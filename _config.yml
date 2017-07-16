@@ -16,7 +16,7 @@
 title: IDIA Pipelines 
 email: bradley.frank@uct.ac.za
 description: > # this means to ignore newlines until "baseurl:"
-Landing Page for the IDIA Pipelines Project.
+    Landing Page for the IDIA Pipelines Project.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 #twitter_username: jekyllrb
