@@ -27,44 +27,7 @@ github_username:  jekyll
 # Build settings
 markdown: kramdown
 #theme: minima
-theme: jekyll-theme-basically-basic
+theme: jekyll-theme-slate
 gems:
   - jekyll-feed
-  - jekyll-seo-tag
-  - jekyll-sitemap
-  - jekyll-paginate
-feed:
-path: atom.xml
 
-exclude:
-  - .asset-cache
-  - .bundle
-  - .codeclimate.yml
-  - .editorconfig
-  - .gitattributes
-  - .jekyll-assets-cache
-  - .sass-cache
-  - .scss-lint.yml
-  - CHANGELOG
-  - Gemfile
-  - Gemfile.lock
-  - LICENSE
-  - node_modules
-  - Rakefile
-  - README
-  - vendor/bundle/
-  - vendor/cache/
-  - vendor/gems/
-  - vendor/ruby/
-  - /docs # ignore Basically Basic sample site
-  - /example # ignore Basically Basic dev site
-
-# Front Matter Defaults
-defaults:
-  # _posts
-  - scope:
-      path: "_posts"
-      type: posts
-    values:
-      layout: post
-read_time: true
