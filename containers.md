@@ -12,11 +12,12 @@ at - [Singularity][singularity]
 
 [singularity]: http://singularity.lbl.gov/
 
-#Quick Start
-Create a container: `singularity create -s 10240 casa-stable.img`
-Bootstrap the container: `singularity bootstrap casa-stable.img casa-stable.def`
-Run the container: `singularity run casa-stable.img`
-Spawn a shell to update or troubleshoot the container: `singularity shell -w casa-stable.img`
+# Quick Start
+
+* Create a container: `singularity create -s 10240 casa-stable.img`
+* Bootstrap the container: `singularity bootstrap casa-stable.img casa-stable.def`
+* Run the container: `singularity run casa-stable.img`
+* Spawn a shell to update or troubleshoot the container: `singularity shell -w casa-stable.img`
 
 # Reasons to use Singularity
 Singularity is a simple, portable and reproducible container technology to retain a specific
