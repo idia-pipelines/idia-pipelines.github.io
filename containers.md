@@ -31,3 +31,13 @@ root on the system in order to complete the installation successfully. The `--pr
 by using the default to ensure that singularity is installed into the `OS PATH`. The base cloud image
 for IDIA will include singularity and also be added to the sudoers environment.
 
+```bash
+VERSION=2.3.1
+wget https://github.com/singularityware/singularity/releases/download/$VERSION/singularity-$VERSION.tar.gz
+tar xvf singularity-$VERSION.tar.gz
+cd singularity-$VERSION
+./configure --prefix=/usr/local
+make
+sudo make install
+```
+
