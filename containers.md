@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Software Deployment and Management using Singularity Containerization for IDIA 
+title: Software Containers 
 permalink: /containers/
 ---
 
