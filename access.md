@@ -66,8 +66,8 @@ Please take careful note of the following.
 Smaller VMs can be spun-up for (sub)-projects. Additionally, users will have to follow the
 aforementioned process to setup their accounts.
 
-Please use the Google form to design your machine:
-[Requesting a VM][https://goo.gl/forms/qNAhKW0drThtVwAC2].
+Please use the Google form to design and [Request a VM][request-vm].
 
 [brad-email]: bradley@idia.ac.za
 [dashboard]: https://dashboard.arc.ac.za
+[request-vm]: https://goo.gl/forms/qNAhKW0drThtVwAC2
