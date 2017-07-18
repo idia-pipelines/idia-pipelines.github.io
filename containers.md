@@ -9,10 +9,9 @@ out more about what's available and how to use them on our dedicated [Github][gi
 repository.
 
 # Introduction
-The installation of Singularity is easy and simple to install. The important bits to note is that
-containers need to be built on a machine which have root access. This includes HPC interconnects,
-resource managers, file systems, GPUs and/or accelerators, More information about this can be found
-at - [Singularity][singularity]
+The installation of [Singularity][singularity] is easy and simple to install. The important bits to
+note is that containers need to be built on a machine which have root access. This includes HPC
+interconnects, resource managers, file systems, GPUs and/or accelerators.
 
 
 # Quick Start
@@ -22,17 +21,19 @@ at - [Singularity][singularity]
 * Run the container: `singularity run casa-stable.img`
 * Spawn a shell to update or troubleshoot the container: `singularity shell -w casa-stable.img`
 
-# Reasons to use Singularity
-Singularity is a simple, portable and reproducible container technology to retain a specific
-environment across a number of diverse systems. These diverse systems could range from a HPC center
-in China to running workloads on Amazon Web Services. The only requirment is that Singularity is
-installed. 
+# Reasons to use [Singularity][singularity]
+[Singularity][singularity] is a simple, portable and reproducible container technology to retain a
+specific environment across a number of diverse systems. These diverse systems could range from a
+HPC center in China to running workloads on Amazon Web Services. The only requirment is that
+[Singularity][singularity]  is installed. 
 
 # Installation Procedure 
 Linux installation -  There are no dependencies required besides `gcc` and `make`. You need to be
 root on the system in order to complete the installation successfully. The `--prefix` could be changed
 by using the default to ensure that singularity is installed into the `OS PATH`. The base cloud image
 for IDIA will include singularity and also be added to the sudoers environment.
+
+Here's an example of how how to install [Singularity][singularity] on in Linux:
 
 ```bash
 VERSION=2.3.1
@@ -43,6 +44,9 @@ cd singularity-$VERSION
 make
 sudo make install
 ```
+
+OSX installation is slightly more complicated with the use of Vagrant and VirtualBox. The
+installation instructions can be found here -- http://singularity.lbl.gov/install-mac.
 
 [singularity]: http://singularity.lbl.gov/
 [github-containers]:https://github.com/AfricanResearchCloud/idia-containers
