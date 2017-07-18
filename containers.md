@@ -3,6 +3,10 @@ layout: page
 title: Software Containers 
 permalink: /containers/
 ---
+# TL;DR
+At IDIA, software is available and managed using [Singularity][singularity] containers. You can find
+out more about what's available and how to use them on our dedicated [Github][github-containers]
+repository.
 
 # Introduction
 The installation of Singularity is easy and simple to install. The important bits to note is that
@@ -10,7 +14,6 @@ containers need to be built on a machine which have root access. This includes H
 resource managers, file systems, GPUs and/or accelerators, More information about this can be found
 at - [Singularity][singularity]
 
-[singularity]: http://singularity.lbl.gov/
 
 # Quick Start
 
@@ -41,3 +44,5 @@ make
 sudo make install
 ```
 
+[singularity]: http://singularity.lbl.gov/
+[github-containers]:https://github.com/AfricanResearchCloud/idia-containers
