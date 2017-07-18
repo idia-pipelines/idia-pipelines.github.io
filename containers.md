@@ -55,6 +55,46 @@ image file.  Docker, which makes use of the union filesystem, creates the filesy
 approach which reduces duplication. [Singularity][singularity] however retains everything in a
 single container image file which can be easily distributed between environments. 
 
+## Creating the image file requires the following command: 
+````
+singularity create -s 10240 casa-stable.img
+````
+This command will create the image file with a size of 10GB and initialize the filesystem for use.
+
+## Create a singularity bootstrap file. 
+Let us refer to this file as casa-stable.def. This bootstrap file is a plain text file with
+instructions on how to build the container and which configuration options to apply. Below is an
+excerpt of a bootstrap file we built for an astronomy package called Casa. The following options are
+important: 
+* **Bootstrap**: Yum as its preferred package management tool. 
+* **OSVersion**: Version of the OS.
+* **MirrorURL**: Location from where to fetch the OS
+* **Include**: Installation of a package on a minimal OS installation
+
+````bash
+fontconfig-dev* libSM-dev* libX11-dev* libXext-dev* libXi-dev* libXrender-dev*
+mkdir -p /opt/casa 
+cd /opt/casa
+wget https://casa.nrao.edu/download/distro/linux/release/el7/casa-release-4.7.2-el7.tar.gz
+tar xfvz casa-release-4.7.2-el7.tar.gz
+
+%runscript
+    exec /opt/casa/casa-release-4.7.2-el7/bin/casa "$@"BootStrap: yum
+OSVersion: 7
+MirrorURL: http://mirror.centos.org/centos-%{OSVERSION}/%{OSVERSION}/os/$basearch/
+Include: yum
+
+# inside the container during the bootstrap instead of the General Availability
+# point release (7.x) then uncomment the following line
+UpdateURL: http://mirror.centos.org/centos-%{OSVERSION}/%{OSVERSION}/updates/$basearch/
+
+%post
+yum -y install centos-release-scl
+yum -y install wget vim svn git gcc cmake python libXrandr-dev* libXcursor-dev* libXinerama-dev* libfontconfig-dev* libfontconfig fontconfig-dev libGL* libGL-dev*
+
+# If you want the updates (available at the bootstrap date) to be installed
+
+````
 
 [singularity]: http://singularity.lbl.gov/
 [github-containers]:https://github.com/AfricanResearchCloud/idia-containers
