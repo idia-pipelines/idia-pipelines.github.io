@@ -35,7 +35,7 @@ for IDIA will include singularity and also be added to the sudoers environment.
 
 Here's an example of how how to install [Singularity][singularity] on in Linux:
 
-```bash
+````bash
 VERSION=2.3.1
 wget https://github.com/singularityware/singularity/releases/download/$VERSION/singularity-$VERSION.tar.gz
 tar xvf singularity-$VERSION.tar.gz
@@ -43,7 +43,7 @@ cd singularity-$VERSION
 ./configure --prefix=/usr/local
 make
 sudo make install
-```
+````
 
 OSX installation is slightly more complicated with the use of Vagrant and VirtualBox. The
 installation instructions can be found here -- http://singularity.lbl.gov/install-mac.
