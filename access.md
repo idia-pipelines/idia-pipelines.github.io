@@ -69,5 +69,5 @@ aforementioned process to setup their accounts.
 Please use the Google form to design your machine:
 [Requesting a VM][https://goo.gl/forms/qNAhKW0drThtVwAC2].
 
-[brad-email][bradley@idia.ac.za]
-[dashboard][https://dashboard.arc.ac.za]
+[brad-email]: bradley@idia.ac.za
+[dashboard]: https://dashboard.arc.ac.za
