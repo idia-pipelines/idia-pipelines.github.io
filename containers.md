@@ -46,7 +46,15 @@ sudo make install
 ````
 
 OSX installation is slightly more complicated with the use of Vagrant and VirtualBox. The
-installation instructions can be found here -- http://singularity.lbl.gov/install-mac.
+installation instructions can be found here -- [http://singularity.lbl.gov/install-mac].
+
+
+# Building our first container: 
+Now that we have [Singularity][singularity] installed, we need to create an empty container file or
+image file.  Docker, which makes use of the union filesystem, creates the filesystem in a layered
+approach which reduces duplication. [Singularity][singularity] however retains everything in a
+single container image file which can be easily distributed between environments. 
+
 
 [singularity]: http://singularity.lbl.gov/
 [github-containers]:https://github.com/AfricanResearchCloud/idia-containers
