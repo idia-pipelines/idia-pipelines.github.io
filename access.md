@@ -6,12 +6,12 @@ permalink: /access/
 
 # Accounts
 Access to the IDIA-Pipeline resources can be arranged if you are part of the **Pipelines** Team.
-Please contact Bradley Frank (bradley@idia.ac.za) if you are interested in joining. 
+Please contact Bradley Frank ([bradley@idia.ac.za]) if you are interested in joining. 
 
 Members of the **Pipelines** team can request access as follows:
 * Send your preferred username, first-name and last-name to admin@arc.ac.za
 * You will be mailed with your username and temporary password. You can then login to the cloud dashboard
-  (https://dashboard.arc.za).
+  ([https://dashboard.arc.za]).
 * Change your password.
 * You can then upload your SSH key, or use the dashboard to generate a new one. You will be able to
   SSH into IDIA machines using this key.
