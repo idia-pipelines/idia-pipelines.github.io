@@ -13,6 +13,10 @@ The installation of [Singularity][singularity] is easy and simple to install. Th
 note is that containers need to be built on a machine which have root access. This includes HPC
 interconnects, resource managers, file systems, GPUs and/or accelerators.
 
+The basic model of software deployment and management using [Singularity][singularity] containers
+is depicted in the following image.
+
+![singularity-flow]({{ site.url }}/assets/singularity-2.3-flow.png)
 
 # Quick Start
 
@@ -55,13 +59,13 @@ image file.  Docker, which makes use of the union filesystem, creates the filesy
 approach which reduces duplication. [Singularity][singularity] however retains everything in a
 single container image file which can be easily distributed between environments. 
 
-## Creating the image file requires the following command: 
+### Creating the image file requires the following command: 
 ````
 singularity create -s 10240 casa-stable.img
 ````
 This command will create the image file with a size of 10GB and initialize the filesystem for use.
 
-## Create a singularity bootstrap file. 
+### Create a singularity bootstrap file. 
 Let us refer to this file as casa-stable.def. This bootstrap file is a plain text file with
 instructions on how to build the container and which configuration options to apply. Below is an
 excerpt of a bootstrap file we built for an astronomy package called Casa. The following options are
@@ -95,6 +99,48 @@ yum -y install wget vim svn git gcc cmake python libXrandr-dev* libXcursor-dev* 
 # If you want the updates (available at the bootstrap date) to be installed
 
 ````
+Scriptlets, defined as %post, %setup and %runscript, are used to process various sections of the
+bootstrap process. These scriptlets execute and provision the container. 
+
+### Bootstrap the container by executing the follow command. 
+````bash
+$ singularity bootstrap casa-stable.img casa-stable.def 
+````
+
+The bootstrap process starts by fetching the operating system, installing the dependencies,
+downloading/uncompressing the Casa stable package and configuring a few bits and pieces into the
+container. It then executes the %runscript scriptlet which places everything listed underneath the
+scriptlet into the “/singularity” file in the root filesystem of the container. 
+
+### Executing the container is as simple as : 
+````bash
+$ singularity run casa-stable.img
+````
+or 
+````bash
+./casa-stable.img
+````
+
+### Interactive use of a container 
+The major differences between Docker and Singularity are networking components which are completely
+stripped from the environment and makes direct use of the server networking. The user namespace is
+well defined and therefore a user on the physical host is the same user in the container. This
+improves security several fold because users who need to execute the container no longer need to
+have escalated privileges ( ie: root access ) in the container to mount volumes.
+
+Updating a singularity container with additional software or just security updates is as simple as
+initiating a shell terminal and executing the commands you would traditionally do in a typical Linux
+environment. The container image is updated immediately upon exit of the shell and is ready for
+distribution. The bootstrap definition file can be updated as well for future deployments if needed
+but is not necessary to rebuild the container.
+
+As root, execute the command which gives the user write access to the container. By default, only
+read-only access is granted to the environment. 
+
+````bash
+singularity shell -w casa-stable.img 
+````
+
 
 [singularity]: http://singularity.lbl.gov/
 [github-containers]:https://github.com/AfricanResearchCloud/idia-containers
