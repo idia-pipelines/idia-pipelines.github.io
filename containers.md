@@ -11,21 +11,21 @@ repository.
 ### Available Containers
 We have the following containers available:
 * `casa-stable`
-** Access: Terminal (SSH).
-** The most recent, stable build of **CASA**, and can only be used on
+  * Access: Terminal (SSH).
+  * The most recent, stable build of **CASA**, and can only be used on
   the terminal (e.g., by SSH'ing into the machine). Includes *MPI* support.
 * `idia-jupyter-casa`
-** Access: Jupyter (https).
-** A working development version of CASA which is controlled through the Jupyter Notebook.
+  * Access: Jupyter (https).
+  * A working development version of CASA which is controlled through the Jupyter Notebook.
 * `idia-python-2.7`
-** Access: Terminal (SSH) and Jupyter (https).
-** Basic Python 2.7 stack.
+  * Access: Terminal (SSH) and Jupyter (https).
+  * Basic Python 2.7 stack.
 * `idia-python-3.6`
-** Access: Terminal (SSH) and Jupyter (https).
-** Basic Python 3.6 stack.
+  * Access: Terminal (SSH) and Jupyter (https).
+  * Basic Python 3.6 stack.
 * `kern2`
-** Access: Terminal (SSH) and Jupyter (https).
-** A comprehensive radio astronomy software environment that has **all** the packages in the
+  * Access: Terminal (SSH) and Jupyter (https).
+  * A comprehensive radio astronomy software environment that has **all** the packages in the
 [KERN2][kern2] repository, which has been painstakingly created by Gijs Molenaar. Please visit
 [KERN2][kern2] to find out more about the available software. This includes source finding finding
 software (e.g., PYBDSF), CASA and MeqTrees-based tools, for example.
