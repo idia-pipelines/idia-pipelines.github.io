@@ -16,13 +16,10 @@
 title: IDIA Pipelines 
 email: bradley.frank@uct.ac.za
 description: > # this means to ignore newlines until "baseurl:"
-  Documentation wiki for the IDIA-Pipelines Project. Here you will find details on how to request access 
-  to IDIA machines, how to login to an IDIA-Pipelines VM and how to use the software containers to deploy, 
-  develop and manage your pipelines and workflows.
+  Documentation wiki for the IDIA-Pipelines Project.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: jekyllrb
-github_username:  jekyll
+#github_username:  
 
 # Build settings
 markdown: kramdown

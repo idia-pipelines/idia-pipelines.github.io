@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Access to IDIA 
+title: Access to IDIA Machines
 permalink: /access/
 ---
 
