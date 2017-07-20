@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Usage Model
+title: User Model
 permalink: /model/
 ---
 
