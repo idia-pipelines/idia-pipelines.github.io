@@ -19,6 +19,8 @@ provide documentation and **slow** information.  The associated GitHub [wiki][[i
 is aimed to provide a space for **fast** information -- notes, discussion, logs, reports and
 recipes. 
 
-A graphical representation of the [User Model][/model/] is provided on this website.
+A graphical representation of the [User Model][model] is provided on this website.
+
+[model]: /model/
 [idia-pipelines]:  https://github.com/idia-pipelines/idia-pipelines.github.io
 [idia-pipelines-wiki]:  https://github.com/idia-pipelines/idia-pipelines.github.io/wiki
