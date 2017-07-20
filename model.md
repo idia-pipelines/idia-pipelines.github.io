@@ -4,4 +4,4 @@ title: Usage Model
 permalink: /model/
 ---
 
-![singularity-flow]({{ site.url }}/assets/idia-pipelines-user-model.png)
+![user-model]({{ site.url }}/assets/idia-pipelines-user-model.png)

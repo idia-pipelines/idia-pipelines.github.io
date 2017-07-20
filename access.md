@@ -6,9 +6,13 @@ permalink: /access/
 
 # Accounts
 Access to the IDIA-Pipeline resources can be arranged if you are part of the **Pipelines** Team.
-Please contact Bradley Frank ([bradley@idia.ac.za][brad-email]) if you are interested in joining. 
+Please contact Bradley Frank ([bradley@idia.ac.za][brad-email]) if you are interested in joining.
 
-Members of the **Pipelines** team can request access as follows:
+[Documentation][idia-pipelines] and [wiki][idia-pipelines-wiki] access is provided through a GitHub
+project, so please sign-up to GitHub (if you haven't already) and join the [IDIA
+Pipelines][idia-pipelines] repo as a contributor.
+
+Members of the **Pipelines** team can request access to IDIA Machines as follows:
 * Send your preferred username, first-name and last-name to admin@arc.ac.za
 * You will be mailed with your username and temporary password. You can then login to the cloud dashboard
   ([https://dashboard.arc.ac.za][dashboard]).
@@ -68,6 +72,14 @@ aforementioned process to setup their accounts.
 
 Please use the Google form to design and [Request a VM][request-vm].
 
-[brad-email]: bradley@idia.ac.za
-[dashboard]: https://dashboard.arc.ac.za
-[request-vm]: https://goo.gl/forms/qNAhKW0drThtVwAC2
+# GitHub
+There are two important GitHub resources that project members can use:
+* [IDIA-Pipelines Blog][idia-pipelines]: This is the repo for this website, and there is an
+  associated [wiki][idia-pipelines-wiki] for project members to share information. 
+* [IDIA Containers][idia-containers]: This is very important repository for the
+  [Singularity][singularity] containers used at IDIA.
+
+[idia-pipelines]:  https://github.com/idia-pipelines/idia-pipelines.github.io
+[idia-pipelines-wiki]:  https://github.com/idia-pipelines/idia-pipelines.github.io/wiki
+[idia-containers]: https://github.com/AfricanResearchCloud/idia-containers
+[singularity]: http://singularity.lbl.gov/
