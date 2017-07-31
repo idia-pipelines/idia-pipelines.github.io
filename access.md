@@ -85,3 +85,4 @@ There are two important GitHub resources that project members can use:
 [singularity]: http://singularity.lbl.gov/
 [sshkey]: https://confluence.atlassian.com/bitbucketserver/creating-ssh-keys-776639788.html
 [racetrack]: https://racetrack.idia.ac.za
+[request-vm]: https://docs.google.com/forms/d/e/1FAIpQLSc6GwFfqTUcKVmkcmn1VRIBADp-_JOSVt9aW1dfNmc12kxuvg/viewform
