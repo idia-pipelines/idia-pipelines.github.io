@@ -15,12 +15,11 @@ Pipelines][idia-pipelines] repo as a contributor.
 Members of the **Pipelines** team can request access to IDIA Machines as follows:
 * Send an email to **support@arc.ac.za** with the following information:
 
-    ** Please state that you are part of the "IDIA Pipelines Team".
-
-** Your home institution.
-** The MeerKAT science projects that you are involved in.
-** Your preferred username, first-name and last-name.
-** Your [ssh public key][sshkey].
+    * Please state that you are part of the "IDIA Pipelines Team".
+    * Your home institution.
+    * The MeerKAT science projects that you are involved in.
+    * Your preferred username, first-name and last-name.
+    * Your [ssh public key][sshkey].
 
 Your username, password and SSH public key will be added to LDAP (default username will be created
 from pre-@ part of email)
