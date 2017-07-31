@@ -13,12 +13,12 @@ project, so please sign-up to GitHub (if you haven't already) and join the [IDIA
 Pipelines][idia-pipelines] repo as a contributor.
 
 Members of the **Pipelines** team can request access to IDIA Machines as follows:
-* Send your preferred username, first-name and last-name to admin@arc.ac.za
-* You will be mailed with your username and temporary password. You can then login to the cloud dashboard
-  ([https://dashboard.arc.ac.za][dashboard]).
-* Change your password.
-* You can then upload your SSH key, or use the dashboard to generate a new one. You will be able to
-  SSH into IDIA machines using this key.
+* Send an email to **support@arc.ac.za** with the following information:
+** Please state that you are part of the "IDIA Pipelines Team".
+** Your home institution.
+** The MeerKAT science projects that you are involved in.
+** Your preferred username, first-name and last-name.
+** Your [ssh] public key][sshkey].
 
 Your username, password and SSH public key will be added to LDAP (default username will be created
 from pre-@ part of email)
@@ -31,7 +31,7 @@ You can access IDIA-Pipelines machines via a Jupyter-Hub (preferred) or SSH (tra
 addresses or URLs for IDIA-Pipeline machines will be provided. 
 
 The URL usually corresponds to the name of the VM, and is served on the IDIA domain. For example,
-our **racetrack** node can be accessed via https://racetrack.idia.c.za.
+our **racetrack** node can be accessed via [https://racetrack.idia.ac.za][racetrack].
 
 ### Jupyter-Hub
 A Virtual Machine (VM) can be accessed online using your browser (Chrome/Firefox preferred). Simply
@@ -83,3 +83,5 @@ There are two important GitHub resources that project members can use:
 [idia-pipelines-wiki]:  https://github.com/idia-pipelines/idia-pipelines.github.io/wiki
 [idia-containers]: https://github.com/AfricanResearchCloud/idia-containers
 [singularity]: http://singularity.lbl.gov/
+[sshkey]: https://confluence.atlassian.com/bitbucketserver/creating-ssh-keys-776639788.html
+[racetrack]: https://racetrack.idia.ac.za
