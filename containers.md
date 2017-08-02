@@ -26,6 +26,12 @@ We have the following containers available:
 * `kern2`
   * Access: Terminal (SSH) and Jupyter (https).
   * A comprehensive radio astronomy software environment that has **all** the packages in the
+* `source-finding`
+  * Access: Terminal (SSH) and Jupyter (https).
+  * Includes commonly used tools for source-finding and data inspection. For more details consult
+    our open [Github Issue][sfissues] on the topic.
+  * This container is about 90% complete, but most of the important tools have already been
+    included. Please consult the [Github Issue][sfissues] for details on the current status.
 [KERN2][kern2] repository, which has been painstakingly created by Gijs Molenaar. Please visit
 [KERN2][kern2] to find out more about the available software. This includes source finding finding
 software (e.g., PYBDSF), CASA and MeqTrees-based tools, for example.
@@ -177,3 +183,4 @@ singularity shell -w casa-stable.img
 [singularity]: http://singularity.lbl.gov/
 [github-containers]:https://github.com/AfricanResearchCloud/idia-containers
 [kern2]: http://kernsuite.info/
+[sfissues]: https://github.com/AfricanResearchCloud/idia-containers/issues/4

@@ -32,7 +32,7 @@ You can access IDIA-Pipelines machines via a Jupyter-Hub (preferred) or SSH (tra
 addresses or URLs for IDIA-Pipeline machines will be provided. 
 
 The URL usually corresponds to the name of the VM, and is served on the IDIA domain. For example,
-our **racetrack** node can be accessed via [https://racetrack.idia.ac.za][racetrack].
+our **helo** node can be accessed via [https://helo.idia.ac.za][helo].
 
 ### Jupyter-Hub
 A Virtual Machine (VM) can be accessed online using your browser (Chrome/Firefox preferred). Simply
@@ -44,9 +44,9 @@ username and password to access your account.
 ### SSH
 To `SSH` into an IDIA-Pipelines VM, you will need your SSH key. 
 
-This is how you would `SSH` into **racetrack** with X-forwarding:
+This is how you would `SSH` into **helo** with X-forwarding:
 ````bash
-$ ssh  -XY -i /path/to/your/key.pem racetrack.idia.ac.za -l <username>
+$ ssh  -XY -i /path/to/your/key.pem helo.idia.ac.za -l <username>
 ````
 
 # Storage
@@ -85,5 +85,5 @@ There are two important GitHub resources that project members can use:
 [idia-containers]: https://github.com/AfricanResearchCloud/idia-containers
 [singularity]: http://singularity.lbl.gov/
 [sshkey]: https://confluence.atlassian.com/bitbucketserver/creating-ssh-keys-776639788.html
-[racetrack]: https://racetrack.idia.ac.za
+[helo]: https://helo.idia.ac.za
 [request-vm]: https://docs.google.com/forms/d/e/1FAIpQLSc6GwFfqTUcKVmkcmn1VRIBADp-_JOSVt9aW1dfNmc12kxuvg/viewform
