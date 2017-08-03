@@ -49,6 +49,21 @@ This is how you would `SSH` into **helo** with X-forwarding:
 $ ssh  -XY -i /path/to/your/key.pem helo.idia.ac.za -l <username>
 ````
 
+# Changing your Password
+`ldappasswd -H ldap://10.102.4.109 -x -D "cn=username,ou=users,dc=idia,dc=arc,dc=ac,dc=za" -W -S -A`
+
+You will then be prompted for passwords as follows:
+* Twice for your current password (verification).
+* Twice for your new password. 
+* Twice for your _LDAP_ password, which will be your *old* password. This is required to bind to the
+  LDAP server to commit the change to your password. 
+
+This is a little more involved then usual, because your credentials are not specific to a machine.
+Access on the cloud is coordinated on using the LDAP server -- this is why you need to do the
+_authenticate -> enter new password -> authorize/bind_ process to propagate your password to the
+server. This allows us to provide you with access to any machine provisioned for your project
+without having to remember a myriad of passwords. 
+
 # Storage
 There are several storage areas available. Most (all) Pipelines machines will have the IDIA storage
 attached. This means that you will have access to your work and your data on any system that you're
