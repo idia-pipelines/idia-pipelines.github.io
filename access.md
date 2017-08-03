@@ -50,7 +50,10 @@ $ ssh  -XY -i /path/to/your/key.pem helo.idia.ac.za -l <username>
 ````
 
 # Changing your Password
-`ldappasswd -H ldap://10.102.4.109 -x -D "cn=username,ou=users,dc=idia,dc=arc,dc=ac,dc=za" -W -S -A`
+You need to change your generic password as soon as possible. You can do this with the following
+command (one line on the prompt):
+
+`$ ldappasswd -H ldap://10.102.4.109 -x -D "cn=username,ou=users,dc=idia,dc=arc,dc=ac,dc=za" -W -S -A`
 
 You will then be prompted for passwords as follows:
 * Twice for your current password (verification).
@@ -63,6 +66,9 @@ Access on the cloud is coordinated on using the LDAP server -- this is why you n
 _authenticate -> enter new password -> authorize/bind_ process to propagate your password to the
 server. This allows us to provide you with access to any machine provisioned for your project
 without having to remember a myriad of passwords. 
+
+Incidentally, you can do this without ssh'ing into the machine -- simply open up a terminal using
+the Jupyter-Hub and use this to change your password.
 
 # Storage
 There are several storage areas available. Most (all) Pipelines machines will have the IDIA storage

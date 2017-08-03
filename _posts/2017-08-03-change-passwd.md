@@ -7,9 +7,9 @@ date: 2017-08-04 10:02:00 +02000
 Hi Folks, 
 
 If you've received an account you're probably wondering on how to change your password. You can do
-this as follows: 
+this as follows (in one line) 
 
-`ldappasswd -H ldap://10.102.4.109 -x -D "cn=username,ou=users,dc=idia,dc=arc,dc=ac,dc=za" -W -S -A`
+`$ ldappasswd -H ldap://10.102.4.109 -x -D "cn=username,ou=users,dc=idia,dc=arc,dc=ac,dc=za" -W -S -A`
 
 You will then be prompted for passwords as follows:
 * Twice for your current password (verification).
