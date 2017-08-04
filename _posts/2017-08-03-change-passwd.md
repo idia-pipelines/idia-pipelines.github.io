@@ -11,10 +11,12 @@ this as follows (in one line)
 
 `$ ldappasswd -H ldap://10.102.4.109 -x -D "cn=username,ou=users,dc=idia,dc=arc,dc=ac,dc=za" -W -S -A`
 
+*Important:* In the command above, you will need to change `username` to your _username_.
+
 You will then be prompted for passwords as follows:
 * Twice for your current password (verification).
 * Twice for your new password. 
-* Twice for your _LDAP_ password, which will be your *old* password. This is required to bind to the
+* For your _LDAP_ password, which will be your *old* password. This is required to bind to the
   LDAP server to commit the change to your password. 
 
 This is a little more involved then usual, because your credentials are not specific to a machine.
