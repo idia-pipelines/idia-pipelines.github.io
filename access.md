@@ -4,7 +4,14 @@ title: Access to IDIA Machines
 permalink: /access/
 ---
 
-# Accounts
+This page provides details on how to get access to the IDIA virtual machines. While this page is
+specific to the IDIA-Pipelines project, the details related to requesting access and connecting to a
+machine is identical. 
+
+In particular, please mention the team that you are a part of when you request access. This is
+extremely important, since it will help us provide you with access to the relevant project files.
+
+# Joining the IDIA Pipelines Team
 Access to the IDIA-Pipeline resources can be arranged if you are part of the **Pipelines** Team.
 Please contact Bradley Frank ([bradley@idia.ac.za][brad-email]) if you are interested in joining.
 
@@ -12,12 +19,15 @@ Please contact Bradley Frank ([bradley@idia.ac.za][brad-email]) if you are inter
 project, so please sign-up to GitHub (if you haven't already) and join the [IDIA
 Pipelines][idia-pipelines] repo as a contributor.
 
-Members of the **Pipelines** team can request access to IDIA Machines as follows:
+# Requesting Access to the IDIA Machines
+
+If you are already part of an IDIA team, you can request access as follows:
+
 * Send an email to **support@arc.ac.za** with the following information:
-    * Please state that you are part of the "IDIA Pipelines Team".
+    * Please state which team you are a member of, e.g., the "IDIA Pipelines Team".
     * Your home institution.
     * Your local phone number (so that we can call you if there's a security problem).
-    * The MeerKAT science projects that you are involved in.
+    * The MeerKAT science projects that you are involved in, if applicable.
     * Your preferred username, first-name and last-name.
     * Your [ssh public key][sshkey].
 
@@ -28,8 +38,12 @@ This will enable you to log into all IDIA machines that connect to LDAP, allowin
 VMs using ssh using their SSH key without needing to use your password.
 
 # Access
-You can access IDIA-Pipelines machines via a Jupyter-Hub (preferred) or SSH (traditional). IP
-addresses or URLs for IDIA-Pipeline machines will be provided. 
+
+There are a pool of IDIA machines that are available for usage. Please note that the machine names
+mentioned here are meant for usage by the IDIA-Pipelines team. In practice, we will provide you with
+a machine name after you've requested access. 
+
+You can access IDIA machines via a Jupyter-Hub (preferred) or SSH (traditional). 
 
 The URL usually corresponds to the name of the VM, and is served on the IDIA domain. For example,
 our **helo** node can be accessed via [https://helo.idia.ac.za][helo].
@@ -42,7 +56,7 @@ You will be presented with a login window for the Jupyter-Hub. Use your previous
 username and password to access your account.
 
 ### SSH
-To `SSH` into an IDIA-Pipelines VM, you will need your SSH key. 
+To `SSH` into an IDIA VM, you will need your SSH key. 
 
 This is how you would `SSH` into **helo** with X-forwarding:
 ````bash
