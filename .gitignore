@@ -1,4 +1,3 @@
 _site
 .sass-cache
 .jekyll-metadata
-MeerKAT_cal_reports/*/*.png
