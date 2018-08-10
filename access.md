@@ -6,36 +6,20 @@ permalink: /access/
 
 This page provides details on how to get access to the IDIA virtual machines. While this page is
 specific to the IDIA-Pipelines project, the details related to requesting access and connecting to a
-machine is identical. 
+machine are identical. 
+
+You can request access using the following [form][access].
 
 In particular, please mention the team that you are a part of when you request access. This is
 extremely important, since it will help us provide you with access to the relevant project files.
 
 # Joining the IDIA Pipelines Team
 Access to the IDIA-Pipeline resources can be arranged if you are part of the **Pipelines** Team.
-Please contact Bradley Frank ([bradley@idia.ac.za][brad-email]) if you are interested in joining.
+Please contact Bradley Frank ([bradley@idia.ac.za][brad]) if you are interested in joining.
 
-[Documentation][idia-pipelines] and [wiki][idia-pipelines-wiki] access is provided through a GitHub
+[Documentation][idia-pipelines] and [wiki][idia-pipelines-wiki] access are provided through a GitHub
 project, so please sign-up to GitHub (if you haven't already) and join the [IDIA
 Pipelines][idia-pipelines] repo as a contributor.
-
-# Requesting Access to the IDIA Machines
-
-If you are already part of an IDIA team, you can request access as follows:
-
-* Send an email to **support@arc.ac.za** with the following information:
-    * Please state which team you are a member of, e.g., the "IDIA Pipelines Team".
-    * Your home institution.
-    * Your local phone number (so that we can call you if there's a security problem).
-    * The MeerKAT science projects that you are involved in, if applicable.
-    * Your preferred username, first-name and last-name.
-    * Your [ssh public key][sshkey].
-
-Your username, password and SSH public key will be added to LDAP (default username will be created
-from pre-@ part of email)
-
-This will enable you to log into all IDIA machines that connect to LDAP, allowing you to log into
-VMs using ssh using their SSH key without needing to use your password.
 
 # Access
 
@@ -124,3 +108,5 @@ There are two important GitHub resources that project members can use:
 [sshkey]: https://confluence.atlassian.com/bitbucketserver/creating-ssh-keys-776639788.html
 [helo]: https://helo.idia.ac.za
 [request-vm]: https://docs.google.com/forms/d/e/1FAIpQLSc6GwFfqTUcKVmkcmn1VRIBADp-_JOSVt9aW1dfNmc12kxuvg/viewform
+[access]: https://goo.gl/forms/huXMGAxwqfTIodOL2
+[brad]: bradley@idia.ac.za
