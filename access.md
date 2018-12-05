@@ -108,5 +108,5 @@ There are two important GitHub resources that project members can use:
 [sshkey]: https://confluence.atlassian.com/bitbucketserver/creating-ssh-keys-776639788.html
 [helo]: https://helo.idia.ac.za
 [request-vm]: https://docs.google.com/forms/d/e/1FAIpQLSc6GwFfqTUcKVmkcmn1VRIBADp-_JOSVt9aW1dfNmc12kxuvg/viewform
-[access]: https://goo.gl/forms/huXMGAxwqfTIodOL2
+[access]: http://www.ilifu.ac.za/il/accessing-facilities
 [brad]: bradley@idia.ac.za
