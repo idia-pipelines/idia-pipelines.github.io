@@ -4,7 +4,9 @@ title: processMeerKAT
 permalink: /processMeerKAT/
 ---
 
-IDIA Pipelein
+# The IDIA Pipeline: `processMeerKAT`
+
+The `processMeerKAT` package is aimed at radio astronomers...
 
 something [blah][mylink]
 
