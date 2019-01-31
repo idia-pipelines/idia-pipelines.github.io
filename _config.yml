@@ -28,7 +28,7 @@ search_enabled: true
 # Aux links for the upper right navigation
 aux_links:
   "BLAH":
-    - "//github.com/pmarsceill/just-the-docs"
+    - "//github.com/idia-astro/pipelines/wiki"
 
 # Color scheme currently only supports "dark" or nil (default)
 color_scheme: nil
