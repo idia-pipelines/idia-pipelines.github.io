@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  
+
+  <title>Calibration in ProcessMeerKAT - Just the Docs</title>
+  <link rel="stylesheet" href="http://localhost:4000/idia-pipelines/assets/css/just-the-docs.css">
+  
+  <script type="text/javascript" src="http://localhost:4000/idia-pipelines/assets/js/vendor/lunr.min.js"></script>
+  
+  <script type="text/javascript" src="http://localhost:4000/idia-pipelines/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+
+  <div class="page-wrap">
+    <div class="side-bar">
+      <a href="http://localhost:4000/idia-pipelines/" class="site-title fs-6 lh-tight">Just the Docs</a>
+      <span class="fs-3"><button class="js-main-nav-trigger navigation-list-toggle btn btn-outline" type="button" data-text-toggle="Hide">Menu</button></span>
+      <div class="navigation main-nav js-main-nav">
+        <nav role="navigation" aria-label="Main navigation">
+  <ul class="navigation-list">
+    
+    
+      
+    
+      
+        
+      
+    
+      
+        
+          <li class="navigation-list-item">
+            
+            <a href="http://localhost:4000/idia-pipelines/" class="navigation-list-link">Home</a>
+            
+          </li>
+        
+      
+    
+      
+        
+          <li class="navigation-list-item">
+            
+            <a href="http://localhost:4000/idia-pipelines/docs/access/" class="navigation-list-link">Access to IDIA Machines</a>
+            
+          </li>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <li class="navigation-list-item">
+            
+            <a href="http://localhost:4000/idia-pipelines/docs/containers/" class="navigation-list-link">Singularity Containers</a>
+            
+          </li>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <li class="navigation-list-item active">
+            
+            <a href="http://localhost:4000/idia-pipelines/docs/processMeerKAT" class="navigation-list-link">processMeerKAT</a>
+            
+              
+              <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/idia-pipelines/docs/processMeerKAT/using-the-pipeline/" class="navigation-list-link">Using the Pipeline</a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item  active">
+                      
+                      <a href="http://localhost:4000/idia-pipelines/docs/processMeerKAT/calibration-in-processmeerkat/" class="navigation-list-link active">Calibration in ProcessMeerKAT</a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/idia-pipelines/docs/processMeerKAT/deep-2-tutorial/" class="navigation-list-link">DEEP 2 Tutorial</a>
+                      
+                    </li>
+                  
+                
+                  
+                
+              </ul>
+            
+          </li>
+        
+      
+    
+  </ul>
+</nav>
+
+      </div>
+      <footer role="contentinfo" class="site-footer">
+        <p class="text-small text-grey-dk-000 mb-0">This site uses <a href="https://github.com/pmarsceill/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.</p>
+      </footer>
+    </div>
+    <div class="main-content-wrap">
+      <div class="page-header">
+        <div class="main-content">
+          
+          <div class="search js-search">
+            <div class="search-input-wrap">
+              <input type="text" class="js-search-input search-input" tabindex="0" placeholder="Search Just the Docs" aria-label="Search Just the Docs" autocomplete="off">
+              <svg width="14" height="14" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" class="search-icon"><title>Search</title><g fill-rule="nonzero"><path d="M17.332 20.735c-5.537 0-10-4.6-10-10.247 0-5.646 4.463-10.247 10-10.247 5.536 0 10 4.601 10 10.247s-4.464 10.247-10 10.247zm0-4c3.3 0 6-2.783 6-6.247 0-3.463-2.7-6.247-6-6.247s-6 2.784-6 6.247c0 3.464 2.7 6.247 6 6.247z"/><path d="M11.672 13.791L.192 25.271 3.02 28.1 14.5 16.62z"/></g></svg>
+            </div>
+            <div class="js-search-results search-results-wrap"></div>
+          </div>
+          
+          
+            <ul class="list-style-none text-small mt-md-1 mb-md-1 pb-4 pb-md-0 js-aux-nav aux-nav">
+              
+                <li class="d-inline-block my-0"><a href="//github.com/pmarsceill/just-the-docs">Just the Docs on GitHub</a></li>
+              
+            </ul>
+          
+        </div>
+      </div>
+      <div class="main-content js-main-content" tabindex="0">
+        
+          
+            <nav class="breadcrumb-nav">
+              <ol class="breadcrumb-nav-list">
+                
+                  <li class="breadcrumb-nav-list-item"><a href="http://localhost:4000/idia-pipelines/docs/processMeerKAT">processMeerKAT</a></li>
+                
+                <li class="breadcrumb-nav-list-item"><span>Calibration in ProcessMeerKAT</span></li>
+              </ol>
+            </nav>
+          
+        
+        <div id="main-content" class="page-content" role="main">
+          <p>processMeerKAT implements a CASA based wide-band full Stokes calibration pipeline (in the linear
+basis). Broadly, the pipeline aims to “do the right thing” and by keeping the steps as general as
+possible we believe that there should be no need for fine tuning in order to obtain a well
+calibrated data set. The pipeline is implemented as a series of SLURM <code class="highlighter-rouge">sbatch</code> scripts that in turn
+call CASA scripts. The scripts are separated out to make optimal use of MPI, by splitting out
+sections that can be run in parallel (via <code class="highlighter-rouge">mpicasa</code> and SLURM) and sections that do not take
+advantage of parallel architectures.</p>
+
+<p>The logical steps are :</p>
+
+<p><strong>Input validation</strong> : This script does a few basic data validity checks, that is to verify that the
+input MS exists, and whether the reference antenna should be calculated internally. If reference
+antenna calculation is specified, the script iteratively calls the <code class="highlighter-rouge">visstat</code> task on each antenna,
+and checks for the antenna with the smallest standard deviation value. During this process, antennas
+which are outliers to the distribution are identified and listed in the config file for future
+flagging. If reference antenna calculation is not requested, a simple check is performed to verify
+that the input reference antenna exists in the MS.</p>
+
+<p><strong>Data partition</strong> : The input measurement set (MS) is partitioned into a <a href="https://casa.nrao.edu/casadocs/casa-5-1.2/uv-manipulation/data-partition">multi-measurement set
+(MMS)</a> using the CASA task
+<code class="highlighter-rouge">partition</code>. This task splits up the main MS into smaller SUBMSs that are individual units of a
+larger logical MMS. The number of SUBMSs created are equal to the number of scans in the input MS.
+Partitioning the data in this manner allows for more efficient use of computation while using MPI,
+since each SUBMS can be independently operated on by different MPI workers.</p>
+
+<p><strong>Flagging (round 1)</strong> : The first of two rounds of pre-calibration flagging. If <code class="highlighter-rouge">badfreqranges</code> and
+<code class="highlighter-rouge">badants</code> are specified in the config file, they are flagged. These lists are also allowed to be
+empty. Following that the data are clipped at the level of 50 Jy to eliminate the strongest RFI and
+the <code class="highlighter-rouge">tfcrop</code> algorithm is run independently on the primary and secondary calibrators and the
+target(s).</p>
+
+<p><strong>Flux scaling</strong> : The <code class="highlighter-rouge">setjy</code> task is run on the specified primary calibrators - this step is run
+once each before the first and second rounds of calibration.</p>
+
+<p><strong>Parallel hand calibration</strong> : Standard delay, bandpass and gain calibration is run on the data, in
+order to obtain better statistics for a second round of flagging.</p>
+
+<p><strong>Flagging (round 2)</strong> : Similar to the first round, the <code class="highlighter-rouge">tfcrop</code> algorithm is run independently on
+the primary and secondary calibrator and the target(s). The thresholds are lower than the first
+round as the algorithm is now operating on calibrated data.</p>
+
+<p><strong>Cross hand calibration</strong> : The cross hand calibration recipe broadly follows the CASA guide for
+<a href="https://casa.nrao.edu/casadocs/casa-5-1.2/synthesis-calibration/instrumental-polarization-calibration">polarisation calibration in the linear
+basis</a>.
+The previous round of calibration is cleared, and a new set of bandpass, delay and parallel hand
+gains are computed. Using the CASA helper routine <code class="highlighter-rouge">qufromgain</code>, the Q and U values of the secondary
+calibrator are computed, and are then used to solve for the frequency dependent leakages and XY
+calibration (<em>i.e.,</em> “Dflls” and “XYf” calibration in <code class="highlighter-rouge">polcal</code>).</p>
+
+<p><strong>Splitting out calibrated data</strong> : Finally the calibrated data are averaged down in time and
+frequency by the amount specified in the config file, and the target(s) and secondary calibrator are
+split out into separate MMSs for further imaging/processing.</p>
+
+
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

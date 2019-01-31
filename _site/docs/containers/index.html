@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  
+
+  <title>Singularity Containers - Just the Docs</title>
+  <link rel="stylesheet" href="http://localhost:4000/idia-pipelines/assets/css/just-the-docs.css">
+  
+  <script type="text/javascript" src="http://localhost:4000/idia-pipelines/assets/js/vendor/lunr.min.js"></script>
+  
+  <script type="text/javascript" src="http://localhost:4000/idia-pipelines/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+
+  <div class="page-wrap">
+    <div class="side-bar">
+      <a href="http://localhost:4000/idia-pipelines/" class="site-title fs-6 lh-tight">Just the Docs</a>
+      <span class="fs-3"><button class="js-main-nav-trigger navigation-list-toggle btn btn-outline" type="button" data-text-toggle="Hide">Menu</button></span>
+      <div class="navigation main-nav js-main-nav">
+        <nav role="navigation" aria-label="Main navigation">
+  <ul class="navigation-list">
+    
+    
+      
+    
+      
+        
+      
+    
+      
+        
+          <li class="navigation-list-item">
+            
+            <a href="http://localhost:4000/idia-pipelines/" class="navigation-list-link">Home</a>
+            
+          </li>
+        
+      
+    
+      
+        
+          <li class="navigation-list-item">
+            
+            <a href="http://localhost:4000/idia-pipelines/docs/access/" class="navigation-list-link">Access to IDIA Machines</a>
+            
+          </li>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <li class="navigation-list-item active">
+            
+            <a href="http://localhost:4000/idia-pipelines/docs/containers/" class="navigation-list-link active">Singularity Containers</a>
+            
+          </li>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <li class="navigation-list-item">
+            
+            <a href="http://localhost:4000/idia-pipelines/docs/processMeerKAT" class="navigation-list-link">processMeerKAT</a>
+            
+              
+              <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/idia-pipelines/docs/processMeerKAT/using-the-pipeline/" class="navigation-list-link">Using the Pipeline</a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/idia-pipelines/docs/processMeerKAT/calibration-in-processmeerkat/" class="navigation-list-link">Calibration in ProcessMeerKAT</a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/idia-pipelines/docs/processMeerKAT/deep-2-tutorial/" class="navigation-list-link">DEEP 2 Tutorial</a>
+                      
+                    </li>
+                  
+                
+                  
+                
+              </ul>
+            
+          </li>
+        
+      
+    
+  </ul>
+</nav>
+
+      </div>
+      <footer role="contentinfo" class="site-footer">
+        <p class="text-small text-grey-dk-000 mb-0">This site uses <a href="https://github.com/pmarsceill/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.</p>
+      </footer>
+    </div>
+    <div class="main-content-wrap">
+      <div class="page-header">
+        <div class="main-content">
+          
+          <div class="search js-search">
+            <div class="search-input-wrap">
+              <input type="text" class="js-search-input search-input" tabindex="0" placeholder="Search Just the Docs" aria-label="Search Just the Docs" autocomplete="off">
+              <svg width="14" height="14" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" class="search-icon"><title>Search</title><g fill-rule="nonzero"><path d="M17.332 20.735c-5.537 0-10-4.6-10-10.247 0-5.646 4.463-10.247 10-10.247 5.536 0 10 4.601 10 10.247s-4.464 10.247-10 10.247zm0-4c3.3 0 6-2.783 6-6.247 0-3.463-2.7-6.247-6-6.247s-6 2.784-6 6.247c0 3.464 2.7 6.247 6 6.247z"/><path d="M11.672 13.791L.192 25.271 3.02 28.1 14.5 16.62z"/></g></svg>
+            </div>
+            <div class="js-search-results search-results-wrap"></div>
+          </div>
+          
+          
+            <ul class="list-style-none text-small mt-md-1 mb-md-1 pb-4 pb-md-0 js-aux-nav aux-nav">
+              
+                <li class="d-inline-block my-0"><a href="//github.com/pmarsceill/just-the-docs">Just the Docs on GitHub</a></li>
+              
+            </ul>
+          
+        </div>
+      </div>
+      <div class="main-content js-main-content" tabindex="0">
+        
+          
+        
+        <div id="main-content" class="page-content" role="main">
+          <h1 id="singularity-containers">Singularity Containers</h1>
+<p>At IDIA, astronomical software packages are provided and managed using <a href="http://singularity.lbl.gov/">Singularity</a> containers. Containers
+are managed and built by our developers. If you have any questions/issues relating to containers,
+please send an email to <a href="support@ilifu.ac.za">support@ilifu.ac.za</a>.</p>
+
+<h1 id="available-containers">Available Containers</h1>
+<p>The most recent, stable versions of containers are available in <code class="highlighter-rouge">/data/exp_soft/containers/</code>. Some
+of these containers can be accessed via the Jupyter-Hub, but all of them can be accessed via the
+terminal (i.e., once you’ve ssh’d into an IDIA machine).</p>
+
+<p>Here are a few examples of the latest stable Singularity container builds that are available in
+<code class="highlighter-rouge">/data/exp_soft/containers/</code>:</p>
+<ul>
+  <li><code class="highlighter-rouge">jupyter-casa-latest.simg</code>
+    <ul>
+      <li>Allows you to use CASA tasks via the Jupyter notebook. Note that visualisation tools like
+<code class="highlighter-rouge">plotms</code> or <code class="highlighter-rouge">viewer</code> will not work on the notebook.</li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">casa-stable-5.3.0.simg</code>
+    <ul>
+      <li>Contains the CASA binaries for the 5.3.0. release.</li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">kern4.simg</code>
+    <ul>
+      <li>Contains <em>all</em> the software packages provided by the <a href="http://kernsuite.info/">Kern</a> repository.</li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">sourcefinding_py3.simg</code>
+    <ul>
+      <li>Builds of commonly used source finding packages, e.g., PyBDSF.</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="reporting-a-bug--requesting-software">Reporting a bug / Requesting Software</h1>
+<p>Please send an email to <a href="support@ilifu.ac.za">support@ilifu.ac.za</a> to report issues, or to request new
+containers, or for existing containers to be updated.</p>
+
+<h1 id="using-containers">Using Containers</h1>
+<h4 id="shell">Shell</h4>
+<p>You can access software in Singularity containers using two methods.</p>
+
+<p>Firstly, you can <em>shell</em> into the container. You will enter a <em>shell</em> which provides access to the
+software provided in that container:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>singularity shell /data/exp_soft/containers/casa-stable-5.3.0.simg
+Singularity: Invoking an interactive shell within container...
+
+Singularity casa-stable-5.3.0.simg:~&gt; casa <span class="nt">--nologger</span> <span class="nt">--log2term</span> <span class="nt">--nogui</span>
+
+<span class="o">=========================================</span>
+The start-up <span class="nb">time </span>of CASA may vary
+depending on whether the shared libraries
+are cached or not.
+<span class="o">=========================================</span>
+
+IPython 5.1.0 <span class="nt">--</span> An enhanced Interactive Python.
+
+CASA 5.3.0-143   <span class="nt">--</span> Common Astronomy Software Applications
+
+2018-08-07 12:37:28	INFO	::casa	CASA Version 5.3.0-143
+<span class="nt">--</span><span class="o">&gt;</span> CrashReporter initialized.
+Enter doc<span class="o">(</span><span class="s1">'start'</span><span class="o">)</span> <span class="k">for </span><span class="nb">help </span>getting started with CASA...
+Using matplotlib backend: TkAgg
+
+CASA &lt;1&gt;: print <span class="s2">"Hello World"</span>
+Hello World
+</code></pre></div></div>
+
+<h4 id="exec">Exec</h4>
+<p>You can also pass a command to a container (using the <code class="highlighter-rouge">exec</code> argument), which then gets executed via
+the shell in that container.</p>
+
+<p>For example, here’s an illustration of how to use the <code class="highlighter-rouge">exec</code> argument to jump into an interactive
+CASA session:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>singularity <span class="nb">exec</span> /data/exp_soft/containers/casa-stable-5.3.0.simg casa <span class="nt">--nologger</span> <span class="nt">--log2term</span> <span class="nt">--nogui</span>
+
+<span class="o">=========================================</span>
+The start-up <span class="nb">time </span>of CASA may vary
+depending on whether the shared libraries
+are cached or not.
+<span class="o">=========================================</span>
+
+IPython 5.1.0 <span class="nt">--</span> An enhanced Interactive Python.
+
+CASA 5.3.0-143   <span class="nt">--</span> Common Astronomy Software Applications
+
+2018-08-07 12:41:19	INFO	::casa	CASA Version 5.3.0-143
+<span class="nt">--</span><span class="o">&gt;</span> CrashReporter initialized.
+Enter doc<span class="o">(</span><span class="s1">'start'</span><span class="o">)</span> <span class="k">for </span><span class="nb">help </span>getting started with CASA...
+Using matplotlib backend: TkAgg
+CASA &lt;1&gt;: inp listobs
+<span class="nt">--------</span><span class="o">&gt;</span> inp<span class="o">(</span>listobs<span class="o">)</span>
+<span class="c">#  listobs :: List the summary of a data set in the logger or in a file</span>
+vis                 <span class="o">=</span>         <span class="s1">''</span>        <span class="c">#  Name of input visibility file (MS)</span>
+selectdata          <span class="o">=</span>       True        <span class="c">#  Data selection parameters</span>
+     field          <span class="o">=</span>         <span class="s1">''</span>        <span class="c">#  Selection based on field names or field index numbers. Default is all.</span>
+     spw            <span class="o">=</span>         <span class="s1">''</span>        <span class="c">#  Selection based on spectral-window/frequency/channel.</span>
+     antenna        <span class="o">=</span>         <span class="s1">''</span>        <span class="c">#  Selection based on antenna/baselines. Default is all.</span>
+     timerange      <span class="o">=</span>         <span class="s1">''</span>        <span class="c">#  Selection based on time range. Default is entire range.</span>
+     correlation    <span class="o">=</span>         <span class="s1">''</span>        <span class="c">#  Selection based on correlation. Default is all.</span>
+     scan           <span class="o">=</span>         <span class="s1">''</span>        <span class="c">#  Selection based on scan numbers. Default is all.</span>
+     intent         <span class="o">=</span>         <span class="s1">''</span>        <span class="c">#  Selection based on observation intent. Default is all.</span>
+     feed           <span class="o">=</span>         <span class="s1">''</span>        <span class="c">#  Selection based on multi-feed numbers: Not yet implemented</span>
+     array          <span class="o">=</span>         <span class="s1">''</span>        <span class="c">#  Selection based on (sub)array numbers. Default is all.</span>
+     uvrange        <span class="o">=</span>         <span class="s1">''</span>        <span class="c">#  Selection based on uv range. Default: entire range. Default units: meters.</span>
+     observation    <span class="o">=</span>         <span class="s1">''</span>        <span class="c">#  Selection based on observation ID. Default is all.</span>
+
+verbose             <span class="o">=</span>       True        <span class="c">#  Controls level of information detail reported. True reports more than False.</span>
+listfile            <span class="o">=</span>         <span class="s1">''</span>        <span class="c">#  Name of disk file to write output. Default is none (output is written to logger only).</span>
+listunfl            <span class="o">=</span>      False        <span class="c">#  List unflagged row counts? If true, it can have significant negative performance impact.</span>
+cachesize           <span class="o">=</span>         50        <span class="c">#  EXPERIMENTAL. Maximum size in megabytes of cache in which data structures can be held.</span>
+CASA &lt;2&gt;:
+</code></pre></div></div>
+
+<p>The true utility of the <code class="highlighter-rouge">exec</code> argument is to execute commands non-interactively:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>singularity <span class="nb">exec</span> /data/exp_soft/containers/casa-stable-5.3.0.simg casa <span class="nt">--nologger</span> <span class="nt">--log2term</span> <span class="nt">--nogui</span> <span class="nt">-c</span> <span class="s2">"print 'Hello World'"</span>
+
+<span class="o">=========================================</span>
+The start-up <span class="nb">time </span>of CASA may vary
+depending on whether the shared libraries
+are cached or not.
+<span class="o">=========================================</span>
+
+IPython 5.1.0 <span class="nt">--</span> An enhanced Interactive Python.
+
+CASA 5.3.0-143   <span class="nt">--</span> Common Astronomy Software Applications
+
+2018-08-07 12:45:43	INFO	::casa	CASA Version 5.3.0-143
+<span class="nt">--</span><span class="o">&gt;</span> CrashReporter initialized.
+Hello World
+<span class="err">$</span>
+</code></pre></div></div>
+
+<p>While the command may seem cumbersome, it is very useful when trying to build scripts that utilise
+several containers.</p>
+
+
+
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
