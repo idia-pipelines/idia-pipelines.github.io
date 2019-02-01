@@ -154,7 +154,35 @@
           
         
         <div id="main-content" class="page-content" role="main">
-          <p>Documentation for the processMeerKAT software.</p>
+          <p>The <code class="highlighter-rouge">processMeerKAT</code> software has been written to do calibration and imaging of MeerKAT
+interferometric data.</p>
+
+<p>Typical calibration and imaging of radio data comprises three steps:</p>
+<ul>
+  <li>Initial or <em>a priori</em> calibration, which involves bootstrapping phase and flux gains from observations of
+reference calibrators.</li>
+  <li>Self-calibration or <em>a posteriori’</em> calibration, where the residual on-target errors are solved for
+by (iteratively) building a good representation of the field.</li>
+  <li>3rd Generation Calibration (3GC), aka post-selfcal, which deals with higher-order effects in the
+pursuit of high dynamic range imaging. This includes compensating for the primary beam and
+direction dependent effects.</li>
+</ul>
+
+<p>The <code class="highlighter-rouge">processMeerKAT</code> currently does full-polarisation <em>a priori</em> calibration on MeerKAT data, and includes automated
+flagging. <code class="highlighter-rouge">processMeerKAT</code> is written solely for the processing of data on IDIA’s SLURM cluster, but
+future revisions will allow you to run the software on any HPC platform.</p>
+
+<p>The main features of <code class="highlighter-rouge">processMeerKAT</code> are as follows:</p>
+<ul>
+  <li>Is written in Python 3.</li>
+  <li>Calibration algorithms only use CASA 5.4.X tasks and helper functions. 
+** Uses a purpose-built CASA Singularity container for parallel processing at IDIA, i.e, is fully
+thread-safe.</li>
+  <li>Uses <code class="highlighter-rouge">MPICASA</code> to run parallel jobs over the cluster.</li>
+  <li>Generates <code class="highlighter-rouge">SBATCH</code> files and ancillary helper scripts for processing.</li>
+</ul>
+
+<p>Please read the documentation to learn how to use the pipeline for your imaging data at IDIA.</p>
 
 
 

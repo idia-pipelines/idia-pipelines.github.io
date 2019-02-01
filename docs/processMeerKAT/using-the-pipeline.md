@@ -6,7 +6,8 @@ nav_order: 1
 ---
 ## Introduction
 
-This repository contains scripts for pipeline processing of MeerKAT data. It is a work in progress, and so far, just runs the initial calibration steps.
+This repository contains scripts for pipeline processing of MeerKAT data. It is a work in progress,
+and so far, just runs the initial calibration steps. 
 
 ### Requirements
 
@@ -63,35 +64,25 @@ optional arguments:
 ### Simple usage
 
 * To get things working, source setup.sh, which will add to your PATH and PYTHONPATH
-
 ```source /data/exp_soft/pipelines/processMeerKAT/pipelines/setup.sh```
 
 * To print the version of the pipeline, run
-
 ```processMeerKAT.py -V```
 
 * To build a config file, which the pipeline reads as input for how to process the data, run
-
 ```processMeerKAT.py -B -C myconfig.txt -M mydata.ms```
 
 * To run the pipeline, run
-
 ```processMeerKAT.py -R -C myconfig.txt```
+* This will create `submit_pipeline.sh`, which you can then run to submit all pipeline jobs to a SLURM queue:
+        ```./submit_pipeline.sh ```
 
-This will create `submit_pipeline.sh`, which you can then run to submit all pipeline jobs to a SLURM queue:
-
-```./submit_pipeline.sh```
-
-* Display a summary of the submitted jobs
-
+* Display a summary of the submitted jobs:
 ```./summary.sh```
 
-* Kill the submitted jobs
-
-```./killJobs.sh```
+* Kill the submitted jobs: ```./killJobs.sh```
 
 * If the pipeline crashes, or reports an error, find the error(s) by running
-
 ```./findErrors.sh```
 
 ### Detailed usage
