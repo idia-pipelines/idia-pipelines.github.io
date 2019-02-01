@@ -30,7 +30,7 @@
   "5": {
     "id": "5",
     "title": "Home",
-    "content": "IDIA Pipelines Blah blah blah",
+    "content": "IDIA Pipelines Welcome to the IDIA Pipelines Website. Here you’ll find help and documentation to help you do calibration and imaging of Radio Data Using the IDIA system.",
     "url": "http://localhost:4000/",
     "relUrl": "/"
   },
