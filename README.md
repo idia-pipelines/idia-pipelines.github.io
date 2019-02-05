@@ -14,8 +14,8 @@ IDIA Pipeline team-members can contribute as follows:
 
 # Structure
 Add markdown content to the `docs` directory:
-` - docs/`
-` - docs/page1.md`
-` - docs/some-topic/`
-` - docs/some-topic/some-page-1.md`
-` - docs/some-topic/some-page-2.md`
+    ` - docs/`
+    ` - docs/page1.md`
+    ` - docs/some-topic/`
+    ` - docs/some-topic/some-page-1.md`
+    ` - docs/some-topic/some-page-2.md`
