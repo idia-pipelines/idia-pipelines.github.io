@@ -59,12 +59,36 @@
     
       
         
+      
+    
+      
+        
+          <li class="navigation-list-item">
+            
+            <a href="http://localhost:4000/docs/containers/" class="navigation-list-link">Singularity Containers</a>
+            
+          </li>
+        
+      
+    
+      
+        
           <li class="navigation-list-item active">
             
             <a href="http://localhost:4000/docs/processMeerKAT" class="navigation-list-link">processMeerKAT</a>
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/Quick-Start/" class="navigation-list-link">Quick Start</a>
+                      
+                    </li>
+                  
                 
                   
                 
@@ -99,11 +123,9 @@
                   
                 
                   
-                
-                  
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/Diagnosing-Errors/" class="navigation-list-link">Calibration in ProcessMeerKAT</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/Diagnosing-Errors/" class="navigation-list-link">Diagnosing Errors</a>
                       
                     </li>
                   
@@ -125,6 +147,12 @@
                   
                 
                   
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/SLURM-and-MPICASA/" class="navigation-list-link">SLURM and MPICASA</a>
+                      
+                    </li>
+                  
                 
               </ul>
             
@@ -133,16 +161,6 @@
       
     
       
-        
-      
-    
-      
-        
-          <li class="navigation-list-item">
-            
-            <a href="http://localhost:4000/docs/containers/" class="navigation-list-link">Singularity Containers</a>
-            
-          </li>
         
       
     
@@ -205,16 +223,56 @@
           
         
         <div id="main-content" class="page-content" role="main">
-          <p>This is the first release of the IDIA calibration pipeline. It currently does only cross-calibration (i.e., <em>a priori</em> calibration) and there are plans to include imaging and self-calibration in a future release.</p>
+          <h1 id="version-10">Version 1.0</h1>
 
-<p>By default, the pipeline executes a full band, full Stokes calibration using a multi-measurement set (MMS). The [[Use Cases|Example-Use-Cases]] web page describes other ways
-to use the pipeline.</p>
+<p>This is the first release of the IDIA Pipelines’ processsMeerKAT package, to be used on the ILIFU SLURM cluster. The software uses a parallelized implementation of CASA to calibrate interferometric (imaging) data from the MeerKAT telescope.</p>
+
+<p>The current release includes the following functionality:</p>
+
+<ul>
+  <li>The processMeerKAT.py script builds a config based on an input measurement set (MS).</li>
+  <li>The pipeline currently only does cross-calibration, or a’priori (1GC) calibration.</li>
+  <li>This includes parallelised flagging using FLAGDATA (tfcrop and rflag).</li>
+  <li>Flux bootstrapping, gain and bandpass calibration.</li>
+  <li>Full stokes calibration.</li>
+  <li>Quick imaging of the calibrators and science targets.</li>
+  <li>Diagnostic plots of the calibration tables.</li>
+</ul>
+
+<p>Please consult the documentation on <a href="https://idia-pipelines.github.io/">https://idia-pipelines.github.io/</a> for more information.</p>
 
 <h1 id="known-issues">Known Issues</h1>
 
 <ul>
-  <li><em>Broadband polarization :</em> CASA does not natively support solving broad-band polarizations, <em>i.e.,</em> it is not RM aware. The assumption is that the RM within a single spectral window (SPW) is constant, however the MeerKAT has only a single SPW that spans the entire bandwidth. We have identified workarounds (which is to split up the band into several SPWs), however presently the broadband polarization models do contain systematic errors.</li>
+  <li>
+    <p><strong>Broadband polarization :</strong> CASA does not natively support solving broad-band polarizations, <em>i.e.,</em> it is not RM aware. The assumption is that the RM within a single spectral window (SPW) is constant, however the MeerKAT has only a single SPW that spans the entire bandwidth. We have identified workarounds (which is to split up the band into several SPWs), however presently the broadband polarization models do contain systematic errors.</p>
+  </li>
+  <li>
+    <p>We recommend using the Test02 partition for the moment (set via the –partition option in processMeerKAT.py) due to ongoing issues in the Main SLURM partition.</p>
+  </li>
+  <li>
+    <p>Generating plots of the calibrated visibilities is very time consuming, often running to a few hours, However as this is the last step of the pipeline, the calibrated, split measurement sets should be ready for further analysis (imaging etc) while the plots are being generated. The speed of plotting is limited by how quickly <code class="highlighter-rouge">plotms</code> can generate the plots.</p>
+  </li>
+  <li>
+    <p><strong>Field IDs</strong>: The pipeline does not currently support specifying multiple fields for anything other than the targets.</p>
+  </li>
+  <li><strong>Threads</strong>:
+    <ul>
+      <li>We set the number of threads to half the number of scans + 1 (master) + 10%, so that for tasks reading the target or phasecal (since we partition by scans - i.e. the number of sub-MSs = the number of scans), the number of threads is approx the number of sub-MSs being read. For tasks reading only sub-MSs corresponding to other calibrators (e.g. bandpass), many threads will not be used</li>
+      <li>Similarly, we use a single memory value for all threadsafe tasks, and hardcode 100 GB for single thread tasks</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Empty rows in sub-MSs</strong>: Some tasks complain that no valid data were found in a sub-MS, but generally this doesn’t seem to affect the progress of the calibration/pipeline.</p>
+  </li>
+  <li><strong>Exit codes</strong>
+    <ul>
+      <li>Issue where some jobs fail in the queue that shouldn’t have, and others don’t fail when they should</li>
+      <li>Generally the pipeline continues even when dependencies legitimately fail</li>
+    </ul>
+  </li>
 </ul>
+
 
 
           

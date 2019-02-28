@@ -2,7 +2,7 @@
 layout: default
 title: DEEP 2 Tutorial
 parent: processMeerKAT
-nav_order: 5
+nav_order: 6
 ---
 
 # DEEP 2 Tutorial
@@ -542,17 +542,17 @@ This corresponds to the data split out from `1491550051.mms`, for the bandpass/f
 
 The last script that runs is `plot_solutions.py`, which calls CASA task `plotms` to plot the calibration solutions for the bandpass calibrator and the phase calibrator. This is the reason that `xvfb-run` is called, which runs a virtual X server to make use of the plotting libraries. Your plots should look like the following.
 
-![bpass_chan_amp](/assets/bpass_chan_amp.png)
-![bpass_chan_phase](/assets/bpass_chan_phase.png)
-![bpass_real_imag](/assets/bpass_real_imag.png)
-![phasecal_time_amp](/assets/phasecal_time_amp.png)
-![phasecal_time_phase](/assets/phasecal_time_phase.png)
+[[/assets/bpass_chan_amp.png]]
+[[/assets/bpass_chan_phase.png]]
+[[/assets/bpass_real_imag.png]]
+[[/assets/phasecal_time_amp.png]]
+[[/assets/phasecal_time_phase.png]]
 
 **That's it! You have completed the tutorial! Now go forth and do some phenomenal MeerKAT science!**
 
 ### Also see
 
-- [Calibration in processMeerKAT](../Calibration-in-processMeerKAT)
-- [Diagnosing Errors](../Diagnosing-Errors)
-- [Using the pipeline](../Using-the-pipeline)
+- [Calibration in processMeerKAT](Calibration-in-processMeerKAT)
+- [Diagnosing Errors](Diagnosing-Errors)
+- [Using the pipeline](Using-the-pipeline)
 

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   
 
-  <title>processMeerKAT - IDIA Pipelines</title>
+  <title>Quick Start - IDIA Pipelines</title>
   <link rel="stylesheet" href="http://localhost:4000/assets/css/just-the-docs.css">
   
   <script type="text/javascript" src="http://localhost:4000/assets/js/vendor/lunr.min.js"></script>
@@ -75,7 +75,7 @@
         
           <li class="navigation-list-item active">
             
-            <a href="http://localhost:4000/docs/processMeerKAT" class="navigation-list-link active">processMeerKAT</a>
+            <a href="http://localhost:4000/docs/processMeerKAT" class="navigation-list-link">processMeerKAT</a>
             
               
               <ul class="navigation-list-child-list ">
@@ -83,9 +83,9 @@
                   
                 
                   
-                    <li class="navigation-list-item ">
+                    <li class="navigation-list-item  active">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/Quick-Start/" class="navigation-list-link">Quick Start</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/Quick-Start/" class="navigation-list-link active">Quick Start</a>
                       
                     </li>
                   
@@ -212,111 +212,59 @@
       <div class="main-content js-main-content" tabindex="0">
         
           
+            <nav class="breadcrumb-nav">
+              <ol class="breadcrumb-nav-list">
+                
+                  <li class="breadcrumb-nav-list-item"><a href="http://localhost:4000/docs/processMeerKAT">processMeerKAT</a></li>
+                
+                <li class="breadcrumb-nav-list-item"><span>Quick Start</span></li>
+              </ol>
+            </nav>
+          
         
         <div id="main-content" class="page-content" role="main">
-          <p>The <code class="highlighter-rouge">processMeerKAT</code> software has been written to do calibration and imaging of MeerKAT
-interferometric data.</p>
+          <ol>
+  <li>
+    <p>In order to use the <code class="highlighter-rouge">processMeerKAT.py</code> script, source the <code class="highlighter-rouge">setup.sh</code> file:</p>
 
-<p>Typical calibration and imaging of radio data comprises three steps:</p>
-<ul>
-  <li>Initial or <em>a priori</em> calibration, which involves bootstrapping phase and flux gains from observations of
-reference calibrators.</li>
-  <li>Self-calibration or <em>a posteriori’</em> calibration, where the residual on-target errors are solved for
-by (iteratively) building a good representation of the field.</li>
-  <li>3rd Generation Calibration (3GC), aka post-selfcal, which deals with higher-order effects in the
-pursuit of high dynamic range imaging. This includes compensating for the primary beam and
-direction dependent effects.</li>
-</ul>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> source /data/exp_soft/pipelines/master/setup.sh
+</code></pre></div>    </div>
+  </li>
+</ol>
 
-<p>The <code class="highlighter-rouge">processMeerKAT</code> currently does full-polarisation <em>a priori</em> calibration on MeerKAT data, and includes automated
-flagging. <code class="highlighter-rouge">processMeerKAT</code> is written solely for the processing of data on IDIA’s SLURM cluster, but
-future revisions will allow you to run the software on any HPC platform.</p>
+<p>which will add the correct paths to your <code class="highlighter-rouge">$PATH</code> and <code class="highlighter-rouge">$PYTHONPATH</code> in order to correctly use the pipeline. We recommend you add this to your <code class="highlighter-rouge">~/.profile</code>, for future use.</p>
 
-<p>The main features of <code class="highlighter-rouge">processMeerKAT</code> are as follows:</p>
-<ul>
-  <li>Is written in Python 3.</li>
-  <li>Calibration algorithms only use CASA 5.4.X tasks and helper functions.
-** Uses a purpose-built CASA Singularity container for parallel processing at IDIA, i.e, is fully
-thread-safe.</li>
-  <li>Uses <code class="highlighter-rouge">MPICASA</code> to run parallel jobs over the cluster.</li>
-  <li>Generates <code class="highlighter-rouge">SBATCH</code> files and ancillary helper scripts for processing.</li>
-</ul>
+<ol>
+  <li>
+    <p>Build a config file, which defines several variables that are read by the pipeline while calibrating the data, as well as requesting resources on the cluster.</p>
 
-<p>Please read the documentation to learn how to use the pipeline for your imaging data at IDIA.</p>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> processMeerKAT.py -B -C myconfig.txt -M mydata.ms
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>The config file parameters are described by in-line comments in the config
+    file itself wherever possible.</p>
+
+<ol>
+  <li>
+    <p>To run the pipeline,</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> processMeerKAT.py -R -C myconfig.txt
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>This will create <code class="highlighter-rouge">submit_pipeline.sh</code>, which you can then run like <code class="highlighter-rouge">./submit_pipeline.sh</code> to submit all pipeline jobs to the SLURM queue.</p>
+
+<p>Other convenience scripts are also created that allow you to monitor and (if necessary) kill the jobs. <code class="highlighter-rouge">summary.sh</code> provides a brief overview of the status of the jobs in the pipeline, <code class="highlighter-rouge">findErrors.sh</code> checks the log files for commonly
+reported errors, and <code class="highlighter-rouge">killJobs.sh</code> kills all the jobs from the current run of the pipeline, ignoring any other jobs you might have running.</p>
+
+<p>For help, run <code class="highlighter-rouge">processMeerKAT.py -h</code>, which provides a brief description of all the command line arguments.</p>
+
+<p>The documentation can be accessed on the <a href="https://idia-pipelines.github.io/docs/processMeerKAT">pipelines website</a>, or on the <a href="https://github.com/idia-astro/pipelines/wiki">Github wiki</a>.</p>
 
 
-
-          
-          <hr>
-          <h2 class="text-delta">Table of contents</h2>
-          
-          <ul>
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-              <li>
-                <a href="http://localhost:4000/docs/processMeerKAT/Quick-Start/">Quick Start</a>
-              </li>
-              
-            
-              
-            
-              
-              <li>
-                <a href="http://localhost:4000/docs/processMeerKAT/Release-Notes/">Release Notes</a>
-              </li>
-              
-            
-              
-            
-              
-            
-              
-              <li>
-                <a href="http://localhost:4000/docs/processMeerKAT/Using-The-Pipeline/">Using the Pipeline</a>
-              </li>
-              
-            
-              
-            
-              
-              <li>
-                <a href="http://localhost:4000/docs/processMeerKAT/Example-Use-Cases/">Example Use Cases</a>
-              </li>
-              
-            
-              
-              <li>
-                <a href="http://localhost:4000/docs/processMeerKAT/Diagnosing-Errors/">Diagnosing Errors</a>
-              </li>
-              
-            
-              
-              <li>
-                <a href="http://localhost:4000/docs/processMeerKAT/DEEP-2-Tutorial/">DEEP 2 Tutorial</a>
-              </li>
-              
-            
-              
-              <li>
-                <a href="http://localhost:4000/docs/processMeerKAT/Calibration-in-processMeerKAT/">Calibration in ProcessMeerKAT</a>
-              </li>
-              
-            
-              
-              <li>
-                <a href="http://localhost:4000/docs/processMeerKAT/SLURM-and-MPICASA/">SLURM and MPICASA</a>
-              </li>
-              
-            
-          </ul>
           
         </div>
       </div>

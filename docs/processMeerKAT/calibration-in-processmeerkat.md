@@ -2,7 +2,7 @@
 layout: default
 title: Calibration in ProcessMeerKAT
 parent: processMeerKAT
-nav_order: 6
+nav_order: 7
 ---
 
 [[/assets/processMeerKAT.png]]

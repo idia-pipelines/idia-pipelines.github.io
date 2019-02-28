@@ -2,7 +2,7 @@
 layout: default
 title: Diagnosing Errors
 parent: processMeerKAT
-nav_order: 4
+nav_order: 5
 ---
 
 # Diagnosing Errors
