@@ -45,9 +45,88 @@
     
       
         
+      
+    
+      
+        
           <li class="navigation-list-item">
             
             <a href="http://localhost:4000/docs/access/" class="navigation-list-link">Access to IDIA Machines</a>
+            
+          </li>
+        
+      
+    
+      
+        
+          <li class="navigation-list-item active">
+            
+            <a href="http://localhost:4000/docs/processMeerKAT" class="navigation-list-link">processMeerKAT</a>
+            
+              
+              <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/Release-Notes/" class="navigation-list-link">Release Notes</a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item  active">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/Using-The-Pipeline/" class="navigation-list-link active">Using the Pipeline</a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/Example-Use-Cases/" class="navigation-list-link">Example Use Cases</a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/Diagnosing-Errors/" class="navigation-list-link">Calibration in ProcessMeerKAT</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/DEEP-2-Tutorial/" class="navigation-list-link">DEEP 2 Tutorial</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/Calibration-in-processMeerKAT/" class="navigation-list-link">Calibration in ProcessMeerKAT</a>
+                      
+                    </li>
+                  
+                
+                  
+                
+              </ul>
             
           </li>
         
@@ -73,50 +152,13 @@
     
       
         
-          <li class="navigation-list-item active">
-            
-            <a href="http://localhost:4000/docs/processMeerKAT" class="navigation-list-link">processMeerKAT</a>
-            
-              
-              <ul class="navigation-list-child-list ">
-                
-                  
-                
-                  
-                    <li class="navigation-list-item  active">
-                      
-                      <a href="http://localhost:4000/docs/processMeerKAT/using-the-pipeline/" class="navigation-list-link active">Using the Pipeline</a>
-                      
-                    </li>
-                  
-                
-                  
-                
-                  
-                
-                  
-                    <li class="navigation-list-item ">
-                      
-                      <a href="http://localhost:4000/docs/processMeerKAT/calibration-in-processmeerkat/" class="navigation-list-link">Calibration in ProcessMeerKAT</a>
-                      
-                    </li>
-                  
-                
-                  
-                
-                  
-                    <li class="navigation-list-item ">
-                      
-                      <a href="http://localhost:4000/docs/processMeerKAT/deep-2-tutorial/" class="navigation-list-link">DEEP 2 Tutorial</a>
-                      
-                    </li>
-                  
-                
-                  
-                
-              </ul>
-            
-          </li>
+      
+    
+      
+        
+      
+    
+      
         
       
     
@@ -163,16 +205,7 @@
           
         
         <div id="main-content" class="page-content" role="main">
-          <h2 id="introduction">Introduction</h2>
-
-<p>This repository contains scripts for pipeline processing of MeerKAT data. It is a work in progress,
-and so far, just runs the initial calibration steps.</p>
-
-<h3 id="requirements">Requirements</h3>
-
-<p>This pipeline is designed to run on the IDIA/Ilifu data intensive research facility, making use of SLURM and MPICASA. For other use, please contact the authors.</p>
-
-<h2 id="usage">Usage</h2>
+          <h2 id="usage">Usage</h2>
 
 <ul>
   <li>The usage can be seen by running
@@ -181,10 +214,10 @@ and so far, just runs the initial calibration steps.</p>
 
 <p>which gives</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>usage: /data/exp_soft/pipelines/processMeerKAT/processMeerKAT.py
-       [-h] [-M path] [-C path] [-N num] [-t num] [-p num] [-m num]
-       [-S script threadsafe container] [--mpi_wrapper path]
-       [--container path] [-c bogus] [-s] [-v] (-B | -R | -V)
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>usage: /data/exp_soft/pipelines/master/processMeerKAT/processMeerKAT.py
+       [-h] [-M path] [-C path] [-N num] [-t num] [-P num] [-m num] [-p name]
+       [-T time] [-S script threadsafe container] [-w path] [-c path]
+       [-n unique] [-l] [-s] [-v] (-B | -R | -V)
 
 Process MeerKAT data via CASA measurement set. Version: 1.0
 
@@ -193,73 +226,103 @@ optional arguments:
   -M path, --MS path    Path to measurement set.
   -C path, --config path
                         Path to config file.
-  -N num, --nodes num   Use this number of nodes [default: 15; max: 30].
+  -N num, --nodes num   Use this number of nodes [default: 8; max: 35].
   -t num, --ntasks-per-node num
-                        Use this number of tasks (per node) [default: 8; max:
+                        Use this number of tasks (per node) [default: 4; max:
                         128].
-  -p num, --plane num   Distribute tasks of this block size before moving onto
-                        next node [default: 4; max: ntasks-per-node].
-  -m num, --mem num     Use this many MB of memory (per node) [default: 98304;
-                        max: 235520 MB (230 GB).
+  -P num, --plane num   Distribute tasks of this block size before moving onto
+                        next node [default: 2; max: ntasks-per-node].
+  -m num, --mem num     Use this many GB of memory (per node) for threadsafe
+                        scripts [default: 236; max: 236].
+  -p name, --partition name
+                        SLURM partition to use [default: 'Main'].
+  -T time, --time time  Time limit to use for all jobs, in the form d-hh:mm:ss
+                        [default: '12:00:00'].
   -S script threadsafe container, --scripts script threadsafe container
                         Run pipeline with these scripts, in this order, using
-                        this container (3rd tuple value - empty string to
-                        default to [--container]). Is it threadsafe (2nd tuple
-                        value)?
-  --mpi_wrapper path    Use this mpi wrapper when calling scripts [default:
-                        '/data/exp_soft/pipelines/casa-
+                        this container (3rd value - empty string to default to
+                        [-c --container]). Is it threadsafe (2nd value)?
+  -w path, --mpi_wrapper path
+                        Use this mpi wrapper when calling threadsafe scripts
+                        [default: '/data/exp_soft/pipelines/casa-
                         prerelease-5.3.0-115.el7/bin/mpicasa'].
-  --container path      Use this container when calling scripts [default:
-                        '/data/exp_soft/pipelines/casameer-5.4.1.simg'].
-  -c bogus, --CASA bogus
-                        Bogus argument to swallow up CASA call.
+  -c path, --container path
+                        Use this container when calling scripts [default:
+                        '/data/exp_soft/pipelines/casameer-5.4.1.xvfb.simg'].
+  -n unique, --name unique
+                        Unique name to give this pipeline run (e.g. 'run1_'),
+                        appended to the start of all job names. [default: ''].
+  -l, --local           Build config file locally (i.e. without calling srun)
+                        [default: False].
   -s, --submit          Submit jobs immediately to SLURM queue [default:
                         False].
   -v, --verbose         Verbose output? [default: False].
-  -B, --build           Build default config file using input MS.
+  -B, --build           Build config file using input MS.
   -R, --run             Run pipeline with input config file.
-  -V, --version         Display the version.
+  -V, --version         Display the version of this pipeline and quit.
 </code></pre></div></div>
 
 <h3 id="simple-usage">Simple usage</h3>
 
 <ul>
-  <li>
-    <p>To get things working, source setup.sh, which will add to your PATH and PYTHONPATH
-<code class="highlighter-rouge">source /data/exp_soft/pipelines/processMeerKAT/pipelines/setup.sh</code></p>
-  </li>
-  <li>
-    <p>To print the version of the pipeline, run
-<code class="highlighter-rouge">processMeerKAT.py -V</code></p>
-  </li>
-  <li>
-    <p>To build a config file, which the pipeline reads as input for how to process the data, run
-<code class="highlighter-rouge">processMeerKAT.py -B -C myconfig.txt -M mydata.ms</code></p>
-  </li>
-  <li>To run the pipeline, run
-<code class="highlighter-rouge">processMeerKAT.py -R -C myconfig.txt</code></li>
-  <li>
-    <p>This will create <code class="highlighter-rouge">submit_pipeline.sh</code>, which you can then run to submit all pipeline jobs to a SLURM queue:
-      <code class="highlighter-rouge">./submit_pipeline.sh</code></p>
-  </li>
-  <li>
-    <p>Display a summary of the submitted jobs:
-<code class="highlighter-rouge">./summary.sh</code></p>
-  </li>
-  <li>
-    <p>Kill the submitted jobs: <code class="highlighter-rouge">./killJobs.sh</code></p>
-  </li>
-  <li>If the pipeline crashes, or reports an error, find the error(s) by running
-<code class="highlighter-rouge">./findErrors.sh</code></li>
+  <li>To get things working, source <code class="highlighter-rouge">setup.sh</code>, which will add to your <code class="highlighter-rouge">$PATH</code> and <code class="highlighter-rouge">$PYTHONPATH</code> (add this to your <code class="highlighter-rouge">~/.profile</code>, for future use)</li>
 </ul>
+
+<p><code class="highlighter-rouge">source /data/exp_soft/pipelines/master/setup.sh</code></p>
+
+<ul>
+  <li>To print the version of the pipeline, run</li>
+</ul>
+
+<p><code class="highlighter-rouge">processMeerKAT.py -V</code></p>
+
+<ul>
+  <li>To build a config file, which the pipeline reads as input for how to process the data, run</li>
+</ul>
+
+<p><code class="highlighter-rouge">processMeerKAT.py -B -C myconfig.txt -M mydata.ms</code></p>
+
+<ul>
+  <li>To run the pipeline, run</li>
+</ul>
+
+<p><code class="highlighter-rouge">processMeerKAT.py -R -C myconfig.txt</code></p>
+
+<p>This will create <code class="highlighter-rouge">submit_pipeline.sh</code>, which you can then run to submit all pipeline jobs to a SLURM queue:</p>
+
+<p><code class="highlighter-rouge">./submit_pipeline.sh</code></p>
+
+<ul>
+  <li>Display a summary of the submitted jobs</li>
+</ul>
+
+<p><code class="highlighter-rouge">./summary.sh</code></p>
+
+<ul>
+  <li>Kill the submitted jobs</li>
+</ul>
+
+<p><code class="highlighter-rouge">./killJobs.sh</code></p>
+
+<ul>
+  <li>If the pipeline crashes, or reports an error, find the error(s) by running (after the pipeline has run)</li>
+</ul>
+
+<p><code class="highlighter-rouge">./findErrors.sh</code></p>
+
+<ul>
+  <li>Once the pipeline has completed, display the start and end times of each job by running</li>
+</ul>
+
+<p><code class="highlighter-rouge">./displayTimes.sh</code></p>
 
 <h3 id="detailed-usage">Detailed usage</h3>
 
 <ul>
-  <li>Build config file using custom SLURM configuration</li>
+  <li>Build config file locally (e.g. on a fat node) using a custom SLURM configuration (nodes and tasks per node may be overwritten in your config file with something more appropriate by the end of the build step)</li>
 </ul>
 
-<p><code class="highlighter-rouge">processMeerKAT.py -B -C myconfig.txt -M mydata.ms -N 10 -t 32 -p 8 -m 131072</code></p>
+<p><code class="highlighter-rouge">processMeerKAT.py -l -B -C myconfig.txt -M mydata.ms -p Test02 -N 10 -t 8 -P 4 -m 100 -T 06:00:00 -n mydata_</code></p>
 
 <ul>
   <li>Build config file using different MPI wrapper and container</li>
@@ -271,54 +334,62 @@ optional arguments:
   <li>Build config file with different set of (python) scripts</li>
 </ul>
 
-<p><code class="highlighter-rouge">processMeerKAT.py -B -C myconfig.txt -S /absolute/path/to/my/script.py False /absolute/path/to/container.simg -S partition.py True '' -S relative/path/to/my/script.py True relative/path/to/container.simg -S flag_round_1.py True '' -S script_in_bash_PATH.py False container_in_bash_path.simg run_setjy.py True ''</code></p>
+<p><code class="highlighter-rouge">processMeerKAT.py -B -C myconfig.txt -S /absolute/path/to/my/script.py False /absolute/path/to/container.simg -S partition.py True '' -S relative/path/to/my/script.py True relative/path/to/container.simg -S flag_round_1.py True '' -S script_in_bash_PATH.py False container_in_bash_PATH.simg run_setjy.py True ''</code></p>
 
 <ul>
   <li>Run the pipeline immediately in verbose mode</li>
 </ul>
 
-<p><code class="highlighter-rouge">processMeerKAT.py -R -v -s --config myconfig.txt</code></p>
+<p><code class="highlighter-rouge">processMeerKAT.py -R -v -s -C myconfig.txt</code></p>
 
-<p><strong>NOTE:</strong> All other command-line arguments passed into <code class="highlighter-rouge">processMeerKAT.py</code> when using option <code class="highlighter-rouge">[-R --run]</code> will have no effect, since the arguments are read from the config file at this point. Only options <code class="highlighter-rouge">[-v --verbose]</code>, <code class="highlighter-rouge">[-s --submit]</code> and <code class="highlighter-rouge">[-C --config]</code> will have any effect at this point. If option <code class="highlighter-rouge">[-v --verbose]</code> is used, it will overwrite the value of <code class="highlighter-rouge">verbose</code> in your config file.</p>
+<p><strong>NOTE:</strong> All other command-line arguments passed into <code class="highlighter-rouge">processMeerKAT.py</code> when using option <code class="highlighter-rouge">[-R --run]</code> will have no effect, since the arguments are read from the config file at this point. Only options <code class="highlighter-rouge">[-v --verbose]</code> and <code class="highlighter-rouge">[-C --config]</code> will have any effect at this point.</p>
 
 <h2 id="config-files">Config files</h2>
 
 <p>The config file is where you set parameters affecting how you run the pipeline. The default config contains the following</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[crosscal]
-minbaselines = 4        # Minimum number of baseline while calibrating
-specave = 1             # Number of chans to avg after calibration
-timeave = '8s'          # Time interval to avg after calibration
-spw = '0:860~1700MHz'   # spw to use for calibration
-calcrefant = True       # Calculate reference antenna in program (overwrites 'refant')
-refant = 'm005'         # Reference antenna name/number
-badfreqranges = ['944~947MHz', '1160~1310MHz', '1476~1611MHz', '1670~1700MHz']
-standard = 'Perley-Butler 2010'  # Flux density standard for setjy
+minbaselines = 4                  # Minimum number of baselines to use while calibrating
+specavg = 1                       # Number of channels to average after calibration (during split)
+timeavg = '8s'                    # Time interval to average after calibration (during split)
+spw = '0:860~1700MHz'             # Spectral window / frequencies to extract for MMS
+calcrefant = True                 # Calculate reference antenna in program (overwrites 'refant')
+refant = 'm005'                   # Reference antenna name / number
+standard = 'Perley-Butler 2010'   # Flux density standard for setjy
+badants = []                      # List of bad antenna numbers (to flag)
+badfreqranges = [ '944~947MHz',   # List of bad frequency ranges (to flag)
+                  '1160~1310MHz',
+                  '1476~1611MHz',
+                  '1670~1700MHz']
 
-[slurm]                 #See processMeerKAT.py -h for documentation
-nodes = 15
-ntasks_per_node = 8
-cpus_per_task = 3
-mem = 98304
-plane = 4
+[slurm]                           # See processMeerKAT.py -h for documentation
+nodes = 8
+ntasks_per_node = 4
+plane = 2
+mem = 236                         # Use this many GB of memory (per node)
+partition = 'Main'                # SLURM partition to use
+time = '12:00:00'
 submit = False
-container = '/data/exp_soft/pipelines/casameer-5.4.1.simg'
+container = '/data/exp_soft/pipelines/casameer-5.4.1.xvfb.simg'
 mpi_wrapper = '/data/exp_soft/pipelines/casa-prerelease-5.3.0-115.el7/bin/mpicasa'
 verbose = False
 scripts = [ ('validate_input.py',False,''),
             ('partition.py',True,''),
+            ('calc_refant.py',False,''),
             ('flag_round_1.py',True,''),
-            ('run_setjy.py',True,''),
-            ('parallel_cal.py',False,''),
-            ('parallel_cal_apply.py',True,''),
+            ('setjy.py',True,''),
+            ('xx_yy_solve.py',False,''),
+            ('xx_yy_apply.py',True,''),
             ('flag_round_2.py',True,''),
-            ('run_setjy.py',True,''),
-            ('cross_cal.py',False,''),
-            ('cross_cal_apply.py',True,''),
-            ('split.py',True,'')]
+            ('setjy.py',True,''),
+            ('xy_yx_solve.py',False,''),
+            ('xy_yx_apply.py',True,''),
+            ('split.py',True,''),
+            ('plot_solutions.py',False,''),
+            ('quick_tclean.py',True,'')]
 </code></pre></div></div>
 
-<p>When the pipeline is run, the contents of your config file are copied to <code class="highlighter-rouge">.config.tmp</code> and each python script reads the parameters from this file as it is run. This way, the user cannot easily break the pipeline during the time it is running. This also means changing your config file will have no effect unless you once again run <code class="highlighter-rouge">processMeerKAT.py -R</code>.</p>
+<p>When the pipeline is run, the contents of your config file are copied to <code class="highlighter-rouge">.config.tmp</code> and each python script reads the parameters from this file as it is run. This way, the user cannot easily break the pipeline during the time it is running. This also means changing the [slurm] section in your config file will have no effect unless you once again run <code class="highlighter-rouge">processMeerKAT.py -R</code>.</p>
 
 <h2 id="selecting-ms-and-fields-ids">Selecting MS and fields IDs</h2>
 
@@ -326,7 +397,7 @@ scripts = [ ('validate_input.py',False,''),
 
 <p><code class="highlighter-rouge">processMeerKAT.py -B -C myconfig.txt -M mydata.ms</code></p>
 
-<p>This calls CASA and adds a <code class="highlighter-rouge">[data]</code> section to your config file, which points to your MS, and a <code class="highlighter-rouge">[fields]</code> section, which points to the field IDs you want to process as bandpass, total flux and phase calibrators, and science target. Any of these may have multiple fields separated by a comma.</p>
+<p>This calls CASA and adds a <code class="highlighter-rouge">[data]</code> section to your config file, which points to your MS, and a <code class="highlighter-rouge">[fields]</code> section, which points to the field IDs you want to process as bandpass, total flux and phase calibrators, and science target(s). Only targets may have multiple fields separated by a comma, and all extra calibrator fields are appended as “targets”, to allow for solutions to be applied to them, and images to be made of them (see [[Release-Notes:-V1.0]]).</p>
 
 <p>The following is an example of what is appended to the bottom of your config file.</p>
 
@@ -340,19 +411,21 @@ phasecalfield = '1'
 targetfields = '2'
 </code></pre></div></div>
 
-<p>You can edit your config file and change the field IDs, such as removing unwanted IDs where multiple exist.</p>
+<p>You can edit your config file and change the field IDs.</p>
 
 <h2 id="inserting-your-own-scripts">Inserting your own scripts</h2>
 
-<p>Our design allows the user to insert their own scripts into the pipeline, along with or instead of our own scripts. All scripts are assumed to be in python, with extension <code class="highlighter-rouge">.py</code>. To insert your own scripts, either build a config file and edit the <code class="highlighter-rouge">scripts</code> argument to contain your list of scripts, or pass your scripts via command line during building your config file. For each script that is added, three arguments are needed</p>
+<p>Our design allows the user to insert their own scripts into the pipeline, along with or instead of our own scripts. All scripts are assumed to be written in python, with extension <code class="highlighter-rouge">.py</code>. They must either have hard-coded values for input such as the MS name, or be able to read the config file and extract the values (e.g. as in the main() function of most of our scripts).</p>
+
+<p>To insert your own scripts, either build a config file and edit the <code class="highlighter-rouge">scripts</code> argument to contain your list of scripts, or pass your scripts via command line during building your config file. For each script that is added, three arguments are needed</p>
 
 <ol>
   <li>The path to the script</li>
-  <li>Whether the script is threadsafe (for MPI - e.g. it uses mpicasa)</li>
+  <li>Whether the script is threadsafe (for MPI - i.e. it can use mpicasa)</li>
   <li>The path to the container with which to call the script - use ‘ ‘ for the default container</li>
 </ol>
 
-<p>The path to the scripts (and containers) can be an absolute path, a relative path, or in your bash path. If none of these exist, the script (or container) is assumed to be in the calibration scripts directory (<code class="highlighter-rouge">/data/exp_soft/pipelines/processMeerKAT/pipelines/processMeerKAT/cal_scripts/</code>). Hence simply using <code class="highlighter-rouge">partition.py</code> will call the partition script in the calibration scripts directory.</p>
+<p>The path to the scripts (and containers) can be an absolute path, a relative path, or in your bash path. If none of these exist, the script (or container) is assumed to be in the calibration scripts directory (<code class="highlighter-rouge">/data/exp_soft/pipelines/master/processMeerKAT/cal_scripts/</code>). Hence simply using <code class="highlighter-rouge">partition.py</code> will call the partition script in the calibration scripts directory.</p>
 
 <h4 id="adding-scripts-to-config-file">Adding scripts to config file</h4>
 
@@ -360,16 +433,11 @@ targetfields = '2'
 
 <h4 id="adding-scripts-via-command-line">Adding scripts via command line</h4>
 
-<p>Build a config file pointing to your scripts, each time appending the same three arguments (listed
-above):</p>
+<p>Build a config file pointing to your scripts, each time appending the same three arguments (listed above):</p>
 
-<p><code class="highlighter-rouge">processMeerKAT.py -B -C myconfig.txt -S /absolute/path/to/my/script.py False
-/absolute/path/to/container.simg -S partition.py True '' -S relative/path/to/my/script.py True
-relative/path/to/container.simg -S flag_round_1.py True '' -S script_in_bash_PATH.py False
-container_in_bash_path.simg run_setjy.py True ''</code></p>
+<p><code class="highlighter-rouge">processMeerKAT.py -B -C myconfig.txt -S /absolute/path/to/my/script.py False /absolute/path/to/container.simg -S partition.py True '' -S relative/path/to/my/script.py True relative/path/to/container.simg -S flag_round_1.py True '' -S script_in_bash_PATH.py False container_in_bash_path.simg run_setjy.py True ''</code></p>
 
 <p>An error will be raised if any of the scripts or containers aren’t found.</p>
-
 
 
           

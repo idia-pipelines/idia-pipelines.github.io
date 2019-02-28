@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   
 
-  <title>processMeerKAT - IDIA Pipelines</title>
+  <title>Diagnosing Errors - IDIA Pipelines</title>
   <link rel="stylesheet" href="http://localhost:4000/assets/css/just-the-docs.css">
   
   <script type="text/javascript" src="http://localhost:4000/assets/js/vendor/lunr.min.js"></script>
@@ -45,6 +45,10 @@
     
       
         
+      
+    
+      
+        
           <li class="navigation-list-item">
             
             <a href="http://localhost:4000/docs/access/" class="navigation-list-link">Access to IDIA Machines</a>
@@ -55,16 +59,22 @@
     
       
         
-      
-    
-      
-        
           <li class="navigation-list-item active">
             
-            <a href="http://localhost:4000/docs/processMeerKAT" class="navigation-list-link active">processMeerKAT</a>
+            <a href="http://localhost:4000/docs/processMeerKAT" class="navigation-list-link">processMeerKAT</a>
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/Release-Notes/" class="navigation-list-link">Release Notes</a>
+                      
+                    </li>
+                  
                 
                   
                 
@@ -83,11 +93,19 @@
                   
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/Calibration-in-processMeerKAT/" class="navigation-list-link">Calibration in ProcessMeerKAT</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/Example-Use-Cases/" class="navigation-list-link">Example Use Cases</a>
                       
                     </li>
                   
                 
+                  
+                
+                  
+                    <li class="navigation-list-item  active">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/Diagnosing-Errors/" class="navigation-list-link active">Diagnosing Errors</a>
+                      
+                    </li>
                   
                 
                   
@@ -99,11 +117,9 @@
                   
                 
                   
-                
-                  
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/Example-Use-Cases/" class="navigation-list-link">Example Use Cases</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/Calibration-in-processMeerKAT/" class="navigation-list-link">Calibration in ProcessMeerKAT</a>
                       
                     </li>
                   
@@ -111,15 +127,7 @@
                   
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/Release-Notes/" class="navigation-list-link">Release Notes</a>
-                      
-                    </li>
-                  
-                
-                  
-                    <li class="navigation-list-item ">
-                      
-                      <a href="http://localhost:4000/docs/processMeerKAT/Diagnosing-Errors/" class="navigation-list-link">Calibration in ProcessMeerKAT</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/SLURM-and-MPICASA/" class="navigation-list-link">SLURM and MPICASA</a>
                       
                     </li>
                   
@@ -141,6 +149,10 @@
             <a href="http://localhost:4000/docs/containers/" class="navigation-list-link">Singularity Containers</a>
             
           </li>
+        
+      
+    
+      
         
       
     
@@ -188,99 +200,72 @@
       <div class="main-content js-main-content" tabindex="0">
         
           
+            <nav class="breadcrumb-nav">
+              <ol class="breadcrumb-nav-list">
+                
+                  <li class="breadcrumb-nav-list-item"><a href="http://localhost:4000/docs/processMeerKAT">processMeerKAT</a></li>
+                
+                <li class="breadcrumb-nav-list-item"><span>Diagnosing Errors</span></li>
+              </ol>
+            </nav>
+          
         
         <div id="main-content" class="page-content" role="main">
-          <p>The <code class="highlighter-rouge">processMeerKAT</code> software has been written to do calibration and imaging of MeerKAT
-interferometric data.</p>
+          <h1 id="diagnosing-errors">Diagnosing Errors</h1>
 
-<p>Typical calibration and imaging of radio data comprises three steps:</p>
-<ul>
-  <li>Initial or <em>a priori</em> calibration, which involves bootstrapping phase and flux gains from observations of
-reference calibrators.</li>
-  <li>Self-calibration or <em>a posteriori’</em> calibration, where the residual on-target errors are solved for
-by (iteratively) building a good representation of the field.</li>
-  <li>3rd Generation Calibration (3GC), aka post-selfcal, which deals with higher-order effects in the
-pursuit of high dynamic range imaging. This includes compensating for the primary beam and
-direction dependent effects.</li>
-</ul>
+<p>This is a list of <em>potential</em> issues that could arise while running the pipeline, which are typically associated with runtime errors, which could be due to issues with the cluster (e.g., worker-node failure during your job) or job parameterisation (e.g., underestimating RAM required).</p>
 
-<p>The <code class="highlighter-rouge">processMeerKAT</code> currently does full-polarisation <em>a priori</em> calibration on MeerKAT data, and includes automated
-flagging. <code class="highlighter-rouge">processMeerKAT</code> is written solely for the processing of data on IDIA’s SLURM cluster, but
-future revisions will allow you to run the software on any HPC platform.</p>
+<p>This page is, by no means, exhaustive, and will be updated as more issues are reported.</p>
 
-<p>The main features of <code class="highlighter-rouge">processMeerKAT</code> are as follows:</p>
-<ul>
-  <li>Is written in Python 3.</li>
-  <li>Calibration algorithms only use CASA 5.4.X tasks and helper functions. 
-** Uses a purpose-built CASA Singularity container for parallel processing at IDIA, i.e, is fully
-thread-safe.</li>
-  <li>Uses <code class="highlighter-rouge">MPICASA</code> to run parallel jobs over the cluster.</li>
-  <li>Generates <code class="highlighter-rouge">SBATCH</code> files and ancillary helper scripts for processing.</li>
-</ul>
+<p>We note here that although the pipeline is constructed to have job dependencies, <em>i.e.,</em> if one job fails, all the subsequent jobs are meant to be cancelled, this does not always work. We find that there are several cases where CASA will crash, and SLURM does not recognise that the job has terminated and will continue to execute the other jobs in the pipeline. We suspect that this is due to a difference in error handling between SLURM and CASA. Please keep a watch on the status of your jobs using the <code class="highlighter-rouge">./summary.sh</code> script, as well as the log files created to make sure that the pipeline is proceeding correctly.</p>
 
-<p>Please read the documentation to learn how to use the pipeline for your imaging data at IDIA.</p>
+<h3 id="orte-error">ORTE error</h3>
+
+<p>An error of the form</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  --------------------------------------------------------------------------
+
+  ORTE has lost communication with its daemon located on node:
 
 
+   hostname:  slwrk-067
 
-          
-          <hr>
-          <h2 class="text-delta">Table of contents</h2>
-          
-          <ul>
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-              <li>
-                <a href="http://localhost:4000/docs/processMeerKAT/Using-The-Pipeline/">Using the Pipeline</a>
-              </li>
-              
-            
-              
-            
-              
-              <li>
-                <a href="http://localhost:4000/docs/processMeerKAT/Calibration-in-processMeerKAT/">Calibration in ProcessMeerKAT</a>
-              </li>
-              
-            
-              
-            
-              
-              <li>
-                <a href="http://localhost:4000/docs/processMeerKAT/DEEP-2-Tutorial/">DEEP 2 Tutorial</a>
-              </li>
-              
-            
-              
-            
-              
-            
-              
-              <li>
-                <a href="http://localhost:4000/docs/processMeerKAT/Example-Use-Cases/">Example Use Cases</a>
-              </li>
-              
-            
-              
-              <li>
-                <a href="http://localhost:4000/docs/processMeerKAT/Release-Notes/">Release Notes</a>
-              </li>
-              
-            
-              
-              <li>
-                <a href="http://localhost:4000/docs/processMeerKAT/Diagnosing-Errors/">Calibration in ProcessMeerKAT</a>
-              </li>
-              
-            
-          </ul>
+
+  This is usually due to either a failure of the TCP network
+
+  connection to the node, or possibly an internal failure of
+
+  the daemon itself. We cannot recover from this failure, and
+
+  therefore will terminate the job.
+
+
+  --------------------------------------------------------------------------
+
+  --------------------------------------------------------------------------
+
+  An ORTE daemon has unexpectedly failed after launch and before
+
+  communicating back to mpirun. This could be caused by a number
+
+  of factors, including an inability to create a connection back
+
+  to mpirun due to a lack of common network interfaces and/or no
+
+  route found between them. Please check network connectivity
+
+  (including firewalls and network routing requirements).
+
+  --------------------------------------------------------------------------
+</code></pre></div></div>
+
+<p>where <code class="highlighter-rouge">slwrk-067</code> can be any of the SLURM worker nodes, typically means that there was a communication/network error between the SLURM head node and the worker node. Please report this issue to the ILIFU support team at support@ilifu.ac.za. This is indicative of an underlying hardware issue, rather than a software problem.</p>
+
+<h3 id="unable-to-launch-jobs-in-slurm">Unable to launch jobs in SLURM</h3>
+
+<p>If the status of your job is <code class="highlighter-rouge">(launch failed requeued held)</code>, please file a ticket with support@ilifu.ac.za.</p>
+
+
           
         </div>
       </div>

@@ -45,9 +45,94 @@
     
       
         
+      
+    
+      
+        
           <li class="navigation-list-item">
             
             <a href="http://localhost:4000/docs/access/" class="navigation-list-link">Access to IDIA Machines</a>
+            
+          </li>
+        
+      
+    
+      
+        
+          <li class="navigation-list-item active">
+            
+            <a href="http://localhost:4000/docs/processMeerKAT" class="navigation-list-link">processMeerKAT</a>
+            
+              
+              <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/Release-Notes/" class="navigation-list-link">Release Notes</a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/Using-The-Pipeline/" class="navigation-list-link">Using the Pipeline</a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/Example-Use-Cases/" class="navigation-list-link">Example Use Cases</a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/Diagnosing-Errors/" class="navigation-list-link">Diagnosing Errors</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/DEEP-2-Tutorial/" class="navigation-list-link">DEEP 2 Tutorial</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item  active">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/Calibration-in-processMeerKAT/" class="navigation-list-link active">Calibration in ProcessMeerKAT</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/SLURM-and-MPICASA/" class="navigation-list-link">SLURM and MPICASA</a>
+                      
+                    </li>
+                  
+                
+              </ul>
             
           </li>
         
@@ -73,50 +158,13 @@
     
       
         
-          <li class="navigation-list-item active">
-            
-            <a href="http://localhost:4000/docs/processMeerKAT" class="navigation-list-link">processMeerKAT</a>
-            
-              
-              <ul class="navigation-list-child-list ">
-                
-                  
-                
-                  
-                    <li class="navigation-list-item ">
-                      
-                      <a href="http://localhost:4000/docs/processMeerKAT/using-the-pipeline/" class="navigation-list-link">Using the Pipeline</a>
-                      
-                    </li>
-                  
-                
-                  
-                
-                  
-                
-                  
-                    <li class="navigation-list-item  active">
-                      
-                      <a href="http://localhost:4000/docs/processMeerKAT/calibration-in-processmeerkat/" class="navigation-list-link active">Calibration in ProcessMeerKAT</a>
-                      
-                    </li>
-                  
-                
-                  
-                
-                  
-                    <li class="navigation-list-item ">
-                      
-                      <a href="http://localhost:4000/docs/processMeerKAT/deep-2-tutorial/" class="navigation-list-link">DEEP 2 Tutorial</a>
-                      
-                    </li>
-                  
-                
-                  
-                
-              </ul>
-            
-          </li>
+      
+    
+      
+        
+      
+    
+      
         
       
     
@@ -163,58 +211,146 @@
           
         
         <div id="main-content" class="page-content" role="main">
-          <p>processMeerKAT implements a CASA based wide-band full Stokes calibration pipeline (in the linear
-basis). Broadly, the pipeline aims to “do the right thing” and by keeping the steps as general as
-possible we believe that there should be no need for fine tuning in order to obtain a well
-calibrated data set. The pipeline is implemented as a series of SLURM <code class="highlighter-rouge">sbatch</code> scripts that in turn
-call CASA scripts. The scripts are separated out to make optimal use of MPI, by splitting out
-sections that can be run in parallel (via <code class="highlighter-rouge">mpicasa</code> and SLURM) and sections that do not take
-advantage of parallel architectures.</p>
+          <p>[[/assets/processMeerKAT.png]]</p>
 
-<p>The logical steps are :</p>
+<p>processMeerKAT implements a CASA based wide-band full Stokes calibration
+pipeline (in the linear basis). Broadly, the pipeline aims to “do the right
+thing” and by keeping the steps as general as possible we believe that there
+should be no need for fine tuning in order to obtain a well calibrated dataset.
+The pipeline is implemented as a series of SLURM <code class="highlighter-rouge">sbatch</code> scripts that in turn
+call CASA scripts. The scripts are separated out to make optimal use of MPI, by
+splitting out sections that can be run in parallel (via <code class="highlighter-rouge">mpicasa</code> and SLURM) and
+sections that do not take advantage of parallel architectures.</p>
 
-<p><strong>Input validation</strong> : This script does a few basic data validity checks, that is to verify that the
-input MS exists, and whether the reference antenna should be calculated internally. If reference
-antenna calculation is specified, the script iteratively calls the <code class="highlighter-rouge">visstat</code> task on each antenna,
-and checks for the antenna with the smallest standard deviation value. During this process, antennas
-which are outliers to the distribution are identified and listed in the config file for future
-flagging. If reference antenna calculation is not requested, a simple check is performed to verify
-that the input reference antenna exists in the MS.</p>
+<p>The logical steps are:</p>
 
-<p><strong>Data partition</strong> : The input measurement set (MS) is partitioned into a <a href="https://casa.nrao.edu/casadocs/casa-5-1.2/uv-manipulation/data-partition">multi-measurement set
-(MMS)</a> using the CASA task
-<code class="highlighter-rouge">partition</code>. This task splits up the main MS into smaller SUBMSs that are individual units of a
-larger logical MMS. The number of SUBMSs created are equal to the number of scans in the input MS.
-Partitioning the data in this manner allows for more efficient use of computation while using MPI,
+<p><strong>Input validation</strong> : This script performs a few basic validity checks, on the
+default config file, and on the input MS. the existence of the input MS, and the
+data types of the inputs specified in the config file are all verified before
+the pipeline continues to the next steps. If reference antenna calculation is
+not requested, a simple check is performed to verify that the input reference
+antenna exists in the MS. Otherwise, the following paragraph describes the
+details of reference antenna calculation.</p>
+
+<p><strong>Reference antenna calculation</strong> : If the <code class="highlighter-rouge">calcrefant</code> parameter in the config
+file is set to <code class="highlighter-rouge">True</code>, then this script is executed. The algorithm works by
+calculating the median and standard deviation over all the visibility amplitudes
+for a given antenna, and iterates over every antenna in the array. Any outlier
+antennas, in the top 2 and bottom 5 percentile of this distribution are then
+flagged. The reference antenna is selected to be the un-flagged antenna with the
+smallest visibility rms.</p>
+
+<p><strong>Data partition</strong> : The input measurement set (MS) is partitioned into
+a <a href="https://casa.nrao.edu/casadocs/casa-5-1.2/uv-manipulation/data-partition">multi-measurement set
+(MMS)</a>
+using the CASA task <code class="highlighter-rouge">partition</code>. This task splits up the main MS into smaller
+SUBMSs that are individual units of a larger logical MMS. The number of SUBMSs
+created are equal to the number of scans in the input MS. Partitioning the data
+in this manner allows for more efficient use of computation while using MPI,
 since each SUBMS can be independently operated on by different MPI workers.</p>
 
-<p><strong>Flagging (round 1)</strong> : The first of two rounds of pre-calibration flagging. If <code class="highlighter-rouge">badfreqranges</code> and
-<code class="highlighter-rouge">badants</code> are specified in the config file, they are flagged. These lists are also allowed to be
-empty. Following that the data are clipped at the level of 50 Jy to eliminate the strongest RFI and
-the <code class="highlighter-rouge">tfcrop</code> algorithm is run independently on the primary and secondary calibrators and the
+<p><strong>Flagging (round 1)</strong> : The first of two rounds of pre-calibration flagging. If
+<code class="highlighter-rouge">badfreqranges</code> and <code class="highlighter-rouge">badants</code> are specified in the config file, they are
+flagged. These lists are also allowed to be empty. Following that the data are
+clipped at the level of 50 Jy to eliminate the strongest RFI and the <code class="highlighter-rouge">tfcrop</code>
+algorithm is run independently on the primary and secondary calibrators and the
 target(s).</p>
 
-<p><strong>Flux scaling</strong> : The <code class="highlighter-rouge">setjy</code> task is run on the specified primary calibrators - this step is run
-once each before the first and second rounds of calibration.</p>
+<p><strong>setjy</strong> : The <code class="highlighter-rouge">setjy</code> task is run on the specified primary calibrators - this
+step is run once each before the first and second rounds of calibration.</p>
 
-<p><strong>Parallel hand calibration</strong> : Standard delay, bandpass and gain calibration is run on the data, in
-order to obtain better statistics for a second round of flagging.</p>
+<p><strong>Parallel hand calibration</strong> : Standard delay, bandpass and gain calibration is
+run on the data, in order to obtain better statistics for a second round of
+flagging.</p>
 
-<p><strong>Flagging (round 2)</strong> : Similar to the first round, the <code class="highlighter-rouge">tfcrop</code> algorithm is run independently on
-the primary and secondary calibrator and the target(s). The thresholds are lower than the first
-round as the algorithm is now operating on calibrated data.</p>
+<p><strong>Flagging (round 2)</strong> : Similar to the first round, the <code class="highlighter-rouge">tfcrop</code> algorithm is
+run independently on the primary and secondary calibrator and the target(s). The
+thresholds are lower than the first round as the algorithm is now operating on
+calibrated data.</p>
 
-<p><strong>Cross hand calibration</strong> : The cross hand calibration recipe broadly follows the CASA guide for
-<a href="https://casa.nrao.edu/casadocs/casa-5-1.2/synthesis-calibration/instrumental-polarization-calibration">polarisation calibration in the linear
+<p><strong>Cross hand calibration</strong> : The cross hand calibration recipe broadly follows
+the CASA guide for <a href="https://casa.nrao.edu/casadocs/casa-5-1.2/synthesis-calibration/instrumental-polarization-calibration">polarisation calibration in the linear
 basis</a>.
-The previous round of calibration is cleared, and a new set of bandpass, delay and parallel hand
-gains are computed. Using the CASA helper routine <code class="highlighter-rouge">qufromgain</code>, the Q and U values of the secondary
-calibrator are computed, and are then used to solve for the frequency dependent leakages and XY
-calibration (<em>i.e.,</em> “Dflls” and “XYf” calibration in <code class="highlighter-rouge">polcal</code>).</p>
+The previous round of calibration is cleared, and a new set of bandpass, delay
+and parallel hand gains are computed. Using the CASA helper routine
+<code class="highlighter-rouge">qufromgain</code>, the Q and U values of the secondary calibrator are computed, and
+are then used to solve for the frequency dependent leakages and XY calibration
+(<em>i.e.,</em> “Dflls” and “XYf” calibration in <code class="highlighter-rouge">polcal</code>). The fluxes are then
+bootstrapped from the primary calibrator to the other fields specified in the
+config file. If the same source is specified as both the flux and secondary
+calibrator, no bootstrapping is performed as the time-dependent gain solutions
+should be correctly scaled to the fluxes specified in <code class="highlighter-rouge">setjy</code>.</p>
 
-<p><strong>Splitting out calibrated data</strong> : Finally the calibrated data are averaged down in time and
-frequency by the amount specified in the config file, and the target(s) and secondary calibrator are
-split out into separate MMSs for further imaging/processing.</p>
+<p><strong>Splitting out calibrated data</strong> : Finally the calibrated data are averaged
+down in time and frequency by the amount specified in the config file, and the
+target(s) and calibrators are split out into separate MMSs for further
+imaging/processing.</p>
+
+<hr />
+
+<h3 id="detailed-description">Detailed description</h3>
+
+<p>What follows is a more detailed description of each of the steps described
+above, where applicable.</p>
+
+<p><strong>Flagging (round 1)</strong> : If a list of bad frequency ranges and bad antennas is
+specified, those are flagged. Further, any autocorrelations are also flagged
+using <code class="highlighter-rouge">mode='manual'</code> and <code class="highlighter-rouge">autocorr=True</code> in the <code class="highlighter-rouge">flagdata</code> parameters.
+Subsequently, <code class="highlighter-rouge">flagdata</code> is called on the calibrators and target sources with
+conservative limits to clip out the worst RFI. It also makes a single call to
+<code class="highlighter-rouge">tfcrop</code> to flag data at a 6 $\sigma$ limit. <code class="highlighter-rouge">tfcrop</code> in this case is preferred,
+since the as yet uncalibrated bandpass shape should be taken care of by fitting
+a piecewise polynomial across the band.</p>
+
+<p><strong>setjy</strong> : By default, the ‘Perley-Butler 2010’ flux scale is used, since it is
+the only one which contains the popular southern calibrator PKS B1934-638. In
+case the calibrator J0408-6545 is present in the data, it is preferred.
+A broadband Stokes I model for J0408-6545 is used, via the <code class="highlighter-rouge">manual</code> mode of
+<code class="highlighter-rouge">setjy</code>.</p>
+
+<p><strong>Cross hand calibration</strong> : The full Stokes calibration procedure is done
+across as much of the SPW as is requested in the config file. In the default
+case, the entire SPW (spanning ~ 800 MHz) is calibrated across. The caveat here
+is that CASA does not support a true wideband, full polarization calibration.
+For example the Stokes Q and U values of a source with non-zero RM across the
+band will not be correctly accounted for.  The assumption CASA makes is that the
+bandwidth is split into several smaller SPWs (such as is the case of VLA or
+ALMA) and that the Stokes parameters within each SPW can be assumed to be
+a constant. We have identified work-arounds to this, and will be implementing
+the fix in upcoming versions of the pipeline.</p>
+
+<p>The cross-hand calibration performs the following steps:</p>
+<ul>
+  <li>Delay calibration (the K term), time averaged, parallel hand</li>
+  <li>Bandpass calibration (the B term), time averaged, parallel hand</li>
+  <li>Cross hand delay calibration (the KCROSS term), time averaged, cross hand</li>
+</ul>
+
+<p>after the cross-hand delay calibration is performed, we iterate over calculating
+the time dependent gains. Initially the time-dependent gains are calculated for
+the primary and secondary calibrators, as a function of time and parallactic
+angle. The polarization properties of the secondary are assumed to be unknown,
+and are determined from the gain variation as a function of parallactic angle.
+This is fit for by the <code class="highlighter-rouge">qufromgain</code> task, which is contained in <code class="highlighter-rouge">almapolhelpers</code>
+and can be accessed in CASA by</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  from almapolhelpers import *
+</code></pre></div></div>
+
+<p>This imports several helper tasks that are meant to solve ALMA polarization, but
+are general enough to work with any telescope that has linear feeds.</p>
+
+<p>Once the fractional Q and U values are determined for the phase calibrator, the
+gain solutions are recomputed with the fractional polarization as an input, in
+theory resulting in more accurate gain solutions. This is followed by a call to
+<code class="highlighter-rouge">xyamb</code>, also within <code class="highlighter-rouge">almapolhelpers</code> that breaks the ambiguity in the X-Y
+phases for the solutions generated by <code class="highlighter-rouge">qufromgain</code>. These can be
+cross-checked with the solutions obtained by running <code class="highlighter-rouge">gaincal</code> with
+<code class="highlighter-rouge">gaintype='XYf+QU</code> which solves for the X-Y phase as a function of frequency,
+assuming an unknown source Q, U value. Finally we run <code class="highlighter-rouge">polcal</code> in the <code class="highlighter-rouge">Dflls</code>
+mode in order to calculate the polarization leakage (the D term) as a function
+of frequency (f), using a linear least squares algorithm (lls). Finally, we
+bootstrap the fluxes from the primary to the secondary using <code class="highlighter-rouge">fluxscale</code>.</p>
 
 
           
