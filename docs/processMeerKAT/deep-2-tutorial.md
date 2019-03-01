@@ -438,7 +438,7 @@ This error likely corresponds to empty sub-MS(s) with data completely flagged ou
 
 `processMeerKAT.py -B -C tutorial_config.txt -M 1491550051.mms`
 
-This way we reset the list of scripts in our config file, and set `verbose=False` and `submit=False`. We will manually remove the scripts we already ran in step [[23|#Run-the-pipeline-using-your-updated-config-file]], so leave the `scripts` parameter as is.
+This way we reset the list of scripts in our config file, and set `verbose=False` and `submit=False`. We will manually remove the scripts we already ran in step 23, so leave the `scripts` parameter as is.
 
 ##### 22. Edit your config file
 
