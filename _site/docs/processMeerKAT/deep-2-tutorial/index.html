@@ -141,7 +141,7 @@
                   
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/Calibration-in-processMeerKAT/" class="navigation-list-link">Calibration in ProcessMeerKAT</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/Calibration-in-processMeerKAT/" class="navigation-list-link">Calibration in processMeerKAT</a>
                       
                     </li>
                   
@@ -225,9 +225,9 @@
         <div id="main-content" class="page-content" role="main">
           <h1 id="deep-2-tutorial">DEEP 2 Tutorial</h1>
 
-<h4 id="this-tutorial-walks-you-through-running-the-various-steps-of-the-pipeline-for-a-single-deep-2-dataset-which-is-a-16-dish-4k-mode-meerkat-observation-of-a-random-patch-of-sky-11-gb-in-size">This tutorial walks you through running the various steps of the pipeline for a single DEEP 2 dataset, which is a 16 dish, 4k-mode MeerKAT observation of a random patch of sky, 11 GB in size.</h4>
+<h4 id="this-tutorial-walks-you-through-running-the-various-steps-of-the-pipeline-for-a-single-deep-2-dataset-which-is-a-snapshot-20-minutes-on-source-16-dish-meerkat-observation-of-a-random-patch-of-sky-using-the-old-roach-2-correlator-11-gb-in-size">This tutorial walks you through running the various steps of the pipeline for a single DEEP 2 dataset, which is a snapshot (~20 minutes on source), 16-dish MeerKAT observation of a random patch of sky using the old ROACH-2 correlator, 11 GB in size.</h4>
 
-<p>To begin, ssh into the ilifu cluster (<code class="highlighter-rouge">slurm.ilifu.ac.za</code>), and create a working directory somewhere on the filesystem (e.g. <code class="highlighter-rouge">/ceph/pipelines/your_username/tutorial/</code>).</p>
+<p>To begin, ssh into the ilifu cluster (<code class="highlighter-rouge">slurm.ilifu.ac.za</code>), and create a working directory somewhere on the filesystem (e.g. <code class="highlighter-rouge">/scratch/users/your_username/tutorial/</code>).</p>
 
 <h5 id="1-source-setupsh-which-will-add-to-your-path-and-pythonpath">1. Source <code class="highlighter-rouge">setup.sh</code>, which will add to your PATH and PYTHONPATH</h5>
 
@@ -738,26 +738,38 @@ Run displayTimes.sh to display start and end timestamps (after pipeline has run)
 
 <h5 id="26-view-the-images-in-the-images-directory">26. View the images in the <code class="highlighter-rouge">images</code> directory</h5>
 
-<p><code class="highlighter-rouge">quick_tclean.py</code> creates quicklook images (i.e. with no selfcal, w-projection, threadholding, no-multiscale, etc) with robust weighting 0, for all fields specified in the config file, creating 512x512 images of the calibrator fields, and 2048x2048 images of the target field(s), both with 2 arcsec pixel sizes. For data with &gt; 100 MHz bandwidth, two taylor terms are used, otherwise the ‘clark’ deconvolver is used.</p>
+<p><code class="highlighter-rouge">quick_tclean.py</code> creates quick-look images (i.e. with no selfcal, w-projection, threadholding, no-multiscale, etc) with robust weighting 0, for all fields specified in the config file, creating 512x512 images of the calibrator fields, and 2048x2048 images of the target field(s), both with 2 arcsec pixel sizes. For data with &gt; 100 MHz bandwidth, two taylor terms are used, otherwise the ‘clark’ deconvolver is used.</p>
+
+<p>You can view the images by running <code class="highlighter-rouge">salloc</code> to allocate a compute node, or connecting to a fat node (e.g. <code class="highlighter-rouge">racetrack.idia.ac.za</code>) and launching ds9 or CASA viewer, respectively with the syntax (replace <code class="highlighter-rouge">/scratch/users/your_username/tutorial</code> below)::</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>singularity exec /data/exp_soft/containers/sourcefinding_py3.simg ds9 /scratch/users/your_username/tutorial/images/*fits
+singularity exec /data/exp_soft/pipelines/casameer-5.4.1.xvfb.simg casa --nologger --log2term -c "viewer(infile='/scratch/users/your_username/tutorial/images/1491550051_DEEP_2_off.im.image.tt0/'); raw_input()"
+</code></pre></div></div>
+
+<p>Here’s what your images of the flux calibrator (<code class="highlighter-rouge">1934-638</code>) and field (<code class="highlighter-rouge">DEEP_2_off</code>) should look like.</p>
+
+<p><img src="/assets/DEEP2_image.png" alt="DEEP2_image" /></p>
+
+<p>Since we imaged a snapshot 16-dish MeerKAT observation using the old ROACH-2 correlator, with an on source time of ~20 minutes, we do not get very good image quality. Below is a more typical image produced by <code class="highlighter-rouge">quick_tclean.py</code> for a 64-dish observation using the SKARAB correlator, spanning ~8 hours, and only 5 MHz bandwidth.</p>
+
+<p><img src="/assets/64-dish-image.png" alt="64-dish-image" /></p>
 
 <h5 id="27-view-the-figures-in-plots-directory">27. View the figures in <code class="highlighter-rouge">plots</code> directory</h5>
 
-<p>The last script that runs is <code class="highlighter-rouge">plot_solutions.py</code>, which calls CASA task <code class="highlighter-rouge">plotms</code> to plot the calibration solutions for the bandpass calibrator and the phase calibrator. This is the reason that <code class="highlighter-rouge">xvfb-run</code> is called, which runs a virtual X server to make use of the plotting libraries. Your plots should look like the following.</p>
+<p>The last script that runs is <code class="highlighter-rouge">plot_solutions.py</code>, which calls CASA task <code class="highlighter-rouge">plotms</code> to plot the calibration solutions for the bandpass calibrator and the phase calibrator, as well as plots of the corrected data to eyeball for RFI. Below are a few selected plots.</p>
 
-<p>[[/assets/bpass_chan_amp.png]]
-[[/assets/bpass_chan_phase.png]]
-[[/assets/bpass_real_imag.png]]
-[[/assets/phasecal_time_amp.png]]
-[[/assets/phasecal_time_phase.png]]</p>
+<p><img src="/assets/bpass_freq_amp.png" alt="bpass_freq_amp" />
+<img src="/assets/DEEP_2_off_freq_amp.png" alt="DEEP_2_off_freq_amp" />
+<img src="/assets/DEEP_2_off_real_imag.png" alt="DEEP_2_off_real_imag" /></p>
 
 <p><strong>That’s it! You have completed the tutorial! Now go forth and do some phenomenal MeerKAT science!</strong></p>
 
 <h3 id="also-see">Also see</h3>
 
 <ul>
-  <li><a href="Calibration-in-processMeerKAT">Calibration in processMeerKAT</a></li>
-  <li><a href="Diagnosing-Errors">Diagnosing Errors</a></li>
-  <li><a href="Using-the-pipeline">Using the pipeline</a></li>
+  <li><a href="../Calibration-in-processMeerKAT">Calibration in processMeerKAT</a></li>
+  <li><a href="../Diagnosing-Errors">Diagnosing Errors</a></li>
+  <li><a href="../Using-the-pipeline">Using the pipeline</a></li>
 </ul>
 
 

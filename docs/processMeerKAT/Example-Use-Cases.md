@@ -13,7 +13,7 @@ Our algorithmic approach toward calibration in the pipeline can be found in [[Ca
 
 Stokes I calibration is achieved in `xx_yy_solve.py`, and includes standard delay, bandpass and gain calibration. Within this pipeline, this is done to obtain better statistics for a second round of flagging.
 
-To calibrate for only Stokes I, the `xy_yx_solve.py` and `xy_yx_apply.py` scripts may be replaced with `xx_yy_solve.py` and `xx_yy_apply.py`, or removed completely. However, since the 2nd round of flagging is different to the 1st, and much more effective, it should not be skipped. Furthermore, for good calibration, new solutions should always be derived after flagging. Lastly, it is recommended the 'xy_yx' scripts be run for good leakage solutions anyway.
+To calibrate for only Stokes I, the `xy_yx_solve.py` and `xy_yx_apply.py` scripts may be replaced with `xx_yy_solve.py` and `xx_yy_apply.py`, or removed completely. However, since the 2nd round of flagging is different to the 1st, and much more effective, it should not be skipped. Furthermore, for good calibration, new solutions should always be derived after flagging. Lastly, it is recommended the 'xy_yx' scripts be run anyway, since linear feeds tend to have non-negligible coupling between the feeds, and so even to get a good Stokes I image, full Stokes calibration may be required.
 
 Therefore, for Stokes I calibration, the 'xx_yy' scripts may be replaced with the 'xx_yy' scripts, in which case only a minimal speedup will be gained. Therefore, this use case is generally discouraged. One reason for this use case may be where issues arise with the calibration, and to simplify the processing to what is well understood.
 
@@ -41,7 +41,7 @@ This mode is encouraged for users who only want to have quicklook images, or who
 
 #### MS -> MMS -> MS
 
-When setting `keepmms=False` in your config file, the pipeline will convert your data to MMS as usual, but during running `split`, each of the field IDs specified in your config file will be written in MS format. By default, `quick_tclean.py` will still run, and will make use of multiple CPUs, but not MPI, meaning your imaging will run slower. This mode is encouraged
+When setting `keepmms=False` in your config file, the pipeline will convert your data to MMS as usual, but during running `split`, each of the field IDs specified in your config file will be written in MS format. By default, `quick_tclean.py` will still run, and will make use of multiple CPUs, but not MPI, meaning your imaging will run slower. This mode is encouraged when the user wishes to do their own imaging that requires an MS.
 
 #### MS only (single thread processing)
 
@@ -65,7 +65,7 @@ Multiple field IDs can be specified by writing a comma-separated list to your co
 
 # Restarting or Using Part of the Pipeline
 
-There are a few steps within the pipeline that need to be run multiple times. For datasets that have already been through the default pipeline, the reference antenna and list of bad antennas would have been calculated, and can be found in `logs/calc_refant-*.out`. These can be written your new config file, where you also set `calcrefant=False`.
+There are a few steps within the pipeline that only need to be run once for a given dataset. For datasets that have already been through the default pipeline, the reference antenna and list of bad antennas would have been calculated, and can be found in `logs/calc_refant-*.out`. These can be written your new config file, where you also set `calcrefant=False`.
 
 More generally, users can run any selected parts of the pipeline by editing the `scripts` argument or passing scripts in via the command-line arguments (see [[Using-the-pipeline#Inserting-your-own-scripts]]).
 

@@ -7,9 +7,9 @@ nav_order: 6
 
 # DEEP 2 Tutorial
 
-#### This tutorial walks you through running the various steps of the pipeline for a single DEEP 2 dataset, which is a 16 dish, 4k-mode MeerKAT observation of a random patch of sky, 11 GB in size.
+#### This tutorial walks you through running the various steps of the pipeline for a single DEEP 2 dataset, which is a snapshot (~20 minutes on source), 16-dish MeerKAT observation of a random patch of sky using the old ROACH-2 correlator, 11 GB in size.
 
-To begin, ssh into the ilifu cluster (`slurm.ilifu.ac.za`), and create a working directory somewhere on the filesystem (e.g. `/ceph/pipelines/your_username/tutorial/`).
+To begin, ssh into the ilifu cluster (`slurm.ilifu.ac.za`), and create a working directory somewhere on the filesystem (e.g. `/scratch/users/your_username/tutorial/`).
 
 ##### 1. Source `setup.sh`, which will add to your PATH and PYTHONPATH
 
@@ -535,24 +535,36 @@ This corresponds to the data split out from `1491550051.mms`, for the bandpass/f
 
 ##### 26. View the images in the `images` directory
 
-`quick_tclean.py` creates quicklook images (i.e. with no selfcal, w-projection, threadholding, no-multiscale, etc) with robust weighting 0, for all fields specified in the config file, creating 512x512 images of the calibrator fields, and 2048x2048 images of the target field(s), both with 2 arcsec pixel sizes. For data with > 100 MHz bandwidth, two taylor terms are used, otherwise the 'clark' deconvolver is used.
+`quick_tclean.py` creates quick-look images (i.e. with no selfcal, w-projection, threadholding, no-multiscale, etc) with robust weighting 0, for all fields specified in the config file, creating 512x512 images of the calibrator fields, and 2048x2048 images of the target field(s), both with 2 arcsec pixel sizes. For data with > 100 MHz bandwidth, two taylor terms are used, otherwise the 'clark' deconvolver is used.
 
+You can view the images by running `salloc` to allocate a compute node, or connecting to a fat node (e.g. `racetrack.idia.ac.za`) and launching ds9 or CASA viewer, respectively with the syntax (replace `/scratch/users/your_username/tutorial` below)::
+
+```
+singularity exec /data/exp_soft/containers/sourcefinding_py3.simg ds9 /scratch/users/your_username/tutorial/images/*fits
+singularity exec /data/exp_soft/pipelines/casameer-5.4.1.xvfb.simg casa --nologger --log2term -c "viewer(infile='/scratch/users/your_username/tutorial/images/1491550051_DEEP_2_off.im.image.tt0/'); raw_input()"
+```
+
+Here's what your images of the flux calibrator (`1934-638`) and field (`DEEP_2_off`) should look like.
+
+![DEEP2_image](/assets/DEEP2_image.png)
+
+Since we imaged a snapshot 16-dish MeerKAT observation using the old ROACH-2 correlator, with an on source time of ~20 minutes, we do not get very good image quality. Below is a more typical image produced by `quick_tclean.py` for a 64-dish observation using the SKARAB correlator, spanning ~8 hours, and only 5 MHz bandwidth.
+
+![64-dish-image](/assets/64-dish-image.png)
 
 ##### 27. View the figures in `plots` directory
 
-The last script that runs is `plot_solutions.py`, which calls CASA task `plotms` to plot the calibration solutions for the bandpass calibrator and the phase calibrator. This is the reason that `xvfb-run` is called, which runs a virtual X server to make use of the plotting libraries. Your plots should look like the following.
+The last script that runs is `plot_solutions.py`, which calls CASA task `plotms` to plot the calibration solutions for the bandpass calibrator and the phase calibrator, as well as plots of the corrected data to eyeball for RFI. Below are a few selected plots.
 
-[[/assets/bpass_chan_amp.png]]
-[[/assets/bpass_chan_phase.png]]
-[[/assets/bpass_real_imag.png]]
-[[/assets/phasecal_time_amp.png]]
-[[/assets/phasecal_time_phase.png]]
+![bpass_freq_amp](/assets/bpass_freq_amp.png)
+![DEEP_2_off_freq_amp](/assets/DEEP_2_off_freq_amp.png)
+![DEEP_2_off_real_imag](/assets/DEEP_2_off_real_imag.png)
 
 **That's it! You have completed the tutorial! Now go forth and do some phenomenal MeerKAT science!**
 
 ### Also see
 
-- [Calibration in processMeerKAT](Calibration-in-processMeerKAT)
-- [Diagnosing Errors](Diagnosing-Errors)
-- [Using the pipeline](Using-the-pipeline)
+- [Calibration in processMeerKAT](../Calibration-in-processMeerKAT)
+- [Diagnosing Errors](../Diagnosing-Errors)
+- [Using the pipeline](../Using-the-pipeline)
 

@@ -6,7 +6,7 @@ nav_order: 3
 # Singularity Containers
 At IDIA, astronomical software packages are provided and managed using [Singularity][singularity] containers. Containers
 are managed and built by our developers. If you have any questions/issues relating to containers,
-please send an email to [support@ilifu.ac.za][support].
+please send an email to [support@ilifu.ac.za][support]. You can find more documentation about containers on Ilifu [here](http://docs.ilifu.ac.za/#/cluster/software_environments).
 
 
 # Available Containers
@@ -32,7 +32,7 @@ containers, or for existing containers to be updated.
 
 # Using Containers
 #### Shell
-You can access software in Singularity containers using two methods. 
+You can access software in Singularity containers using two methods.
 
 Firstly, you can _shell_ into the container. You will enter a _shell_ which provides access to the
 software provided in that container:
@@ -67,7 +67,7 @@ You can also pass a command to a container (using the `exec` argument), which th
 the shell in that container.
 
 For example, here's an illustration of how to use the `exec` argument to jump into an interactive
-CASA session: 
+CASA session:
 
 ```bash
 $ singularity exec /data/exp_soft/containers/casa-stable-5.3.0.simg casa --nologger --log2term --nogui
@@ -131,7 +131,7 @@ $
 ```
 
 While the command may seem cumbersome, it is very useful when trying to build scripts that utilise
-several containers. 
+several containers.
 
 [singularity]: http://singularity.lbl.gov/
 [github-containers]:https://github.com/AfricanResearchCloud/idia-containers

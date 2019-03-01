@@ -5,21 +5,21 @@ parent: processMeerKAT
 nav_order: 1
 ---
 
-1. In order to use the `processMeerKAT.py` script, source the `setup.sh` file:
+### 1. In order to use the `processMeerKAT.py` script, source the `setup.sh` file:
 
         source /data/exp_soft/pipelines/master/setup.sh
 
 which will add the correct paths to your `$PATH` and `$PYTHONPATH` in order to correctly use the pipeline. We recommend you add this to your `~/.profile`, for future use.
 
-2. Build a config file, which defines several variables that are read by the pipeline while calibrating the data, as well as requesting resources on the cluster.
+### 2. Build a config file:
 
         processMeerKAT.py -B -C myconfig.txt -M mydata.ms
 
 
-  The config file parameters are described by in-line comments in the config
+  This defines several variables that are read by the pipeline while calibrating the data, as well as requesting resources on the cluster. The config file parameters are described by in-line comments in the config
     file itself wherever possible.
 
-3. To run the pipeline,
+### 3. To run the pipeline:
 
         processMeerKAT.py -R -C myconfig.txt
 

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Calibration in ProcessMeerKAT
+title: Calibration in processMeerKAT
 parent: processMeerKAT
 nav_order: 7
 ---

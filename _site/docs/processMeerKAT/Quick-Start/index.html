@@ -141,7 +141,7 @@
                   
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/Calibration-in-processMeerKAT/" class="navigation-list-link">Calibration in ProcessMeerKAT</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/Calibration-in-processMeerKAT/" class="navigation-list-link">Calibration in processMeerKAT</a>
                       
                     </li>
                   
@@ -223,37 +223,25 @@
           
         
         <div id="main-content" class="page-content" role="main">
-          <ol>
-  <li>
-    <p>In order to use the <code class="highlighter-rouge">processMeerKAT.py</code> script, source the <code class="highlighter-rouge">setup.sh</code> file:</p>
+          <h3 id="1-in-order-to-use-the-processmeerkatpy-script-source-the-setupsh-file">1. In order to use the <code class="highlighter-rouge">processMeerKAT.py</code> script, source the <code class="highlighter-rouge">setup.sh</code> file:</h3>
 
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> source /data/exp_soft/pipelines/master/setup.sh
-</code></pre></div>    </div>
-  </li>
-</ol>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    source /data/exp_soft/pipelines/master/setup.sh
+</code></pre></div></div>
 
 <p>which will add the correct paths to your <code class="highlighter-rouge">$PATH</code> and <code class="highlighter-rouge">$PYTHONPATH</code> in order to correctly use the pipeline. We recommend you add this to your <code class="highlighter-rouge">~/.profile</code>, for future use.</p>
 
-<ol>
-  <li>
-    <p>Build a config file, which defines several variables that are read by the pipeline while calibrating the data, as well as requesting resources on the cluster.</p>
+<h3 id="2-build-a-config-file">2. Build a config file:</h3>
 
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> processMeerKAT.py -B -C myconfig.txt -M mydata.ms
-</code></pre></div>    </div>
-  </li>
-</ol>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    processMeerKAT.py -B -C myconfig.txt -M mydata.ms
+</code></pre></div></div>
 
-<p>The config file parameters are described by in-line comments in the config
+<p>This defines several variables that are read by the pipeline while calibrating the data, as well as requesting resources on the cluster. The config file parameters are described by in-line comments in the config
     file itself wherever possible.</p>
 
-<ol>
-  <li>
-    <p>To run the pipeline,</p>
+<h3 id="3-to-run-the-pipeline">3. To run the pipeline:</h3>
 
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> processMeerKAT.py -R -C myconfig.txt
-</code></pre></div>    </div>
-  </li>
-</ol>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    processMeerKAT.py -R -C myconfig.txt
+</code></pre></div></div>
 
 <p>This will create <code class="highlighter-rouge">submit_pipeline.sh</code>, which you can then run like <code class="highlighter-rouge">./submit_pipeline.sh</code> to submit all pipeline jobs to the SLURM queue.</p>
 

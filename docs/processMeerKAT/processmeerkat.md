@@ -23,7 +23,7 @@ flagging. `processMeerKAT` is written solely for the processing of data on IDIA'
 future revisions will allow you to run the software on any HPC platform.
 
 The main features of `processMeerKAT` are as follows:
-* Is written in Python 3.
+* Is written in Python 2.7 (for CASA 5.4.X).
 * Calibration algorithms only use CASA 5.4.X tasks and helper functions.
 ** Uses a purpose-built CASA Singularity container for parallel processing at IDIA, i.e, is fully
 thread-safe.

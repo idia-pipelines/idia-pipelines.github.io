@@ -141,7 +141,7 @@
                   
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/Calibration-in-processMeerKAT/" class="navigation-list-link">Calibration in ProcessMeerKAT</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/Calibration-in-processMeerKAT/" class="navigation-list-link">Calibration in processMeerKAT</a>
                       
                     </li>
                   
@@ -225,7 +225,7 @@
         <div id="main-content" class="page-content" role="main">
           <h1 id="version-10">Version 1.0</h1>
 
-<p>This is the first release of the IDIA Pipelines’ processsMeerKAT package, to be used on the ILIFU SLURM cluster. The software uses a parallelized implementation of CASA to calibrate interferometric (imaging) data from the MeerKAT telescope.</p>
+<p>This is the first release of the IDIA Pipelines’ processsMeerKAT package, to be used on the Ilifu SLURM cluster. The software uses a parallelized implementation of CASA to calibrate interferometric (imaging) data from the MeerKAT telescope.</p>
 
 <p>The current release includes the following functionality:</p>
 
@@ -235,8 +235,9 @@
   <li>This includes parallelised flagging using FLAGDATA (tfcrop and rflag).</li>
   <li>Flux bootstrapping, gain and bandpass calibration.</li>
   <li>Full stokes calibration.</li>
-  <li>Quick imaging of the calibrators and science targets.</li>
-  <li>Diagnostic plots of the calibration tables.</li>
+  <li>Quick-look imaging (i.e. without selfcal, w-projection, etc) of the calibrators and science targets.</li>
+  <li>Diagnostic plots of the calibration tables and corrected data.</li>
+  <li>Uses CASA 5.4.1, Python 2.7, and Singularity 2.6.1.</li>
 </ul>
 
 <p>Please consult the documentation on <a href="https://idia-pipelines.github.io/">https://idia-pipelines.github.io/</a> for more information.</p>
@@ -245,29 +246,35 @@
 
 <ul>
   <li>
-    <p><strong>Broadband polarization :</strong> CASA does not natively support solving broad-band polarizations, <em>i.e.,</em> it is not RM aware. The assumption is that the RM within a single spectral window (SPW) is constant, however the MeerKAT has only a single SPW that spans the entire bandwidth. We have identified workarounds (which is to split up the band into several SPWs), however presently the broadband polarization models do contain systematic errors.</p>
+    <p><strong>Broadband polarization</strong>: CASA does not natively support solving broad-band polarizations, <em>i.e.,</em> it is not sensitive to rotation measure (RM). The assumption is that the RM within a single spectral window (SPW) is constant, however MeerKAT has only a single SPW that spans the entire bandwidth. We have identified future workarounds (which is to split up the band into several SPWs), however presently the broadband polarization models do contain systematic errors.</p>
   </li>
   <li>
-    <p>We recommend using the Test02 partition for the moment (set via the –partition option in processMeerKAT.py) due to ongoing issues in the Main SLURM partition.</p>
+    <p><strong>SLURM partition</strong>: We recommend using the <code class="highlighter-rouge">Test02</code> SLURM partition for the moment (set via the –partition option in processMeerKAT.py), due to ongoing issues in the <code class="highlighter-rouge">Main</code> SLURM partition.</p>
   </li>
   <li>
-    <p>Generating plots of the calibrated visibilities is very time consuming, often running to a few hours, However as this is the last step of the pipeline, the calibrated, split measurement sets should be ready for further analysis (imaging etc) while the plots are being generated. The speed of plotting is limited by how quickly <code class="highlighter-rouge">plotms</code> can generate the plots.</p>
+    <p><strong>Slow plotting</strong>: Generating plots of the calibrated visibilities is very time consuming, often running to a few hours. However, as this is the last step of the pipeline, the calibrated, split measurement sets and images should be ready for further analysis while the plots are being generated. The speed of plotting is limited by how quickly <code class="highlighter-rouge">plotms</code> can generate the plots.</p>
   </li>
   <li>
     <p><strong>Field IDs</strong>: The pipeline does not currently support specifying multiple fields for anything other than the targets.</p>
   </li>
-  <li><strong>Threads</strong>:
+  <li>
+    <p><strong>Flux scale</strong>: Although the fluxes of the calibrated targets and calibrator sources are typically accurate to within a few percent, we find that there are certain datasets that result in a flux scale that is down by a factor of a few. We are in the process of tracking down the root cause of these issues, and expect to issue a fix soon. However, if you do happen to notice that the fluxes of one or more of the sources/targets are off (either higher/lower), please report it by creating an issue in the <a href="https://github.com/idia-astro/pipelines/issues">Github repository</a>.</p>
+  </li>
+  <li>
+    <p><strong>Calculation of antenna statistics</strong>: The amplitude and RMS per antenna computed in <code class="highlighter-rouge">calc_refant.py</code> does not match what is found by CASA task <code class="highlighter-rouge">visstat</code>, and decreases as a function of antenna number. We expect to issue a fix soon.</p>
+  </li>
+  <li><strong>Resource allocation</strong>:
     <ul>
-      <li>We set the number of threads to half the number of scans + 1 (master) + 10%, so that for tasks reading the target or phasecal (since we partition by scans - i.e. the number of sub-MSs = the number of scans), the number of threads is approx the number of sub-MSs being read. For tasks reading only sub-MSs corresponding to other calibrators (e.g. bandpass), many threads will not be used</li>
+      <li>We set the number of threads to half the number of scans + 1 (master) + 10%, so that for tasks reading the target or phasecal (since we partition by scans - i.e. the number of sub-MSs = the number of scans), the number of threads is approximately the number of sub-MSs being read. For tasks reading only sub-MSs corresponding to other calibrators (e.g. bandpass), many threads will not be used</li>
       <li>Similarly, we use a single memory value for all threadsafe tasks, and hardcode 100 GB for single thread tasks</li>
     </ul>
   </li>
   <li>
-    <p><strong>Empty rows in sub-MSs</strong>: Some tasks complain that no valid data were found in a sub-MS, but generally this doesn’t seem to affect the progress of the calibration/pipeline.</p>
+    <p><strong>Empty rows in sub-MSs</strong>: Some tasks might complain that no valid data were found in a sub-MS, but generally this seems to be a “harmless” error, and doesn’t seem to affect the progress of the calibration/pipeline.</p>
   </li>
   <li><strong>Exit codes</strong>
     <ul>
-      <li>Issue where some jobs fail in the queue that shouldn’t have, and others don’t fail when they should</li>
+      <li>Some jobs fail in the queue that shouldn’t have, and others don’t fail when they should</li>
       <li>Generally the pipeline continues even when dependencies legitimately fail</li>
     </ul>
   </li>
