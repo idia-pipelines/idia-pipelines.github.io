@@ -59,10 +59,6 @@
     
       
         
-      
-    
-      
-        
           <li class="navigation-list-item">
             
             <a href="http://localhost:4000/docs/containers/" class="navigation-list-link">Singularity Containers</a>
@@ -103,15 +99,15 @@
                   
                 
                   
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/Using-The-Pipeline/" class="navigation-list-link">Using the Pipeline</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/using-the-pipeline/" class="navigation-list-link">Using the Pipeline</a>
                       
                     </li>
-                  
-                
-                  
-                
                   
                 
                   
@@ -133,7 +129,7 @@
                   
                     <li class="navigation-list-item  active">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/DEEP-2-Tutorial/" class="navigation-list-link active">DEEP 2 Tutorial</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/deep-2-tutorial/" class="navigation-list-link active">DEEP 2 Tutorial</a>
                       
                     </li>
                   
@@ -141,7 +137,7 @@
                   
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/Calibration-in-processMeerKAT/" class="navigation-list-link">Calibration in processMeerKAT</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/calibration-in-processmeerkat/" class="navigation-list-link">Calibration in processMeerKAT</a>
                       
                     </li>
                   
@@ -157,6 +153,10 @@
               </ul>
             
           </li>
+        
+      
+    
+      
         
       
     
@@ -241,10 +241,10 @@
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2019-02-28 02:36:14,421 INFO: Extracting field IDs from measurement set "/data/projects/deep/1491550051.ms" using CASA.
 2019-02-28 02:36:14,422 DEBUG: Using the following command:
-	srun --nodes=1 --ntasks=1 --time=10 --mem=4GB --partition=Main singularity exec /data/exp_soft/pipelines/casameer-5.4.1.xvfb.simg  casa --nologger --nogui --nologfile -c /data/exp_soft/pipelines/master/processMeerKAT/cal_scripts/get_fields.py -B -M /data/projects/deep/1491550051.ms -C tutorial_config.txt -N 8 -t 4
-		.
-		.
-		.
+   srun --nodes=1 --ntasks=1 --time=10 --mem=4GB --partition=Main singularity exec /data/exp_soft/pipelines/casameer-5.4.1.xvfb.simg  casa --nologger --nogui --nologfile -c /data/exp_soft/pipelines/master/processMeerKAT/cal_scripts/get_fields.py -B -M /data/projects/deep/1491550051.ms -C tutorial_config.txt -N 8 -t 4
+      .
+      .
+      .
 2019-02-28 02:37:39,788 WARNING: The number of threads (8 node(s) x 4 task(s) = 32) is not ideal compared to the number of scans (12) for "/data/projects/deep/1491550051.ms".
 2019-02-28 02:37:39,788 WARNING: Config file has been updated to use 2 node(s) and 4 task(s) per node.
 2019-02-28 02:37:39,788 INFO: For the best results, update your config file so that nodes x tasks per node = 7.
@@ -422,10 +422,10 @@ squeue -j 1097917
 
 <p>Inside this MMS, you will find the same tables and metadata as in a normal MS, but you will also see a <code class="highlighter-rouge">SUBMSS</code> directory, which should have the following contents.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1491550051.mms.0000.ms	1491550051.mms.0004.ms	1491550051.mms.0008.ms
-1491550051.mms.0001.ms	1491550051.mms.0005.ms	1491550051.mms.0009.ms
-1491550051.mms.0002.ms	1491550051.mms.0006.ms	1491550051.mms.0010.ms
-1491550051.mms.0003.ms	1491550051.mms.0007.ms	1491550051.mms.0011.ms
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1491550051.mms.0000.ms  1491550051.mms.0004.ms  1491550051.mms.0008.ms
+1491550051.mms.0001.ms  1491550051.mms.0005.ms  1491550051.mms.0009.ms
+1491550051.mms.0002.ms  1491550051.mms.0006.ms  1491550051.mms.0010.ms
+1491550051.mms.0003.ms  1491550051.mms.0007.ms  1491550051.mms.0011.ms
 </code></pre></div></div>
 
 <p>These are the 12 sub-MSs, partitioned by this observation’s 12 scans of the various targets.</p>
@@ -468,8 +468,8 @@ watch sacct
 <h5 id="12-view-the-contents-of-your-logs-directory">12. View the contents of your <code class="highlighter-rouge">logs</code> directory</h5>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ls logs
-calc_refant-1097918.casa  calc_refant-1097918.err  calc_refant-1097918.out  
-partition-1097917.casa  partition-1097917.err  partition-1097917.out  
+calc_refant-1097918.casa  calc_refant-1097918.err  calc_refant-1097918.out
+partition-1097917.casa  partition-1097917.err  partition-1097917.out
 validate_input-1097914.casa  validate_input-1097914.err  validate_input-1097914.out
 </code></pre></div></div>
 
@@ -685,9 +685,9 @@ IDs+<span class="o">=</span>,<span class="k">$(</span>sbatch <span class="nt">-d
 <span class="c">#Output message and create jobScripts directory</span>
 <span class="nb">echo </span>Submitted sbatch <span class="nb">jobs </span>with following IDs: <span class="nv">$IDs</span>
 <span class="nb">mkdir</span> <span class="nt">-p</span> jobScripts
-	<span class="nb">.</span>
-	<span class="nb">.</span>
-	<span class="nb">.</span>
+   <span class="nb">.</span>
+   <span class="nb">.</span>
+   <span class="nb">.</span>
 </code></pre></div></div>
 
 <p><strong>Note the first line has been edited to replace <code class="highlighter-rouge">+=,</code> with <code class="highlighter-rouge">=</code> and remove <code class="highlighter-rouge">-d afterok:$IDs --kill-on-invalid-dep=yes</code>, since it does not have any dependencies.</strong></p>
@@ -721,14 +721,7 @@ Run displayTimes.sh to display start and end timestamps (after pipeline has run)
 
 <p>If you want to see the output from the job scripts referring to the old pipeline runs, don’t worry, they’re still in the <code class="highlighter-rouge">jobScripts</code> directory with an older timestamp in the filename. Only the symlink in your working directory has been updated.</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td>These new tasks follow the second step of a two step calibration process that is summarised on [[this page</td>
-      <td>Calibration-in-processMeerKAT]].</td>
-    </tr>
-  </tbody>
-</table>
+<p>These new tasks follow the second step of a two step calibration process that is summarised on <a href="https://idia-pipelines.github.io/docs/processMeerKAT/calibration-in-processmeerkat/">this page</a>.</p>
 
 <p>After <code class="highlighter-rouge">split.py</code> has run, you will see three new files</p>
 

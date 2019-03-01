@@ -59,10 +59,6 @@
     
       
         
-      
-    
-      
-        
           <li class="navigation-list-item">
             
             <a href="http://localhost:4000/docs/containers/" class="navigation-list-link">Singularity Containers</a>
@@ -103,15 +99,15 @@
                   
                 
                   
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/Using-The-Pipeline/" class="navigation-list-link">Using the Pipeline</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/using-the-pipeline/" class="navigation-list-link">Using the Pipeline</a>
                       
                     </li>
-                  
-                
-                  
-                
                   
                 
                   
@@ -133,7 +129,7 @@
                   
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/DEEP-2-Tutorial/" class="navigation-list-link">DEEP 2 Tutorial</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/deep-2-tutorial/" class="navigation-list-link">DEEP 2 Tutorial</a>
                       
                     </li>
                   
@@ -141,7 +137,7 @@
                   
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/Calibration-in-processMeerKAT/" class="navigation-list-link">Calibration in ProcessMeerKAT</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/calibration-in-processmeerkat/" class="navigation-list-link">Calibration in processMeerKAT</a>
                       
                     </li>
                   
@@ -157,6 +153,10 @@
               </ul>
             
           </li>
+        
+      
+    
+      
         
       
     
@@ -276,6 +276,16 @@
 <h3 id="unable-to-launch-jobs-in-slurm">Unable to launch jobs in SLURM</h3>
 
 <p>If the status of your job is <code class="highlighter-rouge">(launch failed requeued held)</code>, please file a ticket with support@ilifu.ac.za.</p>
+
+<h3 id="memory-error">Memory error</h3>
+
+<p>If you see the phrase <code class="highlighter-rouge">MemoryError</code> in the <code class="highlighter-rouge">stderr</code> logs (this can be located by
+<code class="highlighter-rouge">grep -i MemoryError logs/*.err</code>) this is typically indicative that CASA did not
+have enough memory to complete the task. This often happens while running
+<code class="highlighter-rouge">flagdata</code> and does not always halt execution of the pipeline. Reduce the number
+of tasks per node in the config file before re-launching the pipeline, as that
+will allocate more memory per task.</p>
+
 
 
           

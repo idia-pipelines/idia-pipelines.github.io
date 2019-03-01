@@ -24,10 +24,10 @@ After some initial debug output, you should get the following output, with diffe
 ```
 2019-02-28 02:36:14,421 INFO: Extracting field IDs from measurement set "/data/projects/deep/1491550051.ms" using CASA.
 2019-02-28 02:36:14,422 DEBUG: Using the following command:
-	srun --nodes=1 --ntasks=1 --time=10 --mem=4GB --partition=Main singularity exec /data/exp_soft/pipelines/casameer-5.4.1.xvfb.simg  casa --nologger --nogui --nologfile -c /data/exp_soft/pipelines/master/processMeerKAT/cal_scripts/get_fields.py -B -M /data/projects/deep/1491550051.ms -C tutorial_config.txt -N 8 -t 4
-		.
-		.
-		.
+   srun --nodes=1 --ntasks=1 --time=10 --mem=4GB --partition=Main singularity exec /data/exp_soft/pipelines/casameer-5.4.1.xvfb.simg  casa --nologger --nogui --nologfile -c /data/exp_soft/pipelines/master/processMeerKAT/cal_scripts/get_fields.py -B -M /data/projects/deep/1491550051.ms -C tutorial_config.txt -N 8 -t 4
+      .
+      .
+      .
 2019-02-28 02:37:39,788 WARNING: The number of threads (8 node(s) x 4 task(s) = 32) is not ideal compared to the number of scans (12) for "/data/projects/deep/1491550051.ms".
 2019-02-28 02:37:39,788 WARNING: Config file has been updated to use 2 node(s) and 4 task(s) per node.
 2019-02-28 02:37:39,788 INFO: For the best results, update your config file so that nodes x tasks per node = 7.
@@ -214,10 +214,10 @@ You should see two new files - `1491550051.mms` and `1491550051.mms.flagversions
 Inside this MMS, you will find the same tables and metadata as in a normal MS, but you will also see a `SUBMSS` directory, which should have the following contents.
 
 ```
-1491550051.mms.0000.ms	1491550051.mms.0004.ms	1491550051.mms.0008.ms
-1491550051.mms.0001.ms	1491550051.mms.0005.ms	1491550051.mms.0009.ms
-1491550051.mms.0002.ms	1491550051.mms.0006.ms	1491550051.mms.0010.ms
-1491550051.mms.0003.ms	1491550051.mms.0007.ms	1491550051.mms.0011.ms
+1491550051.mms.0000.ms  1491550051.mms.0004.ms  1491550051.mms.0008.ms
+1491550051.mms.0001.ms  1491550051.mms.0005.ms  1491550051.mms.0009.ms
+1491550051.mms.0002.ms  1491550051.mms.0006.ms  1491550051.mms.0010.ms
+1491550051.mms.0003.ms  1491550051.mms.0007.ms  1491550051.mms.0011.ms
 ```
 
 These are the 12 sub-MSs, partitioned by this observation's 12 scans of the various targets.
@@ -265,8 +265,8 @@ Control-C to exit out of `watch`.
 
 ```
 ls logs
-calc_refant-1097918.casa  calc_refant-1097918.err  calc_refant-1097918.out  
-partition-1097917.casa  partition-1097917.err  partition-1097917.out  
+calc_refant-1097918.casa  calc_refant-1097918.err  calc_refant-1097918.out
+partition-1097917.casa  partition-1097917.err  partition-1097917.out
 validate_input-1097914.casa  validate_input-1097914.err  validate_input-1097914.out
 ```
 
@@ -487,9 +487,9 @@ IDs+=,$(sbatch -d afterok:$IDs --kill-on-invalid-dep=yes plot_solutions.sbatch |
 #Output message and create jobScripts directory
 echo Submitted sbatch jobs with following IDs: $IDs
 mkdir -p jobScripts
-	.
-	.
-	.
+   .
+   .
+   .
 ```
 
 **Note the first line has been edited to replace `+=,` with `=` and remove `-d afterok:$IDs --kill-on-invalid-dep=yes`, since it does not have any dependencies.**
@@ -525,7 +525,7 @@ The 4 new ancillary (bash) jobScripts will also correspond to these 7 new job ID
 
 If you want to see the output from the job scripts referring to the old pipeline runs, don't worry, they're still in the `jobScripts` directory with an older timestamp in the filename. Only the symlink in your working directory has been updated.
 
-These new tasks follow the second step of a two step calibration process that is summarised on [[this page|Calibration-in-processMeerKAT]].
+These new tasks follow the second step of a two step calibration process that is summarised on [this page](https://idia-pipelines.github.io/docs/processMeerKAT/calibration-in-processmeerkat/).
 
 After `split.py` has run, you will see three new files
 
