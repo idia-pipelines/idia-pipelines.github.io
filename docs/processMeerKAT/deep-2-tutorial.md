@@ -7,7 +7,7 @@ nav_order: 6
 
 # DEEP 2 Tutorial
 
-#### This tutorial walks you through running the various steps of the pipeline for a single DEEP 2 dataset, which is a snapshot (~20 minutes on source), 16-dish MeerKAT observation of a random patch of sky using the old ROACH-2 correlator, 11 GB in size.
+### This tutorial walks you through running the various steps of the pipeline for a single DEEP 2 dataset, which is a snapshot (~20 minutes on source), 16-dish MeerKAT observation of a random patch of sky using the old ROACH-2 correlator, 11 GB in size.
 
 To begin, ssh into the ilifu cluster (`slurm.ilifu.ac.za`), and create a working directory somewhere on the filesystem (e.g. `/scratch/users/your_username/tutorial/`).
 
@@ -88,11 +88,11 @@ targetfields = '3,1'
 
 This config file contains four sections - crosscal, slurm, data, and fields. The fields IDs we just extracted, seen in section `[fields]`, correspond to field 0 for the bandpass calibrator, field 0 for the total flux calibrator, field 2 for the phase calibrator, and fields 3 and 1 for the science targets (i.e. the DEEP 2 field + another calibrator). Only the target may have multiple fields. If a field isn't found according to its intent, a warning is displayed, and the field for the total flux calibrator is selected. If the total flux calibrator isn't present, the program will display an error and terminate.
 
-The SLURM parameters in section `[slurm]` correspond to those seen by running `processMeerKAT.py -h`. By default, for all threadsafe scripts (i.e. those with `True` in the `scripts` list), we use 8 nodes, 4 tasks per node (=32 threads), 236 GB of memory (per node), and `plane=2` (which distributes four tasks onto one node before moving onto next node). During step 2, only 12 scans were found, and since `partition.py` partitions the data into one sub-measurement set (sub-MS) per scan, only 12 sub-MSs will exist in the multi-measurement set (see section 19). Assuming each observation has a phase calibrator bracketing each target scan, at most, 6 sub-MSs will be operated on at any given time, each handled by one thread, and a master thread. So we aim to have a limit of nscans+1+10% threads, with the 10% to account for the occasional thread that hangs. For this dataset, this limit is 7 threads, so `get_fields.py` attempts to match this number by using the specified number of tasks per node and increasing the node count from 1 until the number of threads is more than the limit, terminating at 2 nodes x 4 tasks per node = 8 threads.
+The SLURM parameters in section `[slurm]` correspond to those seen by running `processMeerKAT.py -h`. By default, for all threadsafe scripts (i.e. those with `True` in the `scripts` list), we use 8 nodes, 4 tasks per node (=32 threads), 236 GB of memory (per node), and `plane=2` (which distributes four tasks onto one node before moving onto next node). During step 2, only 12 scans were found, and since `partition.py` partitions the data into one sub-measurement set (sub-MS) per scan, only 12 sub-MSs will exist in the multi-measurement set (see [section 20](#20-run-displaytimessh)). Assuming each observation has a phase calibrator bracketing each target scan, at most, 6 sub-MSs will be operated on at any given time, each handled by one thread, and a master thread. So we aim to have a limit of nscans+1+10% threads, with the 10% to account for the occasional thread that hangs. For this dataset, this limit is 7 threads, so `get_fields.py` attempts to match this number by using the specified number of tasks per node and increasing the node count from 1 until the number of threads is more than the limit, terminating at 2 nodes x 4 tasks per node = 8 threads.
 
 For script that aren't threadsafe (i.e. those with `False` in the `scripts` list), we use a single node, and a single task per node. For both scripts that are threadsafe and those that aren't, we use a single CPU per task, and explicitly export `OMP_NUM_THREADS=1`, since there is little evidence of a speedup with more than one CPU per task. However, for `quick_tclean.py` we use 4 CPUs per task.
 
-The cross-calibration parameters in section `[crosscal]` correspond to various CASA parameters passed into the calibration tasks that the pipeline used, each of which is documented in [[Calibration-in-processMeerKAT]]. By default all frequency ranges listed in `badfreqranges`, and all antenna numbers listed in `badants`, will be flagged out entirely. The third script the pipeline runs (`calc_refant.py`) will likely change the value of `refant`, and add a list of bad antennas to `badant`.
+The cross-calibration parameters in section `[crosscal]` correspond to various CASA parameters passed into the calibration tasks that the pipeline used, each of which is documented [here](../Calibration-in-processMeerKAT). By default all frequency ranges listed in `badfreqranges`, and all antenna numbers listed in `badants`, will be flagged out entirely. The third script the pipeline runs (`calc_refant.py`) will likely change the value of `refant`, and add a list of bad antennas to `badant`.
 
 ##### 4. Run the pipeline using your config file
 
@@ -188,7 +188,7 @@ export OMP_NUM_THREADS=1
 /data/exp_soft/pipelines/casa-prerelease-5.3.0-115.el7/bin/mpicasa singularity exec /data/exp_soft/pipelines/casameer-5.4.1.xvfb.simg  casa --nologger --nogui --logfile logs/partition-${SLURM_JOB_ID}.casa -c /data/exp_soft/pipelines/master/processMeerKAT/cal_scripts/partition.py --config .config.tmp
 ```
 
-Here we see the same default SLURM parameters for threadsafe tasks, as discussed in section 3. We now use mpicasa as the mpi wrapper, since we are calling a threadsafe script `partition.py`, which calls CASA task `partition`, which partitions the data into several sub measurement sets (sub-MSs - see [section 14 below](#View-the-contents-of-1491550051.mms)) and selects only frequencies specified by your spectral window with parameter `spw` in your config file.
+Here we see the same default SLURM parameters for threadsafe tasks, as discussed in section 3. We now use mpicasa as the mpi wrapper, since we are calling a threadsafe script `partition.py`, which calls CASA task `partition`, which partitions the data into several sub measurement sets (sub-MSs - see [section 14 below](#10-view-the-contents-of-1491550051mms)) and selects only frequencies specified by your spectral window with parameter `spw` in your config file.
 
 ##### 9. Submit your job and watch it in the queue
 
@@ -251,7 +251,7 @@ When your job completes, you will see something similar to the following
 ```
        JobID    JobName  Partition    Account  AllocCPUS      State ExitCode
 ------------ ---------- ---------- ---------- ---------- ---------- --------
-1097917       partition     Test02 b03-pipel+          8  COMPLETED      0:0
+1097917       partition       Main b03-pipel+          8  COMPLETED      0:0
 1097917.bat+      batch            b03-pipel+          4  COMPLETED      0:0
 1097917.0         orted            b03-pipel+          1  COMPLETED      0:0
 1097918      calc_refa+       Main b03-pipel+          1  COMPLETED      0:0
@@ -286,9 +286,9 @@ As specified in our sbatch file, standard out is written to `logs/calc_refant-10
 
 Here we see `calc_refant.py` has selected antenna 7 as the best reference antenna, which measures comparable amplitude for the total flux calibrator compared to antenna 0, but a lower RMS. It has also found antennas 5 and 15 to be bad enough to flag out.
 
-##### 13. View `ant_stats.txt`
+##### 13. View `ant_stats.txt` and `.config.tmp`
 
-You should see the following contents, corresponding to the amplitude and RMS each of the antennas measure
+You should see the following contents in `ant_stats.txt`, corresponding to the amplitude and RMS each of the antennas measure
 
 ```
 ant median rms
@@ -310,27 +310,33 @@ ant median rms
 15  243.71   569.51
 ```
 
-##### 14. View `.config.tmp`
+You should now see `refant = 7` and `badants = [5, 15]` in `.config.tmp`.
 
-You should now see `refant = 7` and `badants = [5, 15]`.
+##### 14. Edit your config file to run the next steps
 
-##### 15. Edit your config file to run the next steps
-
-Edit `tutorial_config.txt` to remove the first two and last six tuples in the `scripts` parameter, so it looks like the following:
+Edit `tutorial_config.txt` to remove the first three and last seven tuples in the `scripts` parameter, so it looks like the following:
 
 ```
 scripts = [('flag_round_1.py', True, ''), ('setjy.py', True, ''), ('xx_yy_solve.py', False, ''), ('xx_yy_apply.py', True, '')]
 ```
 
-Replace `refant` and `badants` with what was found by `validate_input.py`, and select the submit option, so it looks like the following:
+Replace `refant` and `badants` with what was found by `validate_input.py`, select the submit option, and update `vis` to the MMS, so it looks like the following:
 
 ```
 [crosscal]
 refant = 7
 badants = [5, 15]
+  .
+  .
+[slurm]
+submit = True
+  .
+  .
+[data]
+vis = 1491550051.mms
 ```
 
-##### 16. Run the pipeline using your config file
+##### 15. Run the pipeline using your config file
 
 ```processMeerKAT.py -R -C tutorial_config.txt```
 
@@ -362,9 +368,9 @@ Run displayTimes.sh to display start and end timestamps (after pipeline has run)
 
 As before, we see the sbatch files being written to our working directory. Since we set `submit=True`, `submit_pipeline.sh` has been run, and all output after that (without the timestamps) comes from this bash script. After the first job is run (`sbatch flag_round_1.sbatch`), each other job is run with a dependency on all previous jobs (e.g. `sbatch -d afterok:1097919,1097920,1097921 --kill-on-invalid-dep=yes xx_yy_apply.sbatch`). We can see this by calling `squeue -u your_username`, which shows those jobs `(Dependency)`. `submit_pipeline.sh` then writes four job scripts, all of which are explained in the output, written to `jobScripts` with a timestamp appended to the filename, and symlinked from your working directory. `findErrors.sh` finds errors after this pipeline run has completed, overlooking all nominal MPI errors.
 
-These tasks follow the first step of a two-step calibration process that is summarised in [[Calibration-in-processMeerKAT]].
+These tasks follow the first step of a two-step calibration process that is summarised [here](../Calibration-in-processMeerKAT).
 
-##### 17. Run `./summary.sh`
+##### 16. Run `./summary.sh`
 
 This script simply calls `sacct` for all jobs submitted within this pipeline run. You should get output similar to the following.
 
@@ -398,13 +404,13 @@ Those `PENDING` are the jobs with dependencies. Once this pipeline run has compl
 1097930.0       orted                        00:06:29      1      1     1       13386M        6554M            slwrk-061  02:03.228  COMPLETED      0:0
 ```
 
-##### 18. View `caltables` directory
+##### 17. View `caltables` directory
 
 The calibration solution tables have been written to `caltables/1491550051.*`, including `bcal, gcal, fluxscale` and `kcal`, corresponding to the calibration solutions for bandpass, complex gains, flux-scaled complex gains, and delays, respectively.
 
-##### 19. Run `./displayTimes.sh`
+##### 18. Run `./displayTimes.sh`
 
-You should see output similar to the following, which shows this run took 24 minutes to complete, the longest of which was flagging for 8.5 minutes.
+You should see output similar to the following, which shows this run took ~24 minutes to complete, the longest of which was flagging for ~8 minutes.
 
 ```
 logs/flag_round_1-1097927.casa
@@ -421,7 +427,7 @@ logs/xx_yy_apply-1097930.casa
 2019-02-28 01:56:49
 ```
 
-##### 20. Run `./findErrors.sh`
+##### 19. Run `./findErrors.sh`
 
 ```
 logs/flag_round_1-1097927.out
@@ -434,28 +440,28 @@ logs/xx_yy_apply-1097930.out
 
 This error likely corresponds to empty sub-MS(s) with data completely flagged out, which give a worker node nothing to do for whichever CASA tasks are being called.
 
-##### 21. Rebuild your config file without verbose mode
+##### 20. Rebuild your config file without verbose mode
 
 `processMeerKAT.py -B -C tutorial_config.txt -M 1491550051.mms`
 
-This way we reset the list of scripts in our config file, and set `verbose=False` and `submit=False`. We will manually remove the scripts we already ran in step 23, so leave the `scripts` parameter as is.
+This way we reset the list of scripts in our config file, and set `verbose=False` and `submit=False`. We will manually remove the scripts we already ran in [step 24](#24-run-the-pipeline-using-your-updated-config-file), so leave the `scripts` parameter as is.
 
-##### 22. Edit your config file
+##### 21. Edit your config file
 
 Edit `tutorial_config.txt` to update the reference antenna to what `calc_refant.py` found as the best reference antenna. If you've forgotten that was, view it in `jobScripts/tutorial_config_*.txt` (antenna 7). We don't need to update `badants` as only `flag_round_1.py` uses this parameter, which we will not be running.
 
-##### 23. Run the pipeline using your updated config file
+##### 22. Run the pipeline using your updated config file
 
 `processMeerKAT.py -R -C tutorial_config.txt`
 
 Since we have set `verbose=False` and `submit=False`, the pipeline will not yet run, and you should see simplified output like the following:
 
 ```
-2019-02-28 11:47:20,011 WARNING: Changing [slurm] section in your config will have no effect unless you [-R --run] again
+2019-02-28 11:47:20,011 WARNING: Changing [slurm] section in your config will have no effect unless you [-R --run] again.
 2019-01-16 20:30:00,180 INFO: Master script "submit_pipeline.sh" written, but will not run.
 ```
 
-##### 24. Edit `submit_pipeline.sh`
+##### 23. Edit `submit_pipeline.sh`
 
 You will see in `submit_pipeline.sh` that each sbatch job is submitted on its own line, and that the job ID is extracted. Remove everything from `#validate_input.sbatch` to one line before `#flag_round_2.sbatch`, so it looks like the following
 
@@ -494,7 +500,7 @@ mkdir -p jobScripts
 
 **Note the first line has been edited to replace `+=,` with `=` and remove `-d afterok:$IDs --kill-on-invalid-dep=yes`, since it does not have any dependencies.**
 
-##### 25. Run `./submit_pipeline.sh`
+##### 24. Run `./submit_pipeline.sh`
 
 Again, we see simplified output
 
@@ -521,11 +527,15 @@ These job IDs comprise the new pipeline run we've just launched. So now `./summa
 1097954         plot_solutions        Main   00:00:00      1            1                                  None assigned   00:00:00    PENDING      0:0
 ```
 
-The 4 new ancillary (bash) jobScripts will also correspond to these 7 new job IDs. After this pipeline run has completed, viewing the output of `./displayTimes.sh` shows this run took XX minutes.
+The 4 new ancillary (bash) jobScripts will also correspond to these 7 new job IDs. If you want to see the output from the job scripts referring to the old pipeline runs, don't worry, they're still in the `jobScripts` directory with an older timestamp in the filename. Only the symlink in your working directory has been updated.
 
-If you want to see the output from the job scripts referring to the old pipeline runs, don't worry, they're still in the `jobScripts` directory with an older timestamp in the filename. Only the symlink in your working directory has been updated.
+Wait until the run finishes before step 25. You may want to come back later, as it takes ~1.5 hours.
 
-These new tasks follow the second step of a two step calibration process that is summarised on [this page](https://idia-pipelines.github.io/docs/processMeerKAT/calibration-in-processmeerkat/).
+##### 25. View the pipeline output
+
+After this pipeline run has completed, viewing the output of `./displayTimes.sh` shows this run took ~1.5 hours, including ~25 minutes for quick-look imaging all fields, and ~40 minutes for plotting (a [known issue](../Release-Notes#known-issues)).
+
+These new tasks follow the second step of a two step calibration process that is summarised on [this page](../Calibration-in-processMeerKAT).
 
 After `split.py` has run, you will see three new files
 
@@ -537,28 +547,28 @@ This corresponds to the data split out from `1491550051.mms`, for the bandpass/f
 
 `quick_tclean.py` creates quick-look images (i.e. with no selfcal, w-projection, threadholding, no-multiscale, etc) with robust weighting 0, for all fields specified in the config file, creating 512x512 images of the calibrator fields, and 2048x2048 images of the target field(s), both with 2 arcsec pixel sizes. For data with > 100 MHz bandwidth, two taylor terms are used, otherwise the 'clark' deconvolver is used.
 
-You can view the images by running `salloc` to allocate a compute node, or connecting to a fat node (e.g. `racetrack.idia.ac.za`) and launching ds9 or CASA viewer, respectively with the syntax (replace `/scratch/users/your_username/tutorial` below)::
+You can view the images by connecting to a fat node (e.g. `racetrack.idia.ac.za` - also ensure X-forwarding is enabled) and launching ds9 or CASA viewer, respectively with the syntax (replace `/scratch/users/your_username/tutorial` below):
 
 ```
 singularity exec /data/exp_soft/containers/sourcefinding_py3.simg ds9 /scratch/users/your_username/tutorial/images/*fits
 singularity exec /data/exp_soft/pipelines/casameer-5.4.1.xvfb.simg casa --nologger --log2term -c "viewer(infile='/scratch/users/your_username/tutorial/images/1491550051_DEEP_2_off.im.image.tt0/'); raw_input()"
 ```
 
-Here's what your images of the flux calibrator (`1934-638`) and field (`DEEP_2_off`) should look like.
+Here's what your images of the flux calibrator (`1934-638`) and target (`DEEP_2_off`) should look like.
 
-![DEEP2_image](/assets/DEEP2_image.png)
+![DEEP2_image](https://idia-pipelines.github.io/assets/DEEP2_image.png)
 
 Since we imaged a snapshot 16-dish MeerKAT observation using the old ROACH-2 correlator, with an on source time of ~20 minutes, we do not get very good image quality. Below is a more typical image produced by `quick_tclean.py` for a 64-dish observation using the SKARAB correlator, spanning ~8 hours, and only 5 MHz bandwidth.
 
-![64-dish-image](/assets/64-dish-image.png)
+![64-dish-image](https://idia-pipelines.github.io/assets/64-dish-image.png)
 
 ##### 27. View the figures in `plots` directory
 
 The last script that runs is `plot_solutions.py`, which calls CASA task `plotms` to plot the calibration solutions for the bandpass calibrator and the phase calibrator, as well as plots of the corrected data to eyeball for RFI. Below are a few selected plots.
 
-![bpass_freq_amp](/assets/bpass_freq_amp.png)
-![DEEP_2_off_freq_amp](/assets/DEEP_2_off_freq_amp.png)
-![DEEP_2_off_real_imag](/assets/DEEP_2_off_real_imag.png)
+![bpass_freq_amp](https://idia-pipelines.github.io/assets/bpass_freq_amp.png)
+![DEEP_2_off_freq_amp](https://idia-pipelines.github.io/assets/DEEP_2_off_freq_amp.png)
+![DEEP_2_off_real_imag](https://idia-pipelines.github.io/assets/DEEP_2_off_real_imag.png)
 
 **That's it! You have completed the tutorial! Now go forth and do some phenomenal MeerKAT science!**
 

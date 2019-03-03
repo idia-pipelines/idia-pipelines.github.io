@@ -59,12 +59,6 @@
     
       
         
-          <li class="navigation-list-item">
-            
-            <a href="http://localhost:4000/docs/containers/" class="navigation-list-link">Singularity Containers</a>
-            
-          </li>
-        
       
     
       
@@ -99,15 +93,13 @@
                   
                 
                   
-                
-                  
-                
-                  
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/using-the-pipeline/" class="navigation-list-link">Using the Pipeline</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/Using-The-Pipeline/" class="navigation-list-link">Using the Pipeline</a>
                       
                     </li>
+                  
+                
                   
                 
                   
@@ -116,6 +108,8 @@
                       <a href="http://localhost:4000/docs/processMeerKAT/Example-Use-Cases/" class="navigation-list-link">Example Use Cases</a>
                       
                     </li>
+                  
+                
                   
                 
                   
@@ -129,7 +123,7 @@
                   
                     <li class="navigation-list-item  active">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/deep-2-tutorial/" class="navigation-list-link active">DEEP 2 Tutorial</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/DEEP-2-Tutorial/" class="navigation-list-link active">DEEP 2 Tutorial</a>
                       
                     </li>
                   
@@ -137,7 +131,7 @@
                   
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/calibration-in-processmeerkat/" class="navigation-list-link">Calibration in processMeerKAT</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/Calibration-in-processMeerKAT/" class="navigation-list-link">Calibration in processMeerKAT</a>
                       
                     </li>
                   
@@ -161,6 +155,12 @@
       
     
       
+        
+          <li class="navigation-list-item">
+            
+            <a href="http://localhost:4000/docs/containers/" class="navigation-list-link">Singularity Containers</a>
+            
+          </li>
         
       
     
@@ -225,7 +225,7 @@
         <div id="main-content" class="page-content" role="main">
           <h1 id="deep-2-tutorial">DEEP 2 Tutorial</h1>
 
-<h4 id="this-tutorial-walks-you-through-running-the-various-steps-of-the-pipeline-for-a-single-deep-2-dataset-which-is-a-snapshot-20-minutes-on-source-16-dish-meerkat-observation-of-a-random-patch-of-sky-using-the-old-roach-2-correlator-11-gb-in-size">This tutorial walks you through running the various steps of the pipeline for a single DEEP 2 dataset, which is a snapshot (~20 minutes on source), 16-dish MeerKAT observation of a random patch of sky using the old ROACH-2 correlator, 11 GB in size.</h4>
+<h3 id="this-tutorial-walks-you-through-running-the-various-steps-of-the-pipeline-for-a-single-deep-2-dataset-which-is-a-snapshot-20-minutes-on-source-16-dish-meerkat-observation-of-a-random-patch-of-sky-using-the-old-roach-2-correlator-11-gb-in-size">This tutorial walks you through running the various steps of the pipeline for a single DEEP 2 dataset, which is a snapshot (~20 minutes on source), 16-dish MeerKAT observation of a random patch of sky using the old ROACH-2 correlator, 11 GB in size.</h3>
 
 <p>To begin, ssh into the ilifu cluster (<code class="highlighter-rouge">slurm.ilifu.ac.za</code>), and create a working directory somewhere on the filesystem (e.g. <code class="highlighter-rouge">/scratch/users/your_username/tutorial/</code>).</p>
 
@@ -304,11 +304,11 @@ targetfields = '3,1'
 
 <p>This config file contains four sections - crosscal, slurm, data, and fields. The fields IDs we just extracted, seen in section <code class="highlighter-rouge">[fields]</code>, correspond to field 0 for the bandpass calibrator, field 0 for the total flux calibrator, field 2 for the phase calibrator, and fields 3 and 1 for the science targets (i.e. the DEEP 2 field + another calibrator). Only the target may have multiple fields. If a field isn’t found according to its intent, a warning is displayed, and the field for the total flux calibrator is selected. If the total flux calibrator isn’t present, the program will display an error and terminate.</p>
 
-<p>The SLURM parameters in section <code class="highlighter-rouge">[slurm]</code> correspond to those seen by running <code class="highlighter-rouge">processMeerKAT.py -h</code>. By default, for all threadsafe scripts (i.e. those with <code class="highlighter-rouge">True</code> in the <code class="highlighter-rouge">scripts</code> list), we use 8 nodes, 4 tasks per node (=32 threads), 236 GB of memory (per node), and <code class="highlighter-rouge">plane=2</code> (which distributes four tasks onto one node before moving onto next node). During step 2, only 12 scans were found, and since <code class="highlighter-rouge">partition.py</code> partitions the data into one sub-measurement set (sub-MS) per scan, only 12 sub-MSs will exist in the multi-measurement set (see section 19). Assuming each observation has a phase calibrator bracketing each target scan, at most, 6 sub-MSs will be operated on at any given time, each handled by one thread, and a master thread. So we aim to have a limit of nscans+1+10% threads, with the 10% to account for the occasional thread that hangs. For this dataset, this limit is 7 threads, so <code class="highlighter-rouge">get_fields.py</code> attempts to match this number by using the specified number of tasks per node and increasing the node count from 1 until the number of threads is more than the limit, terminating at 2 nodes x 4 tasks per node = 8 threads.</p>
+<p>The SLURM parameters in section <code class="highlighter-rouge">[slurm]</code> correspond to those seen by running <code class="highlighter-rouge">processMeerKAT.py -h</code>. By default, for all threadsafe scripts (i.e. those with <code class="highlighter-rouge">True</code> in the <code class="highlighter-rouge">scripts</code> list), we use 8 nodes, 4 tasks per node (=32 threads), 236 GB of memory (per node), and <code class="highlighter-rouge">plane=2</code> (which distributes four tasks onto one node before moving onto next node). During step 2, only 12 scans were found, and since <code class="highlighter-rouge">partition.py</code> partitions the data into one sub-measurement set (sub-MS) per scan, only 12 sub-MSs will exist in the multi-measurement set (see <a href="#20-run-displaytimessh">section 20</a>). Assuming each observation has a phase calibrator bracketing each target scan, at most, 6 sub-MSs will be operated on at any given time, each handled by one thread, and a master thread. So we aim to have a limit of nscans+1+10% threads, with the 10% to account for the occasional thread that hangs. For this dataset, this limit is 7 threads, so <code class="highlighter-rouge">get_fields.py</code> attempts to match this number by using the specified number of tasks per node and increasing the node count from 1 until the number of threads is more than the limit, terminating at 2 nodes x 4 tasks per node = 8 threads.</p>
 
 <p>For script that aren’t threadsafe (i.e. those with <code class="highlighter-rouge">False</code> in the <code class="highlighter-rouge">scripts</code> list), we use a single node, and a single task per node. For both scripts that are threadsafe and those that aren’t, we use a single CPU per task, and explicitly export <code class="highlighter-rouge">OMP_NUM_THREADS=1</code>, since there is little evidence of a speedup with more than one CPU per task. However, for <code class="highlighter-rouge">quick_tclean.py</code> we use 4 CPUs per task.</p>
 
-<p>The cross-calibration parameters in section <code class="highlighter-rouge">[crosscal]</code> correspond to various CASA parameters passed into the calibration tasks that the pipeline used, each of which is documented in [[Calibration-in-processMeerKAT]]. By default all frequency ranges listed in <code class="highlighter-rouge">badfreqranges</code>, and all antenna numbers listed in <code class="highlighter-rouge">badants</code>, will be flagged out entirely. The third script the pipeline runs (<code class="highlighter-rouge">calc_refant.py</code>) will likely change the value of <code class="highlighter-rouge">refant</code>, and add a list of bad antennas to <code class="highlighter-rouge">badant</code>.</p>
+<p>The cross-calibration parameters in section <code class="highlighter-rouge">[crosscal]</code> correspond to various CASA parameters passed into the calibration tasks that the pipeline used, each of which is documented <a href="../Calibration-in-processMeerKAT">here</a>. By default all frequency ranges listed in <code class="highlighter-rouge">badfreqranges</code>, and all antenna numbers listed in <code class="highlighter-rouge">badants</code>, will be flagged out entirely. The third script the pipeline runs (<code class="highlighter-rouge">calc_refant.py</code>) will likely change the value of <code class="highlighter-rouge">refant</code>, and add a list of bad antennas to <code class="highlighter-rouge">badant</code>.</p>
 
 <h5 id="4-run-the-pipeline-using-your-config-file">4. Run the pipeline using your config file</h5>
 
@@ -399,7 +399,7 @@ srun singularity <span class="nb">exec</span> /data/exp_soft/pipelines/casameer-
 /data/exp_soft/pipelines/casa-prerelease-5.3.0-115.el7/bin/mpicasa singularity <span class="nb">exec</span> /data/exp_soft/pipelines/casameer-5.4.1.xvfb.simg  casa <span class="nt">--nologger</span> <span class="nt">--nogui</span> <span class="nt">--logfile</span> logs/partition-<span class="k">${</span><span class="nv">SLURM_JOB_ID</span><span class="k">}</span>.casa <span class="nt">-c</span> /data/exp_soft/pipelines/master/processMeerKAT/cal_scripts/partition.py <span class="nt">--config</span> .config.tmp
 </code></pre></div></div>
 
-<p>Here we see the same default SLURM parameters for threadsafe tasks, as discussed in section 3. We now use mpicasa as the mpi wrapper, since we are calling a threadsafe script <code class="highlighter-rouge">partition.py</code>, which calls CASA task <code class="highlighter-rouge">partition</code>, which partitions the data into several sub measurement sets (sub-MSs - see <a href="#View-the-contents-of-1491550051.mms">section 14 below</a>) and selects only frequencies specified by your spectral window with parameter <code class="highlighter-rouge">spw</code> in your config file.</p>
+<p>Here we see the same default SLURM parameters for threadsafe tasks, as discussed in section 3. We now use mpicasa as the mpi wrapper, since we are calling a threadsafe script <code class="highlighter-rouge">partition.py</code>, which calls CASA task <code class="highlighter-rouge">partition</code>, which partitions the data into several sub measurement sets (sub-MSs - see <a href="#10-view-the-contents-of-1491550051mms">section 14 below</a>) and selects only frequencies specified by your spectral window with parameter <code class="highlighter-rouge">spw</code> in your config file.</p>
 
 <h5 id="9-submit-your-job-and-watch-it-in-the-queue">9. Submit your job and watch it in the queue</h5>
 
@@ -455,7 +455,7 @@ watch sacct
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>       JobID    JobName  Partition    Account  AllocCPUS      State ExitCode
 ------------ ---------- ---------- ---------- ---------- ---------- --------
-1097917       partition     Test02 b03-pipel+          8  COMPLETED      0:0
+1097917       partition       Main b03-pipel+          8  COMPLETED      0:0
 1097917.bat+      batch            b03-pipel+          4  COMPLETED      0:0
 1097917.0         orted            b03-pipel+          1  COMPLETED      0:0
 1097918      calc_refa+       Main b03-pipel+          1  COMPLETED      0:0
@@ -488,9 +488,9 @@ validate_input-1097914.casa  validate_input-1097914.err  validate_input-1097914.
 
 <p>Here we see <code class="highlighter-rouge">calc_refant.py</code> has selected antenna 7 as the best reference antenna, which measures comparable amplitude for the total flux calibrator compared to antenna 0, but a lower RMS. It has also found antennas 5 and 15 to be bad enough to flag out.</p>
 
-<h5 id="13-view-ant_statstxt">13. View <code class="highlighter-rouge">ant_stats.txt</code></h5>
+<h5 id="13-view-ant_statstxt-and-configtmp">13. View <code class="highlighter-rouge">ant_stats.txt</code> and <code class="highlighter-rouge">.config.tmp</code></h5>
 
-<p>You should see the following contents, corresponding to the amplitude and RMS each of the antennas measure</p>
+<p>You should see the following contents in <code class="highlighter-rouge">ant_stats.txt</code>, corresponding to the amplitude and RMS each of the antennas measure</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ant median rms
 0   8.84   305.28
@@ -511,25 +511,31 @@ validate_input-1097914.casa  validate_input-1097914.err  validate_input-1097914.
 15  243.71   569.51
 </code></pre></div></div>
 
-<h5 id="14-view-configtmp">14. View <code class="highlighter-rouge">.config.tmp</code></h5>
+<p>You should now see <code class="highlighter-rouge">refant = 7</code> and <code class="highlighter-rouge">badants = [5, 15]</code> in <code class="highlighter-rouge">.config.tmp</code>.</p>
 
-<p>You should now see <code class="highlighter-rouge">refant = 7</code> and <code class="highlighter-rouge">badants = [5, 15]</code>.</p>
+<h5 id="14-edit-your-config-file-to-run-the-next-steps">14. Edit your config file to run the next steps</h5>
 
-<h5 id="15-edit-your-config-file-to-run-the-next-steps">15. Edit your config file to run the next steps</h5>
-
-<p>Edit <code class="highlighter-rouge">tutorial_config.txt</code> to remove the first two and last six tuples in the <code class="highlighter-rouge">scripts</code> parameter, so it looks like the following:</p>
+<p>Edit <code class="highlighter-rouge">tutorial_config.txt</code> to remove the first three and last seven tuples in the <code class="highlighter-rouge">scripts</code> parameter, so it looks like the following:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>scripts = [('flag_round_1.py', True, ''), ('setjy.py', True, ''), ('xx_yy_solve.py', False, ''), ('xx_yy_apply.py', True, '')]
 </code></pre></div></div>
 
-<p>Replace <code class="highlighter-rouge">refant</code> and <code class="highlighter-rouge">badants</code> with what was found by <code class="highlighter-rouge">validate_input.py</code>, and select the submit option, so it looks like the following:</p>
+<p>Replace <code class="highlighter-rouge">refant</code> and <code class="highlighter-rouge">badants</code> with what was found by <code class="highlighter-rouge">validate_input.py</code>, select the submit option, and update <code class="highlighter-rouge">vis</code> to the MMS, so it looks like the following:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[crosscal]
 refant = 7
 badants = [5, 15]
+  .
+  .
+[slurm]
+submit = True
+  .
+  .
+[data]
+vis = 1491550051.mms
 </code></pre></div></div>
 
-<h5 id="16-run-the-pipeline-using-your-config-file">16. Run the pipeline using your config file</h5>
+<h5 id="15-run-the-pipeline-using-your-config-file">15. Run the pipeline using your config file</h5>
 
 <p><code class="highlighter-rouge">processMeerKAT.py -R -C tutorial_config.txt</code></p>
 
@@ -560,9 +566,9 @@ Run displayTimes.sh to display start and end timestamps (after pipeline has run)
 
 <p>As before, we see the sbatch files being written to our working directory. Since we set <code class="highlighter-rouge">submit=True</code>, <code class="highlighter-rouge">submit_pipeline.sh</code> has been run, and all output after that (without the timestamps) comes from this bash script. After the first job is run (<code class="highlighter-rouge">sbatch flag_round_1.sbatch</code>), each other job is run with a dependency on all previous jobs (e.g. <code class="highlighter-rouge">sbatch -d afterok:1097919,1097920,1097921 --kill-on-invalid-dep=yes xx_yy_apply.sbatch</code>). We can see this by calling <code class="highlighter-rouge">squeue -u your_username</code>, which shows those jobs <code class="highlighter-rouge">(Dependency)</code>. <code class="highlighter-rouge">submit_pipeline.sh</code> then writes four job scripts, all of which are explained in the output, written to <code class="highlighter-rouge">jobScripts</code> with a timestamp appended to the filename, and symlinked from your working directory. <code class="highlighter-rouge">findErrors.sh</code> finds errors after this pipeline run has completed, overlooking all nominal MPI errors.</p>
 
-<p>These tasks follow the first step of a two-step calibration process that is summarised in [[Calibration-in-processMeerKAT]].</p>
+<p>These tasks follow the first step of a two-step calibration process that is summarised <a href="../Calibration-in-processMeerKAT">here</a>.</p>
 
-<h5 id="17-run-summarysh">17. Run <code class="highlighter-rouge">./summary.sh</code></h5>
+<h5 id="16-run-summarysh">16. Run <code class="highlighter-rouge">./summary.sh</code></h5>
 
 <p>This script simply calls <code class="highlighter-rouge">sacct</code> for all jobs submitted within this pipeline run. You should get output similar to the following.</p>
 
@@ -593,13 +599,13 @@ Run displayTimes.sh to display start and end timestamps (after pipeline has run)
 1097930.0       orted                        00:06:29      1      1     1       13386M        6554M            slwrk-061  02:03.228  COMPLETED      0:0
 </code></pre></div></div>
 
-<h5 id="18-view-caltables-directory">18. View <code class="highlighter-rouge">caltables</code> directory</h5>
+<h5 id="17-view-caltables-directory">17. View <code class="highlighter-rouge">caltables</code> directory</h5>
 
 <p>The calibration solution tables have been written to <code class="highlighter-rouge">caltables/1491550051.*</code>, including <code class="highlighter-rouge">bcal, gcal, fluxscale</code> and <code class="highlighter-rouge">kcal</code>, corresponding to the calibration solutions for bandpass, complex gains, flux-scaled complex gains, and delays, respectively.</p>
 
-<h5 id="19-run-displaytimessh">19. Run <code class="highlighter-rouge">./displayTimes.sh</code></h5>
+<h5 id="18-run-displaytimessh">18. Run <code class="highlighter-rouge">./displayTimes.sh</code></h5>
 
-<p>You should see output similar to the following, which shows this run took 24 minutes to complete, the longest of which was flagging for 8.5 minutes.</p>
+<p>You should see output similar to the following, which shows this run took ~24 minutes to complete, the longest of which was flagging for ~8 minutes.</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>logs/flag_round_1-1097927.casa
 2019-02-28 01:32:37
@@ -615,7 +621,7 @@ logs/xx_yy_apply-1097930.casa
 2019-02-28 01:56:49
 </code></pre></div></div>
 
-<h5 id="20-run-finderrorssh">20. Run <code class="highlighter-rouge">./findErrors.sh</code></h5>
+<h5 id="19-run-finderrorssh">19. Run <code class="highlighter-rouge">./findErrors.sh</code></h5>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>logs/flag_round_1-1097927.out
 logs/setjy-1097928.out
@@ -627,27 +633,27 @@ logs/xx_yy_apply-1097930.out
 
 <p>This error likely corresponds to empty sub-MS(s) with data completely flagged out, which give a worker node nothing to do for whichever CASA tasks are being called.</p>
 
-<h5 id="21-rebuild-your-config-file-without-verbose-mode">21. Rebuild your config file without verbose mode</h5>
+<h5 id="20-rebuild-your-config-file-without-verbose-mode">20. Rebuild your config file without verbose mode</h5>
 
 <p><code class="highlighter-rouge">processMeerKAT.py -B -C tutorial_config.txt -M 1491550051.mms</code></p>
 
-<p>This way we reset the list of scripts in our config file, and set <code class="highlighter-rouge">verbose=False</code> and <code class="highlighter-rouge">submit=False</code>. We will manually remove the scripts we already ran in step 23, so leave the <code class="highlighter-rouge">scripts</code> parameter as is.</p>
+<p>This way we reset the list of scripts in our config file, and set <code class="highlighter-rouge">verbose=False</code> and <code class="highlighter-rouge">submit=False</code>. We will manually remove the scripts we already ran in <a href="#24-run-the-pipeline-using-your-updated-config-file">step 24</a>, so leave the <code class="highlighter-rouge">scripts</code> parameter as is.</p>
 
-<h5 id="22-edit-your-config-file">22. Edit your config file</h5>
+<h5 id="21-edit-your-config-file">21. Edit your config file</h5>
 
 <p>Edit <code class="highlighter-rouge">tutorial_config.txt</code> to update the reference antenna to what <code class="highlighter-rouge">calc_refant.py</code> found as the best reference antenna. If you’ve forgotten that was, view it in <code class="highlighter-rouge">jobScripts/tutorial_config_*.txt</code> (antenna 7). We don’t need to update <code class="highlighter-rouge">badants</code> as only <code class="highlighter-rouge">flag_round_1.py</code> uses this parameter, which we will not be running.</p>
 
-<h5 id="23-run-the-pipeline-using-your-updated-config-file">23. Run the pipeline using your updated config file</h5>
+<h5 id="22-run-the-pipeline-using-your-updated-config-file">22. Run the pipeline using your updated config file</h5>
 
 <p><code class="highlighter-rouge">processMeerKAT.py -R -C tutorial_config.txt</code></p>
 
 <p>Since we have set <code class="highlighter-rouge">verbose=False</code> and <code class="highlighter-rouge">submit=False</code>, the pipeline will not yet run, and you should see simplified output like the following:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2019-02-28 11:47:20,011 WARNING: Changing [slurm] section in your config will have no effect unless you [-R --run] again
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2019-02-28 11:47:20,011 WARNING: Changing [slurm] section in your config will have no effect unless you [-R --run] again.
 2019-01-16 20:30:00,180 INFO: Master script "submit_pipeline.sh" written, but will not run.
 </code></pre></div></div>
 
-<h5 id="24-edit-submit_pipelinesh">24. Edit <code class="highlighter-rouge">submit_pipeline.sh</code></h5>
+<h5 id="23-edit-submit_pipelinesh">23. Edit <code class="highlighter-rouge">submit_pipeline.sh</code></h5>
 
 <p>You will see in <code class="highlighter-rouge">submit_pipeline.sh</code> that each sbatch job is submitted on its own line, and that the job ID is extracted. Remove everything from <code class="highlighter-rouge">#validate_input.sbatch</code> to one line before <code class="highlighter-rouge">#flag_round_2.sbatch</code>, so it looks like the following</p>
 
@@ -685,7 +691,7 @@ IDs+<span class="o">=</span>,<span class="k">$(</span>sbatch <span class="nt">-d
 
 <p><strong>Note the first line has been edited to replace <code class="highlighter-rouge">+=,</code> with <code class="highlighter-rouge">=</code> and remove <code class="highlighter-rouge">-d afterok:$IDs --kill-on-invalid-dep=yes</code>, since it does not have any dependencies.</strong></p>
 
-<h5 id="25-run-submit_pipelinesh">25. Run <code class="highlighter-rouge">./submit_pipeline.sh</code></h5>
+<h5 id="24-run-submit_pipelinesh">24. Run <code class="highlighter-rouge">./submit_pipeline.sh</code></h5>
 
 <p>Again, we see simplified output</p>
 
@@ -710,11 +716,15 @@ Run displayTimes.sh to display start and end timestamps (after pipeline has run)
 1097954         plot_solutions        Main   00:00:00      1            1                                  None assigned   00:00:00    PENDING      0:0
 </code></pre></div></div>
 
-<p>The 4 new ancillary (bash) jobScripts will also correspond to these 7 new job IDs. After this pipeline run has completed, viewing the output of <code class="highlighter-rouge">./displayTimes.sh</code> shows this run took XX minutes.</p>
+<p>The 4 new ancillary (bash) jobScripts will also correspond to these 7 new job IDs. If you want to see the output from the job scripts referring to the old pipeline runs, don’t worry, they’re still in the <code class="highlighter-rouge">jobScripts</code> directory with an older timestamp in the filename. Only the symlink in your working directory has been updated.</p>
 
-<p>If you want to see the output from the job scripts referring to the old pipeline runs, don’t worry, they’re still in the <code class="highlighter-rouge">jobScripts</code> directory with an older timestamp in the filename. Only the symlink in your working directory has been updated.</p>
+<p>Wait until the run finishes before step 25. You may want to come back later, as it takes ~1.5 hours.</p>
 
-<p>These new tasks follow the second step of a two step calibration process that is summarised on <a href="https://idia-pipelines.github.io/docs/processMeerKAT/calibration-in-processmeerkat/">this page</a>.</p>
+<h5 id="25-view-the-pipeline-output">25. View the pipeline output</h5>
+
+<p>After this pipeline run has completed, viewing the output of <code class="highlighter-rouge">./displayTimes.sh</code> shows this run took ~1.5 hours, including ~25 minutes for quick-look imaging all fields, and ~40 minutes for plotting (a <a href="../Release-Notes#known-issues">known issue</a>).</p>
+
+<p>These new tasks follow the second step of a two step calibration process that is summarised on <a href="../Calibration-in-processMeerKAT">this page</a>.</p>
 
 <p>After <code class="highlighter-rouge">split.py</code> has run, you will see three new files</p>
 
@@ -726,27 +736,27 @@ Run displayTimes.sh to display start and end timestamps (after pipeline has run)
 
 <p><code class="highlighter-rouge">quick_tclean.py</code> creates quick-look images (i.e. with no selfcal, w-projection, threadholding, no-multiscale, etc) with robust weighting 0, for all fields specified in the config file, creating 512x512 images of the calibrator fields, and 2048x2048 images of the target field(s), both with 2 arcsec pixel sizes. For data with &gt; 100 MHz bandwidth, two taylor terms are used, otherwise the ‘clark’ deconvolver is used.</p>
 
-<p>You can view the images by running <code class="highlighter-rouge">salloc</code> to allocate a compute node, or connecting to a fat node (e.g. <code class="highlighter-rouge">racetrack.idia.ac.za</code>) and launching ds9 or CASA viewer, respectively with the syntax (replace <code class="highlighter-rouge">/scratch/users/your_username/tutorial</code> below)::</p>
+<p>You can view the images by connecting to a fat node (e.g. <code class="highlighter-rouge">racetrack.idia.ac.za</code> - also ensure X-forwarding is enabled) and launching ds9 or CASA viewer, respectively with the syntax (replace <code class="highlighter-rouge">/scratch/users/your_username/tutorial</code> below):</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>singularity exec /data/exp_soft/containers/sourcefinding_py3.simg ds9 /scratch/users/your_username/tutorial/images/*fits
 singularity exec /data/exp_soft/pipelines/casameer-5.4.1.xvfb.simg casa --nologger --log2term -c "viewer(infile='/scratch/users/your_username/tutorial/images/1491550051_DEEP_2_off.im.image.tt0/'); raw_input()"
 </code></pre></div></div>
 
-<p>Here’s what your images of the flux calibrator (<code class="highlighter-rouge">1934-638</code>) and field (<code class="highlighter-rouge">DEEP_2_off</code>) should look like.</p>
+<p>Here’s what your images of the flux calibrator (<code class="highlighter-rouge">1934-638</code>) and target (<code class="highlighter-rouge">DEEP_2_off</code>) should look like.</p>
 
-<p><img src="/assets/DEEP2_image.png" alt="DEEP2_image" /></p>
+<p><img src="https://idia-pipelines.github.io/assets/DEEP2_image.png" alt="DEEP2_image" /></p>
 
 <p>Since we imaged a snapshot 16-dish MeerKAT observation using the old ROACH-2 correlator, with an on source time of ~20 minutes, we do not get very good image quality. Below is a more typical image produced by <code class="highlighter-rouge">quick_tclean.py</code> for a 64-dish observation using the SKARAB correlator, spanning ~8 hours, and only 5 MHz bandwidth.</p>
 
-<p><img src="/assets/64-dish-image.png" alt="64-dish-image" /></p>
+<p><img src="https://idia-pipelines.github.io/assets/64-dish-image.png" alt="64-dish-image" /></p>
 
 <h5 id="27-view-the-figures-in-plots-directory">27. View the figures in <code class="highlighter-rouge">plots</code> directory</h5>
 
 <p>The last script that runs is <code class="highlighter-rouge">plot_solutions.py</code>, which calls CASA task <code class="highlighter-rouge">plotms</code> to plot the calibration solutions for the bandpass calibrator and the phase calibrator, as well as plots of the corrected data to eyeball for RFI. Below are a few selected plots.</p>
 
-<p><img src="/assets/bpass_freq_amp.png" alt="bpass_freq_amp" />
-<img src="/assets/DEEP_2_off_freq_amp.png" alt="DEEP_2_off_freq_amp" />
-<img src="/assets/DEEP_2_off_real_imag.png" alt="DEEP_2_off_real_imag" /></p>
+<p><img src="https://idia-pipelines.github.io/assets/bpass_freq_amp.png" alt="bpass_freq_amp" />
+<img src="https://idia-pipelines.github.io/assets/DEEP_2_off_freq_amp.png" alt="DEEP_2_off_freq_amp" />
+<img src="https://idia-pipelines.github.io/assets/DEEP_2_off_real_imag.png" alt="DEEP_2_off_real_imag" /></p>
 
 <p><strong>That’s it! You have completed the tutorial! Now go forth and do some phenomenal MeerKAT science!</strong></p>
 

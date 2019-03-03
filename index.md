@@ -26,5 +26,5 @@ active members who are working on the IDIA system, or the related software/algor
 Email the project lead at [bradley@idia.ac.za][brad], or submit a ticket to our helpdesk:
 [support@ilifu.ac.za][ilifu].
 
-[ilifu]: support@ilifu.ac.za
-[brad]: bradley@idia.ac.za
+[ilifu]: mailto:support@ilifu.ac.za
+[brad]: mailto:bradley@idia.ac.za

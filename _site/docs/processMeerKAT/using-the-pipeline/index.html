@@ -59,12 +59,6 @@
     
       
         
-          <li class="navigation-list-item">
-            
-            <a href="http://localhost:4000/docs/containers/" class="navigation-list-link">Singularity Containers</a>
-            
-          </li>
-        
       
     
       
@@ -99,15 +93,13 @@
                   
                 
                   
-                
-                  
-                
-                  
                     <li class="navigation-list-item  active">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/using-the-pipeline/" class="navigation-list-link active">Using the Pipeline</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/Using-The-Pipeline/" class="navigation-list-link active">Using the Pipeline</a>
                       
                     </li>
+                  
+                
                   
                 
                   
@@ -116,6 +108,8 @@
                       <a href="http://localhost:4000/docs/processMeerKAT/Example-Use-Cases/" class="navigation-list-link">Example Use Cases</a>
                       
                     </li>
+                  
+                
                   
                 
                   
@@ -129,7 +123,7 @@
                   
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/deep-2-tutorial/" class="navigation-list-link">DEEP 2 Tutorial</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/DEEP-2-tutorial/" class="navigation-list-link">DEEP 2 Tutorial</a>
                       
                     </li>
                   
@@ -137,7 +131,7 @@
                   
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/calibration-in-processmeerkat/" class="navigation-list-link">Calibration in processMeerKAT</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/Calibration-in-processMeerKAT/" class="navigation-list-link">Calibration in processMeerKAT</a>
                       
                     </li>
                   
@@ -161,6 +155,12 @@
       
     
       
+        
+          <li class="navigation-list-item">
+            
+            <a href="http://localhost:4000/docs/containers/" class="navigation-list-link">Singularity Containers</a>
+            
+          </li>
         
       
     
@@ -352,7 +352,7 @@ optional arguments:
   <li>Build config file with different set of (python) scripts</li>
 </ul>
 
-<p><code class="highlighter-rouge">processMeerKAT.py -B -C myconfig.txt -S /absolute/path/to/my/script.py False /absolute/path/to/container.simg -S partition.py True '' -S relative/path/to/my/script.py True relative/path/to/container.simg -S flag_round_1.py True '' -S script_in_bash_PATH.py False container_in_bash_PATH.simg run_setjy.py True ''</code></p>
+<p><code class="highlighter-rouge">processMeerKAT.py -B -C myconfig.txt -S /absolute/path/to/my/script.py False /absolute/path/to/container.simg -S partition.py True '' -S relative/path/to/my/script.py True relative/path/to/container.simg -S flag_round_1.py True '' -S script_in_bash_PATH.py False container_in_bash_PATH.simg setjy.py True ''</code></p>
 
 <ul>
   <li>Run the pipeline immediately in verbose mode</li>
@@ -360,7 +360,7 @@ optional arguments:
 
 <p><code class="highlighter-rouge">processMeerKAT.py -R -v -s -C myconfig.txt</code></p>
 
-<p><strong>NOTE:</strong> All other command-line arguments passed into <code class="highlighter-rouge">processMeerKAT.py</code> when using option <code class="highlighter-rouge">[-R --run]</code> will have no effect, since the arguments are read from the config file at this point. Only options <code class="highlighter-rouge">[-v --verbose]</code> and <code class="highlighter-rouge">[-C --config]</code> will have any effect at this point.</p>
+<p><strong>NOTE:</strong> All other command-line arguments passed into <code class="highlighter-rouge">processMeerKAT.py</code> when using option <code class="highlighter-rouge">[-R --run]</code> will have no effect, since the arguments are read from the config file at this point. Only options <code class="highlighter-rouge">[-v --verbose]</code> and <code class="highlighter-rouge">[-C --config]</code> will have any effect at this point. Similarly, changing the <code class="highlighter-rouge">[slurm]</code> section in your config file after using option <code class="highlighter-rouge">[-R --run]</code> will have no effect unless you <code class="highlighter-rouge">[-R --run]</code> again.</p>
 
 <h2 id="config-files">Config files</h2>
 
@@ -390,6 +390,7 @@ time = '12:00:00'
 submit = False
 container = '/data/exp_soft/pipelines/casameer-5.4.1.xvfb.simg'
 mpi_wrapper = '/data/exp_soft/pipelines/casa-prerelease-5.3.0-115.el7/bin/mpicasa'
+name = ''
 verbose = False
 scripts = [ ('validate_input.py',False,''),
             ('partition.py',True,''),
@@ -445,15 +446,15 @@ targetfields = '2'
 
 <p>The path to the scripts (and containers) can be an absolute path, a relative path, or in your bash path. If none of these exist, the script (or container) is assumed to be in the calibration scripts directory (<code class="highlighter-rouge">/data/exp_soft/pipelines/master/processMeerKAT/cal_scripts/</code>). Hence simply using <code class="highlighter-rouge">partition.py</code> will call the partition script in the calibration scripts directory.</p>
 
-<h4 id="adding-scripts-to-config-file">Adding scripts to config file</h4>
+<h3 id="adding-scripts-to-config-file">Adding scripts to config file</h3>
 
 <p>Edit the <code class="highlighter-rouge">scripts</code> argument in your config file, which must be a list of lists/tuples.</p>
 
-<h4 id="adding-scripts-via-command-line">Adding scripts via command line</h4>
+<h3 id="adding-scripts-via-command-line">Adding scripts via command line</h3>
 
 <p>Build a config file pointing to your scripts, each time appending the same three arguments (listed above):</p>
 
-<p><code class="highlighter-rouge">processMeerKAT.py -B -C myconfig.txt -S /absolute/path/to/my/script.py False /absolute/path/to/container.simg -S partition.py True '' -S relative/path/to/my/script.py True relative/path/to/container.simg -S flag_round_1.py True '' -S script_in_bash_PATH.py False container_in_bash_path.simg run_setjy.py True ''</code></p>
+<p><code class="highlighter-rouge">processMeerKAT.py -B -C myconfig.txt -S /absolute/path/to/my/script.py False /absolute/path/to/container.simg -S partition.py True '' -S relative/path/to/my/script.py True relative/path/to/container.simg -S flag_round_1.py True '' -S script_in_bash_PATH.py False container_in_bash_path.simg setjy.py True ''</code></p>
 
 <p>An error will be raised if any of the scripts or containers aren’t found.</p>
 

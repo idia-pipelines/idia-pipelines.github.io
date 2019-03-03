@@ -20,8 +20,7 @@ The current release includes the following functionality:
 * Diagnostic plots of the calibration tables and corrected data.
 * Uses CASA 5.4.1, Python 2.7, and Singularity 2.6.1.
 
-Please consult the documentation on [https://idia-pipelines.github.io/](https://idia-pipelines.github.io/) for more information.
-
+Please consult the documentation on [GitHub](https://idia-pipelines.github.io/) for more information. Three talks about version 1.0 of the pipeline, presented from the IDIA pipelines team during the [2019 South African MIGHTEE Early Science Workshop](https://www.idia.ac.za/mightee-uwc-2019/), can be found here: [1](https://idia-pipelines.github.io/assets/Talk1.pdf), [2](https://idia-pipelines.github.io/assets/Talk2.pdf), [3](https://idia-pipelines.github.io/assets/Talk3.pdf).
 
 Known Issues
 ==
@@ -34,7 +33,7 @@ Known Issues
 
 * **Field IDs**: The pipeline does not currently support specifying multiple fields for anything other than the targets.
 
-* **Flux scale**: Although the fluxes of the calibrated targets and calibrator sources are typically accurate to within a few percent, we find that there are certain datasets that result in a flux scale that is down by a factor of a few. We are in the process of tracking down the root cause of these issues, and expect to issue a fix soon. However, if you do happen to notice that the fluxes of one or more of the sources/targets are off (either higher/lower), please report it by creating an issue in the [Github repository](https://github.com/idia-astro/pipelines/issues).
+* **Flux scale**: Although the fluxes of the calibrated targets and calibrator sources are typically accurate to within a few percent, we find that there are certain datasets that result in a flux scale that is down by a factor of a few. We are in the process of tracking down the root cause of these issues, and expect to issue a fix soon. However, if you do happen to notice that the fluxes of one or more of the sources/targets are off (either higher/lower), please report it by creating a [Github issue](https://github.com/idia-astro/pipelines/issues).
 
 * **Calculation of antenna statistics**: The amplitude and RMS per antenna computed in `calc_refant.py` does not match what is found by CASA task `visstat`, and decreases as a function of antenna number. We expect to issue a fix soon.
 

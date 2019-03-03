@@ -19,7 +19,7 @@ Typical calibration and imaging of radio data comprises three steps:
   direction dependent effects.
 
 The `processMeerKAT` currently does full-polarisation *a priori* calibration on MeerKAT data, and includes automated
-flagging. `processMeerKAT` is written solely for the processing of data on IDIA's SLURM cluster, but
+flagging. `processMeerKAT` is written solely for the processing of data on the Ilifu SLURM cluster, but
 future revisions will allow you to run the software on any HPC platform.
 
 The main features of `processMeerKAT` are as follows:

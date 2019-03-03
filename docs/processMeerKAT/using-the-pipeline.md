@@ -111,13 +111,13 @@ This will create `submit_pipeline.sh`, which you can then run to submit all pipe
 
 * Build config file with different set of (python) scripts
 
-```processMeerKAT.py -B -C myconfig.txt -S /absolute/path/to/my/script.py False /absolute/path/to/container.simg -S partition.py True '' -S relative/path/to/my/script.py True relative/path/to/container.simg -S flag_round_1.py True '' -S script_in_bash_PATH.py False container_in_bash_PATH.simg run_setjy.py True ''```
+```processMeerKAT.py -B -C myconfig.txt -S /absolute/path/to/my/script.py False /absolute/path/to/container.simg -S partition.py True '' -S relative/path/to/my/script.py True relative/path/to/container.simg -S flag_round_1.py True '' -S script_in_bash_PATH.py False container_in_bash_PATH.simg setjy.py True ''```
 
 * Run the pipeline immediately in verbose mode
 
 ```processMeerKAT.py -R -v -s -C myconfig.txt```
 
-**NOTE:** All other command-line arguments passed into `processMeerKAT.py` when using option `[-R --run]` will have no effect, since the arguments are read from the config file at this point. Only options `[-v --verbose]` and `[-C --config]` will have any effect at this point.
+**NOTE:** All other command-line arguments passed into `processMeerKAT.py` when using option `[-R --run]` will have no effect, since the arguments are read from the config file at this point. Only options `[-v --verbose]` and `[-C --config]` will have any effect at this point. Similarly, changing the `[slurm]` section in your config file after using option `[-R --run]` will have no effect unless you `[-R --run]` again.
 
 ## Config files
 
@@ -148,6 +148,7 @@ time = '12:00:00'
 submit = False
 container = '/data/exp_soft/pipelines/casameer-5.4.1.xvfb.simg'
 mpi_wrapper = '/data/exp_soft/pipelines/casa-prerelease-5.3.0-115.el7/bin/mpicasa'
+name = ''
 verbose = False
 scripts = [ ('validate_input.py',False,''),
             ('partition.py',True,''),
@@ -203,14 +204,14 @@ To insert your own scripts, either build a config file and edit the `scripts` ar
 
 The path to the scripts (and containers) can be an absolute path, a relative path, or in your bash path. If none of these exist, the script (or container) is assumed to be in the calibration scripts directory (`/data/exp_soft/pipelines/master/processMeerKAT/cal_scripts/`). Hence simply using `partition.py` will call the partition script in the calibration scripts directory.
 
-#### Adding scripts to config file
+### Adding scripts to config file
 
 Edit the `scripts` argument in your config file, which must be a list of lists/tuples.
 
-#### Adding scripts via command line
+### Adding scripts via command line
 
 Build a config file pointing to your scripts, each time appending the same three arguments (listed above):
 
-```processMeerKAT.py -B -C myconfig.txt -S /absolute/path/to/my/script.py False /absolute/path/to/container.simg -S partition.py True '' -S relative/path/to/my/script.py True relative/path/to/container.simg -S flag_round_1.py True '' -S script_in_bash_PATH.py False container_in_bash_path.simg run_setjy.py True ''```
+```processMeerKAT.py -B -C myconfig.txt -S /absolute/path/to/my/script.py False /absolute/path/to/container.simg -S partition.py True '' -S relative/path/to/my/script.py True relative/path/to/container.simg -S flag_round_1.py True '' -S script_in_bash_PATH.py False container_in_bash_path.simg setjy.py True ''```
 
 An error will be raised if any of the scripts or containers aren't found.

@@ -59,12 +59,6 @@
     
       
         
-          <li class="navigation-list-item">
-            
-            <a href="http://localhost:4000/docs/containers/" class="navigation-list-link">Singularity Containers</a>
-            
-          </li>
-        
       
     
       
@@ -99,15 +93,13 @@
                   
                 
                   
-                
-                  
-                
-                  
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/using-the-pipeline/" class="navigation-list-link">Using the Pipeline</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/Using-The-Pipeline/" class="navigation-list-link">Using the Pipeline</a>
                       
                     </li>
+                  
+                
                   
                 
                   
@@ -116,6 +108,8 @@
                       <a href="http://localhost:4000/docs/processMeerKAT/Example-Use-Cases/" class="navigation-list-link">Example Use Cases</a>
                       
                     </li>
+                  
+                
                   
                 
                   
@@ -129,7 +123,7 @@
                   
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/deep-2-tutorial/" class="navigation-list-link">DEEP 2 Tutorial</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/DEEP-2-tutorial/" class="navigation-list-link">DEEP 2 Tutorial</a>
                       
                     </li>
                   
@@ -137,7 +131,7 @@
                   
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/calibration-in-processmeerkat/" class="navigation-list-link">Calibration in processMeerKAT</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/Calibration-in-processMeerKAT/" class="navigation-list-link">Calibration in processMeerKAT</a>
                       
                     </li>
                   
@@ -161,6 +155,12 @@
       
     
       
+        
+          <li class="navigation-list-item">
+            
+            <a href="http://localhost:4000/docs/containers/" class="navigation-list-link">Singularity Containers</a>
+            
+          </li>
         
       
     
@@ -235,8 +235,7 @@
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    processMeerKAT.py -B -C myconfig.txt -M mydata.ms
 </code></pre></div></div>
 
-<p>This defines several variables that are read by the pipeline while calibrating the data, as well as requesting resources on the cluster. The config file parameters are described by in-line comments in the config
-    file itself wherever possible.</p>
+<p>This defines several variables that are read by the pipeline while calibrating the data, as well as requesting resources on the cluster. The config file parameters are described by in-line comments in the config file itself wherever possible.</p>
 
 <h3 id="3-to-run-the-pipeline">3. To run the pipeline:</h3>
 
@@ -245,8 +244,7 @@
 
 <p>This will create <code class="highlighter-rouge">submit_pipeline.sh</code>, which you can then run like <code class="highlighter-rouge">./submit_pipeline.sh</code> to submit all pipeline jobs to the SLURM queue.</p>
 
-<p>Other convenience scripts are also created that allow you to monitor and (if necessary) kill the jobs. <code class="highlighter-rouge">summary.sh</code> provides a brief overview of the status of the jobs in the pipeline, <code class="highlighter-rouge">findErrors.sh</code> checks the log files for commonly
-reported errors, and <code class="highlighter-rouge">killJobs.sh</code> kills all the jobs from the current run of the pipeline, ignoring any other jobs you might have running.</p>
+<p>Other convenience scripts are also created that allow you to monitor and (if necessary) kill the jobs. <code class="highlighter-rouge">summary.sh</code> provides a brief overview of the status of the jobs in the pipeline, <code class="highlighter-rouge">findErrors.sh</code> checks the log files for commonly reported errors, and <code class="highlighter-rouge">killJobs.sh</code> kills all the jobs from the current run of the pipeline, ignoring any other jobs you might have running.</p>
 
 <p>For help, run <code class="highlighter-rouge">processMeerKAT.py -h</code>, which provides a brief description of all the command line arguments.</p>
 

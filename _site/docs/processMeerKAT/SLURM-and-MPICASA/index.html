@@ -59,12 +59,6 @@
     
       
         
-          <li class="navigation-list-item">
-            
-            <a href="http://localhost:4000/docs/containers/" class="navigation-list-link">Singularity Containers</a>
-            
-          </li>
-        
       
     
       
@@ -99,15 +93,13 @@
                   
                 
                   
-                
-                  
-                
-                  
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/using-the-pipeline/" class="navigation-list-link">Using the Pipeline</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/Using-The-Pipeline/" class="navigation-list-link">Using the Pipeline</a>
                       
                     </li>
+                  
+                
                   
                 
                   
@@ -116,6 +108,8 @@
                       <a href="http://localhost:4000/docs/processMeerKAT/Example-Use-Cases/" class="navigation-list-link">Example Use Cases</a>
                       
                     </li>
+                  
+                
                   
                 
                   
@@ -129,7 +123,7 @@
                   
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/deep-2-tutorial/" class="navigation-list-link">DEEP 2 Tutorial</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/DEEP-2-Tutorial/" class="navigation-list-link">DEEP 2 Tutorial</a>
                       
                     </li>
                   
@@ -137,7 +131,7 @@
                   
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/calibration-in-processmeerkat/" class="navigation-list-link">Calibration in processMeerKAT</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/Calibration-in-processMeerKAT/" class="navigation-list-link">Calibration in processMeerKAT</a>
                       
                     </li>
                   
@@ -161,6 +155,12 @@
       
     
       
+        
+          <li class="navigation-list-item">
+            
+            <a href="http://localhost:4000/docs/containers/" class="navigation-list-link">Singularity Containers</a>
+            
+          </li>
         
       
     
@@ -311,7 +311,7 @@ https://slurm.schedmd.com/sbatch.html</p>
 
 <p>Running CASA through SLURM requires calling CASA via <code class="highlighter-rouge">mpicasa</code>. CASA understands how to use <code class="highlighter-rouge">mpi</code> on tasks that are optimised for <code class="highlighter-rouge">mpi</code> (such as <code class="highlighter-rouge">flagdata</code>, <code class="highlighter-rouge">tclean</code>, <code class="highlighter-rouge">setjy</code>, and <code class="highlighter-rouge">applycal</code>) while operating as per usual on tasks that are not <code class="highlighter-rouge">mpi</code> aware (like <code class="highlighter-rouge">gaincal</code>). Ideally, the only change to an existing script would be to add a call to <code class="highlighter-rouge">partition</code> at the top. Below are some notes on tasks.</p>
 
-<p><strong>partition</strong>: In order to run across a cluster the <code class="highlighter-rouge">partition</code> task needs to be called prior to running any other tasks. <code class="highlighter-rouge">partition</code>  <a href="https://casa.nrao.edu/docs/TaskRef/partition-task.html">creates a multi-measurement set</a> (MMS) that is a collection of multiple SUBMS’s, each of which will be operated upon as a task in SLURM. By default CASA will split the MS along the spectral window (<code class="highlighter-rouge">spw</code>) axis, and across scans. The number of SUBMSes created can be specified in <code class="highlighter-rouge">partition</code>, however it seems that specifying a number larger than what CASA would decide leads to some strangeness with the metadata (and a failure of tasks that operate on the MMS).</p>
+<p><strong>partition</strong>: In order to run across a cluster the <code class="highlighter-rouge">partition</code> task needs to be called prior to running any other tasks. <code class="highlighter-rouge">partition</code>  <a href="https://casa.nrao.edu/casadocs/casa-5.4.1/uv-manipulation/data-partition">creates a multi-measurement set</a> (MMS) that is a collection of multiple SUBMS’s, each of which will be operated upon as a task in SLURM. By default CASA will split the MS along the spectral window (<code class="highlighter-rouge">spw</code>) axis, and across scans. The number of SUBMSes created can be specified in <code class="highlighter-rouge">partition</code>, however it seems that specifying a number larger than what CASA would decide leads to some strangeness with the metadata (and a failure of tasks that operate on the MMS).</p>
 
 <p><strong>tclean</strong>: In order to run across a cluster, <code class="highlighter-rouge">parallel=True</code> should be specified in <code class="highlighter-rouge">tclean</code>. However, if <code class="highlighter-rouge">savemodel='modelcolumn'</code> is also specified, it triggers some kind of a race condition between the different nodes where they are competing for write access, and the task crashes. So setting <code class="highlighter-rouge">savemodel='virtual'</code> or <code class="highlighter-rouge">savemodel='none'</code> are the only options that work. Both the <code class="highlighter-rouge">makePSF</code> step and the minor cycles of deconvolution are openMP aware, and can exploit additional resources specified via <code class="highlighter-rouge">--cpus-per-task</code> in the SLURM <code class="highlighter-rouge">sbatch</code> file.</p>
 

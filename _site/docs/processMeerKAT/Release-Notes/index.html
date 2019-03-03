@@ -59,12 +59,6 @@
     
       
         
-          <li class="navigation-list-item">
-            
-            <a href="http://localhost:4000/docs/containers/" class="navigation-list-link">Singularity Containers</a>
-            
-          </li>
-        
       
     
       
@@ -99,15 +93,13 @@
                   
                 
                   
-                
-                  
-                
-                  
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/using-the-pipeline/" class="navigation-list-link">Using the Pipeline</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/Using-The-Pipeline/" class="navigation-list-link">Using the Pipeline</a>
                       
                     </li>
+                  
+                
                   
                 
                   
@@ -116,6 +108,8 @@
                       <a href="http://localhost:4000/docs/processMeerKAT/Example-Use-Cases/" class="navigation-list-link">Example Use Cases</a>
                       
                     </li>
+                  
+                
                   
                 
                   
@@ -129,7 +123,7 @@
                   
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/deep-2-tutorial/" class="navigation-list-link">DEEP 2 Tutorial</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/DEEP-2-Tutorial/" class="navigation-list-link">DEEP 2 Tutorial</a>
                       
                     </li>
                   
@@ -137,7 +131,7 @@
                   
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/calibration-in-processmeerkat/" class="navigation-list-link">Calibration in processMeerKAT</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/Calibration-in-processMeerKAT/" class="navigation-list-link">Calibration in processMeerKAT</a>
                       
                     </li>
                   
@@ -161,6 +155,12 @@
       
     
       
+        
+          <li class="navigation-list-item">
+            
+            <a href="http://localhost:4000/docs/containers/" class="navigation-list-link">Singularity Containers</a>
+            
+          </li>
         
       
     
@@ -240,7 +240,7 @@
   <li>Uses CASA 5.4.1, Python 2.7, and Singularity 2.6.1.</li>
 </ul>
 
-<p>Please consult the documentation on <a href="https://idia-pipelines.github.io/">https://idia-pipelines.github.io/</a> for more information.</p>
+<p>Please consult the documentation on <a href="https://idia-pipelines.github.io/">GitHub</a> for more information. Three talks about version 1.0 of the pipeline, presented from the IDIA pipelines team during the <a href="https://www.idia.ac.za/mightee-uwc-2019/">2019 South African MIGHTEE Early Science Workshop</a>, can be found here: <a href="https://idia-pipelines.github.io/assets/Talk1.pdf">1</a>, <a href="https://idia-pipelines.github.io/assets/Talk2.pdf">2</a>, <a href="https://idia-pipelines.github.io/assets/Talk3.pdf">3</a>.</p>
 
 <h1 id="known-issues">Known Issues</h1>
 
@@ -258,7 +258,7 @@
     <p><strong>Field IDs</strong>: The pipeline does not currently support specifying multiple fields for anything other than the targets.</p>
   </li>
   <li>
-    <p><strong>Flux scale</strong>: Although the fluxes of the calibrated targets and calibrator sources are typically accurate to within a few percent, we find that there are certain datasets that result in a flux scale that is down by a factor of a few. We are in the process of tracking down the root cause of these issues, and expect to issue a fix soon. However, if you do happen to notice that the fluxes of one or more of the sources/targets are off (either higher/lower), please report it by creating an issue in the <a href="https://github.com/idia-astro/pipelines/issues">Github repository</a>.</p>
+    <p><strong>Flux scale</strong>: Although the fluxes of the calibrated targets and calibrator sources are typically accurate to within a few percent, we find that there are certain datasets that result in a flux scale that is down by a factor of a few. We are in the process of tracking down the root cause of these issues, and expect to issue a fix soon. However, if you do happen to notice that the fluxes of one or more of the sources/targets are off (either higher/lower), please report it by creating a <a href="https://github.com/idia-astro/pipelines/issues">Github issue</a>.</p>
   </li>
   <li>
     <p><strong>Calculation of antenna statistics</strong>: The amplitude and RMS per antenna computed in <code class="highlighter-rouge">calc_refant.py</code> does not match what is found by CASA task <code class="highlighter-rouge">visstat</code>, and decreases as a function of antenna number. We expect to issue a fix soon.</p>

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Singularity Containers
-nav_order: 3
+nav_order: 4
 ---
 # Singularity Containers
 At IDIA, astronomical software packages are provided and managed using [Singularity][singularity] containers. Containers
@@ -137,4 +137,4 @@ several containers.
 [github-containers]:https://github.com/AfricanResearchCloud/idia-containers
 [kern]: http://kernsuite.info/
 [sfissues]: https://github.com/AfricanResearchCloud/idia-containers/issues/4
-[support]: support@ilifu.ac.za
+[support]: mailto:support@ilifu.ac.za

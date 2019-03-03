@@ -36,7 +36,7 @@ smallest visibility rms.
 
 **Data partition** : The input measurement set (MS) is partitioned into
 a [multi-measurement set
-(MMS)](https://casa.nrao.edu/casadocs/casa-5-1.2/uv-manipulation/data-partition)
+(MMS)](https://casa.nrao.edu/casadocs/casa-5.4.1/uv-manipulation/data-partition)
 using the CASA task `partition`. This task splits up the main MS into smaller
 SUBMSs that are individual units of a larger logical MMS. The number of SUBMSs
 created are equal to the number of scans in the input MS. Partitioning the data
@@ -64,7 +64,7 @@ calibrated data.
 
 **Cross hand calibration** : The cross hand calibration recipe broadly follows
 the CASA guide for [polarisation calibration in the linear
-basis](https://casa.nrao.edu/casadocs/casa-5-1.2/synthesis-calibration/instrumental-polarization-calibration).
+basis](https://casa.nrao.edu/casadocs/casa-5.4.1/synthesis-calibration/instrumental-polarization-calibration).
 The previous round of calibration is cleared, and a new set of bandpass, delay
 and parallel hand gains are computed. Using the CASA helper routine
 `qufromgain`, the Q and U values of the secondary calibrator are computed, and
