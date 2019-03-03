@@ -7,7 +7,7 @@ nav_order: 4
 
 # Calibration
 
-Our algorithmic approach toward calibration in the pipeline can be found [here](../Calibration-in-processMeerKAT).
+Our algorithmic approach toward calibration in the pipeline can be found [here](https://idia-pipelines.github.io/Calibration-in-processMeerKAT).
 
 ### Stokes I Calibration (Continuum)
 
@@ -37,7 +37,7 @@ By default, the pipeline will convert the input measurement set (MS) into a mult
 
 At the end of the pipeline, `split.py` will split each of the field IDs specified in your config file into MMS format. This is the default behaviour, since the default value of `keepmms` in the config file is `True`. This also ensures `tclean` makes use of MPI (and multiple CPUs) during `quick_tclean.py`, so that your imaging runs much more quickly.
 
-This mode is encouraged for users who only want to have quicklook images, or who have written a `tclean` script that will make use of MPI, that they can insert at the end of the pipeline (see [Using the Pipeline](../Using-the-Pipeline#inserting-your-own-scripts)).
+This mode is encouraged for users who only want to have quicklook images, or who have written a `tclean` script that will make use of MPI, that they can insert at the end of the pipeline (see [Using the Pipeline](https://idia-pipelines.github.io/Using-the-Pipeline#inserting-your-own-scripts)).
 
 ### MS -> MMS -> MS
 
@@ -67,6 +67,6 @@ Multiple field IDs can be specified by writing a comma-separated list to your co
 
 There are a few steps within the pipeline that only need to be run once for a given dataset. For datasets that have already been through the default pipeline, the reference antenna and list of bad antennas would have been calculated, and can be found in `logs/calc_refant-*.out`. These can be written your new config file, where you also set `calcrefant=False`.
 
-More generally, users can run any selected parts of the pipeline by editing the `scripts` argument or passing scripts in via the command-line arguments (see [Using the Pipeline](../Using-the-Pipeline#inserting-your-own-scripts)).
+More generally, users can run any selected parts of the pipeline by editing the `scripts` argument or passing scripts in via the command-line arguments (see [Using the Pipeline](https://idia-pipelines.github.io/Using-the-Pipeline#inserting-your-own-scripts)).
 
 The pipeline is not designed to run twice within the same directory, since CASA will complain the files already exist. The pipeline can be killed and re-run from the start at any point, but care should also be taken to ensure the data are not corrupted (e.g. during flagging or solving).

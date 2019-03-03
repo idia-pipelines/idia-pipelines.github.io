@@ -92,7 +92,7 @@ The SLURM parameters in section `[slurm]` correspond to those seen by running `p
 
 For script that aren't threadsafe (i.e. those with `False` in the `scripts` list), we use a single node, and a single task per node. For both scripts that are threadsafe and those that aren't, we use a single CPU per task, and explicitly export `OMP_NUM_THREADS=1`, since there is little evidence of a speedup with more than one CPU per task. However, for `quick_tclean.py` we use 4 CPUs per task.
 
-The cross-calibration parameters in section `[crosscal]` correspond to various CASA parameters passed into the calibration tasks that the pipeline used, each of which is documented [here](../Calibration-in-processMeerKAT). By default all frequency ranges listed in `badfreqranges`, and all antenna numbers listed in `badants`, will be flagged out entirely. The third script the pipeline runs (`calc_refant.py`) will likely change the value of `refant`, and add a list of bad antennas to `badant`.
+The cross-calibration parameters in section `[crosscal]` correspond to various CASA parameters passed into the calibration tasks that the pipeline used, each of which is documented [here](https://idia-pipelines.github.io/Calibration-in-processMeerKAT). By default all frequency ranges listed in `badfreqranges`, and all antenna numbers listed in `badants`, will be flagged out entirely. The third script the pipeline runs (`calc_refant.py`) will likely change the value of `refant`, and add a list of bad antennas to `badant`.
 
 ##### 4. Run the pipeline using your config file
 
@@ -368,7 +368,7 @@ Run displayTimes.sh to display start and end timestamps (after pipeline has run)
 
 As before, we see the sbatch files being written to our working directory. Since we set `submit=True`, `submit_pipeline.sh` has been run, and all output after that (without the timestamps) comes from this bash script. After the first job is run (`sbatch flag_round_1.sbatch`), each other job is run with a dependency on all previous jobs (e.g. `sbatch -d afterok:1097919,1097920,1097921 --kill-on-invalid-dep=yes xx_yy_apply.sbatch`). We can see this by calling `squeue -u your_username`, which shows those jobs `(Dependency)`. `submit_pipeline.sh` then writes four job scripts, all of which are explained in the output, written to `jobScripts` with a timestamp appended to the filename, and symlinked from your working directory. `findErrors.sh` finds errors after this pipeline run has completed, overlooking all nominal MPI errors.
 
-These tasks follow the first step of a two-step calibration process that is summarised [here](../Calibration-in-processMeerKAT).
+These tasks follow the first step of a two-step calibration process that is summarised [here](https://idia-pipelines.github.io/Calibration-in-processMeerKAT).
 
 ##### 16. Run `./summary.sh`
 
@@ -533,9 +533,9 @@ Wait until the run finishes before step 25. You may want to come back later, as 
 
 ##### 25. View the pipeline output
 
-After this pipeline run has completed, viewing the output of `./displayTimes.sh` shows this run took ~1.5 hours, including ~25 minutes for quick-look imaging all fields, and ~40 minutes for plotting (a [known issue](../Release-Notes#known-issues)).
+After this pipeline run has completed, viewing the output of `./displayTimes.sh` shows this run took ~1.5 hours, including ~25 minutes for quick-look imaging all fields, and ~40 minutes for plotting (a [known issue](https://idia-pipelines.github.io/Release-Notes#known-issues)).
 
-These new tasks follow the second step of a two step calibration process that is summarised on [this page](../Calibration-in-processMeerKAT).
+These new tasks follow the second step of a two step calibration process that is summarised on [this page](https://idia-pipelines.github.io/Calibration-in-processMeerKAT).
 
 After `split.py` has run, you will see three new files
 
@@ -574,7 +574,7 @@ The last script that runs is `plot_solutions.py`, which calls CASA task `plotms`
 
 ### Also see
 
-- [Calibration in processMeerKAT](../Calibration-in-processMeerKAT)
-- [Diagnosing Errors](../Diagnosing-Errors)
-- [Using the pipeline](../Using-the-pipeline)
+- [Calibration in processMeerKAT](https://idia-pipelines.github.io/Calibration-in-processMeerKAT)
+- [Diagnosing Errors](https://idia-pipelines.github.io/Diagnosing-Errors)
+- [Using the pipeline](https://idia-pipelines.github.io/Using-the-pipeline)
 

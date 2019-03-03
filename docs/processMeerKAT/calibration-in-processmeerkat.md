@@ -5,7 +5,7 @@ parent: processMeerKAT
 nav_order: 7
 ---
 
-![processMeerKAT_flowchart](/assets/processMeerKAT.png)
+![processMeerKAT_flowchart](https://idia-pipelines.github.io/assets/processMeerKAT.png)
 
 processMeerKAT implements a CASA based wide-band full Stokes calibration
 pipeline (in the linear basis). Broadly, the pipeline aims to "do the right
