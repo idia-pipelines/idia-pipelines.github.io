@@ -13,6 +13,10 @@ This page is, by no means, exhaustive, and will be updated as more issues are re
 
 We note here that although the pipeline is constructed to have job dependencies, _i.e.,_ if one job fails, all the subsequent jobs are meant to be cancelled, this does not always work. We find that there are several cases where CASA will crash, and SLURM does not recognise that the job has terminated and will continue to execute the other jobs in the pipeline. We suspect that this is due to a difference in error handling between SLURM and CASA. Please keep a watch on the status of your jobs using the `./summary.sh` script, as well as the log files created to make sure that the pipeline is proceeding correctly.
 
+### Fluxscale Issues
+
+If any fluxscale issues are discovered within your dataset (see [known issues](https://idia-pipelines.github.io/docs/processMeerKAT/Release-Notes/#known-issues)), particularly for short-track observations, we recommend you replace the 'xy_yx' scripts in your config file with the 'xx_yy' scripts (see [example use case](https://idia-pipelines.github.io/docs/processMeerKAT/Example-Use-Cases#short-track-observations-and-fluxscale-issues)).
+
 ### ORTE error
 
 An error of the form

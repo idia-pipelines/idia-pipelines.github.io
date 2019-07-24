@@ -13,30 +13,30 @@ To begin, ssh into the ilifu cluster (`slurm.ilifu.ac.za`), and create a working
 
 ##### 1. Source `setup.sh`, which will add to your PATH and PYTHONPATH
 
-```source /data/exp_soft/pipelines/master/setup.sh```
+```source /idia/software/pipelines/master/setup.sh```
 
 ##### 2. Build a config file, using verbose mode, and pointing to the DEEP 2 dataset
 
-```processMeerKAT.py -B -C tutorial_config.txt -M /data/projects/deep/1491550051.ms -v```
+```processMeerKAT.py -B -C tutorial_config.txt -M /idia/projects/deep/1491550051.ms -v```
 
 After some initial debug output, you should get the following output, with different timestamps
 
 ```
-2019-02-28 02:36:14,421 INFO: Extracting field IDs from measurement set "/data/projects/deep/1491550051.ms" using CASA.
+2019-02-28 02:36:14,421 INFO: Extracting field IDs from measurement set "/idia/projects/deep/1491550051.ms" using CASA.
 2019-02-28 02:36:14,422 DEBUG: Using the following command:
-   srun --nodes=1 --ntasks=1 --time=10 --mem=4GB --partition=Main singularity exec /data/exp_soft/pipelines/casameer-5.4.1.xvfb.simg  casa --nologger --nogui --nologfile -c /data/exp_soft/pipelines/master/processMeerKAT/cal_scripts/get_fields.py -B -M /data/projects/deep/1491550051.ms -C tutorial_config.txt -N 8 -t 4
+   srun --nodes=1 --ntasks=1 --time=10 --mem=4GB --partition=Main singularity exec /idia/software/pipelines/casameer-5.4.1.xvfb.simg  casa --nologger --nogui --nologfile -c /idia/software/pipelines/master/processMeerKAT/cal_scripts/get_fields.py -B -M /idia/projects/deep/1491550051.ms -C tutorial_config.txt -N 8 -t 4
       .
       .
       .
-2019-02-28 02:37:39,788 WARNING: The number of threads (8 node(s) x 4 task(s) = 32) is not ideal compared to the number of scans (12) for "/data/projects/deep/1491550051.ms".
+2019-02-28 02:37:39,788 WARNING: The number of threads (8 node(s) x 4 task(s) = 32) is not ideal compared to the number of scans (12) for "/idia/projects/deep/1491550051.ms".
 2019-02-28 02:37:39,788 WARNING: Config file has been updated to use 2 node(s) and 4 task(s) per node.
 2019-02-28 02:37:39,788 INFO: For the best results, update your config file so that nodes x tasks per node = 7.
-2019-02-28 02:37:40,045 INFO: Multiple fields found with intent "CALIBRATE_FLUX" in dataset "/data/projects/deep/1491550051.ms" - [0 1].
+2019-02-28 02:37:40,045 INFO: Multiple fields found with intent "CALIBRATE_FLUX" in dataset "/idia/projects/deep/1491550051.ms" - [0 1].
 2019-02-28 02:37:40,110 WARNING: Only using field "0" for "fluxfield", which has the most scans (1).
 2019-02-28 02:37:40,110 WARNING: Putting extra fields with intent "CALIBRATE_FLUX" in "targetfields" - [1]
-2019-02-28 02:37:40,111 INFO: Multiple fields found with intent "CALIBRATE_BANDPASS" in dataset "/data/projects/deep/1491550051.ms" - [0 1].
+2019-02-28 02:37:40,111 INFO: Multiple fields found with intent "CALIBRATE_BANDPASS" in dataset "/idia/projects/deep/1491550051.ms" - [0 1].
 2019-02-28 02:37:40,111 WARNING: Only using field "0" for "bpassfield", which has the most scans (1).
-2019-02-28 02:37:40,112 INFO: Multiple fields found with intent "CALIBRATE_PHASE" in dataset "/data/projects/deep/1491550051.ms" - [1 2].
+2019-02-28 02:37:40,112 INFO: Multiple fields found with intent "CALIBRATE_PHASE" in dataset "/idia/projects/deep/1491550051.ms" - [1 2].
 2019-02-28 02:37:40,112 WARNING: Only using field "2" for "phasecalfield", which has the most scans (5).
 2019-02-28 02:37:40,123 INFO: [fields] section written to "tutorial_config.txt". Edit this section to change field IDs (comma-seperated string for multiple IDs).
 2019-02-28 02:37:41,990 INFO: Config "tutorial_config.txt" generated.
@@ -70,14 +70,14 @@ mem = 236
 partition = 'Main'
 time = '12:00:00'
 submit = False
-container = '/data/exp_soft/pipelines/casameer-5.4.1.xvfb.simg'
-mpi_wrapper = '/data/exp_soft/pipelines/casa-prerelease-5.3.0-115.el7/bin/mpicasa'
+container = '/idia/software/pipelines/casameer-5.4.1.xvfb.simg'
+mpi_wrapper = '/idia/software/pipelines/casa-prerelease-5.3.0-115.el7/bin/mpicasa'
 name = ''
 verbose = True
 scripts = [('validate_input.py', False, ''), ('partition.py', True, ''), ('calc_refant.py', False, ''), ('flag_round_1.py', True, ''), ('setjy.py', True, ''), ('xx_yy_solve.py', False, ''), ('xx_yy_apply.py', True, ''), ('flag_round_2.py', True, ''), ('setjy.py', True, ''), ('xy_yx_solve.py', False, ''), ('xy_yx_apply.py', True, ''), ('split.py', True, ''), ('quick_tclean.py', True, ''), ('plot_solutions.py', False, '')]
 
 [data]
-vis = '/data/projects/deep/1491550051.ms'
+vis = '/idia/projects/deep/1491550051.ms'
 
 [fields]
 bpassfield = '0'
@@ -139,7 +139,7 @@ A number of sbatch files have now been written to your working directory, each o
 
 export OMP_NUM_THREADS=1
 
-srun singularity exec /data/exp_soft/pipelines/casameer-5.4.1.xvfb.simg  casa --nologger --nogui --logfile logs/validate_input-${SLURM_JOB_ID}.casa -c /data/exp_soft/pipelines/master/processMeerKAT/cal_scripts/validate_input.py --config .config.tmp
+srun singularity exec /idia/software/pipelines/casameer-5.4.1.xvfb.simg  casa --nologger --nogui --logfile logs/validate_input-${SLURM_JOB_ID}.casa -c /idia/software/pipelines/master/processMeerKAT/cal_scripts/validate_input.py --config .config.tmp
 ```
 
 Since this script is not threadsafe, the job is called with `srun`, and is configured to run a single task on a single node, with 100 GB of memory. The last line shows the CASA call of the `validate_input.py` task, which will validate the parameters in the config file.
@@ -185,7 +185,7 @@ We can see the job with name `validate` was submitted to SLURM worker node 8, am
 
 export OMP_NUM_THREADS=1
 
-/data/exp_soft/pipelines/casa-prerelease-5.3.0-115.el7/bin/mpicasa singularity exec /data/exp_soft/pipelines/casameer-5.4.1.xvfb.simg  casa --nologger --nogui --logfile logs/partition-${SLURM_JOB_ID}.casa -c /data/exp_soft/pipelines/master/processMeerKAT/cal_scripts/partition.py --config .config.tmp
+/idia/software/pipelines/casa-prerelease-5.3.0-115.el7/bin/mpicasa singularity exec /idia/software/pipelines/casameer-5.4.1.xvfb.simg  casa --nologger --nogui --logfile logs/partition-${SLURM_JOB_ID}.casa -c /idia/software/pipelines/master/processMeerKAT/cal_scripts/partition.py --config .config.tmp
 ```
 
 Here we see the same default SLURM parameters for threadsafe tasks, as discussed in [section 3](#3-view-the-config-file-created-which-has-the-following-contents). We now use mpicasa as the mpi wrapper, since we are calling a threadsafe script `partition.py`, which calls CASA task `partition`, which partitions the data into several sub measurement sets (sub-MSs - see [section 10 below](#10-view-the-contents-of-1491550051mms)) and selects only frequencies specified by your spectral window with parameter `spw` in your config file.
@@ -545,13 +545,13 @@ This corresponds to the data split out from `1491550051.mms`, for the bandpass/f
 
 ##### 26. View the images in the `images` directory
 
-`quick_tclean.py` creates quick-look images (i.e. with no selfcal, w-projection, threadholding, no-multiscale, etc) with robust weighting 0, for all fields specified in the config file, creating 512x512 images of the calibrator fields, and 2048x2048 images of the target field(s), both with 2 arcsec pixel sizes. For data with > 100 MHz bandwidth, two taylor terms are used, otherwise the 'clark' deconvolver is used.
+`quick_tclean.py` creates quick-look images (i.e. with no selfcal, w-projection, thresholding, no multiscale, etc) with robust weighting 0, for all fields specified in the config file, creating 512x512 images of the calibrator fields, and 2048x2048 images of the target field(s), both with 2 arcsec pixel sizes. For data with > 100 MHz bandwidth, two taylor terms are used, otherwise the 'clark' deconvolver is used.
 
 You can view the images by connecting to a fat node (e.g. `racetrack.idia.ac.za` - also ensure X-forwarding is enabled) and launching ds9 or CASA viewer, respectively with the syntax (replace `/scratch/users/your_username/tutorial` below):
 
 ```
-singularity exec /data/exp_soft/containers/sourcefinding_py3.simg ds9 /scratch/users/your_username/tutorial/images/*fits
-singularity exec /data/exp_soft/pipelines/casameer-5.4.1.xvfb.simg casa --nologger --log2term -c "viewer(infile='/scratch/users/your_username/tutorial/images/1491550051_DEEP_2_off.im.image.tt0/'); raw_input()"
+singularity exec /idia/software/containers/sourcefinding_py3.simg ds9 /scratch/users/your_username/tutorial/images/*fits
+singularity exec /idia/software/pipelines/casameer-5.4.1.xvfb.simg casa --nologger --log2term -c "viewer(infile='/scratch/users/your_username/tutorial/images/1491550051_DEEP_2_off.im.image.tt0/'); raw_input()"
 ```
 
 Here's what your images of the flux calibrator (`1934-638`) and target (`DEEP_2_off`) should look like.

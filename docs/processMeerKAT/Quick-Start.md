@@ -7,7 +7,7 @@ nav_order: 1
 
 ### 1. In order to use the `processMeerKAT.py` script, source the `setup.sh` file:
 
-        source /data/exp_soft/pipelines/master/setup.sh
+        source /idia/software/pipelines/master/setup.sh
 
 which will add the correct paths to your `$PATH` and `$PYTHONPATH` in order to correctly use the pipeline. We recommend you add this to your `~/.profile`, for future use.
 

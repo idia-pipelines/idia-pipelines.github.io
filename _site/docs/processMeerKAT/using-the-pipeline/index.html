@@ -45,15 +45,15 @@
     
       
         
-      
-    
-      
-        
           <li class="navigation-list-item">
             
             <a href="http://localhost:4000/docs/access/" class="navigation-list-link">Access to IDIA Machines</a>
             
           </li>
+        
+      
+    
+      
         
       
     
@@ -83,6 +83,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/Release-Notes/" class="navigation-list-link">Release Notes</a>
@@ -91,11 +93,9 @@
                   
                 
                   
-                
-                  
                     <li class="navigation-list-item  active">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/Using-The-Pipeline/" class="navigation-list-link active">Using the Pipeline</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/using-the-pipeline/" class="navigation-list-link active">Using the Pipeline</a>
                       
                     </li>
                   
@@ -123,7 +123,7 @@
                   
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/DEEP-2-tutorial/" class="navigation-list-link">DEEP 2 Tutorial</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/deep-2-tutorial/" class="navigation-list-link">DEEP 2 Tutorial</a>
                       
                     </li>
                   
@@ -131,7 +131,7 @@
                   
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/Calibration-in-processMeerKAT/" class="navigation-list-link">Calibration in processMeerKAT</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/calibration-in-processmeerkat/" class="navigation-list-link">Calibration in processMeerKAT</a>
                       
                     </li>
                   
@@ -232,7 +232,7 @@
 
 <p>which gives</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>usage: /data/exp_soft/pipelines/master/processMeerKAT/processMeerKAT.py
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>usage: /idia/software/pipelines/master/processMeerKAT/processMeerKAT.py
        [-h] [-M path] [-C path] [-N num] [-t num] [-P num] [-m num] [-p name]
        [-T time] [-S script threadsafe container] [-w path] [-c path]
        [-n unique] [-l] [-s] [-v] (-B | -R | -V)
@@ -262,11 +262,11 @@ optional arguments:
                         [-c --container]). Is it threadsafe (2nd value)?
   -w path, --mpi_wrapper path
                         Use this mpi wrapper when calling threadsafe scripts
-                        [default: '/data/exp_soft/pipelines/casa-
+                        [default: '/idia/software/pipelines/casa-
                         prerelease-5.3.0-115.el7/bin/mpicasa'].
   -c path, --container path
                         Use this container when calling scripts [default:
-                        '/data/exp_soft/pipelines/casameer-5.4.1.xvfb.simg'].
+                        '/idia/software/pipelines/casameer-5.4.1.xvfb.simg'].
   -n unique, --name unique
                         Unique name to give this pipeline run (e.g. 'run1_'),
                         appended to the start of all job names. [default: ''].
@@ -286,7 +286,7 @@ optional arguments:
   <li>To get things working, source <code class="highlighter-rouge">setup.sh</code>, which will add to your <code class="highlighter-rouge">$PATH</code> and <code class="highlighter-rouge">$PYTHONPATH</code> (add this to your <code class="highlighter-rouge">~/.profile</code>, for future use)</li>
 </ul>
 
-<p><code class="highlighter-rouge">source /data/exp_soft/pipelines/master/setup.sh</code></p>
+<p><code class="highlighter-rouge">source /idia/software/pipelines/master/setup.sh</code></p>
 
 <ul>
   <li>To print the version of the pipeline, run</li>
@@ -360,7 +360,7 @@ optional arguments:
 
 <p><code class="highlighter-rouge">processMeerKAT.py -R -v -s -C myconfig.txt</code></p>
 
-<p><strong>NOTE:</strong> All other command-line arguments passed into <code class="highlighter-rouge">processMeerKAT.py</code> when using option <code class="highlighter-rouge">[-R --run]</code> will have no effect, since the arguments are read from the config file at this point. Only options <code class="highlighter-rouge">[-v --verbose]</code> and <code class="highlighter-rouge">[-C --config]</code> will have any effect at this point. Similarly, changing the <code class="highlighter-rouge">[slurm]</code> section in your config file after using option <code class="highlighter-rouge">[-R --run]</code> will have no effect unless you <code class="highlighter-rouge">[-R --run]</code> again.</p>
+<p><strong>NOTE:</strong> All other command-line arguments passed into <code class="highlighter-rouge">processMeerKAT.py</code> when using option <code class="highlighter-rouge">[-R --run]</code> will have no effect, since the arguments are read from the config file at this point. Only options <code class="highlighter-rouge">[-s --submit], [-v --verbose]</code> and <code class="highlighter-rouge">[-C --config]</code> will have any effect at this point. Similarly, changing the <code class="highlighter-rouge">[slurm]</code> section in your config file after using option <code class="highlighter-rouge">[-R --run]</code> will have no effect unless you <code class="highlighter-rouge">[-R --run]</code> again.</p>
 
 <h2 id="config-files">Config files</h2>
 
@@ -371,11 +371,11 @@ minbaselines = 4                  # Minimum number of baselines to use while cal
 specavg = 1                       # Number of channels to average after calibration (during split)
 timeavg = '8s'                    # Time interval to average after calibration (during split)
 spw = '0:860~1700MHz'             # Spectral window / frequencies to extract for MMS
-calcrefant = True                 # Calculate reference antenna in program (overwrites 'refant')
+calcrefant = False                # Calculate reference antenna in program (overwrites 'refant')
 refant = 'm005'                   # Reference antenna name / number
 standard = 'Perley-Butler 2010'   # Flux density standard for setjy
 badants = []                      # List of bad antenna numbers (to flag)
-badfreqranges = [ '944~947MHz',   # List of bad frequency ranges (to flag)
+badfreqranges = [ '935~947MHz',   # List of bad frequency ranges (to flag)
                   '1160~1310MHz',
                   '1476~1611MHz',
                   '1670~1700MHz']
@@ -388,8 +388,8 @@ mem = 236                         # Use this many GB of memory (per node)
 partition = 'Main'                # SLURM partition to use
 time = '12:00:00'
 submit = False
-container = '/data/exp_soft/pipelines/casameer-5.4.1.xvfb.simg'
-mpi_wrapper = '/data/exp_soft/pipelines/casa-prerelease-5.3.0-115.el7/bin/mpicasa'
+container = '/idia/software/pipelines/casameer-5.4.1.xvfb.simg'
+mpi_wrapper = '/idia/software/pipelines/casa-prerelease-5.3.0-115.el7/bin/mpicasa'
 name = ''
 verbose = False
 scripts = [ ('validate_input.py',False,''),
@@ -408,7 +408,7 @@ scripts = [ ('validate_input.py',False,''),
             ('quick_tclean.py',True,'')]
 </code></pre></div></div>
 
-<p>When the pipeline is run, the contents of your config file are copied to <code class="highlighter-rouge">.config.tmp</code> and each python script reads the parameters from this file as it is run. This way, the user cannot easily break the pipeline during the time it is running. This also means changing the [slurm] section in your config file will have no effect unless you once again run <code class="highlighter-rouge">processMeerKAT.py -R</code>.</p>
+<p>When the pipeline is run, the contents of your config file are copied to <code class="highlighter-rouge">.config.tmp</code> and each python script reads the parameters from this file as it is run. This way, the user cannot easily break the pipeline during the time it is running. This means changing the [slurm] section in your config file will have no effect unless you once again run <code class="highlighter-rouge">processMeerKAT.py -R</code>.</p>
 
 <h2 id="selecting-ms-and-fields-ids">Selecting MS and fields IDs</h2>
 
@@ -416,12 +416,12 @@ scripts = [ ('validate_input.py',False,''),
 
 <p><code class="highlighter-rouge">processMeerKAT.py -B -C myconfig.txt -M mydata.ms</code></p>
 
-<p>This calls CASA and adds a <code class="highlighter-rouge">[data]</code> section to your config file, which points to your MS, and a <code class="highlighter-rouge">[fields]</code> section, which points to the field IDs you want to process as bandpass, total flux and phase calibrators, and science target(s). Only targets may have multiple fields separated by a comma, and all extra calibrator fields are appended as “targets”, to allow for solutions to be applied to them, and images to be made of them (see [[Release-Notes:-V1.0]]).</p>
+<p>This calls CASA and adds a <code class="highlighter-rouge">[data]</code> section to your config file, which points to your MS, and a <code class="highlighter-rouge">[fields]</code> section, which points to the field IDs you want to process as bandpass, total flux and phase calibrators, and science target(s). Only targets may have multiple fields separated by a comma, and all extra calibrator fields are appended as “targets”, to allow for solutions to be applied to them, and images to be made of them (see <a href="https://idia-pipelines.github.io/docs/processMeerKAT/Release-Notes/">v1.0 release notes</a>).</p>
 
 <p>The following is an example of what is appended to the bottom of your config file.</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[data]
-vis = '/data/projects/deep/1497056411.ms'
+vis = '/idia/projects/deep/1497056411.ms'
 
 [fields]
 bpassfield = '0'
@@ -444,7 +444,7 @@ targetfields = '2'
   <li>The path to the container with which to call the script - use ‘ ‘ for the default container</li>
 </ol>
 
-<p>The path to the scripts (and containers) can be an absolute path, a relative path, or in your bash path. If none of these exist, the script (or container) is assumed to be in the calibration scripts directory (<code class="highlighter-rouge">/data/exp_soft/pipelines/master/processMeerKAT/cal_scripts/</code>). Hence simply using <code class="highlighter-rouge">partition.py</code> will call the partition script in the calibration scripts directory.</p>
+<p>The path to the scripts (and containers) can be an absolute path, a relative path, or in your bash path. If none of these exist, the script (or container) is assumed to be in the calibration scripts directory (<code class="highlighter-rouge">/idia/software/pipelines/master/processMeerKAT/cal_scripts/</code>). Hence simply using <code class="highlighter-rouge">partition.py</code> will call the partition script in the calibration scripts directory.</p>
 
 <h3 id="adding-scripts-to-config-file">Adding scripts to config file</h3>
 

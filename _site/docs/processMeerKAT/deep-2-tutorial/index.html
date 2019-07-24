@@ -45,15 +45,15 @@
     
       
         
-      
-    
-      
-        
           <li class="navigation-list-item">
             
             <a href="http://localhost:4000/docs/access/" class="navigation-list-link">Access to IDIA Machines</a>
             
           </li>
+        
+      
+    
+      
         
       
     
@@ -83,6 +83,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/Release-Notes/" class="navigation-list-link">Release Notes</a>
@@ -91,11 +93,9 @@
                   
                 
                   
-                
-                  
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/Using-The-Pipeline/" class="navigation-list-link">Using the Pipeline</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/using-the-pipeline/" class="navigation-list-link">Using the Pipeline</a>
                       
                     </li>
                   
@@ -123,7 +123,7 @@
                   
                     <li class="navigation-list-item  active">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/DEEP-2-Tutorial/" class="navigation-list-link active">DEEP 2 Tutorial</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/deep-2-tutorial/" class="navigation-list-link active">DEEP 2 Tutorial</a>
                       
                     </li>
                   
@@ -131,7 +131,7 @@
                   
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/Calibration-in-processMeerKAT/" class="navigation-list-link">Calibration in processMeerKAT</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/calibration-in-processmeerkat/" class="navigation-list-link">Calibration in processMeerKAT</a>
                       
                     </li>
                   
@@ -231,29 +231,29 @@
 
 <h5 id="1-source-setupsh-which-will-add-to-your-path-and-pythonpath">1. Source <code class="highlighter-rouge">setup.sh</code>, which will add to your PATH and PYTHONPATH</h5>
 
-<p><code class="highlighter-rouge">source /data/exp_soft/pipelines/master/setup.sh</code></p>
+<p><code class="highlighter-rouge">source /idia/software/pipelines/master/setup.sh</code></p>
 
 <h5 id="2-build-a-config-file-using-verbose-mode-and-pointing-to-the-deep-2-dataset">2. Build a config file, using verbose mode, and pointing to the DEEP 2 dataset</h5>
 
-<p><code class="highlighter-rouge">processMeerKAT.py -B -C tutorial_config.txt -M /data/projects/deep/1491550051.ms -v</code></p>
+<p><code class="highlighter-rouge">processMeerKAT.py -B -C tutorial_config.txt -M /idia/projects/deep/1491550051.ms -v</code></p>
 
 <p>After some initial debug output, you should get the following output, with different timestamps</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2019-02-28 02:36:14,421 INFO: Extracting field IDs from measurement set "/data/projects/deep/1491550051.ms" using CASA.
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2019-02-28 02:36:14,421 INFO: Extracting field IDs from measurement set "/idia/projects/deep/1491550051.ms" using CASA.
 2019-02-28 02:36:14,422 DEBUG: Using the following command:
-   srun --nodes=1 --ntasks=1 --time=10 --mem=4GB --partition=Main singularity exec /data/exp_soft/pipelines/casameer-5.4.1.xvfb.simg  casa --nologger --nogui --nologfile -c /data/exp_soft/pipelines/master/processMeerKAT/cal_scripts/get_fields.py -B -M /data/projects/deep/1491550051.ms -C tutorial_config.txt -N 8 -t 4
+   srun --nodes=1 --ntasks=1 --time=10 --mem=4GB --partition=Main singularity exec /idia/software/pipelines/casameer-5.4.1.xvfb.simg  casa --nologger --nogui --nologfile -c /idia/software/pipelines/master/processMeerKAT/cal_scripts/get_fields.py -B -M /idia/projects/deep/1491550051.ms -C tutorial_config.txt -N 8 -t 4
       .
       .
       .
-2019-02-28 02:37:39,788 WARNING: The number of threads (8 node(s) x 4 task(s) = 32) is not ideal compared to the number of scans (12) for "/data/projects/deep/1491550051.ms".
+2019-02-28 02:37:39,788 WARNING: The number of threads (8 node(s) x 4 task(s) = 32) is not ideal compared to the number of scans (12) for "/idia/projects/deep/1491550051.ms".
 2019-02-28 02:37:39,788 WARNING: Config file has been updated to use 2 node(s) and 4 task(s) per node.
 2019-02-28 02:37:39,788 INFO: For the best results, update your config file so that nodes x tasks per node = 7.
-2019-02-28 02:37:40,045 INFO: Multiple fields found with intent "CALIBRATE_FLUX" in dataset "/data/projects/deep/1491550051.ms" - [0 1].
+2019-02-28 02:37:40,045 INFO: Multiple fields found with intent "CALIBRATE_FLUX" in dataset "/idia/projects/deep/1491550051.ms" - [0 1].
 2019-02-28 02:37:40,110 WARNING: Only using field "0" for "fluxfield", which has the most scans (1).
 2019-02-28 02:37:40,110 WARNING: Putting extra fields with intent "CALIBRATE_FLUX" in "targetfields" - [1]
-2019-02-28 02:37:40,111 INFO: Multiple fields found with intent "CALIBRATE_BANDPASS" in dataset "/data/projects/deep/1491550051.ms" - [0 1].
+2019-02-28 02:37:40,111 INFO: Multiple fields found with intent "CALIBRATE_BANDPASS" in dataset "/idia/projects/deep/1491550051.ms" - [0 1].
 2019-02-28 02:37:40,111 WARNING: Only using field "0" for "bpassfield", which has the most scans (1).
-2019-02-28 02:37:40,112 INFO: Multiple fields found with intent "CALIBRATE_PHASE" in dataset "/data/projects/deep/1491550051.ms" - [1 2].
+2019-02-28 02:37:40,112 INFO: Multiple fields found with intent "CALIBRATE_PHASE" in dataset "/idia/projects/deep/1491550051.ms" - [1 2].
 2019-02-28 02:37:40,112 WARNING: Only using field "2" for "phasecalfield", which has the most scans (5).
 2019-02-28 02:37:40,123 INFO: [fields] section written to "tutorial_config.txt". Edit this section to change field IDs (comma-seperated string for multiple IDs).
 2019-02-28 02:37:41,990 INFO: Config "tutorial_config.txt" generated.
@@ -286,14 +286,14 @@ mem = 236
 partition = 'Main'
 time = '12:00:00'
 submit = False
-container = '/data/exp_soft/pipelines/casameer-5.4.1.xvfb.simg'
-mpi_wrapper = '/data/exp_soft/pipelines/casa-prerelease-5.3.0-115.el7/bin/mpicasa'
+container = '/idia/software/pipelines/casameer-5.4.1.xvfb.simg'
+mpi_wrapper = '/idia/software/pipelines/casa-prerelease-5.3.0-115.el7/bin/mpicasa'
 name = ''
 verbose = True
 scripts = [('validate_input.py', False, ''), ('partition.py', True, ''), ('calc_refant.py', False, ''), ('flag_round_1.py', True, ''), ('setjy.py', True, ''), ('xx_yy_solve.py', False, ''), ('xx_yy_apply.py', True, ''), ('flag_round_2.py', True, ''), ('setjy.py', True, ''), ('xy_yx_solve.py', False, ''), ('xy_yx_apply.py', True, ''), ('split.py', True, ''), ('quick_tclean.py', True, ''), ('plot_solutions.py', False, '')]
 
 [data]
-vis = '/data/projects/deep/1491550051.ms'
+vis = '/idia/projects/deep/1491550051.ms'
 
 [fields]
 bpassfield = '0'
@@ -308,7 +308,7 @@ targetfields = '3,1'
 
 <p>For script that aren’t threadsafe (i.e. those with <code class="highlighter-rouge">False</code> in the <code class="highlighter-rouge">scripts</code> list), we use a single node, and a single task per node. For both scripts that are threadsafe and those that aren’t, we use a single CPU per task, and explicitly export <code class="highlighter-rouge">OMP_NUM_THREADS=1</code>, since there is little evidence of a speedup with more than one CPU per task. However, for <code class="highlighter-rouge">quick_tclean.py</code> we use 4 CPUs per task.</p>
 
-<p>The cross-calibration parameters in section <code class="highlighter-rouge">[crosscal]</code> correspond to various CASA parameters passed into the calibration tasks that the pipeline used, each of which is documented <a href="../Calibration-in-processMeerKAT">here</a>. By default all frequency ranges listed in <code class="highlighter-rouge">badfreqranges</code>, and all antenna numbers listed in <code class="highlighter-rouge">badants</code>, will be flagged out entirely. The third script the pipeline runs (<code class="highlighter-rouge">calc_refant.py</code>) will likely change the value of <code class="highlighter-rouge">refant</code>, and add a list of bad antennas to <code class="highlighter-rouge">badant</code>.</p>
+<p>The cross-calibration parameters in section <code class="highlighter-rouge">[crosscal]</code> correspond to various CASA parameters passed into the calibration tasks that the pipeline used, each of which is documented <a href="https://idia-pipelines.github.io/docs/processMeerKAT/calibration-in-processmeerkat">here</a>. By default all frequency ranges listed in <code class="highlighter-rouge">badfreqranges</code>, and all antenna numbers listed in <code class="highlighter-rouge">badants</code>, will be flagged out entirely. The third script the pipeline runs (<code class="highlighter-rouge">calc_refant.py</code>) will likely change the value of <code class="highlighter-rouge">refant</code>, and add a list of bad antennas to <code class="highlighter-rouge">badant</code>.</p>
 
 <h5 id="4-run-the-pipeline-using-your-config-file">4. Run the pipeline using your config file</h5>
 
@@ -353,7 +353,7 @@ targetfields = '3,1'
 
 <span class="nb">export </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span>1
 
-srun singularity <span class="nb">exec</span> /data/exp_soft/pipelines/casameer-5.4.1.xvfb.simg  casa <span class="nt">--nologger</span> <span class="nt">--nogui</span> <span class="nt">--logfile</span> logs/validate_input-<span class="k">${</span><span class="nv">SLURM_JOB_ID</span><span class="k">}</span>.casa <span class="nt">-c</span> /data/exp_soft/pipelines/master/processMeerKAT/cal_scripts/validate_input.py <span class="nt">--config</span> .config.tmp
+srun singularity <span class="nb">exec</span> /idia/software/pipelines/casameer-5.4.1.xvfb.simg  casa <span class="nt">--nologger</span> <span class="nt">--nogui</span> <span class="nt">--logfile</span> logs/validate_input-<span class="k">${</span><span class="nv">SLURM_JOB_ID</span><span class="k">}</span>.casa <span class="nt">-c</span> /idia/software/pipelines/master/processMeerKAT/cal_scripts/validate_input.py <span class="nt">--config</span> .config.tmp
 </code></pre></div></div>
 
 <p>Since this script is not threadsafe, the job is called with <code class="highlighter-rouge">srun</code>, and is configured to run a single task on a single node, with 100 GB of memory. The last line shows the CASA call of the <code class="highlighter-rouge">validate_input.py</code> task, which will validate the parameters in the config file.</p>
@@ -396,7 +396,7 @@ srun singularity <span class="nb">exec</span> /data/exp_soft/pipelines/casameer-
 
 <span class="nb">export </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span>1
 
-/data/exp_soft/pipelines/casa-prerelease-5.3.0-115.el7/bin/mpicasa singularity <span class="nb">exec</span> /data/exp_soft/pipelines/casameer-5.4.1.xvfb.simg  casa <span class="nt">--nologger</span> <span class="nt">--nogui</span> <span class="nt">--logfile</span> logs/partition-<span class="k">${</span><span class="nv">SLURM_JOB_ID</span><span class="k">}</span>.casa <span class="nt">-c</span> /data/exp_soft/pipelines/master/processMeerKAT/cal_scripts/partition.py <span class="nt">--config</span> .config.tmp
+/idia/software/pipelines/casa-prerelease-5.3.0-115.el7/bin/mpicasa singularity <span class="nb">exec</span> /idia/software/pipelines/casameer-5.4.1.xvfb.simg  casa <span class="nt">--nologger</span> <span class="nt">--nogui</span> <span class="nt">--logfile</span> logs/partition-<span class="k">${</span><span class="nv">SLURM_JOB_ID</span><span class="k">}</span>.casa <span class="nt">-c</span> /idia/software/pipelines/master/processMeerKAT/cal_scripts/partition.py <span class="nt">--config</span> .config.tmp
 </code></pre></div></div>
 
 <p>Here we see the same default SLURM parameters for threadsafe tasks, as discussed in <a href="#3-view-the-config-file-created-which-has-the-following-contents">section 3</a>. We now use mpicasa as the mpi wrapper, since we are calling a threadsafe script <code class="highlighter-rouge">partition.py</code>, which calls CASA task <code class="highlighter-rouge">partition</code>, which partitions the data into several sub measurement sets (sub-MSs - see <a href="#10-view-the-contents-of-1491550051mms">section 10 below</a>) and selects only frequencies specified by your spectral window with parameter <code class="highlighter-rouge">spw</code> in your config file.</p>
@@ -566,7 +566,7 @@ Run displayTimes.sh to display start and end timestamps (after pipeline has run)
 
 <p>As before, we see the sbatch files being written to our working directory. Since we set <code class="highlighter-rouge">submit=True</code>, <code class="highlighter-rouge">submit_pipeline.sh</code> has been run, and all output after that (without the timestamps) comes from this bash script. After the first job is run (<code class="highlighter-rouge">sbatch flag_round_1.sbatch</code>), each other job is run with a dependency on all previous jobs (e.g. <code class="highlighter-rouge">sbatch -d afterok:1097919,1097920,1097921 --kill-on-invalid-dep=yes xx_yy_apply.sbatch</code>). We can see this by calling <code class="highlighter-rouge">squeue -u your_username</code>, which shows those jobs <code class="highlighter-rouge">(Dependency)</code>. <code class="highlighter-rouge">submit_pipeline.sh</code> then writes four job scripts, all of which are explained in the output, written to <code class="highlighter-rouge">jobScripts</code> with a timestamp appended to the filename, and symlinked from your working directory. <code class="highlighter-rouge">findErrors.sh</code> finds errors after this pipeline run has completed, overlooking all nominal MPI errors.</p>
 
-<p>These tasks follow the first step of a two-step calibration process that is summarised <a href="../Calibration-in-processMeerKAT">here</a>.</p>
+<p>These tasks follow the first step of a two-step calibration process that is summarised <a href="https://idia-pipelines.github.io/docs/processMeerKAT/calibration-in-processmeerkat">here</a>.</p>
 
 <h5 id="16-run-summarysh">16. Run <code class="highlighter-rouge">./summary.sh</code></h5>
 
@@ -722,9 +722,9 @@ Run displayTimes.sh to display start and end timestamps (after pipeline has run)
 
 <h5 id="25-view-the-pipeline-output">25. View the pipeline output</h5>
 
-<p>After this pipeline run has completed, viewing the output of <code class="highlighter-rouge">./displayTimes.sh</code> shows this run took ~1.5 hours, including ~25 minutes for quick-look imaging all fields, and ~40 minutes for plotting (a <a href="../Release-Notes#known-issues">known issue</a>).</p>
+<p>After this pipeline run has completed, viewing the output of <code class="highlighter-rouge">./displayTimes.sh</code> shows this run took ~1.5 hours, including ~25 minutes for quick-look imaging all fields, and ~40 minutes for plotting (a <a href="https://idia-pipelines.github.io/docs/processMeerKAT/Release-Notes#known-issues">known issue</a>).</p>
 
-<p>These new tasks follow the second step of a two step calibration process that is summarised on <a href="../Calibration-in-processMeerKAT">this page</a>.</p>
+<p>These new tasks follow the second step of a two step calibration process that is summarised on <a href="https://idia-pipelines.github.io/docs/processMeerKAT/calibration-in-processmeerkat">this page</a>.</p>
 
 <p>After <code class="highlighter-rouge">split.py</code> has run, you will see three new files</p>
 
@@ -734,12 +734,12 @@ Run displayTimes.sh to display start and end timestamps (after pipeline has run)
 
 <h5 id="26-view-the-images-in-the-images-directory">26. View the images in the <code class="highlighter-rouge">images</code> directory</h5>
 
-<p><code class="highlighter-rouge">quick_tclean.py</code> creates quick-look images (i.e. with no selfcal, w-projection, threadholding, no-multiscale, etc) with robust weighting 0, for all fields specified in the config file, creating 512x512 images of the calibrator fields, and 2048x2048 images of the target field(s), both with 2 arcsec pixel sizes. For data with &gt; 100 MHz bandwidth, two taylor terms are used, otherwise the ‘clark’ deconvolver is used.</p>
+<p><code class="highlighter-rouge">quick_tclean.py</code> creates quick-look images (i.e. with no selfcal, w-projection, thresholding, no multiscale, etc) with robust weighting 0, for all fields specified in the config file, creating 512x512 images of the calibrator fields, and 2048x2048 images of the target field(s), both with 2 arcsec pixel sizes. For data with &gt; 100 MHz bandwidth, two taylor terms are used, otherwise the ‘clark’ deconvolver is used.</p>
 
 <p>You can view the images by connecting to a fat node (e.g. <code class="highlighter-rouge">racetrack.idia.ac.za</code> - also ensure X-forwarding is enabled) and launching ds9 or CASA viewer, respectively with the syntax (replace <code class="highlighter-rouge">/scratch/users/your_username/tutorial</code> below):</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>singularity exec /data/exp_soft/containers/sourcefinding_py3.simg ds9 /scratch/users/your_username/tutorial/images/*fits
-singularity exec /data/exp_soft/pipelines/casameer-5.4.1.xvfb.simg casa --nologger --log2term -c "viewer(infile='/scratch/users/your_username/tutorial/images/1491550051_DEEP_2_off.im.image.tt0/'); raw_input()"
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>singularity exec /idia/software/containers/sourcefinding_py3.simg ds9 /scratch/users/your_username/tutorial/images/*fits
+singularity exec /idia/software/pipelines/casameer-5.4.1.xvfb.simg casa --nologger --log2term -c "viewer(infile='/scratch/users/your_username/tutorial/images/1491550051_DEEP_2_off.im.image.tt0/'); raw_input()"
 </code></pre></div></div>
 
 <p>Here’s what your images of the flux calibrator (<code class="highlighter-rouge">1934-638</code>) and target (<code class="highlighter-rouge">DEEP_2_off</code>) should look like.</p>
@@ -763,9 +763,9 @@ singularity exec /data/exp_soft/pipelines/casameer-5.4.1.xvfb.simg casa --nologg
 <h3 id="also-see">Also see</h3>
 
 <ul>
-  <li><a href="../Calibration-in-processMeerKAT">Calibration in processMeerKAT</a></li>
-  <li><a href="../Diagnosing-Errors">Diagnosing Errors</a></li>
-  <li><a href="../Using-the-pipeline">Using the pipeline</a></li>
+  <li><a href="https://idia-pipelines.github.io/docs/processMeerKAT/calibration-in-processmeerkat">Calibration in processMeerKAT</a></li>
+  <li><a href="https://idia-pipelines.github.io/docs/processMeerKAT/Diagnosing-Errors">Diagnosing Errors</a></li>
+  <li><a href="https://idia-pipelines.github.io/docs/processMeerKAT/using-the-pipeline">Using the pipeline</a></li>
 </ul>
 
 
