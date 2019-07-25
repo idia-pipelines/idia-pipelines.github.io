@@ -31,7 +31,7 @@ Full-Stokes calibration is not recommended for short-track observations (see [se
 
 ### Calibrating a Small Sub-Band (Spectral Line)
 
-A small sub-band of frequencies can be selected and calibrated by specifying a range of frequencies with argument `spw` in your config file. e.g. `spw = '0:1350~1450MHz'` means `partition` will extract only frequencies between 1350-1400 MHz for calibration. For very small bandwidth of several MHz, it may not be necessary to use MMS and MPI (see section [MS only](#ms-only-single-thread-processing) below).
+A small sub-band of frequencies can be selected and calibrated by specifying a range of frequencies with argument `spw` in your config file. e.g. `spw = '0:1350~1450MHz'` means `partition` will extract only frequencies between 1350-1450 MHz for calibration. For very small bandwidth of several MHz, it may not be necessary to use MMS and MPI (see section [MS only](#ms-only-single-thread-processing) below).
 
 This mode is useful for calibration of spectral line data.
 

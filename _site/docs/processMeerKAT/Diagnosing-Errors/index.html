@@ -283,12 +283,7 @@
 
 <h3 id="memory-error">Memory error</h3>
 
-<p>If you see the phrase <code class="highlighter-rouge">MemoryError</code> in the <code class="highlighter-rouge">stderr</code> logs (this can be located by
-<code class="highlighter-rouge">grep -i MemoryError logs/*.err</code>) this is typically indicative that CASA did not
-have enough memory to complete the task. This often happens while running
-<code class="highlighter-rouge">flagdata</code> and does not always halt execution of the pipeline. Reduce the number
-of tasks per node in the config file before re-launching the pipeline, as that
-will allocate more memory per task.</p>
+<p>If you see the phrase <code class="highlighter-rouge">MemoryError</code> in the <code class="highlighter-rouge">stderr</code> logs (this can be located by <code class="highlighter-rouge">grep -i MemoryError logs/*.err</code>) this is typically indicative that CASA did not have enough memory to complete the task. This often happens while running <code class="highlighter-rouge">flagdata</code> and does not always halt execution of the pipeline. Reduce the number of tasks per node and increase the nodes in the config file (e.g. halve tasks and double nodes) before re-launching the pipeline, as that will allocate more memory per task.</p>
 
 
 

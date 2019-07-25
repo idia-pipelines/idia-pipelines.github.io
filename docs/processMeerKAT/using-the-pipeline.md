@@ -59,6 +59,7 @@ optional arguments:
   -B, --build           Build config file using input MS.
   -R, --run             Run pipeline with input config file.
   -V, --version         Display the version of this pipeline and quit.
+  -L, --license         Display this program's license and quit.
 ```
 
 ### Simple usage
@@ -162,8 +163,8 @@ scripts = [ ('validate_input.py',False,''),
             ('xy_yx_solve.py',False,''),
             ('xy_yx_apply.py',True,''),
             ('split.py',True,''),
-            ('plot_solutions.py',False,''),
-            ('quick_tclean.py',True,'')]
+            ('quick_tclean.py',True,''),
+            ('plot_solutions.py',False,'')]
 ```
 
 When the pipeline is run, the contents of your config file are copied to `.config.tmp` and each python script reads the parameters from this file as it is run. This way, the user cannot easily break the pipeline during the time it is running. This means changing the [slurm] section in your config file will have no effect unless you once again run `processMeerKAT.py -R`.

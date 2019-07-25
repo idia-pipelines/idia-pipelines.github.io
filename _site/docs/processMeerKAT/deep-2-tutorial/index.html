@@ -308,7 +308,7 @@ targetfields = '3,1'
 
 <p>For script that aren’t threadsafe (i.e. those with <code class="highlighter-rouge">False</code> in the <code class="highlighter-rouge">scripts</code> list), we use a single node, and a single task per node. For both scripts that are threadsafe and those that aren’t, we use a single CPU per task, and explicitly export <code class="highlighter-rouge">OMP_NUM_THREADS=1</code>, since there is little evidence of a speedup with more than one CPU per task. However, for <code class="highlighter-rouge">quick_tclean.py</code> we use 4 CPUs per task.</p>
 
-<p>The cross-calibration parameters in section <code class="highlighter-rouge">[crosscal]</code> correspond to various CASA parameters passed into the calibration tasks that the pipeline used, each of which is documented <a href="https://idia-pipelines.github.io/docs/processMeerKAT/calibration-in-processmeerkat">here</a>. By default all frequency ranges listed in <code class="highlighter-rouge">badfreqranges</code>, and all antenna numbers listed in <code class="highlighter-rouge">badants</code>, will be flagged out entirely. The third script the pipeline runs (<code class="highlighter-rouge">calc_refant.py</code>) will likely change the value of <code class="highlighter-rouge">refant</code>, and add a list of bad antennas to <code class="highlighter-rouge">badant</code>.</p>
+<p>The cross-calibration parameters in section <code class="highlighter-rouge">[crosscal]</code> correspond to various CASA parameters passed into the calibration tasks that the pipeline used, each of which is documented <a href="https://idia-pipelines.github.io/docs/processMeerKAT/calibration-in-processmeerkat">here</a>. By default all frequency ranges listed in <code class="highlighter-rouge">badfreqranges</code>, and all antenna numbers listed in <code class="highlighter-rouge">badants</code>, will be flagged out entirely. The third script the pipeline runs (<code class="highlighter-rouge">calc_refant.py</code>) will likely change the value of <code class="highlighter-rouge">refant</code>, and add a list of bad antennas to <code class="highlighter-rouge">badants</code>.</p>
 
 <h5 id="4-run-the-pipeline-using-your-config-file">4. Run the pipeline using your config file</h5>
 
@@ -631,7 +631,7 @@ logs/xx_yy_apply-1097930.out
 (The same error repeated another 23 times)
 </code></pre></div></div>
 
-<p>This error likely corresponds to empty sub-MS(s) with data completely flagged out, which give a worker node nothing to do for whichever CASA tasks are being called.</p>
+<p>This error likely corresponds to empty sub-MS(s) with data completely flagged out, which give a thread nothing to do for whichever CASA tasks are being called.</p>
 
 <h5 id="20-rebuild-your-config-file-without-verbose-mode">20. Rebuild your config file without verbose mode</h5>
 
@@ -746,7 +746,7 @@ singularity exec /idia/software/pipelines/casameer-5.4.1.xvfb.simg casa --nologg
 
 <p><img src="https://idia-pipelines.github.io/assets/DEEP2_image.png" alt="DEEP2_image" /></p>
 
-<p>Since we imaged a snapshot 16-dish MeerKAT observation using the old ROACH-2 correlator, with an on source time of ~20 minutes, we do not get very good image quality. Below is a more typical image produced by <code class="highlighter-rouge">quick_tclean.py</code> for a 64-dish observation using the SKARAB correlator, spanning ~8 hours, and only 5 MHz bandwidth.</p>
+<p>Since we imaged a snapshot 16-dish MeerKAT observation using the old ROACH-2 correlator, with an on source time of ~20 minutes, we do not get very good image quality. Below is a more typical image produced by <code class="highlighter-rouge">quick_tclean.py</code> for a 64-dish observation using the SKARAB correlator, spanning ~8 hours, and only 10 MHz bandwidth.</p>
 
 <p><img src="https://idia-pipelines.github.io/assets/64-dish-image.png" alt="64-dish-image" /></p>
 

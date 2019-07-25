@@ -92,7 +92,7 @@ The SLURM parameters in section `[slurm]` correspond to those seen by running `p
 
 For script that aren't threadsafe (i.e. those with `False` in the `scripts` list), we use a single node, and a single task per node. For both scripts that are threadsafe and those that aren't, we use a single CPU per task, and explicitly export `OMP_NUM_THREADS=1`, since there is little evidence of a speedup with more than one CPU per task. However, for `quick_tclean.py` we use 4 CPUs per task.
 
-The cross-calibration parameters in section `[crosscal]` correspond to various CASA parameters passed into the calibration tasks that the pipeline used, each of which is documented [here](https://idia-pipelines.github.io/docs/processMeerKAT/calibration-in-processmeerkat). By default all frequency ranges listed in `badfreqranges`, and all antenna numbers listed in `badants`, will be flagged out entirely. The third script the pipeline runs (`calc_refant.py`) will likely change the value of `refant`, and add a list of bad antennas to `badant`.
+The cross-calibration parameters in section `[crosscal]` correspond to various CASA parameters passed into the calibration tasks that the pipeline used, each of which is documented [here](https://idia-pipelines.github.io/docs/processMeerKAT/calibration-in-processmeerkat). By default all frequency ranges listed in `badfreqranges`, and all antenna numbers listed in `badants`, will be flagged out entirely. The third script the pipeline runs (`calc_refant.py`) will likely change the value of `refant`, and add a list of bad antennas to `badants`.
 
 ##### 4. Run the pipeline using your config file
 
@@ -438,7 +438,7 @@ logs/xx_yy_apply-1097930.out
 (The same error repeated another 23 times)
 ```
 
-This error likely corresponds to empty sub-MS(s) with data completely flagged out, which give a worker node nothing to do for whichever CASA tasks are being called.
+This error likely corresponds to empty sub-MS(s) with data completely flagged out, which give a thread nothing to do for whichever CASA tasks are being called.
 
 ##### 20. Rebuild your config file without verbose mode
 
@@ -558,7 +558,7 @@ Here's what your images of the flux calibrator (`1934-638`) and target (`DEEP_2_
 
 ![DEEP2_image](https://idia-pipelines.github.io/assets/DEEP2_image.png)
 
-Since we imaged a snapshot 16-dish MeerKAT observation using the old ROACH-2 correlator, with an on source time of ~20 minutes, we do not get very good image quality. Below is a more typical image produced by `quick_tclean.py` for a 64-dish observation using the SKARAB correlator, spanning ~8 hours, and only 5 MHz bandwidth.
+Since we imaged a snapshot 16-dish MeerKAT observation using the old ROACH-2 correlator, with an on source time of ~20 minutes, we do not get very good image quality. Below is a more typical image produced by `quick_tclean.py` for a 64-dish observation using the SKARAB correlator, spanning ~8 hours, and only 10 MHz bandwidth.
 
 ![64-dish-image](https://idia-pipelines.github.io/assets/64-dish-image.png)
 

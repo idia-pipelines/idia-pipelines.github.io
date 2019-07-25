@@ -65,12 +65,7 @@ If the status of your job is `(launch failed requeued held)`, please file a tick
 
 ### Memory error
 
-If you see the phrase `MemoryError` in the `stderr` logs (this can be located by
-`grep -i MemoryError logs/*.err`) this is typically indicative that CASA did not
-have enough memory to complete the task. This often happens while running
-`flagdata` and does not always halt execution of the pipeline. Reduce the number
-of tasks per node in the config file before re-launching the pipeline, as that
-will allocate more memory per task.
+If you see the phrase `MemoryError` in the `stderr` logs (this can be located by `grep -i MemoryError logs/*.err`) this is typically indicative that CASA did not have enough memory to complete the task. This often happens while running `flagdata` and does not always halt execution of the pipeline. Reduce the number of tasks per node and increase the nodes in the config file (e.g. halve tasks and double nodes) before re-launching the pipeline, as that will allocate more memory per task.
 
 
 
