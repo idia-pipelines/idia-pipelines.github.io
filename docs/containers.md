@@ -6,16 +6,16 @@ nav_order: 4
 # Singularity Containers
 At IDIA, astronomical software packages are provided and managed using [Singularity][singularity] containers. Containers
 are managed and built by our developers. If you have any questions/issues relating to containers,
-please send an email to [support@ilifu.ac.za][support]. You can find more documentation about containers on Ilifu [here](http://docs.ilifu.ac.za/#/cluster/software_environments).
+please send an email to [support@ilifu.ac.za][support]. You can find more documentation about containers on Ilifu [here](http://docs.ilifu.ac.za/#/getting_started/container_environments).
 
 
 # Available Containers
-The most recent, stable versions of containers are available in `/data/exp_soft/containers/`. Some
+The most recent, stable versions of containers are available in `/idia/software/containers/`. Some
 of these containers can be accessed via the Jupyter-Hub, but all of them can be accessed via the
 terminal (i.e., once you've ssh'd into an IDIA machine).
 
 Here are a few examples of the latest stable Singularity container builds that are available in
-`/data/exp_soft/containers/`:
+`/idia/software/containers/`:
 * `jupyter-casa-latest.simg`
     * Allows you to use CASA tasks via the Jupyter notebook. Note that visualisation tools like
       `plotms` or `viewer` will not work on the notebook.
@@ -38,7 +38,7 @@ Firstly, you can _shell_ into the container. You will enter a _shell_ which prov
 software provided in that container:
 
 ```bash
-$ singularity shell /data/exp_soft/containers/casa-stable-5.3.0.simg
+$ singularity shell /idia/software/containers/casa-stable-5.3.0.simg
 Singularity: Invoking an interactive shell within container...
 
 Singularity casa-stable-5.3.0.simg:~> casa --nologger --log2term --nogui
@@ -70,7 +70,7 @@ For example, here's an illustration of how to use the `exec` argument to jump in
 CASA session:
 
 ```bash
-$ singularity exec /data/exp_soft/containers/casa-stable-5.3.0.simg casa --nologger --log2term --nogui
+$ singularity exec /idia/software/containers/casa-stable-5.3.0.simg casa --nologger --log2term --nogui
 
 =========================================
 The start-up time of CASA may vary
@@ -112,7 +112,7 @@ CASA <2>:
 
 The true utility of the `exec` argument is to execute commands non-interactively:
 ```bash
-$ singularity exec /data/exp_soft/containers/casa-stable-5.3.0.simg casa --nologger --log2term --nogui -c "print 'Hello World'"
+$ singularity exec /idia/software/containers/casa-stable-5.3.0.simg casa --nologger --log2term --nogui -c "print 'Hello World'"
 
 =========================================
 The start-up time of CASA may vary

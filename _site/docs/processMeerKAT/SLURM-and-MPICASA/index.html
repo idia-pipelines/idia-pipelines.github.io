@@ -45,15 +45,15 @@
     
       
         
-      
-    
-      
-        
           <li class="navigation-list-item">
             
             <a href="http://localhost:4000/docs/access/" class="navigation-list-link">Access to IDIA Machines</a>
             
           </li>
+        
+      
+    
+      
         
       
     
@@ -83,6 +83,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/Release-Notes/" class="navigation-list-link">Release Notes</a>
@@ -91,11 +93,9 @@
                   
                 
                   
-                
-                  
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/Using-The-Pipeline/" class="navigation-list-link">Using the Pipeline</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/using-the-pipeline/" class="navigation-list-link">Using the Pipeline</a>
                       
                     </li>
                   
@@ -123,7 +123,7 @@
                   
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/DEEP-2-Tutorial/" class="navigation-list-link">DEEP 2 Tutorial</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/deep-2-tutorial/" class="navigation-list-link">DEEP 2 Tutorial</a>
                       
                     </li>
                   
@@ -131,7 +131,7 @@
                   
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/Calibration-in-processMeerKAT/" class="navigation-list-link">Calibration in processMeerKAT</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/calibration-in-processmeerkat/" class="navigation-list-link">Calibration in processMeerKAT</a>
                       
                     </li>
                   
@@ -272,7 +272,7 @@ https://slurm.schedmd.com/sbatch.html</p>
 <span class="c">#SBATCH -o casameer-batch-1530187312-tclean.sh.stdout.txt</span>
 <span class="c">#SBATCH -e casameer-batch-1530187312-tclean.sh.stderr.txt</span>
 <span class="c">#Run the application:</span>
-/data/users/frank/casa-cluster/casa-prerelease-5.3.0-115.el7/bin/mpicasa /usr/bin/singularity <span class="nb">exec</span> ~/casameer.simg  <span class="s2">"casa"</span> <span class="nt">--nologger</span> <span class="nt">--log2term</span> <span class="nt">--nogui</span> <span class="nt">-c</span> tclean.py
+/idia/users/frank/casa-cluster/casa-prerelease-5.3.0-115.el7/bin/mpicasa /usr/bin/singularity <span class="nb">exec</span> ~/casameer.simg  <span class="s2">"casa"</span> <span class="nt">--nologger</span> <span class="nt">--log2term</span> <span class="nt">--nogui</span> <span class="nt">-c</span> tclean.py
 </code></pre></div></div>
 
 <p>Please consult our documentation/wiki pages for more details on how software and containers are used on the IDIA Cloud.</p>

@@ -45,15 +45,15 @@
     
       
         
-      
-    
-      
-        
           <li class="navigation-list-item">
             
             <a href="http://localhost:4000/docs/access/" class="navigation-list-link">Access to IDIA Machines</a>
             
           </li>
+        
+      
+    
+      
         
       
     
@@ -83,6 +83,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/Release-Notes/" class="navigation-list-link">Release Notes</a>
@@ -91,11 +93,9 @@
                   
                 
                   
-                
-                  
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/Using-The-Pipeline/" class="navigation-list-link">Using the Pipeline</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/using-the-pipeline/" class="navigation-list-link">Using the Pipeline</a>
                       
                     </li>
                   
@@ -123,7 +123,7 @@
                   
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/DEEP-2-tutorial/" class="navigation-list-link">DEEP 2 Tutorial</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/deep-2-tutorial/" class="navigation-list-link">DEEP 2 Tutorial</a>
                       
                     </li>
                   
@@ -131,7 +131,7 @@
                   
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/Calibration-in-processMeerKAT/" class="navigation-list-link">Calibration in processMeerKAT</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/calibration-in-processmeerkat/" class="navigation-list-link">Calibration in processMeerKAT</a>
                       
                     </li>
                   
@@ -223,9 +223,13 @@
           
         
         <div id="main-content" class="page-content" role="main">
-          <h3 id="1-in-order-to-use-the-processmeerkatpy-script-source-the-setupsh-file">1. In order to use the <code class="highlighter-rouge">processMeerKAT.py</code> script, source the <code class="highlighter-rouge">setup.sh</code> file:</h3>
+          <h1 id="quick-start">Quick Start</h1>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    source /data/exp_soft/pipelines/master/setup.sh
+<p><strong>Note: It is not necessary to copy the raw data (i.e. the MS) to your working directory. The first step of the pipeline does this for you by creating an MMS or MS, and does not attempt to manipulate the raw data (e.g. stored in <code class="highlighter-rouge">/idia/projects</code> - see <a href="https://idia-pipelines.github.io/docs/processMeerKAT/Example-Use-Cases/#data-format">data format</a>).</strong></p>
+
+<h3 id="1-in-order-to-use-the-processmeerkatpy-script-source-the-setupsh-file">1. In order to use the <code class="highlighter-rouge">processMeerKAT.py</code> script, source the <code class="highlighter-rouge">setup.sh</code> file:</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    source /idia/software/pipelines/master/setup.sh
 </code></pre></div></div>
 
 <p>which will add the correct paths to your <code class="highlighter-rouge">$PATH</code> and <code class="highlighter-rouge">$PYTHONPATH</code> in order to correctly use the pipeline. We recommend you add this to your <code class="highlighter-rouge">~/.profile</code>, for future use.</p>
@@ -242,9 +246,9 @@
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    processMeerKAT.py -R -C myconfig.txt
 </code></pre></div></div>
 
-<p>This will create <code class="highlighter-rouge">submit_pipeline.sh</code>, which you can then run like <code class="highlighter-rouge">./submit_pipeline.sh</code> to submit all pipeline jobs to the SLURM queue.</p>
+<p>This will create <code class="highlighter-rouge">submit_pipeline.sh</code>, which you can then run with <code class="highlighter-rouge">./submit_pipeline.sh</code> to submit all pipeline jobs to the SLURM queue.</p>
 
-<p>Other convenience scripts are also created that allow you to monitor and (if necessary) kill the jobs. <code class="highlighter-rouge">summary.sh</code> provides a brief overview of the status of the jobs in the pipeline, <code class="highlighter-rouge">findErrors.sh</code> checks the log files for commonly reported errors, and <code class="highlighter-rouge">killJobs.sh</code> kills all the jobs from the current run of the pipeline, ignoring any other jobs you might have running.</p>
+<p>Other convenient scripts are also created that allow you to monitor and (if necessary) kill the jobs. <code class="highlighter-rouge">summary.sh</code> provides a brief overview of the status of the jobs in the pipeline, <code class="highlighter-rouge">findErrors.sh</code> checks the log files for commonly reported errors, and <code class="highlighter-rouge">killJobs.sh</code> kills all the jobs from the current run of the pipeline, ignoring any other jobs you might have running.</p>
 
 <p>For help, run <code class="highlighter-rouge">processMeerKAT.py -h</code>, which provides a brief description of all the command line arguments.</p>
 

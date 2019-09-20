@@ -82,9 +82,9 @@ Access to data is managed with Unix groups.
 Please take careful note of the following.
 
 * `/users/<username>/`, where `/users` is a shared BeeGFS volume.
-* `/data/users/<username>/`, where `/data` is a shared BeeGFS volume. This is the preferred space
+* `/idia/users/<username>/`, where `/idia` is a shared BeeGFS volume. This is the preferred space
   for you to store your longish term data products.
-* `/data/<Project>` is a shared directory on BeeGFS for a project. You can fetch raw data from here.
+* `/idia/<Project>` is a shared directory on BeeGFS for a project. You can fetch raw data from here.
   Please steer away from dumping data into this directory.
 * `/scratch/users/<username>/` is the shared working directory for <username>, where `/scratch` is a
   BeeGFS volume). This is the preferred space for intermediate data products, e.g., you can use this
@@ -110,6 +110,6 @@ There are two important GitHub resources that project members can use:
 [sshkey]: https://confluence.atlassian.com/bitbucketserver/creating-ssh-keys-776639788.html
 [helo]: https://helo.idia.ac.za
 [request-vm]: https://docs.google.com/forms/d/e/1FAIpQLSc6GwFfqTUcKVmkcmn1VRIBADp-_JOSVt9aW1dfNmc12kxuvg/viewform
-[access]: http://docs.ilifu.ac.za/#/access/request_time
+[access]: http://docs.ilifu.ac.za/#/getting_started/request_access
 [brad]: mailto:bradley@idia.ac.za
 

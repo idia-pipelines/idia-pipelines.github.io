@@ -13,7 +13,7 @@ nav_order: 3
 which gives
 
 ```
-usage: /data/exp_soft/pipelines/master/processMeerKAT/processMeerKAT.py
+usage: /idia/software/pipelines/master/processMeerKAT/processMeerKAT.py
        [-h] [-M path] [-C path] [-N num] [-t num] [-P num] [-m num] [-p name]
        [-T time] [-S script threadsafe container] [-w path] [-c path]
        [-n unique] [-l] [-s] [-v] (-B | -R | -V)
@@ -43,11 +43,11 @@ optional arguments:
                         [-c --container]). Is it threadsafe (2nd value)?
   -w path, --mpi_wrapper path
                         Use this mpi wrapper when calling threadsafe scripts
-                        [default: '/data/exp_soft/pipelines/casa-
+                        [default: '/idia/software/pipelines/casa-
                         prerelease-5.3.0-115.el7/bin/mpicasa'].
   -c path, --container path
                         Use this container when calling scripts [default:
-                        '/data/exp_soft/pipelines/casameer-5.4.1.xvfb.simg'].
+                        '/idia/software/pipelines/casameer-5.4.1.xvfb.simg'].
   -n unique, --name unique
                         Unique name to give this pipeline run (e.g. 'run1_'),
                         appended to the start of all job names. [default: ''].
@@ -59,13 +59,14 @@ optional arguments:
   -B, --build           Build config file using input MS.
   -R, --run             Run pipeline with input config file.
   -V, --version         Display the version of this pipeline and quit.
+  -L, --license         Display this program's license and quit.
 ```
 
 ### Simple usage
 
 * To get things working, source `setup.sh`, which will add to your `$PATH` and `$PYTHONPATH` (add this to your `~/.profile`, for future use)
 
-```source /data/exp_soft/pipelines/master/setup.sh```
+```source /idia/software/pipelines/master/setup.sh```
 
 * To print the version of the pipeline, run
 
@@ -117,7 +118,7 @@ This will create `submit_pipeline.sh`, which you can then run to submit all pipe
 
 ```processMeerKAT.py -R -v -s -C myconfig.txt```
 
-**NOTE:** All other command-line arguments passed into `processMeerKAT.py` when using option `[-R --run]` will have no effect, since the arguments are read from the config file at this point. Only options `[-v --verbose]` and `[-C --config]` will have any effect at this point. Similarly, changing the `[slurm]` section in your config file after using option `[-R --run]` will have no effect unless you `[-R --run]` again.
+**NOTE:** All other command-line arguments passed into `processMeerKAT.py` when using option `[-R --run]` will have no effect, since the arguments are read from the config file at this point. Only options `[-s --submit], [-v --verbose]` and `[-C --config]` will have any effect at this point. Similarly, changing the `[slurm]` section in your config file after using option `[-R --run]` will have no effect unless you `[-R --run]` again.
 
 ## Config files
 
@@ -129,11 +130,11 @@ minbaselines = 4                  # Minimum number of baselines to use while cal
 specavg = 1                       # Number of channels to average after calibration (during split)
 timeavg = '8s'                    # Time interval to average after calibration (during split)
 spw = '0:860~1700MHz'             # Spectral window / frequencies to extract for MMS
-calcrefant = True                 # Calculate reference antenna in program (overwrites 'refant')
+calcrefant = False                # Calculate reference antenna in program (overwrites 'refant')
 refant = 'm005'                   # Reference antenna name / number
 standard = 'Perley-Butler 2010'   # Flux density standard for setjy
 badants = []                      # List of bad antenna numbers (to flag)
-badfreqranges = [ '944~947MHz',   # List of bad frequency ranges (to flag)
+badfreqranges = [ '935~947MHz',   # List of bad frequency ranges (to flag)
                   '1160~1310MHz',
                   '1476~1611MHz',
                   '1670~1700MHz']
@@ -146,8 +147,8 @@ mem = 236                         # Use this many GB of memory (per node)
 partition = 'Main'                # SLURM partition to use
 time = '12:00:00'
 submit = False
-container = '/data/exp_soft/pipelines/casameer-5.4.1.xvfb.simg'
-mpi_wrapper = '/data/exp_soft/pipelines/casa-prerelease-5.3.0-115.el7/bin/mpicasa'
+container = '/idia/software/pipelines/casameer-5.4.1.xvfb.simg'
+mpi_wrapper = '/idia/software/pipelines/casa-prerelease-5.3.0-115.el7/bin/mpicasa'
 name = ''
 verbose = False
 scripts = [ ('validate_input.py',False,''),
@@ -162,11 +163,11 @@ scripts = [ ('validate_input.py',False,''),
             ('xy_yx_solve.py',False,''),
             ('xy_yx_apply.py',True,''),
             ('split.py',True,''),
-            ('plot_solutions.py',False,''),
-            ('quick_tclean.py',True,'')]
+            ('quick_tclean.py',True,''),
+            ('plot_solutions.py',False,'')]
 ```
 
-When the pipeline is run, the contents of your config file are copied to `.config.tmp` and each python script reads the parameters from this file as it is run. This way, the user cannot easily break the pipeline during the time it is running. This also means changing the [slurm] section in your config file will have no effect unless you once again run `processMeerKAT.py -R`.
+When the pipeline is run, the contents of your config file are copied to `.config.tmp` and each python script reads the parameters from this file as it is run. This way, the user cannot easily break the pipeline during the time it is running. This means changing the [slurm] section in your config file will have no effect unless you once again run `processMeerKAT.py -R`.
 
 ## Selecting MS and fields IDs
 
@@ -174,13 +175,13 @@ As previously stated, to build a config file, run
 
 ```processMeerKAT.py -B -C myconfig.txt -M mydata.ms```
 
-This calls CASA and adds a `[data]` section to your config file, which points to your MS, and a `[fields]` section, which points to the field IDs you want to process as bandpass, total flux and phase calibrators, and science target(s). Only targets may have multiple fields separated by a comma, and all extra calibrator fields are appended as "targets", to allow for solutions to be applied to them, and images to be made of them (see [[Release-Notes:-V1.0]]).
+This calls CASA and adds a `[data]` section to your config file, which points to your MS, and a `[fields]` section, which points to the field IDs you want to process as bandpass, total flux and phase calibrators, and science target(s). Only targets may have multiple fields separated by a comma, and all extra calibrator fields are appended as "targets", to allow for solutions to be applied to them, and images to be made of them (see [v1.0 release notes](https://idia-pipelines.github.io/docs/processMeerKAT/Release-Notes/)).
 
 The following is an example of what is appended to the bottom of your config file.
 
 ```
 [data]
-vis = '/data/projects/deep/1497056411.ms'
+vis = '/idia/projects/deep/1497056411.ms'
 
 [fields]
 bpassfield = '0'
@@ -202,7 +203,7 @@ To insert your own scripts, either build a config file and edit the `scripts` ar
 2. Whether the script is threadsafe (for MPI - i.e. it can use mpicasa)
 3. The path to the container with which to call the script - use ' ' for the default container
 
-The path to the scripts (and containers) can be an absolute path, a relative path, or in your bash path. If none of these exist, the script (or container) is assumed to be in the calibration scripts directory (`/data/exp_soft/pipelines/master/processMeerKAT/cal_scripts/`). Hence simply using `partition.py` will call the partition script in the calibration scripts directory.
+The path to the scripts (and containers) can be an absolute path, a relative path, or in your bash path. If none of these exist, the script (or container) is assumed to be in the calibration scripts directory (`/idia/software/pipelines/master/processMeerKAT/cal_scripts/`). Hence simply using `partition.py` will call the partition script in the calibration scripts directory.
 
 ### Adding scripts to config file
 

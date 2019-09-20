@@ -31,15 +31,15 @@
     
       
         
+      
+    
+      
+        
           <li class="navigation-list-item">
             
             <a href="http://localhost:4000/" class="navigation-list-link">Home</a>
             
           </li>
-        
-      
-    
-      
         
       
     
@@ -59,14 +59,16 @@
     
       
         
+      
+    
+      
+        
           <li class="navigation-list-item">
             
             <a href="http://localhost:4000/docs/processMeerKAT" class="navigation-list-link">processMeerKAT</a>
             
               
               <ul class="navigation-list-child-list ">
-                
-                  
                 
                   
                 
@@ -81,6 +83,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/Release-Notes/" class="navigation-list-link">Release Notes</a>
@@ -89,11 +93,9 @@
                   
                 
                   
-                
-                  
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/Using-The-Pipeline/" class="navigation-list-link">Using the Pipeline</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/using-the-pipeline/" class="navigation-list-link">Using the Pipeline</a>
                       
                     </li>
                   
@@ -106,6 +108,8 @@
                       <a href="http://localhost:4000/docs/processMeerKAT/Example-Use-Cases/" class="navigation-list-link">Example Use Cases</a>
                       
                     </li>
+                  
+                
                   
                 
                   
@@ -176,10 +180,6 @@
         
       
     
-      
-        
-      
-    
   </ul>
 </nav>
 
@@ -217,15 +217,15 @@
           <h1 id="singularity-containers">Singularity Containers</h1>
 <p>At IDIA, astronomical software packages are provided and managed using <a href="http://singularity.lbl.gov/">Singularity</a> containers. Containers
 are managed and built by our developers. If you have any questions/issues relating to containers,
-please send an email to <a href="mailto:support@ilifu.ac.za">support@ilifu.ac.za</a>. You can find more documentation about containers on Ilifu <a href="http://docs.ilifu.ac.za/#/cluster/software_environments">here</a>.</p>
+please send an email to <a href="mailto:support@ilifu.ac.za">support@ilifu.ac.za</a>. You can find more documentation about containers on Ilifu <a href="http://docs.ilifu.ac.za/#/getting_started/container_environments">here</a>.</p>
 
 <h1 id="available-containers">Available Containers</h1>
-<p>The most recent, stable versions of containers are available in <code class="highlighter-rouge">/data/exp_soft/containers/</code>. Some
+<p>The most recent, stable versions of containers are available in <code class="highlighter-rouge">/idia/software/containers/</code>. Some
 of these containers can be accessed via the Jupyter-Hub, but all of them can be accessed via the
 terminal (i.e., once you’ve ssh’d into an IDIA machine).</p>
 
 <p>Here are a few examples of the latest stable Singularity container builds that are available in
-<code class="highlighter-rouge">/data/exp_soft/containers/</code>:</p>
+<code class="highlighter-rouge">/idia/software/containers/</code>:</p>
 <ul>
   <li><code class="highlighter-rouge">jupyter-casa-latest.simg</code>
     <ul>
@@ -261,7 +261,7 @@ containers, or for existing containers to be updated.</p>
 <p>Firstly, you can <em>shell</em> into the container. You will enter a <em>shell</em> which provides access to the
 software provided in that container:</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>singularity shell /data/exp_soft/containers/casa-stable-5.3.0.simg
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>singularity shell /idia/software/containers/casa-stable-5.3.0.simg
 Singularity: Invoking an interactive shell within container...
 
 Singularity casa-stable-5.3.0.simg:~&gt; casa <span class="nt">--nologger</span> <span class="nt">--log2term</span> <span class="nt">--nogui</span>
@@ -292,7 +292,7 @@ the shell in that container.</p>
 <p>For example, here’s an illustration of how to use the <code class="highlighter-rouge">exec</code> argument to jump into an interactive
 CASA session:</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>singularity <span class="nb">exec</span> /data/exp_soft/containers/casa-stable-5.3.0.simg casa <span class="nt">--nologger</span> <span class="nt">--log2term</span> <span class="nt">--nogui</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>singularity <span class="nb">exec</span> /idia/software/containers/casa-stable-5.3.0.simg casa <span class="nt">--nologger</span> <span class="nt">--log2term</span> <span class="nt">--nogui</span>
 
 <span class="o">=========================================</span>
 The start-up <span class="nb">time </span>of CASA may vary
@@ -333,7 +333,7 @@ CASA &lt;2&gt;:
 </code></pre></div></div>
 
 <p>The true utility of the <code class="highlighter-rouge">exec</code> argument is to execute commands non-interactively:</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>singularity <span class="nb">exec</span> /data/exp_soft/containers/casa-stable-5.3.0.simg casa <span class="nt">--nologger</span> <span class="nt">--log2term</span> <span class="nt">--nogui</span> <span class="nt">-c</span> <span class="s2">"print 'Hello World'"</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>singularity <span class="nb">exec</span> /idia/software/containers/casa-stable-5.3.0.simg casa <span class="nt">--nologger</span> <span class="nt">--log2term</span> <span class="nt">--nogui</span> <span class="nt">-c</span> <span class="s2">"print 'Hello World'"</span>
 
 <span class="o">=========================================</span>
 The start-up <span class="nb">time </span>of CASA may vary

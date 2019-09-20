@@ -53,7 +53,7 @@ Here’s an example of an SBATCH script that submits a TCLEAN job:
     #SBATCH -o casameer-batch-1530187312-tclean.sh.stdout.txt
     #SBATCH -e casameer-batch-1530187312-tclean.sh.stderr.txt
     #Run the application:
-    /data/users/frank/casa-cluster/casa-prerelease-5.3.0-115.el7/bin/mpicasa /usr/bin/singularity exec ~/casameer.simg  "casa" --nologger --log2term --nogui -c tclean.py
+    /idia/users/frank/casa-cluster/casa-prerelease-5.3.0-115.el7/bin/mpicasa /usr/bin/singularity exec ~/casameer.simg  "casa" --nologger --log2term --nogui -c tclean.py
 
 Please consult our documentation/wiki pages for more details on how software and containers are used on the IDIA Cloud.
 

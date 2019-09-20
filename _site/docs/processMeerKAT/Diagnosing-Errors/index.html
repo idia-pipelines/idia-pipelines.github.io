@@ -31,15 +31,15 @@
     
       
         
+      
+    
+      
+        
           <li class="navigation-list-item">
             
             <a href="http://localhost:4000/" class="navigation-list-link">Home</a>
             
           </li>
-        
-      
-    
-      
         
       
     
@@ -59,14 +59,16 @@
     
       
         
+      
+    
+      
+        
           <li class="navigation-list-item active">
             
             <a href="http://localhost:4000/docs/processMeerKAT" class="navigation-list-link">processMeerKAT</a>
             
               
               <ul class="navigation-list-child-list ">
-                
-                  
                 
                   
                 
@@ -81,6 +83,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/Release-Notes/" class="navigation-list-link">Release Notes</a>
@@ -89,11 +93,9 @@
                   
                 
                   
-                
-                  
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/Using-The-Pipeline/" class="navigation-list-link">Using the Pipeline</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/using-the-pipeline/" class="navigation-list-link">Using the Pipeline</a>
                       
                     </li>
                   
@@ -106,6 +108,8 @@
                       <a href="http://localhost:4000/docs/processMeerKAT/Example-Use-Cases/" class="navigation-list-link">Example Use Cases</a>
                       
                     </li>
+                  
+                
                   
                 
                   
@@ -176,10 +180,6 @@
         
       
     
-      
-        
-      
-    
   </ul>
 </nav>
 
@@ -231,6 +231,10 @@
 
 <p>We note here that although the pipeline is constructed to have job dependencies, <em>i.e.,</em> if one job fails, all the subsequent jobs are meant to be cancelled, this does not always work. We find that there are several cases where CASA will crash, and SLURM does not recognise that the job has terminated and will continue to execute the other jobs in the pipeline. We suspect that this is due to a difference in error handling between SLURM and CASA. Please keep a watch on the status of your jobs using the <code class="highlighter-rouge">./summary.sh</code> script, as well as the log files created to make sure that the pipeline is proceeding correctly.</p>
 
+<h3 id="fluxscale-issues">Fluxscale Issues</h3>
+
+<p>If any fluxscale issues are discovered within your dataset (see <a href="https://idia-pipelines.github.io/docs/processMeerKAT/Release-Notes/#known-issues">known issues</a>), particularly for short-track observations, we recommend you replace the ‘xy_yx’ scripts in your config file with the ‘xx_yy’ scripts (see <a href="https://idia-pipelines.github.io/docs/processMeerKAT/Example-Use-Cases#short-track-observations-and-fluxscale-issues">example use case</a>).</p>
+
 <h3 id="orte-error">ORTE error</h3>
 
 <p>An error of the form</p>
@@ -279,12 +283,7 @@
 
 <h3 id="memory-error">Memory error</h3>
 
-<p>If you see the phrase <code class="highlighter-rouge">MemoryError</code> in the <code class="highlighter-rouge">stderr</code> logs (this can be located by
-<code class="highlighter-rouge">grep -i MemoryError logs/*.err</code>) this is typically indicative that CASA did not
-have enough memory to complete the task. This often happens while running
-<code class="highlighter-rouge">flagdata</code> and does not always halt execution of the pipeline. Reduce the number
-of tasks per node in the config file before re-launching the pipeline, as that
-will allocate more memory per task.</p>
+<p>If you see the phrase <code class="highlighter-rouge">MemoryError</code> in the <code class="highlighter-rouge">stderr</code> logs (this can be located by <code class="highlighter-rouge">grep -i MemoryError logs/*.err</code>) this is typically indicative that CASA did not have enough memory to complete the task. This often happens while running <code class="highlighter-rouge">flagdata</code> and does not always halt execution of the pipeline. Reduce the number of tasks per node and increase the nodes in the config file (e.g. halve tasks and double nodes) before re-launching the pipeline, as that will allocate more memory per task.</p>
 
 
 

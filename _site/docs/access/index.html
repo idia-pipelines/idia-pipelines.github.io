@@ -45,15 +45,15 @@
     
       
         
-      
-    
-      
-        
           <li class="navigation-list-item active">
             
             <a href="http://localhost:4000/docs/access/" class="navigation-list-link active">Access to IDIA Machines</a>
             
           </li>
+        
+      
+    
+      
         
       
     
@@ -83,6 +83,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/Release-Notes/" class="navigation-list-link">Release Notes</a>
@@ -91,11 +93,9 @@
                   
                 
                   
-                
-                  
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/Using-The-Pipeline/" class="navigation-list-link">Using the Pipeline</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/using-the-pipeline/" class="navigation-list-link">Using the Pipeline</a>
                       
                     </li>
                   
@@ -123,7 +123,7 @@
                   
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/DEEP-2-tutorial/" class="navigation-list-link">DEEP 2 Tutorial</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/deep-2-tutorial/" class="navigation-list-link">DEEP 2 Tutorial</a>
                       
                     </li>
                   
@@ -131,7 +131,7 @@
                   
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/Calibration-in-processMeerKAT/" class="navigation-list-link">Calibration in processMeerKAT</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/calibration-in-processmeerkat/" class="navigation-list-link">Calibration in processMeerKAT</a>
                       
                     </li>
                   
@@ -220,7 +220,7 @@
 specific to the IDIA-Pipelines project, the details related to requesting access and connecting to a
 machine are identical.</p>
 
-<p>You can request access using the following <a href="http://docs.ilifu.ac.za/#/access/request_time">form</a>.</p>
+<p>You can request access using the following <a href="http://docs.ilifu.ac.za/#/getting_started/request_access">form</a>.</p>
 
 <p>In particular, please mention the team that you are a part of when you request access. This is
 extremely important, since it will help us provide you with access to the relevant project files.</p>
@@ -294,9 +294,9 @@ logged into.</p>
 
 <ul>
   <li><code class="highlighter-rouge">/users/&lt;username&gt;/</code>, where <code class="highlighter-rouge">/users</code> is a shared BeeGFS volume.</li>
-  <li><code class="highlighter-rouge">/data/users/&lt;username&gt;/</code>, where <code class="highlighter-rouge">/data</code> is a shared BeeGFS volume. This is the preferred space
+  <li><code class="highlighter-rouge">/idia/users/&lt;username&gt;/</code>, where <code class="highlighter-rouge">/idia</code> is a shared BeeGFS volume. This is the preferred space
 for you to store your longish term data products.</li>
-  <li><code class="highlighter-rouge">/data/&lt;Project&gt;</code> is a shared directory on BeeGFS for a project. You can fetch raw data from here.
+  <li><code class="highlighter-rouge">/idia/&lt;Project&gt;</code> is a shared directory on BeeGFS for a project. You can fetch raw data from here.
 Please steer away from dumping data into this directory.</li>
   <li><code class="highlighter-rouge">/scratch/users/&lt;username&gt;/</code> is the shared working directory for <username>, where `/scratch` is a
 BeeGFS volume). This is the preferred space for intermediate data products, e.g., you can use this
