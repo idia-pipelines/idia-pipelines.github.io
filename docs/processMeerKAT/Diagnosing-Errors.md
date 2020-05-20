@@ -15,7 +15,7 @@ We note here that although the pipeline is constructed to have job dependencies,
 
 ### Fluxscale Issues
 
-If any fluxscale issues are discovered within your dataset (see [known issues](https://idia-pipelines.github.io/docs/processMeerKAT/Release-Notes/#known-issues)), particularly for short-track observations, we recommend you replace the 'xy_yx' scripts in your config file with the 'xx_yy' scripts (see [example use case](https://idia-pipelines.github.io/docs/processMeerKAT/Example-Use-Cases#short-track-observations-and-fluxscale-issues)).
+If any fluxscale issues are discovered within your dataset (see [known issues](/docs/processMeerKAT/Release-Notes/#known-issues)), particularly for short-track observations, we recommend you replace the 'xy_yx' scripts in your config file with the 'xx_yy' scripts (see [example use case](/docs/processMeerKAT/Example-Use-Cases#short-track-observations-and-fluxscale-issues)).
 
 ### ORTE error
 

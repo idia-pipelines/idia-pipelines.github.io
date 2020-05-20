@@ -229,13 +229,13 @@ direction dependent effects.</li>
 </ul>
 
 <p>The <code class="highlighter-rouge">processMeerKAT</code> currently does full-polarisation <em>a priori</em> calibration on MeerKAT data, and includes automated
-flagging. <code class="highlighter-rouge">processMeerKAT</code> is written solely for the processing of data on the Ilifu SLURM cluster, but
+flagging. <code class="highlighter-rouge">processMeerKAT</code> is written solely for the processing of data on the ilifu SLURM cluster, but
 future revisions will allow you to run the software on any HPC platform.</p>
 
 <p>The main features of <code class="highlighter-rouge">processMeerKAT</code> are as follows:</p>
 <ul>
-  <li>Is written in Python 2.7 (for CASA 5.4.X).</li>
-  <li>Calibration algorithms only use CASA 5.4.X tasks and helper functions.</li>
+  <li>Is written in Python 2.7 (for CASA 5.X).</li>
+  <li>Calibration algorithms only use CASA 5.X tasks and helper functions.</li>
   <li>Uses a purpose-built CASA Singularity container for parallel processing at IDIA, i.e, is fully
 thread-safe.</li>
   <li>Uses <code class="highlighter-rouge">MPICASA</code> to run parallel jobs over the cluster.</li>
