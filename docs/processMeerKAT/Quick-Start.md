@@ -7,7 +7,7 @@ nav_order: 1
 
 # Quick Start
 
-**Note: It is not necessary to copy the raw data (i.e. the MS) to your working directory. The first step of the pipeline does this for you by creating an MMS or MS, and does not attempt to manipulate the raw data (e.g. stored in `/idia/projects` - see [data format](https://idia-pipelines.github.io/docs/processMeerKAT/Example-Use-Cases/#data-format)).**
+**Note: It is not necessary to copy the raw data (i.e. the MS) to your working directory. The first step of the pipeline does this for you by creating an MMS or MS, and does not attempt to manipulate the raw data (e.g. stored in `/idia/projects` - see [data format](/docs/processMeerKAT/Example-Use-Cases/#data-format)).**
 
 ### 1. In order to use the `processMeerKAT.py` script, source the `setup.sh` file:
 
@@ -32,4 +32,4 @@ Other convenient scripts are also created that allow you to monitor and (if nece
 
 For help, run `processMeerKAT.py -h`, which provides a brief description of all the command line arguments.
 
-The documentation can be accessed on the [pipelines website](https://idia-pipelines.github.io/docs/processMeerKAT), or on the [Github wiki](https://github.com/idia-astro/pipelines/wiki).
+<!-- The documentation can be accessed on the [pipelines website](/docs/processMeerKAT), or on the [Github wiki](https://github.com/idia-astro/pipelines/wiki). -->

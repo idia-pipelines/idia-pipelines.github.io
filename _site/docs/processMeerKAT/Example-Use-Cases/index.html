@@ -225,7 +225,7 @@
         <div id="main-content" class="page-content" role="main">
           <h1 id="calibration">Calibration</h1>
 
-<p>Our algorithmic approach toward calibration in the pipeline can be found <a href="https://idia-pipelines.github.io/docs/processMeerKAT/calibration-in-processmeerkat">here</a>.</p>
+<p>Our algorithmic approach toward calibration in the pipeline can be found <a href="/docs/processMeerKAT/calibration-in-processmeerkat">here</a>.</p>
 
 <h3 id="stokes-i-calibration-continuum">Stokes I Calibration (Continuum)</h3>
 
@@ -261,7 +261,7 @@
 
 <p>At the end of the pipeline, <code class="highlighter-rouge">split.py</code> will split each of the field IDs specified in your config file into MMS format. This is the default behaviour, since the default value of <code class="highlighter-rouge">keepmms</code> in the config file is <code class="highlighter-rouge">True</code>. This also ensures <code class="highlighter-rouge">tclean</code> makes use of MPI (and multiple CPUs) during <code class="highlighter-rouge">quick_tclean.py</code>, so that your imaging runs much more quickly.</p>
 
-<p>This mode is encouraged for users who only want to have quicklook images, or who have written a <code class="highlighter-rouge">tclean</code> script that will make use of MPI, that they can insert at the end of the pipeline (see <a href="https://idia-pipelines.github.io/docs/processMeerKAT/using-the-pipeline#inserting-your-own-scripts">Using the Pipeline</a>).</p>
+<p>This mode is encouraged for users who only want to have quicklook images, or who have written a <code class="highlighter-rouge">tclean</code> script that will make use of MPI, that they can insert at the end of the pipeline (see <a href="/docs/processMeerKAT/using-the-pipeline#inserting-your-own-scripts">Using the Pipeline</a>).</p>
 
 <h3 id="ms---mms---ms">MS -&gt; MMS -&gt; MS</h3>
 
@@ -271,7 +271,9 @@
 
 <p>The pipeline can be run on a MS, where the user would have to request 1 node and 1 task per node. In this case, the user would need to skip the <code class="highlighter-rouge">partition.py</code> script, by removing it from the <code class="highlighter-rouge">scripts</code> list in the config file, copy the MS do their working directory, and use this as the input dataset.</p>
 
-<p>This mode isn’t generally encouraged, but may be useful for small datasets (tens of GB - e.g. small bandwidth of several MHz), when using MMS has little to no advantage. In such a case, the user may need to manually run <code class="highlighter-rouge">partition</code> (e.g. to select a <code class="highlighter-rouge">spw</code>), and set <code class="highlighter-rouge">createmms=False</code>. Alternatively, the user can run <code class="highlighter-rouge">split</code> or <code class="highlighter-rouge">mstransform</code> to select an <code class="highlighter-rouge">spw</code>.</p>
+<p>This mode isn’t generally encouraged, but may be useful for small datasets (tens of GB - e.g. small bandwidth of several MHz), when using MMS has little to no advantage, or when the number of scans is very large (hundreds), when splitting into multiple SPWs and multiple sub-MSs is too extreme. In such a case, the user may need to manually run <code class="highlighter-rouge">partition</code> (e.g. to select a <code class="highlighter-rouge">spw</code>), and set <code class="highlighter-rouge">createmms=False</code>. Alternatively, the user can run <code class="highlighter-rouge">split</code> or <code class="highlighter-rouge">mstransform</code> to select an <code class="highlighter-rouge">spw</code>.</p>
+
+<!-- Add recipe here -->
 
 <h1 id="field-ids">Field IDs</h1>
 
@@ -291,7 +293,7 @@
 
 <p>There are a few steps within the pipeline that only need to be run once for a given dataset. For datasets that have already been through the default pipeline, the reference antenna and list of bad antennas would have been calculated, and can be found in <code class="highlighter-rouge">logs/calc_refant-*.err</code>. These can be written in your new config file, where you also set <code class="highlighter-rouge">calcrefant=False</code>.</p>
 
-<p>More generally, users can run any selected parts of the pipeline by editing the <code class="highlighter-rouge">scripts</code> argument or passing scripts in via the command-line arguments (see <a href="https://idia-pipelines.github.io/docs/processMeerKAT/using-the-pipeline#inserting-your-own-scripts">Using the Pipeline</a>).</p>
+<p>More generally, users can run any selected parts of the pipeline by editing the <code class="highlighter-rouge">scripts</code> argument or passing scripts in via the command-line arguments (see <a href="/docs/processMeerKAT/using-the-pipeline#inserting-your-own-scripts">Using the Pipeline</a>).</p>
 
 <p>The pipeline is not designed to run twice within the same directory, since CASA will complain the files already exist. The pipeline can be killed and re-run from the start at any point, but care should also be taken to ensure the data are not corrupted (e.g. during flagging or solving).</p>
 

@@ -237,62 +237,32 @@
 
 <p><code class="highlighter-rouge">processMeerKAT.py -B -C tutorial_config.txt -M /idia/projects/deep/1491550051.ms -v</code></p>
 
-<p>After some initial debug output, you should get the following output, with different timestamps</p>
+<p>You should get the following output, with different timestamps</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2019-02-28 02:36:14,421 INFO: Extracting field IDs from measurement set "/idia/projects/deep/1491550051.ms" using CASA.
-2019-02-28 02:36:14,422 DEBUG: Using the following command:
-   srun --nodes=1 --ntasks=1 --time=10 --mem=4GB --partition=Main singularity exec /idia/software/pipelines/casameer-5.4.1.xvfb.simg  casa --nologger --nogui --nologfile -c /idia/software/pipelines/master/processMeerKAT/cal_scripts/get_fields.py -B -M /idia/projects/deep/1491550051.ms -C tutorial_config.txt -N 8 -t 4
-      .
-      .
-      .
-2019-02-28 02:37:39,788 WARNING: The number of threads (8 node(s) x 4 task(s) = 32) is not ideal compared to the number of scans (12) for "/idia/projects/deep/1491550051.ms".
-2019-02-28 02:37:39,788 WARNING: Config file has been updated to use 2 node(s) and 4 task(s) per node.
-2019-02-28 02:37:39,788 INFO: For the best results, update your config file so that nodes x tasks per node = 7.
-2019-02-28 02:37:40,045 INFO: Multiple fields found with intent "CALIBRATE_FLUX" in dataset "/idia/projects/deep/1491550051.ms" - [0 1].
-2019-02-28 02:37:40,110 WARNING: Only using field "0" for "fluxfield", which has the most scans (1).
-2019-02-28 02:37:40,110 WARNING: Putting extra fields with intent "CALIBRATE_FLUX" in "targetfields" - [1]
-2019-02-28 02:37:40,111 INFO: Multiple fields found with intent "CALIBRATE_BANDPASS" in dataset "/idia/projects/deep/1491550051.ms" - [0 1].
-2019-02-28 02:37:40,111 WARNING: Only using field "0" for "bpassfield", which has the most scans (1).
-2019-02-28 02:37:40,112 INFO: Multiple fields found with intent "CALIBRATE_PHASE" in dataset "/idia/projects/deep/1491550051.ms" - [1 2].
-2019-02-28 02:37:40,112 WARNING: Only using field "2" for "phasecalfield", which has the most scans (5).
-2019-02-28 02:37:40,123 INFO: [fields] section written to "tutorial_config.txt". Edit this section to change field IDs (comma-seperated string for multiple IDs).
-2019-02-28 02:37:41,990 INFO: Config "tutorial_config.txt" generated.
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2020-05-12 14:51:34,877 INFO: Extracting field IDs from measurement set "/idia/projects/deep/1491550051.ms" using CASA.
+2020-05-12 14:51:34,877 DEBUG: Using the following command:
+	srun --qos qos-interactive --nodes=1 --ntasks=1 --time=10 --mem=4GB --partition=Main singularity run /idia/software/containers/casa-stable-5.6.2-2.simg  /users/jcollier/Scripts/pipelines/processMeerKAT/cal_scripts/get_fields.py -B -M /idia/projects/deep/1491550051.ms -C tutorial_config.txt -N 8 -t 4 2&gt;&amp;1 | grep -v 'msmetadata_cmpt.cc::open\|MSMetaData::_computeScanAndSubScanProperties'
+2020-05-12 14:51:36,883 INFO: Using reference antenna 'm059'.
+2020-05-12 14:51:36,883 INFO: This is usually a well-behaved (stable) antenna. Update 'refant' in [crosscal] section of 'tutorial_config.txt' to change this.
+2020-05-12 14:51:36,929 WARNING: The number of threads (8 node(s) x 4 task(s) = 32) is not ideal compared to the number of scans (12) for "/idia/projects/deep/1491550051.ms".
+2020-05-12 14:51:36,929 WARNING: Config file has been updated to use 1 node(s) and 8 task(s) per node.
+2020-05-12 14:51:36,929 INFO: For the best results, update your config file so that nodes x tasks per node = 7.
+2020-05-12 14:51:37,154 INFO: Multiple fields found with intent "CALIBRATE_FLUX" in dataset "/idia/projects/deep/1491550051.ms" - [0 1].
+2020-05-12 14:51:37,158 WARNING: Only using field "0" for "fluxfield", which has the most scans (1).
+2020-05-12 14:51:37,158 WARNING: Putting extra fields with intent "CALIBRATE_FLUX" in "targetfields" - [1]
+2020-05-12 14:51:37,158 INFO: Multiple fields found with intent "CALIBRATE_BANDPASS" in dataset "/idia/projects/deep/1491550051.ms" - [0 1].
+2020-05-12 14:51:37,159 WARNING: Only using field "0" for "bpassfield", which has the most scans (1).
+2020-05-12 14:51:37,159 INFO: Multiple fields found with intent "CALIBRATE_PHASE" in dataset "/idia/projects/deep/1491550051.ms" - [1 2].
+2020-05-12 14:51:37,159 WARNING: Only using field "2" for "phasecalfield", which has the most scans (5).
+2020-05-12 14:51:37,165 INFO: [fields] section written to "tutorial_config.txt". Edit this section if you need to change field IDs (comma-seperated string for multiple IDs).
+2020-05-12 14:51:37,541 INFO: Config "tutorial_config.txt" generated.
 </code></pre></div></div>
 
-<p>This calls CASA via the default singularity container without writing log files, and runs <code class="highlighter-rouge">get_fields.py</code>. It calls <code class="highlighter-rouge">srun</code>, requesting only 1 node, 1 task, 4 GB of memory, and a 10 minute time limit, to increase the likelihood of jumping to the top of the queue. The purpose of this call is to extract the field IDs corresponding to our different targets, and check the nodes and tasks per node against the number of scans, each of which is handled by a thread (see section 3). The output statements with <code class="highlighter-rouge">DEBUG</code> correspond to those output during verbose mode. The warnings display when multiple fields are present with the same intent, but only one is extracted, corresponding to the field with the most scans. In this case the extras are moved to <code class="highlighter-rouge">targetfields</code> (i.e. for applying calibration and imaging).</p>
+<p>This calls CASA via the default singularity container without writing log files, and runs <code class="highlighter-rouge">get_fields.py</code>. It calls <code class="highlighter-rouge">srun</code>, requesting only 1 node, 1 task, 4 GB of memory, and a 10 minute time limit, to increase the likelihood of launching <code class="highlighter-rouge">srun</code> immediately. The purpose of this call is to extract the field IDs corresponding to our different targets, and check the nodes and tasks per node against the number of scans, each of which is handled by a thread (see section 3). The output statements with <code class="highlighter-rouge">DEBUG</code> correspond to those output during verbose mode. The warnings display when multiple fields are present with the same intent, but only one is extracted, corresponding to the field with the most scans. In this case the extras are moved to <code class="highlighter-rouge">targetfields</code> (i.e. for applying calibration and imaging).</p>
 
 <h5 id="3-view-the-config-file-created-which-has-the-following-contents">3. View the config file created, which has the following contents:</h5>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[crosscal]
-minbaselines = 4                  # Minimum number of baselines to use while calibrating
-specavg = 1                       # Number of channels to average after calibration (during split)
-timeavg = '8s'                    # Time interval to average after calibration (during split)
-keepmms = True                    # Output MMS (True) or MS (False) during split
-spw = '0:860~1700MHz'             # Spectral window / frequencies to extract for MMS
-calcrefant = True                 # Calculate reference antenna in program (overwrites 'refant')
-refant = 'm005'                   # Reference antenna name / number
-standard = 'Perley-Butler 2010'   # Flux density standard for setjy
-badants = []                      # List of bad antenna numbers (to flag)
-badfreqranges = [ '944~947MHz',   # List of bad frequency ranges (to flag)
-        '1160~1310MHz',
-        '1476~1611MHz',
-        '1670~1700MHz']
-
-[slurm]
-nodes = 2
-ntasks_per_node = 4
-plane = 2
-mem = 236
-partition = 'Main'
-time = '12:00:00'
-submit = False
-container = '/idia/software/pipelines/casameer-5.4.1.xvfb.simg'
-mpi_wrapper = '/idia/software/pipelines/casa-prerelease-5.3.0-115.el7/bin/mpicasa'
-name = ''
-verbose = True
-scripts = [('validate_input.py', False, ''), ('partition.py', True, ''), ('calc_refant.py', False, ''), ('flag_round_1.py', True, ''), ('setjy.py', True, ''), ('xx_yy_solve.py', False, ''), ('xx_yy_apply.py', True, ''), ('flag_round_2.py', True, ''), ('setjy.py', True, ''), ('xy_yx_solve.py', False, ''), ('xy_yx_apply.py', True, ''), ('split.py', True, ''), ('quick_tclean.py', True, ''), ('plot_solutions.py', False, '')]
-
-[data]
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[data]
 vis = '/idia/projects/deep/1491550051.ms'
 
 [fields]
@@ -300,153 +270,196 @@ bpassfield = '0'
 fluxfield = '0'
 phasecalfield = '2'
 targetfields = '3,1'
+
+[slurm]
+nodes = 1
+ntasks_per_node = 8
+plane = 1
+mem = 236
+partition = 'Main'
+exclude = ''
+time = '12:00:00'
+submit = False
+container = '/idia/software/containers/casa-stable-5.6.2-2.simg'
+mpi_wrapper = '/idia/software/pipelines/casa-pipeline-release-5.6.1-8.el7/bin/mpicasa'
+name = ''
+dependencies = ''
+account = 'b03-idia-ag'
+reservation = ''
+verbose = True
+precal_scripts = [('calc_refant.py', False, ''), ('partition.py', True, '')]
+postcal_scripts = [('concat.py', False, '')]
+scripts = [('validate_input.py', False, ''), ('flag_round_1.py', True, ''), ('calc_refant.py', False, ''), ('setjy.py', True, ''), ('xx_yy_solve.py', False, ''), ('xx_yy_apply.py', True, ''), ('flag_round_2.py', True, ''), ('xx_yy_solve.py', False, ''), ('xx_yy_apply.py', True, ''), ('split.py', True, ''), ('quick_tclean.py', True, ''), ('plot_solutions.py', False, '')]
+
+[crosscal]
+minbaselines = 4                  # Minimum number of baselines to use while calibrating
+preavg = 1                        # Number of channels to average before calibration (during partition)
+specavg = 1                       # Number of channels to average after calibration (during split)
+timeavg = '8s'                    # Time interval to average after calibration (during split)
+keepmms = True                    # Output MMS (True) or MS (False) during split
+spw = '0:860~1680MHz'             # Spectral window / frequencies to extract for MMS
+nspw = 16                         # Number of spectral windows to split into
+calcrefant = True                 # Calculate reference antenna in program (overwrites 'refant')
+refant = 'm059'                   # Reference antenna name / number
+standard = 'Stevens-Reynolds 2016'# Flux density standard for setjy
+badants = []                      # List of bad antenna numbers (to flag)
+badfreqranges = [ '933~960MHz',   # List of bad frequency ranges (to flag)
+        '1163~1299MHz',
+        '1524~1630MHz']
+
+[run]
+continue = True
 </code></pre></div></div>
 
-<p>This config file contains four sections - crosscal, slurm, data, and fields. The fields IDs we just extracted, seen in section <code class="highlighter-rouge">[fields]</code>, correspond to field 0 for the bandpass calibrator, field 0 for the total flux calibrator, field 2 for the phase calibrator, and fields 3 and 1 for the science targets (i.e. the DEEP 2 field + another calibrator). Only the target may have multiple fields. If a field isn’t found according to its intent, a warning is displayed, and the field for the total flux calibrator is selected. If the total flux calibrator isn’t present, the program will display an error and terminate.</p>
+<p>This config file contains five sections - data, fields, slurm, crosscal, and run. The fields IDs we just extracted, seen in section <code class="highlighter-rouge">[fields]</code>, correspond to field 0 for the bandpass calibrator, field 0 for the total flux calibrator, field 2 for the phase calibrator, and fields 3 and 1 for the science targets (i.e. the DEEP 2 field + another calibrator). Only the target may have multiple fields. If a field isn’t found according to its intent, a warning is displayed, and the field for the total flux calibrator is selected. If the total flux calibrator isn’t present, the program will display an error and terminate. The <code class="highlighter-rouge">[run]</code> section is used internally by the pipeline, and should be ignored.</p>
 
-<p>The SLURM parameters in section <code class="highlighter-rouge">[slurm]</code> correspond to those seen by running <code class="highlighter-rouge">processMeerKAT.py -h</code>. By default, for all threadsafe scripts (i.e. those with <code class="highlighter-rouge">True</code> in the <code class="highlighter-rouge">scripts</code> list), we use 8 nodes, 4 tasks per node (=32 threads), 236 GB of memory (per node), and <code class="highlighter-rouge">plane=2</code> (which distributes four tasks onto one node before moving onto next node). During step 2, only 12 scans were found, and since <code class="highlighter-rouge">partition.py</code> partitions the data into one sub-measurement set (sub-MS) per scan, only 12 sub-MSs will exist in the multi-measurement set (MMS - see <a href="#10-view-the-contents-of-1491550051mms">section 10 below</a>). Assuming each observation has a phase calibrator bracketing each target scan, at most, 6 sub-MSs will be operated on at any given time, each handled by one thread, and a master thread. So we aim to have a limit of nscans+1+10% threads, with the 10% to account for the occasional thread that hangs. For this dataset, this limit is 7 threads, so <code class="highlighter-rouge">get_fields.py</code> attempts to match this number by using the specified number of tasks per node and increasing the node count from 1 until the number of threads is more than the limit, terminating at 2 nodes x 4 tasks per node = 8 threads.</p>
+<p>The SLURM parameters in section <code class="highlighter-rouge">[slurm]</code> correspond to those seen by running <code class="highlighter-rouge">processMeerKAT.py -h</code>. The pipeline executes all the scripts from the <code class="highlighter-rouge">scripts</code> parameter in order, including any of your own that you can insert (see <a href="/docs/processMeerKAT/using-the-pipeline#inserting-your-own-scripts">Using the Pipeline</a>). The <code class="highlighter-rouge">precal_scripts</code> and <code class="highlighter-rouge">postcal_scripts</code> are only relevant when <code class="highlighter-rouge">nspw</code> &gt; 1 (the default is <code class="highlighter-rouge">nspw=16</code>), where as we will set <code class="highlighter-rouge">nspw=1</code> in this tutorial, meaning that in the next step, the scripts in <code class="highlighter-rouge">precal_scripts</code> will be prepended to the beginning of <code class="highlighter-rouge">scripts</code>, and the scripts in <code class="highlighter-rouge">postcal_scripts</code> will be appended to the end of <code class="highlighter-rouge">scripts</code>. See the <a href="link-TBD">MIGHTEE tutorial</a> when using <code class="highlighter-rouge">nspw</code> &gt; 1.</p>
 
-<p>For script that aren’t threadsafe (i.e. those with <code class="highlighter-rouge">False</code> in the <code class="highlighter-rouge">scripts</code> list), we use a single node, and a single task per node. For both scripts that are threadsafe and those that aren’t, we use a single CPU per task, and explicitly export <code class="highlighter-rouge">OMP_NUM_THREADS=1</code>, since there is little evidence of a speedup with more than one CPU per task. However, for <code class="highlighter-rouge">quick_tclean.py</code> we use 4 CPUs per task.</p>
+<p>By default, for all threadsafe scripts (i.e. those with <code class="highlighter-rouge">True</code> in the <code class="highlighter-rouge">scripts</code> list), we use 2 nodes, 8 tasks per node (=16 threads), 236 GB of memory (per node), and <code class="highlighter-rouge">plane=1</code> (an argument that distributes N tasks onto one node before moving onto next node). During step 2, only 12 scans were found, and since <code class="highlighter-rouge">partition.py</code> partitions the data into one sub-measurement set (sub-MS) per scan, only 12 sub-MSs will exist in the multi-measurement set (MMS - see <a href="#10-view-the-contents-of-1491550051mms">section 10 below</a>). Assuming each observation has a phase calibrator bracketing each target scan, at most, 6 sub-MSs will be operated on at any given time, each handled by one thread, and a master thread. So we aim to have a limit of nscans+1+10% threads, with the 10% to account for the occasional thread that hangs. For this dataset, this limit is 7 threads, so <code class="highlighter-rouge">get_fields.py</code> attempts to match this number by using the specified number of tasks per node and increasing the node count from 1 until the number of threads is more than the limit, terminating at 1 nodes x 8 tasks per node = 8 threads.</p>
 
-<p>The cross-calibration parameters in section <code class="highlighter-rouge">[crosscal]</code> correspond to various CASA parameters passed into the calibration tasks that the pipeline used, each of which is documented <a href="https://idia-pipelines.github.io/docs/processMeerKAT/calibration-in-processmeerkat">here</a>. By default all frequency ranges listed in <code class="highlighter-rouge">badfreqranges</code>, and all antenna numbers listed in <code class="highlighter-rouge">badants</code>, will be flagged out entirely. The third script the pipeline runs (<code class="highlighter-rouge">calc_refant.py</code>) will likely change the value of <code class="highlighter-rouge">refant</code>, and add a list of bad antennas to <code class="highlighter-rouge">badants</code>.</p>
+<p>For script that aren’t threadsafe (i.e. those with <code class="highlighter-rouge">False</code> in the <code class="highlighter-rouge">scripts</code> list), we use a single node, and a single task per node. For the majority scripts that are threadsafe and those that aren’t, we use a single CPU per task, and explicitly export <code class="highlighter-rouge">OMP_NUM_THREADS=1</code>, since there is little evidence of a speedup with more than one CPU per task. However, for <code class="highlighter-rouge">partition.py</code> we use between 2-4 CPUs per task (equal to the number of polarisations, which is 2 by default, but 4 if <code class="highlighter-rouge">[-D --dopol]</code> is used, which adds the <code class="highlighter-rouge">xy_yx_solve.py</code> or <code class="highlighter-rouge">xy_yx_apply.py</code> scripts to the <code class="highlighter-rouge">scripts</code> parameter in your config). Furthermore, <code class="highlighter-rouge">quick_tclean.py</code> will use as many CPUs as it can without exceeding 32 in total.</p>
 
-<h5 id="4-run-the-pipeline-using-your-config-file">4. Run the pipeline using your config file</h5>
+<p>The cross-calibration parameters in section <code class="highlighter-rouge">[crosscal]</code> correspond to various CASA parameters passed into the calibration tasks that the pipeline used, each of which is documented <a href="/docs/processMeerKAT/calibration-in-processmeerkat">here</a>. By default all frequency ranges listed in <code class="highlighter-rouge">badfreqranges</code>, and all antenna numbers listed in <code class="highlighter-rouge">badants</code>, will be flagged out entirely. The third script the pipeline runs (<code class="highlighter-rouge">calc_refant.py</code>) will likely change the value of <code class="highlighter-rouge">refant</code>, and add a list of bad antennas to <code class="highlighter-rouge">badants</code>.</p>
+
+<h5 id="4-edit-your-config-file-to-set-nspw1-and-then-run-the-pipeline-using-your-config-file">4. Edit your config file to set <code class="highlighter-rouge">nspw=1</code>, and then run the pipeline using your config file</h5>
 
 <p><code class="highlighter-rouge">processMeerKAT.py -R -C tutorial_config.txt</code></p>
 
 <p>You should get the following output, with different timestamps</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2019-02-28 02:44:06,078 DEBUG: Copying 'tutorial_config.txt' to '.config.tmp', and using this to run pipeline.
-2019-02-28 02:44:06,096 WARNING: Changing [slurm] section in your config will have no effect unless you [-R --run] again
-2019-02-28 02:44:06,131 DEBUG: Wrote sbatch file "validate_input.sbatch"
-2019-02-28 02:44:06,138 DEBUG: Wrote sbatch file "partition.sbatch"
-2019-02-28 02:44:06,144 DEBUG: Wrote sbatch file "calc_refant.sbatch"
-2019-02-28 02:44:06,150 DEBUG: Wrote sbatch file "flag_round_1.sbatch"
-2019-02-28 02:44:06,156 DEBUG: Wrote sbatch file "setjy.sbatch"
-2019-02-28 02:44:06,172 DEBUG: Wrote sbatch file "xx_yy_solve.sbatch"
-2019-02-28 02:44:06,247 DEBUG: Wrote sbatch file "xx_yy_apply.sbatch"
-2019-02-28 02:44:06,253 DEBUG: Wrote sbatch file "flag_round_2.sbatch"
-2019-02-28 02:44:06,260 DEBUG: Wrote sbatch file "setjy.sbatch"
-2019-02-28 02:44:06,267 DEBUG: Wrote sbatch file "xy_yx_solve.sbatch"
-2019-02-28 02:44:06,273 DEBUG: Wrote sbatch file "xy_yx_apply.sbatch"
-2019-02-28 02:44:06,279 DEBUG: Wrote sbatch file "split.sbatch"
-2019-02-28 02:44:06,291 DEBUG: Wrote sbatch file "quick_tclean.sbatch"
-2019-02-28 02:44:06,331 DEBUG: Wrote sbatch file "plot_solutions.sbatch"
-2019-02-28 02:44:06,338 INFO: Master script "submit_pipeline.sh" written, but will not run.
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2020-05-12 15:08:42,808 WARNING: Appending "precal_scripts" to beginning of "scripts", and "postcal_script" to end of "scripts", since nspw=1. Overwritting this in "tutorial_config.txt".
+2020-05-12 15:08:42,844 DEBUG: Copying 'tutorial_config.txt' to '.config.tmp', and using this to run pipeline.
+2020-05-12 15:08:42,848 WARNING: Changing [slurm] section in your config will have no effect unless you [-R --run] again.
+2020-05-12 15:08:42,854 DEBUG: Wrote sbatch file "calc_refant.sbatch"
+2020-05-12 15:08:42,858 DEBUG: Wrote sbatch file "partition.sbatch"
+2020-05-12 15:08:42,861 DEBUG: Wrote sbatch file "validate_input.sbatch"
+2020-05-12 15:08:42,865 DEBUG: Wrote sbatch file "flag_round_1.sbatch"
+2020-05-12 15:08:42,868 DEBUG: Wrote sbatch file "calc_refant.sbatch"
+2020-05-12 15:08:42,871 DEBUG: Wrote sbatch file "setjy.sbatch"
+2020-05-12 15:08:42,875 DEBUG: Wrote sbatch file "xx_yy_solve.sbatch"
+2020-05-12 15:08:42,878 DEBUG: Wrote sbatch file "xx_yy_apply.sbatch"
+2020-05-12 15:08:42,881 DEBUG: Wrote sbatch file "flag_round_2.sbatch"
+2020-05-12 15:08:42,885 DEBUG: Wrote sbatch file "xx_yy_solve.sbatch"
+2020-05-12 15:08:42,888 DEBUG: Wrote sbatch file "xx_yy_apply.sbatch"
+2020-05-12 15:08:42,891 DEBUG: Wrote sbatch file "split.sbatch"
+2020-05-12 15:08:42,894 DEBUG: Wrote sbatch file "quick_tclean.sbatch"
+2020-05-12 15:08:42,898 DEBUG: Wrote sbatch file "plot_solutions.sbatch"
+2020-05-12 15:08:42,902 DEBUG: Wrote sbatch file "concat.sbatch"
+2020-05-12 15:08:42,904 INFO: Master script "submit_pipeline.sh" written, but will not run.```
+
+A number of sbatch files have now been written to your working directory, each of which corresponds to the python script in the list of scripts set by the `scripts` parameter in our config file. Our config file was copied to `.config.tmp`, which is the config file written and edited by the pipeline, which the user should not touch. A bash script called `submit_pipeline.sh` was written, which we will look at soon. However, this script was not run, since we set `submit = False` in our config file (you can change this in your config file, or by using option `[-s --submit]` when you build your config file with `processMeerKAT.py`). Lastly, a `logs` directory was created, which will store the log files from the SLURM output.
+
+##### 5. View `validate_input.sbatch`, which has the following contents:
+
 </code></pre></div></div>
+<p>#!/bin/bash
+#SBATCH –account=b03-idia-ag
+#SBATCH –nodes=1
+#SBATCH –ntasks-per-node=1
+#SBATCH –cpus-per-task=1
+#SBATCH –mem=236GB
+#SBATCH –job-name=validate_input
+#SBATCH –distribution=plane=1
+#SBATCH –output=logs/%x-%j.out
+#SBATCH –error=logs/%x-%j.err
+#SBATCH –partition=Main
+#SBATCH –time=12:00:00</p>
 
-<p>A number of sbatch files have now been written to your working directory, each of which corresponds to the python script in the list of scripts set by the <code class="highlighter-rouge">scripts</code> parameter in our config file. Our config file was copied to <code class="highlighter-rouge">.config.tmp</code>, which is the config file written and edited by the pipeline, which the user should not touch. A bash script called <code class="highlighter-rouge">submit_pipeline.sh</code> was written, which we will look at soon. However, this script was not run, since we set <code class="highlighter-rouge">submit = False</code> in our config file (you can change this in your config file, or by using option <code class="highlighter-rouge">[-s --submit]</code> when you build your config file with <code class="highlighter-rouge">processMeerKAT.py</code>). Lastly, a <code class="highlighter-rouge">logs</code> directory was created, which will store the log files from the SLURM output.</p>
+<p>export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+export OMPI_MCA_btl_tcp_if_exclude=’192.168.100.0/24’</p>
 
-<h5 id="5-view-validate_inputsbatch-which-has-the-following-contents">5. View <code class="highlighter-rouge">validate_input.sbatch</code>, which has the following contents:</h5>
+<p>srun singularity run /idia/software/containers/casa-stable-5.6.2-2.simg  casa –nologger –nogui –logfile logs/${SLURM_JOB_NAME}-${SLURM_JOB_ID}.casa -c /users/jcollier/Scripts/pipelines/processMeerKAT/cal_scripts/validate_input.py –config .config.tmp 2&gt;&amp;1 | grep -v ‘msmetadata_cmpt.cc::open|MSMetaData::_computeScanAndSubScanProperties’</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+Since this script is not threadsafe, the job is called with `srun`, and is configured to run a single task on a single node. The last line shows the CASA call of the `validate_input.py` task, which will validate the parameters in the config file.
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
-<span class="c">#SBATCH --nodes=1</span>
-<span class="c">#SBATCH --ntasks-per-node=1</span>
-<span class="c">#SBATCH --cpus-per-task=1</span>
-<span class="c">#SBATCH --mem=100GB</span>
-<span class="c">#SBATCH --job-name=validate_input</span>
-<span class="c">#SBATCH --distribution=plane=1</span>
-<span class="c">#SBATCH --output=logs/validate_input-%j.out</span>
-<span class="c">#SBATCH --error=logs/validate_input-%j.err</span>
-<span class="c">#SBATCH --partition=Main</span>
-<span class="c">#SBATCH --time=12:00:00</span>
+##### 6. Run the first sbatch job
 
-<span class="nb">export </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span>1
+```sbatch validate_input.sbatch```
 
-srun singularity <span class="nb">exec</span> /idia/software/pipelines/casameer-5.4.1.xvfb.simg  casa <span class="nt">--nologger</span> <span class="nt">--nogui</span> <span class="nt">--logfile</span> logs/validate_input-<span class="k">${</span><span class="nv">SLURM_JOB_ID</span><span class="k">}</span>.casa <span class="nt">-c</span> /idia/software/pipelines/master/processMeerKAT/cal_scripts/validate_input.py <span class="nt">--config</span> .config.tmp
+You should see the following output, corresponding to your SLURM job ID
+
+```Submitted batch job 1281331```
+
+##### 7. View your job in the SLURM queue (if you weren't quick enough, repeat step 6, and quickly do step 7)
+
+`squeue`
+
+You will see something similar to the following, with other people's jobs mixed into the queue.
+
 </code></pre></div></div>
+<p>JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+1281331      Main validate jcollier  R       0:13      1 slwrk-121</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+We can see the job with name `validate` was submitted to SLURM worker node 121, amongst a number of jobs in the Main partition, the Jupyter Spawner partition, and possible other partitions. Your job may list `(Priority)`, which means it is too low a priority to be run at this point, or `(Resources)`, which means it is waiting for resources to be made available.
 
-<p>Since this script is not threadsafe, the job is called with <code class="highlighter-rouge">srun</code>, and is configured to run a single task on a single node, with 100 GB of memory. The last line shows the CASA call of the <code class="highlighter-rouge">validate_input.py</code> task, which will validate the parameters in the config file.</p>
+*NOTE: You can view just your jobs with `squeue -u your_username`, an individual job with `squeue -j 1281331`, and just the jobs in the main partition with `squeue -p Main`. You can view which nodes are allocated, which are idle, which are mixed (i.e. partially allocated), and which are down in the main partition with `sinfo -p Main`. Often it is good idea to check this before selecting your SLURM parameters. More more information: see [docs](URL-here)*
 
-<h5 id="6-run-the-first-sbatch-job">6. Run the first sbatch job</h5>
 
-<p><code class="highlighter-rouge">sbatch validate_input.sbatch</code></p>
+##### 8. View `partition.sbatch`, which has the following contents:
 
-<p>You should see the following output, corresponding to your SLURM job ID</p>
-
-<p><code class="highlighter-rouge">Submitted batch job 1097914</code></p>
-
-<h5 id="7-view-your-job-in-the-slurm-queue">7. View your job in the SLURM queue</h5>
-
-<p><code class="highlighter-rouge">squeue</code></p>
-
-<p>You will see something similar to the following, with other people’s jobs mixed into the queue.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
-1097914      Main validate jcollier  R       0:13      1 slwrk-008
 </code></pre></div></div>
+<p>#!/bin/bash
+#SBATCH –account=b03-idia-ag
+#SBATCH –nodes=1
+#SBATCH –ntasks-per-node=8
+#SBATCH –cpus-per-task=2
+#SBATCH –mem=236GB
+#SBATCH –job-name=partition
+#SBATCH –distribution=plane=1
+#SBATCH –output=logs/%x-%j.out
+#SBATCH –error=logs/%x-%j.err
+#SBATCH –partition=Main
+#SBATCH –time=12:00:00</p>
 
-<p>We can see the job with name <code class="highlighter-rouge">validate</code> was submitted to SLURM worker node 8, amongst a number of jobs in the main partition, the JupyterSpawner partition, and possible other partitions. Your job may list <code class="highlighter-rouge">(Priority)</code>, which means it is too low a priority to be run at this point, or <code class="highlighter-rouge">(Resources)</code>, which means it is waiting for resources to be made available.</p>
+<p>export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+export OMPI_MCA_btl_tcp_if_exclude=’192.168.100.0/24’</p>
 
-<p><em>NOTE: You can view just your jobs with <code class="highlighter-rouge">squeue -u your_username</code>, an individual job with <code class="highlighter-rouge">squeue -j 1097914</code>, and just the jobs in the main partition with <code class="highlighter-rouge">squeue -p Main</code>. You can view which nodes are allocated, which are idle, which are mixed (i.e. partially allocated), and which are down in the main partition with <code class="highlighter-rouge">sinfo -p Main</code>. Often it is good idea to check this before selecting your SLURM parameters.</em></p>
+<p>/idia/software/pipelines/casa-pipeline-release-5.6.1-8.el7/bin/mpicasa singularity exec /idia/software/containers/casa-stable-5.6.2-2.simg  casa –nologger –nogui –logfile logs/${SLURM_JOB_NAME}-${SLURM_JOB_ID}.casa -c /users/jcollier/Scripts/pipelines/processMeerKAT/cal_scripts/partition.py –config .config.tmp</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+Here we see the same default SLURM parameters for threadsafe tasks, as discussed in [section 3](#3-view-the-config-file-created-which-has-the-following-contents). We now use mpicasa as the mpi wrapper, since we are calling a threadsafe script `partition.py`, which calls CASA task `partition`, which partitions the data into several sub measurement sets (sub-MSs - see [section 10 below](#10-view-the-contents-of-1491550051mms)) and selects only frequencies specified by your spectral window with parameter `spw` in your config file.
 
-<h5 id="8-view-partitionsbatch-which-has-the-following-contents">8. View <code class="highlighter-rouge">partition.sbatch</code>, which has the following contents:</h5>
+##### 9. Submit your job and watch it in the queue
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
-<span class="c">#SBATCH --nodes=2</span>
-<span class="c">#SBATCH --ntasks-per-node=4</span>
-<span class="c">#SBATCH --cpus-per-task=1</span>
-<span class="c">#SBATCH --mem=236GB</span>
-<span class="c">#SBATCH --job-name=partition</span>
-<span class="c">#SBATCH --distribution=plane=2</span>
-<span class="c">#SBATCH --output=logs/partition-%j.out</span>
-<span class="c">#SBATCH --error=logs/partition-%j.err</span>
-<span class="c">#SBATCH --partition=Main</span>
-<span class="c">#SBATCH --time=12:00:00</span>
-
-<span class="nb">export </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span>1
-
-/idia/software/pipelines/casa-prerelease-5.3.0-115.el7/bin/mpicasa singularity <span class="nb">exec</span> /idia/software/pipelines/casameer-5.4.1.xvfb.simg  casa <span class="nt">--nologger</span> <span class="nt">--nogui</span> <span class="nt">--logfile</span> logs/partition-<span class="k">${</span><span class="nv">SLURM_JOB_ID</span><span class="k">}</span>.casa <span class="nt">-c</span> /idia/software/pipelines/master/processMeerKAT/cal_scripts/partition.py <span class="nt">--config</span> .config.tmp
 </code></pre></div></div>
-
-<p>Here we see the same default SLURM parameters for threadsafe tasks, as discussed in <a href="#3-view-the-config-file-created-which-has-the-following-contents">section 3</a>. We now use mpicasa as the mpi wrapper, since we are calling a threadsafe script <code class="highlighter-rouge">partition.py</code>, which calls CASA task <code class="highlighter-rouge">partition</code>, which partitions the data into several sub measurement sets (sub-MSs - see <a href="#10-view-the-contents-of-1491550051mms">section 10 below</a>) and selects only frequencies specified by your spectral window with parameter <code class="highlighter-rouge">spw</code> in your config file.</p>
-
-<h5 id="9-submit-your-job-and-watch-it-in-the-queue">9. Submit your job and watch it in the queue</h5>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sbatch partition.sbatch
+<p>sbatch partition.sbatch
 Submitted batch job 1097917
-squeue -j 1097917
+squeue -j 1097917</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+You will see something similar to the following, showing that 2 nodes are now being used (worker nodes 60 &amp; 61).
+
 </code></pre></div></div>
+<p>JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+1097917      Main partitio jcollier  R       0:22      2 slwrk-[060-061]</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+Wait until the job completes, before step 10.
 
-<p>You will see something similar to the following, showing that 2 nodes are now being used (worker nodes 60 &amp; 61).</p>
+##### 10. View the contents of `1491550051.mms`.
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
-1097917      Main partitio jcollier  R       0:22      2 slwrk-[060-061]
+You should see two new files - `1491550051.mms` and `1491550051.mms.flagversions`, which corresponds to the data and flag data of a multi-measurement set (MMS). From now on, the pipeline operates on these data, rather than the . The same path to the original MS will remain in your config file under section `[data]`, but each task will point to your MMS.
+
+Inside this MMS, you will find the same tables and metadata as in a normal MS, but you will also see a `SUBMSS` directory, which should have the following contents.
+
 </code></pre></div></div>
-
-<p>Wait until the job completes, before step 10.</p>
-
-<h5 id="10-view-the-contents-of-1491550051mms">10. View the contents of <code class="highlighter-rouge">1491550051.mms</code>.</h5>
-
-<p>You should see two new files - <code class="highlighter-rouge">1491550051.mms</code> and <code class="highlighter-rouge">1491550051.mms.flagversions</code>, which corresponds to the data and flag data of a multi-measurement set (MMS). From now on, the pipeline operates on these data, rather than the . The same path to the original MS will remain in your config file under section <code class="highlighter-rouge">[data]</code>, but each task will point to your MMS.</p>
-
-<p>Inside this MMS, you will find the same tables and metadata as in a normal MS, but you will also see a <code class="highlighter-rouge">SUBMSS</code> directory, which should have the following contents.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1491550051.mms.0000.ms  1491550051.mms.0004.ms  1491550051.mms.0008.ms
+<p>1491550051.mms.0000.ms  1491550051.mms.0004.ms  1491550051.mms.0008.ms
 1491550051.mms.0001.ms  1491550051.mms.0005.ms  1491550051.mms.0009.ms
 1491550051.mms.0002.ms  1491550051.mms.0006.ms  1491550051.mms.0010.ms
-1491550051.mms.0003.ms  1491550051.mms.0007.ms  1491550051.mms.0011.ms
+1491550051.mms.0003.ms  1491550051.mms.0007.ms  1491550051.mms.0011.ms</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+These are the 12 sub-MSs, partitioned by this observation's 12 scans of the various targets.
+
+If we now view the CASA log, you will find a bunch of junk output from mpicasa (often including nominal "errors", sometimes severe), and 13 calls of `partition`, corresponding to 12 workers for your 12 sub-MSs, and one master process. Similarly, your standard output logs will contains 8 sets of output from CASA launching, corresponding to the 8 threads (i.e. 2 nodes x 4 tasks per node) and some junk output from mpicasa. Again, your standard error log should be empty.
+
+
+##### 11. Run `calc_refant.sbatch` and watch your submitted job
+
 </code></pre></div></div>
+<p>sbatch calc_refant.sbatch
+watch sacct</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+You will initially see something similar to the following
 
-<p>These are the 12 sub-MSs, partitioned by this observation’s 12 scans of the various targets.</p>
-
-<p>If we now view the CASA log, you will find a bunch of junk output from mpicasa (often including nominal “errors”, sometimes severe), and 13 calls of <code class="highlighter-rouge">partition</code>, corresponding to 12 workers for your 12 sub-MSs, and one master process. Similarly, your standard output logs will contains 8 sets of output from CASA launching, corresponding to the 8 threads (i.e. 2 nodes x 4 tasks per node) and some junk output from mpicasa. Again, your standard error log should be empty.</p>
-
-<h5 id="11-run-calc_refantsbatch-and-watch-your-submitted-job">11. Run <code class="highlighter-rouge">calc_refant.sbatch</code> and watch your submitted job</h5>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sbatch calc_refant.sbatch
-watch sacct
 </code></pre></div></div>
-
-<p>You will initially see something similar to the following</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>       JobID    JobName  Partition    Account  AllocCPUS      State ExitCode
------------- ---------- ---------- ---------- ---------- ---------- --------
-1097917       partition       Main b03-pipel+          8  COMPLETED      0:0
-1097917.bat+      batch            b03-pipel+          4  COMPLETED      0:0
-1097917.0         orted            b03-pipel+          1  COMPLETED      0:0
-1097918      calc_refa+       Main b03-pipel+          1    RUNNING      0:0
-1097918.0    singulari+            b03-pipel+          1    RUNNING      0:0
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   JobID    JobName  Partition    Account  AllocCPUS      State ExitCode ------------ ---------- ---------- ---------- ---------- ---------- -------- 1097917       partition       Main b03-pipel+          8  COMPLETED      0:0 1097917.bat+      batch            b03-pipel+          4  COMPLETED      0:0 1097917.0         orted            b03-pipel+          1  COMPLETED      0:0 1097918      calc_refa+       Main b03-pipel+          1    RUNNING      0:0 1097918.0    singulari+            b03-pipel+          1    RUNNING      0:0 ```
 </code></pre></div></div>
 
 <p><code class="highlighter-rouge">sacct</code> lists all recently submitted jobs and their status. If your job fails, it will list <code class="highlighter-rouge">FAILED</code> under <code class="highlighter-rouge">State</code>. However, please note jobs running <code class="highlighter-rouge">mpicasa</code> often state they have failed when they haven’t. Similarly, when jobs do genuinely fail, the pipeline may continue to run. Both of these are issues we are working to overcome.</p>
@@ -566,7 +579,7 @@ Run displayTimes.sh to display start and end timestamps (after pipeline has run)
 
 <p>As before, we see the sbatch files being written to our working directory. Since we set <code class="highlighter-rouge">submit=True</code>, <code class="highlighter-rouge">submit_pipeline.sh</code> has been run, and all output after that (without the timestamps) comes from this bash script. After the first job is run (<code class="highlighter-rouge">sbatch flag_round_1.sbatch</code>), each other job is run with a dependency on all previous jobs (e.g. <code class="highlighter-rouge">sbatch -d afterok:1097919,1097920,1097921 --kill-on-invalid-dep=yes xx_yy_apply.sbatch</code>). We can see this by calling <code class="highlighter-rouge">squeue -u your_username</code>, which shows those jobs <code class="highlighter-rouge">(Dependency)</code>. <code class="highlighter-rouge">submit_pipeline.sh</code> then writes four job scripts, all of which are explained in the output, written to <code class="highlighter-rouge">jobScripts</code> with a timestamp appended to the filename, and symlinked from your working directory. <code class="highlighter-rouge">findErrors.sh</code> finds errors after this pipeline run has completed, overlooking all nominal MPI errors.</p>
 
-<p>These tasks follow the first step of a two-step calibration process that is summarised <a href="https://idia-pipelines.github.io/docs/processMeerKAT/calibration-in-processmeerkat">here</a>.</p>
+<p>These tasks follow the first step of a two-step calibration process that is summarised <a href="/docs/processMeerKAT/calibration-in-processmeerkat">here</a>.</p>
 
 <h5 id="16-run-summarysh">16. Run <code class="highlighter-rouge">./summary.sh</code></h5>
 
@@ -722,9 +735,9 @@ Run displayTimes.sh to display start and end timestamps (after pipeline has run)
 
 <h5 id="25-view-the-pipeline-output">25. View the pipeline output</h5>
 
-<p>After this pipeline run has completed, viewing the output of <code class="highlighter-rouge">./displayTimes.sh</code> shows this run took ~1.5 hours, including ~25 minutes for quick-look imaging all fields, and ~40 minutes for plotting (a <a href="https://idia-pipelines.github.io/docs/processMeerKAT/Release-Notes#known-issues">known issue</a>).</p>
+<p>After this pipeline run has completed, viewing the output of <code class="highlighter-rouge">./displayTimes.sh</code> shows this run took ~1.5 hours, including ~25 minutes for quick-look imaging all fields, and ~40 minutes for plotting (a <a href="/docs/processMeerKAT/Release-Notes#known-issues">known issue</a>).</p>
 
-<p>These new tasks follow the second step of a two step calibration process that is summarised on <a href="https://idia-pipelines.github.io/docs/processMeerKAT/calibration-in-processmeerkat">this page</a>.</p>
+<p>These new tasks follow the second step of a two step calibration process that is summarised on <a href="/docs/processMeerKAT/calibration-in-processmeerkat">this page</a>.</p>
 
 <p>After <code class="highlighter-rouge">split.py</code> has run, you will see three new files</p>
 
@@ -744,28 +757,28 @@ singularity exec /idia/software/pipelines/casameer-5.4.1.xvfb.simg casa --nologg
 
 <p>Here’s what your images of the flux calibrator (<code class="highlighter-rouge">1934-638</code>) and target (<code class="highlighter-rouge">DEEP_2_off</code>) should look like.</p>
 
-<p><img src="https://idia-pipelines.github.io/assets/DEEP2_image.png" alt="DEEP2_image" /></p>
+<p><img src="/assets/DEEP2_image.png" alt="DEEP2_image" /></p>
 
 <p>Since we imaged a snapshot 16-dish MeerKAT observation using the old ROACH-2 correlator, with an on source time of ~20 minutes, we do not get very good image quality. Below is a more typical image produced by <code class="highlighter-rouge">quick_tclean.py</code> for a 64-dish observation using the SKARAB correlator, spanning ~8 hours, and only 10 MHz bandwidth.</p>
 
-<p><img src="https://idia-pipelines.github.io/assets/64-dish-image.png" alt="64-dish-image" /></p>
+<p><img src="/assets/64-dish-image.png" alt="64-dish-image" /></p>
 
 <h5 id="27-view-the-figures-in-plots-directory">27. View the figures in <code class="highlighter-rouge">plots</code> directory</h5>
 
 <p>The last script that runs is <code class="highlighter-rouge">plot_solutions.py</code>, which calls CASA task <code class="highlighter-rouge">plotms</code> to plot the calibration solutions for the bandpass calibrator and the phase calibrator, as well as plots of the corrected data to eyeball for RFI. Below are a few selected plots.</p>
 
-<p><img src="https://idia-pipelines.github.io/assets/bpass_freq_amp.png" alt="bpass_freq_amp" />
-<img src="https://idia-pipelines.github.io/assets/DEEP_2_off_freq_amp.png" alt="DEEP_2_off_freq_amp" />
-<img src="https://idia-pipelines.github.io/assets/DEEP_2_off_real_imag.png" alt="DEEP_2_off_real_imag" /></p>
+<p><img src="/assets/bpass_freq_amp.png" alt="bpass_freq_amp" />
+<img src="/assets/DEEP_2_off_freq_amp.png" alt="DEEP_2_off_freq_amp" />
+<img src="/assets/DEEP_2_off_real_imag.png" alt="DEEP_2_off_real_imag" /></p>
 
 <p><strong>That’s it! You have completed the tutorial! Now go forth and do some phenomenal MeerKAT science!</strong></p>
 
 <h3 id="also-see">Also see</h3>
 
 <ul>
-  <li><a href="https://idia-pipelines.github.io/docs/processMeerKAT/calibration-in-processmeerkat">Calibration in processMeerKAT</a></li>
-  <li><a href="https://idia-pipelines.github.io/docs/processMeerKAT/Diagnosing-Errors">Diagnosing Errors</a></li>
-  <li><a href="https://idia-pipelines.github.io/docs/processMeerKAT/using-the-pipeline">Using the pipeline</a></li>
+  <li><a href="/docs/processMeerKAT/calibration-in-processmeerkat">Calibration in processMeerKAT</a></li>
+  <li><a href="/docs/processMeerKAT/Diagnosing-Errors">Diagnosing Errors</a></li>
+  <li><a href="/docs/processMeerKAT/using-the-pipeline">Using the pipeline</a></li>
 </ul>
 
 
