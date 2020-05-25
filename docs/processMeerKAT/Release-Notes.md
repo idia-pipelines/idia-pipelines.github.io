@@ -7,14 +7,14 @@ nav_order: 2
 
 # Version 1.1
 
-This is the second release of the IDIA Pipelines `processsMeerKAT` package, to be used on the ilifu SLURM cluster. The software uses a parallelized implementation of CASA to calibrate interferometric (imaging) data from the MeerKAT telescope.
+This is the second release of the IDIA Pipelines `processsMeerKAT` package, to be used on the ilifu SLURM cluster. The software uses a parallelised implementation of CASA to calibrate interferometric (imaging) data from the MeerKAT telescope.
 
 The current release adds the following functionality:
 
 * Spectral Window (SPW) splitting, where each separate SPW is processed independently and concurrently, providing a speed-up for large (TB) datasets, better polarisation calibration, and better flux scaling
 * Quick-look continuum cube, across all SPWs
 * Pre-processing during initial partition of MS, including pre-averaging of frequency channels, removal of cross-hand correlations up front for Stokes I processing, and removal of autocorrelations
-* Improved performance, including ...
+<!-- * Improved performance, including ... -->
 * Improved default parameters, including a smaller RFI mask that removes `933~960, 1163~1299`, and `1524~1630` MHz
 * Improved interaction with SLURM, including `exclude, dependencies, account` and `reservation` parameters, and graceful termination of pipeline after errors
 * Improved calculation of antenna statistics, based on flags within raw data, used to select reference antenna and flag any bad antennas
@@ -29,7 +29,7 @@ The current release adds the following functionality:
     * For tasks reading only sub-MSs corresponding to other calibrators (e.g. bandpass), some CPUs will not be used
     * Similarly, we use a single memory value for all threadsafe tasks.
 
-* **Discontinuity in polarisation calibration**
+<!-- * **Discontinuity in polarisation calibration** -->
 
 ### Minor:
 
