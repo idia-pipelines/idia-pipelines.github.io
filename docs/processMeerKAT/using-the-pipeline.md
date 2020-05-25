@@ -295,7 +295,47 @@ The initial partition, given by the `partiton.py` script (by default the last sc
 
 ### Bash `jobScripts`
 
-When using `nspw` > 1, the behaviour of the bash scripts within the `jobScripts` directory (symlinked from the working directory) is different. Each bash script will iterate through the SPW directories and display the output for that SPW, running each SPW directory's instance of that bash script, which remains the same as above. Since there are more than 100 jobs by default, `./summary.sh` will display only the running or failed jobs, and will not display completed or pending jobs, whereas `./fullSummary.sh` will display all of the jobs. Additionally, when `precal_scripts` and `postcal_scripts` are not empty lists, there will be a version of each of these `jobScripts` starting with `allSPW_`. These correspond to the pipeline jobs that are run at top-level directory over all SPWs, which is also displayed when calling the other `jobScripts`. EXAMPLE??
+When using `nspw` > 1, the behaviour of the bash scripts within the `jobScripts` directory (symlinked from the working directory) is different. Each bash script will iterate through the SPW directories and display the output for that SPW, running each SPW directory's instance of that bash script, which remains the same as above. Since there are more than 100 jobs by default, `./summary.sh` will display only the running or failed jobs, and will not display completed or pending jobs, whereas `./fullSummary.sh` will display all of the jobs. Additionally, when `precal_scripts` and `postcal_scripts` are not empty lists, there will be a version of each of these `jobScripts` starting with `allSPW_`. These correspond to the pipeline jobs that are run at top-level directory over all SPWs, which is also displayed when calling the other `jobScripts`. For example, when running `./summary.sh` during the middle of your processing with `nspw=4`, you will see something similar to the following:
+
+```
+jcollier@slurm-login:/scratch/users/jcollier/MIGHTEE/32k_nspw4$ ./summary.sh
+SPW #1: /scratch/users/jcollier/MIGHTEE/32k_nspw4/1350.0~1375.0MHz
+          JobID         JobName  Partition    Elapsed NNodes NTasks NCPUS  MaxDiskRead MaxDiskWrite             NodeList   TotalCPU    CPUTime     MaxRSS      State ExitCode
+--------------- --------------- ---------- ---------- ------ ------ ----- ------------ ------------ -------------------- ---------- ---------- ---------- ---------- --------
+1362974         setjy                 Main   01:22:05      2           16                                slwrk-[102-103]   00:00:00   21:53:20               RUNNING      0:0
+1362974.0       orted                        01:22:05      1      1     1                                      slwrk-103   00:00:00   01:22:05               RUNNING      0:0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+SPW #2: /scratch/users/jcollier/MIGHTEE/32k_nspw4/1375.0~1400.0MHz
+          JobID         JobName  Partition    Elapsed NNodes NTasks NCPUS  MaxDiskRead MaxDiskWrite             NodeList   TotalCPU    CPUTime     MaxRSS      State ExitCode
+--------------- --------------- ---------- ---------- ------ ------ ----- ------------ ------------ -------------------- ---------- ---------- ---------- ---------- --------
+1362983         flag_round_1          Main   01:14:44      2           16                                slwrk-[160-161]   00:00:00   19:55:44               RUNNING      0:0
+1362983.0       orted                        01:14:44      1      1     1                                      slwrk-161   00:00:00   01:14:44               RUNNING      0:0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+SPW #3: /scratch/users/jcollier/MIGHTEE/32k_nspw4/1400.0~1425.0MHz
+          JobID         JobName  Partition    Elapsed NNodes NTasks NCPUS  MaxDiskRead MaxDiskWrite             NodeList   TotalCPU    CPUTime     MaxRSS      State ExitCode
+--------------- --------------- ---------- ---------- ------ ------ ----- ------------ ------------ -------------------- ---------- ---------- ---------- ---------- --------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+SPW #4: /scratch/users/jcollier/MIGHTEE/32k_nspw4/1425.0~1450.0MHz
+          JobID         JobName  Partition    Elapsed NNodes NTasks NCPUS  MaxDiskRead MaxDiskWrite             NodeList   TotalCPU    CPUTime     MaxRSS      State ExitCode
+--------------- --------------- ---------- ---------- ------ ------ ----- ------------ ------------ -------------------- ---------- ---------- ---------- ---------- --------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+All SPWs: /scratch/users/jcollier/MIGHTEE/32k_nspw4
+          JobID         JobName  Partition    Elapsed NNodes NTasks NCPUS  MaxDiskRead MaxDiskWrite             NodeList   TotalCPU    CPUTime     MaxRSS      State ExitCode
+--------------- --------------- ---------- ---------- ------ ------ ----- ------------ ------------ -------------------- ---------- ---------- ---------- ---------- --------
+1362970         calc_refant           Main   00:03:27      1            1                                      slwrk-105  02:54.393   00:03:27             COMPLETED      0:0
+1362970.batch   batch                        00:03:27      1      1     1        0.06M        0.00M            slwrk-105  00:00.034   00:03:27      0.01G  COMPLETED      0:0
+1362970.0       singularity                  00:03:27      1      1     1       69.58G        0.02M            slwrk-105  02:54.358   00:03:27      1.01G  COMPLETED      0:0
+1362971_[3%1]   partition             Main   00:00:00      2           64                                  None assigned   00:00:00   00:00:00               PENDING      0:0
+1363012         concat                Main   00:00:00      1            1                                  None assigned   00:00:00   00:00:00               PENDING      0:0
+1362971_0       partition             Main   01:22:50      2           64                                slwrk-[130-131]  58:39.694 3-16:21:20             COMPLETED      0:0
+1362971_0.batch batch                        01:22:50      1      1    32      552.96G       46.36G            slwrk-130  19:17.852 1-20:10:40      4.15G  COMPLETED      0:0
+1362971_0.0     orted                        01:22:49      1      1     4     1671.24G      143.22G            slwrk-131  39:21.841   05:31:16      4.34G  COMPLETED      0:0
+1362971_1       partition             Main   00:36:07      2           64                                slwrk-[130-131]  54:48.316 1-14:31:28             COMPLETED      0:0
+1362971_1.batch batch                        00:36:07      1      1    32      950.31G       80.41G            slwrk-130  26:23.615   19:15:44      4.39G  COMPLETED      0:0
+1362971_1.0     orted                        00:36:06      1      1     4     1273.81G      109.17G            slwrk-131  28:24.700   02:24:24      4.36G  COMPLETED      0:0
+1362971_2       partition             Main   01:15:22      2           64                                slwrk-[130-131]   00:00:00 3-08:23:28               RUNNING      0:0
+1362971_2.0     orted                        01:15:21      1      1     4                                      slwrk-131   00:00:00   05:01:24               RUNNING      0:0
+```
 
 ### Concatenation and further imaging
 

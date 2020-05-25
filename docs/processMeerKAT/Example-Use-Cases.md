@@ -55,6 +55,8 @@ The pipeline can be run on a MS, where the user would have to request 1 node and
 
 This mode isn't generally encouraged, but may be useful for small datasets (tens of GB - e.g. small bandwidth of several MHz), when using MMS has little to no advantage, or when the number of scans is very large (hundreds), when splitting into multiple SPWs and multiple sub-MSs is too extreme. In such a case, the user may need to manually run `partition` (e.g. to select a `spw`), and set `createmms=False`. Alternatively, the user can run `split` or `mstransform` to select an `spw`.
 
+<!-- Add recipe here -->
+
 # Field IDs
 
 ### Default: Primary and Secondary Calibrator
