@@ -11,11 +11,12 @@ This is the second release of the IDIA Pipelines `processsMeerKAT` package, to b
 
 The current release adds the following functionality:
 
-* Spectral Window (SPW) splitting, where each separate SPW is processed independently and concurrently, providing a speed-up for large (TB) datasets, better polarisation calibration, and better flux scaling
+* Spectral Window (SPW) splitting, where each separate SPW is processed independently and concurrently, providing a speed-up for large (TB) datasets, better polarization calibration, and better flux scaling
 * Quick-look continuum cube, across all SPWs
 * Pre-processing during initial partition of MS, including pre-averaging of frequency channels, removal of cross-hand correlations up front for Stokes I processing, and removal of autocorrelations
+* If running in full Stokes mode, `setjy` now includes the polarization models for 3C286 and 3C138 if they are present in the data.
 <!-- * Improved performance, including ... -->
-* Improved default parameters, including a smaller RFI mask that removes `933~960, 1163~1299`, and `1524~1630` MHz
+* Improved default parameters, including a smaller RFI mask that removes the persistent RFI in the ranges `933~960, 1163~1299`, and `1524~1630` MHz
 * Improved interaction with SLURM, including `exclude, dependencies, account` and `reservation` parameters, and graceful termination of pipeline after errors
 * Improved calculation of antenna statistics, based on flags within raw data, used to select reference antenna and flag any bad antennas
 * Uses CASA 5.6.2, Python 2.7, and Singularity 3.5.2.
@@ -29,13 +30,14 @@ The current release adds the following functionality:
     * For tasks reading only sub-MSs corresponding to other calibrators (e.g. bandpass), some CPUs will not be used
     * Similarly, we use a single memory value for all threadsafe tasks.
 
-<!-- * **Discontinuity in polarisation calibration** -->
+* **Discontinuities in the Stokes Q and U spectra**:
+In the event that full Stokes calibration is requested (by passing the `--dopol` paramter during the build stage) we have noticed that the Stokes Q and U spectra of the calibrated data show discontinuities between the spectral windows. While the overall shape of the Q and U spectra seem to be right, the discontuities will affect the inferences made during rotation measure synthesis. We are in the process of debugging this and will issue a patch once we have fixed it.
 
 ### Minor:
 
 * **SLURM reports setjy jobs as FAILED**: Every time the `setjy` pipeline job is run, SLURM reports that this job failed, even though it has successfully completed. A quick glance at the last few lines of the logs will determine whether this step has legitimately failed or not.
 
-* **Empty rows in sub-MSs**: Some tasks might complain that no valid data were found in a sub-MS, but generally this seems to be a "harmless" error, and doesn’t seem to affect the progress of the calibration/pipeline.
+* **Empty rows in sub-MSs**: Some tasks might complain that no valid data were found in a sub-MS, due to some combination of data selection parameters resulting in a null selection for a specific sub-MS. Generally this seems to be a "harmless" error, and doesn’t seem to affect the progress of the calibration/pipeline.
 
 * **Slow plotting**: Generating plots of the calibrated visibilities is very time consuming, often running to a few hours. However, as this is the last step of the pipeline, the calibrated, split measurement sets and images should be ready for further analysis while the plots are being generated. The speed of plotting is limited by how quickly `plotms` can generate the plots.
 

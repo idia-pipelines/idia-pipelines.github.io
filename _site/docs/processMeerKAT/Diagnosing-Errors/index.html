@@ -45,19 +45,15 @@
     
       
         
+      
+    
+      
+        
           <li class="navigation-list-item">
             
             <a href="http://localhost:4000/docs/access/" class="navigation-list-link">Access to IDIA Machines</a>
             
           </li>
-        
-      
-    
-      
-        
-      
-    
-      
         
       
     
@@ -83,8 +79,6 @@
                   
                 
                   
-                
-                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/Release-Notes/" class="navigation-list-link">Release Notes</a>
@@ -93,13 +87,15 @@
                   
                 
                   
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/using-the-pipeline/" class="navigation-list-link">Using the Pipeline</a>
                       
                     </li>
-                  
-                
                   
                 
                   
@@ -147,6 +143,10 @@
               </ul>
             
           </li>
+        
+      
+    
+      
         
       
     
@@ -224,58 +224,9 @@
         
         <div id="main-content" class="page-content" role="main">
           <h1 id="diagnosing-errors">Diagnosing Errors</h1>
-
 <p>This is a list of <em>potential</em> issues that could arise while running the pipeline, which are typically associated with runtime errors, which could be due to issues with the cluster (e.g., worker-node failure during your job) or job parameterisation (e.g., underestimating RAM required).</p>
 
-<p>This page is, by no means, exhaustive, and will be updated as more issues are reported.</p>
-
-<p>We note here that although the pipeline is constructed to have job dependencies, <em>i.e.,</em> if one job fails, all the subsequent jobs are meant to be cancelled, this does not always work. We find that there are several cases where CASA will crash, and SLURM does not recognise that the job has terminated and will continue to execute the other jobs in the pipeline. We suspect that this is due to a difference in error handling between SLURM and CASA. Please keep a watch on the status of your jobs using the <code class="highlighter-rouge">./summary.sh</code> script, as well as the log files created to make sure that the pipeline is proceeding correctly.</p>
-
-<h3 id="fluxscale-issues">Fluxscale Issues</h3>
-
-<p>If any fluxscale issues are discovered within your dataset (see <a href="/docs/processMeerKAT/Release-Notes/#known-issues">known issues</a>), particularly for short-track observations, we recommend you replace the ‘xy_yx’ scripts in your config file with the ‘xx_yy’ scripts (see <a href="/docs/processMeerKAT/Example-Use-Cases#short-track-observations-and-fluxscale-issues">example use case</a>).</p>
-
-<h3 id="orte-error">ORTE error</h3>
-
-<p>An error of the form</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  --------------------------------------------------------------------------
-
-  ORTE has lost communication with its daemon located on node:
-
-
-   hostname:  slwrk-067
-
-
-  This is usually due to either a failure of the TCP network
-
-  connection to the node, or possibly an internal failure of
-
-  the daemon itself. We cannot recover from this failure, and
-
-  therefore will terminate the job.
-
-
-  --------------------------------------------------------------------------
-
-  --------------------------------------------------------------------------
-
-  An ORTE daemon has unexpectedly failed after launch and before
-
-  communicating back to mpirun. This could be caused by a number
-
-  of factors, including an inability to create a connection back
-
-  to mpirun due to a lack of common network interfaces and/or no
-
-  route found between them. Please check network connectivity
-
-  (including firewalls and network routing requirements).
-
-  --------------------------------------------------------------------------
-</code></pre></div></div>
-
-<p>where <code class="highlighter-rouge">slwrk-067</code> can be any of the SLURM worker nodes, typically means that there was a communication/network error between the SLURM head node and the worker node. Please report this issue to the ILIFU support team at support@ilifu.ac.za. This is indicative of an underlying hardware issue, rather than a software problem.</p>
+<p>This is not an exhaustive list, and is intended to give the user a sense of what problems may need to be reported to support@ilifu.ac.za and which ones can be ignored.</p>
 
 <h3 id="unable-to-launch-jobs-in-slurm">Unable to launch jobs in SLURM</h3>
 
@@ -283,7 +234,41 @@
 
 <h3 id="memory-error">Memory error</h3>
 
-<p>If you see the phrase <code class="highlighter-rouge">MemoryError</code> in the <code class="highlighter-rouge">stderr</code> logs (this can be located by <code class="highlighter-rouge">grep -i MemoryError logs/*.err</code>) this is typically indicative that CASA did not have enough memory to complete the task. This often happens while running <code class="highlighter-rouge">flagdata</code> and does not always halt execution of the pipeline. Reduce the number of tasks per node and increase the nodes in the config file (e.g. halve tasks and double nodes) before re-launching the pipeline, as that will allocate more memory per task.</p>
+<p>If you see the phrase <code class="highlighter-rouge">MemoryError</code> in the <code class="highlighter-rouge">.err</code> logs (this can be located by <code class="highlighter-rouge">grep -i MemoryError logs/*.err</code>) this is typically indicative that CASA did not have enough memory to complete the task. This often happens while running <code class="highlighter-rouge">flagdata</code> and does not always halt execution of the pipeline. Reduce the number of tasks per node and increase the nodes in the config file (e.g. halve tasks and double nodes) before re-launching the pipeline, as that will allocate more memory per task.</p>
+
+<p>There are cases where a failure in <code class="highlighter-rouge">flagdata</code> can leave the MS in an intermediate state that causes the subsequent calibration tasks to fail. We recommend killing any currently running jobs (by running <code class="highlighter-rouge">./killJobs.sh</code> from the parent directory), wiping the <code class="highlighter-rouge">*MHz</code> subdirectories, and re-running <code class="highlighter-rouge">processMeerKAT.py -R [-C &lt;config_file&gt;]</code> and <code class="highlighter-rouge">./submit_pipeline.sh</code> again after making the above changes to the config file.</p>
+
+<h2 id="false-positives">False positives</h2>
+<h3 id="timeout-errors">Timeout errors</h3>
+<p>Errors of the form</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>MPIMonitorClient::get_server_timeout::MPIMonitorClient::get_server_timeout::@slwrk-155:MPIClient        Found 1 servers in timeout status
+</code></pre></div></div>
+
+<p>are benign and do not have an impact on the pipeline performance. The MPI daemon simply times out waiting for a worker node to respond, and prints out this error to the logs. SLURM is able to handle these timeouts gracefully and restarts the process once it times out.</p>
+
+<h3 id="no-valid-spw-and-chan-combination-found">“No valid SPW and Chan combination found”</h3>
+<p>Errors of the form</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>agentflagger::::MPIServer-31 (file ../../tools/flagging/agentflagger_cmpt.cc, line 35)  Exception Reported: No valid SPW &amp; Chan combination found
+</code></pre></div></div>
+
+<p>often show up in the logs of either <code class="highlighter-rouge">flag_round_1</code> or <code class="highlighter-rouge">flag_round_2</code> or both. Similar to the <a href="#generic-applycal-error">applycal</a> error, this is caused by a combination of data selection parameters leading to a null selection for this particular subMS. it simply means that the flagging range requested lies outside the frequency range in the target MS/subMS.</p>
+
+<h3 id="utc-offset-by-more-than-1s">UTC offset by more than 1s</h3>
+<p>Errors of the form</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Leap second table TAI_UTC seems out-of-date.  Until the table is updated (see the CASA documentation or your system admin), times and coordinates derived from UTC could be wrong by 1s or more.
+</code></pre></div></div>
+
+<p>are fairly common and are completely benign. These errors are auto-generated by CASA when the internal data repository has not been updated for some pre-defined length of time. While we try to keep our containers up to date, these errors can still occur and have no impact on the image quality or fidelity.</p>
+
+<h3 id="generic-applycal-error">Generic applycal error</h3>
+<p>Sometimes the <code class="highlighter-rouge">findErrors.sh</code> script will report generic errors in the <code class="highlighter-rouge">applycal</code> task that are something like</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SEVERE  applycal::::@slwrk-128::MPIServer-7     An error occurred running task applycal
+</code></pre></div></div>
+
+<p>There are two ways to determine if this is a “false positive”. Locate the script in question inside the logs directory of the relevant SPW directory and inspect the <code class="highlighter-rouge">.casa</code> log. There should be several successful <code class="highlighter-rouge">applycal</code> instances. There should also be logs that read</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>*** Error *** Error in data selection specification: MSSelectionNullSelection : The selected table has zero rows.
+</code></pre></div></div>
+<p>in either the corresponding <code class="highlighter-rouge">.out</code> or <code class="highlighter-rouge">.err</code> file. These errors basically arise because a combination of chan/SPW/field/time selection has resulted in a null selection for one subMS inside the MMS causing applycal to fail for that one subMS. These errors do not have any impact on the final image quality.</p>
 
 
 
