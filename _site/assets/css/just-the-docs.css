@@ -471,7 +471,7 @@ hr {
     .side-bar {
       flex-wrap: nowrap;
       position: absolute;
-      width: 248px;
+      width: 132px;
       height: 100%;
       padding-top: 4rem;
       padding-bottom: 0;
@@ -480,7 +480,7 @@ hr {
       align-items: flex-end; } }
   @media (min-width: 70rem) {
     .side-bar {
-      width: calc((100% - 1032px) / 2 + 232px);
+      width: calc((100% - 1032px) / 2 + 0.5*232px);
       min-width: 232px; } }
 
 @media (min-width: 46.25rem) {
@@ -506,7 +506,7 @@ hr {
   @media (min-width: 46.25rem) {
     .main-content {
       position: relative;
-      max-width: 800px;
+      max-width: 1200px;
       padding-top: 2rem;
       padding-bottom: 2rem;
       padding-left: 3rem;
@@ -514,7 +514,7 @@ hr {
   @media (min-width: 70rem) {
     .main-content {
       padding-left: 2rem;
-      margin-left: calc((100% - 1032px) / 2 + 232px); } }
+      margin-left: calc((100% - 1032px) / 2 + 0.5*232px); } }
 
 .js-main-content:focus {
   outline: none; }
