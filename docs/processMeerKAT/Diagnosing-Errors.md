@@ -16,13 +16,13 @@ If the status of your job is `(launch failed requeued held)`, please file a tick
 
 ### Memory error
 
-If you see the phrase `MemoryError` in the `.err` logs (this can be located by `grep -i MemoryError logs/*.err`) this is typically indicative that CASA did not have enough memory to complete the task. This often happens while running `flagdata` and does not always halt execution of the pipeline. Reduce the number of tasks per node and increase the nodes in the config file (e.g. halve tasks and double nodes) before re-launching the pipeline, as that will allocate more memory per task.
+If you see the phrase `MemoryError` in the `.err` logs (this can be located by `grep -i MemoryError logs/*.err`) this is typically indicative that CASA did not have enough memory to complete the task. This often happens while running `flagdata` and does not always halt execution of the pipeline. If you are not using the maximum amount of memory per node, increase your allocation (up to 236 GB on an ilifu node from the Main partitoin, or 482 GB on an ilifu node from the HighMem partition). If you are using the maxmium amount of memory per node, reduce the number of tasks per node and increase the nodes in the config file (e.g. halve tasks and double nodes) before re-launching the pipeline, as that will allocate more memory per task.
 
 There are cases where a failure in `flagdata` can leave the MS in an intermediate state that causes the subsequent calibration tasks to fail. We recommend killing any currently running jobs (by running `./killJobs.sh` from the parent directory), wiping the `*MHz` subdirectories, and re-running `processMeerKAT.py -R [-C <config_file>]` and `./submit_pipeline.sh` again after making the above changes to the config file.
 
 
 ## False positives
-### Timeout errors
+### Server timeout errors
 Errors of the form
 ```
 MPIMonitorClient::get_server_timeout::MPIMonitorClient::get_server_timeout::@slwrk-155:MPIClient        Found 1 servers in timeout status
@@ -40,7 +40,7 @@ agentflagger::::MPIServer-31 (file ../../tools/flagging/agentflagger_cmpt.cc, li
 often show up in the logs of either `flag_round_1` or `flag_round_2` or both. Similar to the [applycal](#generic-applycal-error) error, this is caused by a combination of data selection parameters leading to a null selection for this particular subMS. it simply means that the flagging range requested lies outside the frequency range in the target MS/subMS.
 
 ### UTC offset by more than 1s
-Errors of the form 
+Errors of the form
 ```
 Leap second table TAI_UTC seems out-of-date.  Until the table is updated (see the CASA documentation or your system admin), times and coordinates derived from UTC could be wrong by 1s or more.
 ```

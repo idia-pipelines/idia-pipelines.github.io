@@ -45,15 +45,15 @@
     
       
         
-      
-    
-      
-        
           <li class="navigation-list-item">
             
             <a href="http://localhost:4000/docs/access/" class="navigation-list-link">Access to IDIA Machines</a>
             
           </li>
+        
+      
+    
+      
         
       
     
@@ -79,13 +79,13 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item  active">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/Release-Notes/" class="navigation-list-link active">Release Notes</a>
                       
                     </li>
-                  
-                
                   
                 
                   
@@ -99,13 +99,13 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/Example-Use-Cases/" class="navigation-list-link">Example Use Cases</a>
                       
                     </li>
-                  
-                
                   
                 
                   
@@ -140,13 +140,17 @@
                     </li>
                   
                 
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/LICENSE/" class="navigation-list-link">LICENSE</a>
+                      
+                    </li>
+                  
+                
               </ul>
             
           </li>
-        
-      
-    
-      
         
       
     
@@ -161,6 +165,14 @@
             <a href="http://localhost:4000/docs/containers/" class="navigation-list-link">Singularity Containers</a>
             
           </li>
+        
+      
+    
+      
+        
+      
+    
+      
         
       
     
@@ -230,10 +242,10 @@
 <p>The current release adds the following functionality:</p>
 
 <ul>
-  <li>Spectral Window (SPW) splitting, where each separate SPW is processed independently and concurrently, providing a speed-up for large (TB) datasets, better polarization calibration, and better flux scaling</li>
+  <li>Spectral Window (SPW) splitting (see docs <a href="/docs/processMeerKAT/using-the-pipeline#spw-splitting">here</a>), where each separate SPW is processed independently and concurrently, providing a speed-up for large (TB) datasets, better polarisation calibration, and better flux scaling</li>
   <li>Quick-look continuum cube, across all SPWs</li>
   <li>Pre-processing during initial partition of MS, including pre-averaging of frequency channels, removal of cross-hand correlations up front for Stokes I processing, and removal of autocorrelations</li>
-  <li>If running in full Stokes mode, <code class="highlighter-rouge">setjy</code> now includes the polarization models for 3C286 and 3C138 if they are present in the data.
+  <li>If running in full Stokes mode, <code class="highlighter-rouge">setjy</code> now includes the polarisation models for 3C286 and 3C138 if they are present in the data.
 <!-- * Improved performance, including ... --></li>
   <li>Improved default parameters, including a smaller RFI mask that removes the persistent RFI in the ranges <code class="highlighter-rouge">933~960, 1163~1299</code>, and <code class="highlighter-rouge">1524~1630</code> MHz</li>
   <li>Improved interaction with SLURM, including <code class="highlighter-rouge">exclude, dependencies, account</code> and <code class="highlighter-rouge">reservation</code> parameters, and graceful termination of pipeline after errors</li>
@@ -254,7 +266,7 @@
     </ul>
   </li>
   <li><strong>Discontinuities in the Stokes Q and U spectra</strong>:
-In the event that full Stokes calibration is requested (by passing the <code class="highlighter-rouge">--dopol</code> paramter during the build stage) we have noticed that the Stokes Q and U spectra of the calibrated data show discontinuities between the spectral windows. While the overall shape of the Q and U spectra seem to be right, the discontuities will affect the inferences made during rotation measure synthesis. We are in the process of debugging this and will issue a patch once we have fixed it.</li>
+In the event that full Stokes calibration is requested (by passing the <code class="highlighter-rouge">--dopol</code> parameter during the build stage) we have noticed that the Stokes Q and U spectra of the calibrated data show discontinuities between the spectral windows (i.e. when <code class="highlighter-rouge">nspw</code> &gt; 1 in your config). While the overall shape of the Q and U spectra seem to be right, the discontinuities will affect the inferences made during rotation measure synthesis. We are in the process of debugging this and will issue a patch once we have fixed it.</li>
 </ul>
 
 <h3 id="minor">Minor:</h3>
@@ -262,6 +274,9 @@ In the event that full Stokes calibration is requested (by passing the <code cla
 <ul>
   <li>
     <p><strong>SLURM reports setjy jobs as FAILED</strong>: Every time the <code class="highlighter-rouge">setjy</code> pipeline job is run, SLURM reports that this job failed, even though it has successfully completed. A quick glance at the last few lines of the logs will determine whether this step has legitimately failed or not.</p>
+  </li>
+  <li>
+    <p><strong>Discontinuities in the phase solutions</strong>: We have noticed a discontinuity in the phase of the bandpass solutions between spectral windows (i.e. when <code class="highlighter-rouge">nspw</code> &gt; 1 in your config). However, this does not seem to have a significant effect on the calibration, as the spectrum of sources within the target field matches between data calibrated with <code class="highlighter-rouge">nspw</code> &gt; 1, and data calibrated with <code class="highlighter-rouge">nspw=1</code>.</p>
   </li>
   <li>
     <p><strong>Empty rows in sub-MSs</strong>: Some tasks might complain that no valid data were found in a sub-MS, due to some combination of data selection parameters resulting in a null selection for a specific sub-MS. Generally this seems to be a “harmless” error, and doesn’t seem to affect the progress of the calibration/pipeline.</p>
@@ -302,7 +317,7 @@ In the event that full Stokes calibration is requested (by passing the <code cla
     <p><strong>Flux scale (not seen in V1.1)</strong>: Although the fluxes of the calibrated targets and calibrator sources are typically accurate to within a few percent, we find that there are certain datasets that result in a flux scale that is down by a factor of a few, particularly for short-track (e.g. 2 hour) observations (see <a href="/docs/processMeerKAT/Example-Use-Cases#short-track-observations-and-fluxscale-issues">example use case</a>). We are in the process of tracking down the root cause of these issues, and expect to issue a fix soon. However, if you do happen to notice that the fluxes of one or more of the sources/targets are off (either higher/lower), please report it by creating a <a href="https://github.com/idia-astro/pipelines/issues">Github issue</a>.</p>
   </li>
   <li>
-    <p><strong>Broadband polarization (resolved in V1.1)</strong>: CASA does not natively support solving broad-band polarizations, <em>i.e.,</em> it is not sensitive to rotation measure (RM). The assumption is that the RM within a single spectral window (SPW) is constant, however MeerKAT has only a single SPW that spans the entire bandwidth. We have identified future workarounds (which is to split up the band into several SPWs), however presently the broadband polarization models do contain systematic errors.</p>
+    <p><strong>Broadband polarisation (resolved in V1.1)</strong>: CASA does not natively support solving broad-band polarisations, <em>i.e.,</em> it is not sensitive to rotation measure (RM). The assumption is that the RM within a single spectral window (SPW) is constant, however MeerKAT has only a single SPW that spans the entire bandwidth. We have identified future workarounds (which is to split up the band into several SPWs), however presently the broadband polarisation models do contain systematic errors.</p>
   </li>
   <li>
     <p><strong>Calculation of antenna statistics (resolved in V1.1)</strong>: The amplitude and RMS per antenna computed in <code class="highlighter-rouge">calc_refant.py</code> does not match what is found by CASA task <code class="highlighter-rouge">visstat</code>, and decreases as a function of antenna number. We expect to issue a fix soon. For now, we recommend users have <code class="highlighter-rouge">calcrefant=False</code> in their config files, which also disables antenna flagging (i.e. entirely flagging out bad antennas).</p>

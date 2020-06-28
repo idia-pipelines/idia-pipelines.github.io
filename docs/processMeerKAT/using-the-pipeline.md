@@ -13,12 +13,12 @@ nav_order: 3
 which gives
 
 ```
-usage: /idia/software/pipelines/selfcal-dev/processMeerKAT/processMeerKAT.py
-       [-h] [-M path] [-C path] [-N num] [-t num] [-P num] [-m num] [-p name]
+usage: /idia/software/pipelines/master/processMeerKAT/processMeerKAT.py
+       [-h] [-M path] [-C path] [-N num] [-t num] [-D num] [-m num] [-p name]
        [-T time] [-S script threadsafe container]
        [-b script threadsafe container] [-a script threadsafe container]
        [-w path] [-c path] [-n unique] [-d list] [-e nodes] [-A group]
-       [-r name] [-l] [-s] [-v] [-q] [-D] [-2] [-x] (-B | -R | -V | -L)
+       [-r name] [-l] [-s] [-v] [-q] [-P] [-2] [-x] (-B | -R | -V | -L)
 
 Process MeerKAT data via CASA measurement set. Version: 1.1
 
@@ -27,11 +27,11 @@ optional arguments:
   -M path, --MS path    Path to measurement set.
   -C path, --config path
                         Relative (not absolute) path to config file.
-  -N num, --nodes num   Use this number of nodes [default: 8; max: 79].
+  -N num, --nodes num   Use this number of nodes [default: 1; max: 79].
   -t num, --ntasks-per-node num
-                        Use this number of tasks (per node) [default: 4; max:
+                        Use this number of tasks (per node) [default: 16; max:
                         32].
-  -P num, --plane num   Distribute tasks of this block size before moving onto
+  -D num, --plane num   Distribute tasks of this block size before moving onto
                         next node [default: 1; max: ntasks-per-node].
   -m num, --mem num     Use this many GB of memory (per node) for threadsafe
                         scripts [default: 236; max: 236].
@@ -75,7 +75,7 @@ optional arguments:
   -v, --verbose         Verbose output? [default: False].
   -q, --quiet           Activate quiet mode, with suppressed output [default:
                         False].
-  -D, --dopol           Perform polarization calibration in the pipeline
+  -P, --dopol           Perform polarization calibration in the pipeline
                         [default: False].
   -2, --do2GC           Perform (2GC) self-calibration in the pipeline
                         [default: False].
@@ -158,9 +158,10 @@ bpassfield = ''
 fluxfield = ''
 phasecalfield = ''
 targetfields = ''
+extrafields = ''
 
 [slurm]                           # See processMeerKAT.py -h for documentation
-nodes = 2
+nodes = 1
 ntasks_per_node = 8
 plane = 1
 mem = 236                         # Use this many GB of memory (per node)
@@ -176,7 +177,7 @@ account = 'b03-idia-ag'
 reservation = ''
 verbose = False
 precal_scripts = [('calc_refant.py',False,''), ('partition.py',True,'')]
-postcal_scripts = [('concat.py',False,''), ('selfcal_part1.py',True,''), ('selfcal_part2.py',False,'')]
+postcal_scripts = [('concat.py',False,''), ('plotcal_spw.py', False, ''), ('selfcal_part1.py',True,''), ('selfcal_part2.py',False,''), ('run_bdsf.py', False, ''), ('make_pixmask.py', False, '')]
 scripts = [ ('validate_input.py',False,''),
             ('flag_round_1.py',True,''),
             ('calc_refant.py',False,''),
@@ -192,26 +193,26 @@ scripts = [ ('validate_input.py',False,''),
 
 [crosscal]
 minbaselines = 4                  # Minimum number of baselines to use while calibrating
-preavg = 1                        # Number of channels to average before calibration (during partition)
-specavg = 1                       # Number of channels to average after calibration (during split)
+chanbin = 1                       # Number of channels to average before calibration (during partition)
+width = 1                         # Number of channels to (further) average after calibration (during split)
 timeavg = '8s'                    # Time interval to average after calibration (during split)
+createmms = True                  # Create MMS (True) or MS (False) for cross-calibration during partition
 keepmms = True                    # Output MMS (True) or MS (False) during split
-spw = '0:860~1700MHz'             # Spectral window / frequencies to extract for MMS
+spw = '0:880~1680MHz'             # Spectral window / frequencies to extract for MMS
 nspw = 16                         # Number of spectral windows to split into
-calcrefant = True                 # Calculate reference antenna in program (overwrites 'refant')
+calcrefant = False                # Calculate reference antenna in program (overwrites 'refant')
 refant = 'm059'                   # Reference antenna name / number
 standard = 'Stevens-Reynolds 2016'# Flux density standard for setjy
 badants = []                      # List of bad antenna numbers (to flag)
-badfreqranges = [ '935~947MHz',   # List of bad frequency ranges (to flag)
-                  '1160~1310MHz',
-                  '1476~1611MHz',
-                  '1670~1700MHz']
+badfreqranges = [ '933~960MHz',   # List of bad frequency ranges (to flag)
+                  '1163~1299MHz',
+                  '1524~1630MHz']
 
-[run]
+[run]                             # Internal variables for pipeline execution
 continue = True
 ```
 
-If you're also performing self-calibration (option [-2 --do2GC]), the default config will also contain the `[selfcal]` section:
+If you're also performing self-calibration (option [-2 --do2GC], experimental at this point), the default config will also contain the `[selfcal]` section:
 
 ```
 [selfcal]
@@ -219,11 +220,11 @@ nloops = 4                        # Number of clean + bdsf + self-cal loops.
 restart_no = 0                    # If nonzero, adds this number to nloops to name images
 cell = '2.0arcsec'
 robust = -0.5
-imsize = [8192, 8192]
+imsize = [6827, 6827]
 wprojplanes = 128
 niter = [8000, 11000, 14000, 15000, 200000]
 threshold = [100e-6, 50e-6, 20e-6, 10e-6, 4e-6] # In units of Jy
-multiscale = [15, 10, 5]
+multiscale = []
 nterms = 2                        # Number of taylor terms
 gridder = 'wproject'
 deconvolver = 'mtmfs'
@@ -347,7 +348,7 @@ Furthermore, each split field's quick-look image is concatenated together into a
 
 Our design allows the user to insert their own scripts into the pipeline, along with or instead of our own scripts. All scripts are assumed to be written in python, with extension `.py`. They must either have hard-coded values for input such as the MS name, or be able to read the config file and extract the values (e.g. as in the main() function of most of our scripts).
 
-To insert your own scripts, either build a config file and edit the `scripts` argument to contain your list of scripts, or pass your scripts via command line during building your config file. For each script that is added, three arguments are needed
+To insert your own scripts, either build a config file and edit the `scripts`, `precal_scripts` or `postcal_scripts` parameters (see [SPW splitting](/docs/processMeerKAT/using-the-pipeline#spw-splitting)) argument to contain your list of scripts, or pass your scripts via command line during building your config file. For each script that is added, three arguments are needed
 
 1. The path to the script
 2. Whether the script is threadsafe (for MPI - i.e. it can use mpicasa)
@@ -357,7 +358,7 @@ The path to the scripts (and containers) can be an absolute path, a relative pat
 
 ### Adding scripts to config file
 
-Edit the `scripts` argument in your config file, which must be a list of lists/tuples.
+Edit the `scripts`, `precal_scripts` or `postcal_scripts` parameters (see [SPW splitting](/docs/processMeerKAT/using-the-pipeline#spw-splitting)) in your config file, which must be a list of lists/tuples.
 
 ### Adding scripts via command line
 
@@ -366,3 +367,11 @@ Build a config file pointing to your scripts, each time appending the same three
 ```processMeerKAT.py -B -C myconfig.txt -S /absolute/path/to/my/script.py False /absolute/path/to/container.simg -S partition.py True '' -S relative/path/to/my/script.py True relative/path/to/container.simg -S flag_round_1.py True '' -S script_in_bash_PATH.py False container_in_bash_path.simg setjy.py True ''```
 
 An error will be raised if any of the scripts or containers aren't found.
+
+Similarly, the `[-b --precal_scripts]` and `[-a --postcal_scripts]` parameters can be used to add precal and postcal scripts (see [SPW splitting](/docs/processMeerKAT/using-the-pipeline#spw-splitting)) via the command line, with the same syntax.
+
+### Editing pipeline scripts
+
+Users may wish to edit some of the pipeline scripts to do their own custom progressing by changing CASA task parameters not exposed via the config file. To do so, first copy the script (e.g. from `/idia/software/pipelines/master/processMeerKAT/cal_scripts/`) to your working directory, and then edit it from there. The pipeline will first look for a local copy of the pipeline scripts and run this instead of the normal version of the script.
+
+<!-- If you can't find the script, type `which processMeerKAT.py` into your terminal, and then search in the same directory (e.g. `which `) -->

@@ -11,10 +11,10 @@ This is the second release of the IDIA Pipelines `processsMeerKAT` package, to b
 
 The current release adds the following functionality:
 
-* Spectral Window (SPW) splitting, where each separate SPW is processed independently and concurrently, providing a speed-up for large (TB) datasets, better polarization calibration, and better flux scaling
+* Spectral Window (SPW) splitting (see docs [here](/docs/processMeerKAT/using-the-pipeline#spw-splitting)), where each separate SPW is processed independently and concurrently, providing a speed-up for large (TB) datasets, better polarisation calibration, and better flux scaling
 * Quick-look continuum cube, across all SPWs
 * Pre-processing during initial partition of MS, including pre-averaging of frequency channels, removal of cross-hand correlations up front for Stokes I processing, and removal of autocorrelations
-* If running in full Stokes mode, `setjy` now includes the polarization models for 3C286 and 3C138 if they are present in the data.
+* If running in full Stokes mode, `setjy` now includes the polarisation models for 3C286 and 3C138 if they are present in the data.
 <!-- * Improved performance, including ... -->
 * Improved default parameters, including a smaller RFI mask that removes the persistent RFI in the ranges `933~960, 1163~1299`, and `1524~1630` MHz
 * Improved interaction with SLURM, including `exclude, dependencies, account` and `reservation` parameters, and graceful termination of pipeline after errors
@@ -31,11 +31,13 @@ The current release adds the following functionality:
     * Similarly, we use a single memory value for all threadsafe tasks.
 
 * **Discontinuities in the Stokes Q and U spectra**:
-In the event that full Stokes calibration is requested (by passing the `--dopol` paramter during the build stage) we have noticed that the Stokes Q and U spectra of the calibrated data show discontinuities between the spectral windows. While the overall shape of the Q and U spectra seem to be right, the discontuities will affect the inferences made during rotation measure synthesis. We are in the process of debugging this and will issue a patch once we have fixed it.
+In the event that full Stokes calibration is requested (by passing the `--dopol` parameter during the build stage) we have noticed that the Stokes Q and U spectra of the calibrated data show discontinuities between the spectral windows (i.e. when `nspw` > 1 in your config). While the overall shape of the Q and U spectra seem to be right, the discontinuities will affect the inferences made during rotation measure synthesis. We are in the process of debugging this and will issue a patch once we have fixed it.
 
 ### Minor:
 
 * **SLURM reports setjy jobs as FAILED**: Every time the `setjy` pipeline job is run, SLURM reports that this job failed, even though it has successfully completed. A quick glance at the last few lines of the logs will determine whether this step has legitimately failed or not.
+
+* **Discontinuities in the phase solutions**: We have noticed a discontinuity in the phase of the bandpass solutions between spectral windows (i.e. when `nspw` > 1 in your config). However, this does not seem to have a significant effect on the calibration, as the spectrum of sources within the target field matches between data calibrated with `nspw` > 1, and data calibrated with `nspw=1`.
 
 * **Empty rows in sub-MSs**: Some tasks might complain that no valid data were found in a sub-MS, due to some combination of data selection parameters resulting in a null selection for a specific sub-MS. Generally this seems to be a "harmless" error, and doesn’t seem to affect the progress of the calibration/pipeline.
 
@@ -66,7 +68,7 @@ Please consult the documentation on [GitHub](https://idia-pipelines.github.io/) 
 
 * **Flux scale (not seen in V1.1)**: Although the fluxes of the calibrated targets and calibrator sources are typically accurate to within a few percent, we find that there are certain datasets that result in a flux scale that is down by a factor of a few, particularly for short-track (e.g. 2 hour) observations (see [example use case](/docs/processMeerKAT/Example-Use-Cases#short-track-observations-and-fluxscale-issues)). We are in the process of tracking down the root cause of these issues, and expect to issue a fix soon. However, if you do happen to notice that the fluxes of one or more of the sources/targets are off (either higher/lower), please report it by creating a [Github issue](https://github.com/idia-astro/pipelines/issues).
 
-* **Broadband polarization (resolved in V1.1)**: CASA does not natively support solving broad-band polarizations, _i.e.,_ it is not sensitive to rotation measure (RM). The assumption is that the RM within a single spectral window (SPW) is constant, however MeerKAT has only a single SPW that spans the entire bandwidth. We have identified future workarounds (which is to split up the band into several SPWs), however presently the broadband polarization models do contain systematic errors.
+* **Broadband polarisation (resolved in V1.1)**: CASA does not natively support solving broad-band polarisations, _i.e.,_ it is not sensitive to rotation measure (RM). The assumption is that the RM within a single spectral window (SPW) is constant, however MeerKAT has only a single SPW that spans the entire bandwidth. We have identified future workarounds (which is to split up the band into several SPWs), however presently the broadband polarisation models do contain systematic errors.
 
 * **Calculation of antenna statistics (resolved in V1.1)**: The amplitude and RMS per antenna computed in `calc_refant.py` does not match what is found by CASA task `visstat`, and decreases as a function of antenna number. We expect to issue a fix soon. For now, we recommend users have `calcrefant=False` in their config files, which also disables antenna flagging (i.e. entirely flagging out bad antennas).
 

@@ -45,15 +45,15 @@
     
       
         
-      
-    
-      
-        
           <li class="navigation-list-item">
             
             <a href="http://localhost:4000/docs/access/" class="navigation-list-link">Access to IDIA Machines</a>
             
           </li>
+        
+      
+    
+      
         
       
     
@@ -79,13 +79,13 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/Release-Notes/" class="navigation-list-link">Release Notes</a>
                       
                     </li>
-                  
-                
                   
                 
                   
@@ -99,13 +99,13 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/Example-Use-Cases/" class="navigation-list-link">Example Use Cases</a>
                       
                     </li>
-                  
-                
                   
                 
                   
@@ -140,13 +140,17 @@
                     </li>
                   
                 
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/LICENSE/" class="navigation-list-link">LICENSE</a>
+                      
+                    </li>
+                  
+                
               </ul>
             
           </li>
-        
-      
-    
-      
         
       
     
@@ -161,6 +165,14 @@
             <a href="http://localhost:4000/docs/containers/" class="navigation-list-link">Singularity Containers</a>
             
           </li>
+        
+      
+    
+      
+        
+      
+    
+      
         
       
     
@@ -234,12 +246,12 @@
 
 <h3 id="memory-error">Memory error</h3>
 
-<p>If you see the phrase <code class="highlighter-rouge">MemoryError</code> in the <code class="highlighter-rouge">.err</code> logs (this can be located by <code class="highlighter-rouge">grep -i MemoryError logs/*.err</code>) this is typically indicative that CASA did not have enough memory to complete the task. This often happens while running <code class="highlighter-rouge">flagdata</code> and does not always halt execution of the pipeline. Reduce the number of tasks per node and increase the nodes in the config file (e.g. halve tasks and double nodes) before re-launching the pipeline, as that will allocate more memory per task.</p>
+<p>If you see the phrase <code class="highlighter-rouge">MemoryError</code> in the <code class="highlighter-rouge">.err</code> logs (this can be located by <code class="highlighter-rouge">grep -i MemoryError logs/*.err</code>) this is typically indicative that CASA did not have enough memory to complete the task. This often happens while running <code class="highlighter-rouge">flagdata</code> and does not always halt execution of the pipeline. If you are not using the maximum amount of memory per node, increase your allocation (up to 236 GB on an ilifu node from the Main partitoin, or 482 GB on an ilifu node from the HighMem partition). If you are using the maxmium amount of memory per node, reduce the number of tasks per node and increase the nodes in the config file (e.g. halve tasks and double nodes) before re-launching the pipeline, as that will allocate more memory per task.</p>
 
 <p>There are cases where a failure in <code class="highlighter-rouge">flagdata</code> can leave the MS in an intermediate state that causes the subsequent calibration tasks to fail. We recommend killing any currently running jobs (by running <code class="highlighter-rouge">./killJobs.sh</code> from the parent directory), wiping the <code class="highlighter-rouge">*MHz</code> subdirectories, and re-running <code class="highlighter-rouge">processMeerKAT.py -R [-C &lt;config_file&gt;]</code> and <code class="highlighter-rouge">./submit_pipeline.sh</code> again after making the above changes to the config file.</p>
 
 <h2 id="false-positives">False positives</h2>
-<h3 id="timeout-errors">Timeout errors</h3>
+<h3 id="server-timeout-errors">Server timeout errors</h3>
 <p>Errors of the form</p>
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>MPIMonitorClient::get_server_timeout::MPIMonitorClient::get_server_timeout::@slwrk-155:MPIClient        Found 1 servers in timeout status
 </code></pre></div></div>

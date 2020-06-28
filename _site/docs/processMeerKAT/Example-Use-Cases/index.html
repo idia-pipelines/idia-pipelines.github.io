@@ -45,15 +45,15 @@
     
       
         
-      
-    
-      
-        
           <li class="navigation-list-item">
             
             <a href="http://localhost:4000/docs/access/" class="navigation-list-link">Access to IDIA Machines</a>
             
           </li>
+        
+      
+    
+      
         
       
     
@@ -79,13 +79,13 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/Release-Notes/" class="navigation-list-link">Release Notes</a>
                       
                     </li>
-                  
-                
                   
                 
                   
@@ -99,13 +99,13 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item  active">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/Example-Use-Cases/" class="navigation-list-link active">Example Use Cases</a>
                       
                     </li>
-                  
-                
                   
                 
                   
@@ -140,13 +140,17 @@
                     </li>
                   
                 
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/LICENSE/" class="navigation-list-link">LICENSE</a>
+                      
+                    </li>
+                  
+                
               </ul>
             
           </li>
-        
-      
-    
-      
         
       
     
@@ -161,6 +165,14 @@
             <a href="http://localhost:4000/docs/containers/" class="navigation-list-link">Singularity Containers</a>
             
           </li>
+        
+      
+    
+      
+        
+      
+    
+      
         
       
     
@@ -231,17 +243,20 @@
 
 <p>Stokes I calibration is achieved in <code class="highlighter-rouge">xx_yy_solve.py</code>, and includes standard delay, bandpass and gain calibration. Within this pipeline, this is done to obtain better statistics for a second round of flagging.</p>
 
-<p>To calibrate for only Stokes I, the <code class="highlighter-rouge">xy_yx_solve.py</code> and <code class="highlighter-rouge">xy_yx_apply.py</code> scripts may be replaced with <code class="highlighter-rouge">xx_yy_solve.py</code> and <code class="highlighter-rouge">xx_yy_apply.py</code>, or removed completely. However, since the 2nd round of flagging is different to the 1st, and much more effective, it should not be skipped. Furthermore, for good calibration, new solutions should always be derived after flagging. Lastly, it is recommended the ‘xy_yx’ scripts be run anyway, since linear feeds tend to have non-negligible coupling between the feeds, and so even to get a good Stokes I image, full Stokes calibration may be required.</p>
+<p>Stokes I calibration is the default mode of the pipeline, using the <code class="highlighter-rouge">xx_yy_solve.py</code> and <code class="highlighter-rouge">xx_yy_apply.py</code> scripts, instead of the <code class="highlighter-rouge">xy_yx_solve.py</code> and <code class="highlighter-rouge">xy_yx_apply.py</code> scripts. Since the 2nd round of flagging is different to the 1st, and much more effective, these two scripts are called twice, in a second round that should not be skipped. Furthermore, for good calibration, new solutions should always be derived after flagging.</p>
 
-<p>Therefore, for Stokes I calibration, the ‘xy_yx’ scripts may be replaced with the ‘xx_yy’ scripts, in which case only a minimal speedup will be gained. Therefore, this use case is generally discouraged. One reason for this use case may be where issues arise with the calibration, and to simplify the processing to what is well understood.</p>
+<!-- Krishna to revise -->
+<!-- Lastly, it is recommended the 'xy_yx' scripts be run anyway, since linear feeds tend to have non-negligible coupling between the feeds, and so even to get a good Stokes I image, full Stokes calibration may be required.
+
+Therefore, for Stokes I calibration, the 'xy_yx' scripts may be replaced with the 'xx_yy' scripts, in which case only a minimal speedup will be gained. Therefore, this use case is generally discouraged. One reason for this use case may be where issues arise with the calibration, and to simplify the processing to what is well understood. -->
 
 <h5 id="short-track-observations-and-fluxscale-issues">Short-Track Observations and Fluxscale Issues</h5>
 
-<p>Replacing the ‘xy_yx’ scripts with the ‘xx_yy’ scripts is recommended for short-track observations (e.g. 2 hours), because the ‘xy_yx’ scripts assume that the phase calibrator has sufficient parallactic angle coverage to solve for the leakage and Stokes Q &amp; U. We also recommend this for cases where there are issues with fluxscale, which often occurs when the ‘xy_yx’ scripts are run for short-track observations.</p>
+<p>Replacing the ‘xy_yx’ scripts with the ‘xx_yy’ scripts is recommended for short-track observations (e.g. 2 hours), because the ‘xy_yx’ scripts assume that the phase calibrator has sufficient parallactic angle coverage to solve for the leakage and Stokes Q &amp; U. We also recommend this for cases where there are issues with fluxscale, which often occurs when the ‘xy_yx’ scripts are run for short-track observations. **New in v1.1: Only <code class="highlighter-rouge">xx_yy</code> scripts are used by default, and if the parallactic angle coverage is &lt; 30 degrees, <code class="highlighter-rouge">dopol</code> will be forced to False, meaning the <code class="highlighter-rouge">xy_yx</code> scripts will not be inserted, even if the user chooses to perform polarisation calibration.</p>
 
 <h3 id="full-stokes-calibration-polarisation">Full Stokes Calibration (Polarisation)</h3>
 
-<p>Full Stokes calibration is the default mode of the pipeline, which, in addition to the calibration listed <a href="#stokes-i-calibration-continuum">above</a>, includes calibration of instrumental leakage, X-Y phase, source polarisation, and Stokes Q and U from gain variations, using the CASA helper task <code class="highlighter-rouge">GainFromQU</code>. This is achieved by using the phase calibrator to solve as a function of parallactic angle.</p>
+<p>Full Stokes calibration can be activated with <code class="highlighter-rouge">[-P --dopol]</code>, which, in addition to the calibration listed <a href="#stokes-i-calibration-continuum">above</a>, includes calibration of instrumental leakage, X-Y phase, source polarisation, and Stokes Q and U from gain variations, using the CASA helper task <code class="highlighter-rouge">GainFromQU</code>. This is achieved by using the phase calibrator to solve as a function of parallactic angle.</p>
 
 <p>Currently the pipeline does not solve for absolute polarisation angle, since the <code class="highlighter-rouge">CALIBRATE_POLARIZATION</code> intent is missing from MeerKAT datasets. Additionally, CASA currently has no functionality to solve for wide-band leakage and QU, but assumes a constant value across single spectral windows. Both of these issues will be addressed in future releases.</p>
 
@@ -269,11 +284,9 @@
 
 <h3 id="ms-only-single-thread-processing">MS only (single thread processing)</h3>
 
-<p>The pipeline can be run on a MS, where the user would have to request 1 node and 1 task per node. In this case, the user would need to skip the <code class="highlighter-rouge">partition.py</code> script, by removing it from the <code class="highlighter-rouge">scripts</code> list in the config file, copy the MS do their working directory, and use this as the input dataset.</p>
+<p>The pipeline can be run on a MS, where the user would have to request 1 node and 1 task per node. In this case, the user would set <code class="highlighter-rouge">createmms=False</code> in their config.</p>
 
-<p>This mode isn’t generally encouraged, but may be useful for small datasets (tens of GB - e.g. small bandwidth of several MHz), when using MMS has little to no advantage, or when the number of scans is very large (hundreds), when splitting into multiple SPWs and multiple sub-MSs is too extreme. In such a case, the user may need to manually run <code class="highlighter-rouge">partition</code> (e.g. to select a <code class="highlighter-rouge">spw</code>), and set <code class="highlighter-rouge">createmms=False</code>. Alternatively, the user can run <code class="highlighter-rouge">split</code> or <code class="highlighter-rouge">mstransform</code> to select an <code class="highlighter-rouge">spw</code>.</p>
-
-<!-- Add recipe here -->
+<p>This mode isn’t generally encouraged, but may be useful for small datasets (tens of GB - e.g. small bandwidth of several MHz, or short-track observations), when using MMS has little to no advantage, or when the number of scans is very large (hundreds), when splitting into multiple SPWs and multiple sub-MSs is too extreme.</p>
 
 <h1 id="field-ids">Field IDs</h1>
 
