@@ -370,7 +370,7 @@ An error will be raised if any of the scripts or containers aren't found.
 
 Similarly, the `[-b --precal_scripts]` and `[-a --postcal_scripts]` parameters can be used to add precal and postcal scripts (see [SPW splitting](/docs/processMeerKAT/using-the-pipeline#spw-splitting)) via the command line, with the same syntax.
 
-### Editing pipeline scripts
+## Editing pipeline scripts
 
 Users may wish to edit some of the pipeline scripts to do their own custom progressing by changing CASA task parameters not exposed via the config file. To do so, first copy the script (e.g. from `/idia/software/pipelines/master/processMeerKAT/cal_scripts/`) to your working directory, and then edit it from there. The pipeline will first look for a local copy of the pipeline scripts and run this instead of the normal version of the script.
 
