@@ -35,7 +35,7 @@ Please read the documentation to learn how to use the pipeline for your imaging 
 ## License
 
 Copyright (C) 2020 Inter-University Institute for Data Intensive Astronomy.
-support@ilifu.ac.za
+[support@ilifu.ac.za](mailto:support@ilifu.ac.za)
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
