@@ -26,7 +26,7 @@
   @include mq(md) {
     flex-wrap: nowrap;
     position: absolute;
-    width: $nav-width/2 + 16px;
+    width: $nav-width + 16px;
     height: 100%;
     padding-top: $gutter-spacing * 2;
     padding-bottom: 0;
@@ -36,7 +36,7 @@
   }
 
   @include mq(lg) {
-    width: calc((100% - #{$nav-width + $content-width}) / 2 + 0.5*#{$nav-width});
+    width: calc((100% - #{$nav-width + $content-width}) / 10 + #{$nav-width});
     min-width: $nav-width;
   }
 }
@@ -61,7 +61,7 @@
 
   @include mq(md) {
     position: relative;
-    max-width: 1.5*$content-width;
+    max-width: 5*$content-width;
     padding-top: $gutter-spacing;
     padding-bottom: $gutter-spacing;
     padding-left: $gutter-spacing * 1.5;
@@ -70,7 +70,7 @@
 
   @include mq(lg) {
     padding-left: $gutter-spacing;
-    margin-left: calc((100% - #{$nav-width + $content-width}) / 2 + 0.5*#{$nav-width});
+    margin-left: calc((100% - #{$nav-width + $content-width}) / 10 + #{$nav-width});
   }
 }
 
