@@ -34,7 +34,6 @@ Please read the documentation to learn how to use the pipeline for your imaging 
 
 ## License
 
-Process MeerKAT data via CASA measurement set.
 Copyright (C) 2020 Inter-University Institute for Data Intensive Astronomy.
 support@ilifu.ac.za
 
