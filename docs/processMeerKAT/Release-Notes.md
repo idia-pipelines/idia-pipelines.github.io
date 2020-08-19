@@ -18,28 +18,26 @@ The current release adds the following functionality:
 <!-- * Improved performance, including ... -->
 * Improved default parameters, including a smaller RFI mask that removes the persistent RFI in the ranges `933~960, 1163~1299`, and `1524~1630` MHz
 * Improved interaction with SLURM, including `exclude, dependencies, account` and `reservation` parameters, and graceful termination of pipeline after errors
-* Improved calculation of antenna statistics, based on flags within raw data, used to select reference antenna and flag any bad antennas
+<!-- * Improved calculation of antenna statistics, based on flags within raw data, used to select reference antenna and flag any bad antennas -->
 * Uses CASA 5.6.2, Python 2.7, and Singularity 3.5.2.
 
 ## Known Issues
 
 ### Moderate:
 
-* **Resource allocation**:
-   * There is an upper limit to the number of CPUs that can be utilised by MPICASA, which is given by the number of scans, plus the master MPIClient (nscans + 1). Relating this to the processing footprint is complex, since each task uses a different selection of those scans. We estimate the optimal number of MPI tasks as int(1.1*(nscans/2 + 1)), where nscans is the number of scans, typically 30-40. The motivation for this is that at most, if you have only target and phase calibrator, nscans / 2 will be selected by a task. So the master MPI client is added (+1) to this, and then 10%, in case some nodes time out.
-    * For tasks reading only sub-MSs corresponding to other calibrators (e.g. bandpass), some CPUs will not be used
-    * Similarly, we use a single memory value for all threadsafe tasks.
-
 * **Discontinuities in the Stokes Q and U spectra**:
 In the event that full Stokes calibration is requested (by passing the `--dopol` parameter during the build stage) we have noticed that the Stokes Q and U spectra of the calibrated data show discontinuities between the spectral windows (i.e. when `nspw` > 1 in your config). While the overall shape of the Q and U spectra seem to be right, the discontinuities will affect the inferences made during rotation measure synthesis. We are in the process of debugging this and will issue a patch once we have fixed it.
 
 ### Minor:
 
-* **SLURM reports setjy jobs as FAILED**: Every time the `setjy` pipeline job is run, SLURM reports that this job failed, even though it has successfully completed. A quick glance at the last few lines of the logs will determine whether this step has legitimately failed or not.
+* **Resource allocation**:
+   * There is an upper limit to the number of CPUs that can be utilised by MPICASA, which is given by the number of scans, plus the master MPIClient (nscans + 1). Relating this to the processing footprint is complex, since each task uses a different selection of those scans. We estimate the optimal number of MPI tasks as int(1.1*(nscans/2 + 1)), where nscans is the number of scans, typically 30-40. The motivation for this is that at most, if you have only target and phase calibrator, nscans / 2 will be selected by a task. So the master MPI client is added (+1) to this, and then 10%, in case some nodes time out.
+    * For tasks reading only sub-MSs corresponding to other calibrators (e.g. bandpass), some CPUs will not be used
+    * Similarly, we use a single memory value for all threadsafe tasks.
+
+<!-- * **SLURM reports setjy jobs as FAILED**: Every time the `setjy` pipeline job is run, SLURM reports that this job failed, even though it has successfully completed. A quick glance at the last few lines of the logs will determine whether this step has legitimately failed or not. -->
 
 * **Discontinuities in the phase solutions**: We have noticed a discontinuity in the phase of the bandpass solutions between spectral windows (i.e. when `nspw` > 1 in your config). However, this does not seem to have a significant effect on the calibration, as the spectrum of sources within the target field matches between data calibrated with `nspw` > 1, and data calibrated with `nspw=1`.
-
-* **Empty rows in sub-MSs**: Some tasks might complain that no valid data were found in a sub-MS, due to some combination of data selection parameters resulting in a null selection for a specific sub-MS. Generally this seems to be a "harmless" error, and doesn’t seem to affect the progress of the calibration/pipeline.
 
 * **Slow plotting**: Generating plots of the calibrated visibilities is very time consuming, often running to a few hours. However, as this is the last step of the pipeline, the calibrated, split measurement sets and images should be ready for further analysis while the plots are being generated. The speed of plotting is limited by how quickly `plotms` can generate the plots.
 

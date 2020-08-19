@@ -12,14 +12,23 @@ This is not an exhaustive list, and is intended to give the user a sense of what
 
 ### Unable to launch jobs in SLURM
 
-If the status of your job is `(launch failed requeued held)`, please file a ticket with support@ilifu.ac.za.
+If the status of your job is `(launch failed requeued held)`, please file a ticket with [support@ilifu.ac.za](mailto:support@ilifu.ac.za).
+
+### Node Failure
+
+You may encounter the rare error of a node failure, which shows an error message similar to the following within your logs:
+
+```
+JOB 14024 ON compute-010 CANCELLED AT 2020-08-10T03:55:21 DUE TO NODE FAILURE, SEE SLURMCTLD LOG FOR DETAILS ***
+```
+
+If you encounter this error, please file a ticket with [support@ilifu.ac.za](mailto:support@ilifu.ac.za).
 
 ### Memory error
 
-If you see the phrase `MemoryError` in the `.err` logs (this can be located by `grep -i MemoryError logs/*.err`) this is typically indicative that CASA did not have enough memory to complete the task. This often happens while running `flagdata` and does not always halt execution of the pipeline. If you are not using the maximum amount of memory per node, increase your allocation (up to 236 GB on an ilifu node from the Main partitoin, or 482 GB on an ilifu node from the HighMem partition). If you are using the maxmium amount of memory per node, reduce the number of tasks per node and increase the nodes in the config file (e.g. halve tasks and double nodes) before re-launching the pipeline, as that will allocate more memory per task.
+If you see the phrase `MemoryError` in the `.err` logs (this can be located by `grep -i MemoryError logs/*.err`) this is typically indicative that CASA did not have enough memory to complete the task. This often happens while running `flagdata` and does not always halt execution of the pipeline. If you are not using the maximum amount of memory per node, increase your allocation (up to 232 GB on an ilifu node from the Main partition, or 480 GB on an ilifu node from the HighMem partition). If you are using the maximum amount of memory per node, reduce the number of tasks per node and increase the nodes in the config file (e.g. halve tasks and double nodes) before re-launching the pipeline, as that will allocate more memory per task.
 
 There are cases where a failure in `flagdata` can leave the MS in an intermediate state that causes the subsequent calibration tasks to fail. We recommend killing any currently running jobs (by running `./killJobs.sh` from the parent directory), wiping the `*MHz` subdirectories, and re-running `processMeerKAT.py -R [-C <config_file>]` and `./submit_pipeline.sh` again after making the above changes to the config file.
-
 
 ## False positives
 ### Server timeout errors
@@ -30,6 +39,13 @@ MPIMonitorClient::get_server_timeout::MPIMonitorClient::get_server_timeout::@slw
 
 are benign and do not have an impact on the pipeline performance. The MPI daemon simply times out waiting for a worker node to respond, and prints out this error to the logs. SLURM is able to handle these timeouts gracefully and restarts the process once it times out.
 
+### Empty rows in sub-MSs
+
+```
+*** Error *** Error in data selection specification: MSSelectionNullSelection : The selected table has zero rows.
+```
+
+Some tasks might complain that no valid data were found in a sub-MS, due to some combination of data selection parameters resulting in a null selection for a specific sub-MS. Generally this seems to be a "harmless" error, and doesn’t seem to affect the progress of the calibration/pipeline.
 
 ### "No valid SPW and Chan combination found"
 Errors of the form

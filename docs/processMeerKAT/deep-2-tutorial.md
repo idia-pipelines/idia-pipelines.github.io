@@ -72,7 +72,7 @@ extrafields = '1'
 nodes = 1
 ntasks_per_node = 6
 plane = 1
-mem = 236
+mem = 232
 partition = 'Main'
 exclude = ''
 time = '12:00:00'
@@ -116,7 +116,7 @@ The SLURM parameters in section `[slurm]` correspond to those seen by running `p
 
 <!-- See the [MIGHTEE tutorial](link-TBD) when using `nspw` > 1. -->
 
-By default, for this particular MS, for all threadsafe scripts (i.e. those with `True` in the list(s) of scripts), we use 1 node, 6 tasks per node, 236 GB of memory (per node), and `plane=1` (an argument that distributes N tasks onto one node before moving onto next node). During step 2, only 12 scans were found, and since `partition.py` partitions the data into one sub-MeasurementSet (sub-MS) per scan, only 12 sub-MSs will exist in the multi-MeasurementSet (MMS - see [step 10 below](#10-view-the-contents-of-1491550051880016800mhzmms)). Assuming that each observation has a phase calibrator bracketing each target scan, and includes at least one other calibrator scan (i.e. the bandpass/flux calibrator), at most, half the sub-MSs will be generally operated on at any given time, each handled by one MPI worker, and a master MPI worker (the MPIClient). So we aim to have a limit of nscans/2 threads, including the MPIClient. For this dataset, the limit is 6 threads, so `read_ms.py` attempts to match this number by starting with one node and increasing the number of tasks (and then nodes) until the number of threads is more than the limit, terminating at 1 nodes x 6 tasks per node = 6 threads.
+By default, for this particular MS, for all threadsafe scripts (i.e. those with `True` in the list(s) of scripts), we use 1 node, 6 tasks per node, 232 GB of memory (per node), and `plane=1` (an argument that distributes N tasks onto one node before moving onto next node). During step 2, only 12 scans were found, and since `partition.py` partitions the data into one sub-MeasurementSet (sub-MS) per scan, only 12 sub-MSs will exist in the multi-MeasurementSet (MMS - see [step 10 below](#10-view-the-contents-of-1491550051880016800mhzmms)). Assuming that each observation has a phase calibrator bracketing each target scan, and includes at least one other calibrator scan (i.e. the bandpass/flux calibrator), at most, half the sub-MSs will be generally operated on at any given time, each handled by one MPI worker, and a master MPI worker (the MPIClient). So we aim to have a limit of nscans/2 threads, including the MPIClient. For this dataset, the limit is 6 threads, so `read_ms.py` attempts to match this number by starting with one node and increasing the number of tasks (and then nodes) until the number of threads is more than the limit, terminating at 1 nodes x 6 tasks per node = 6 threads.
 
 For scripts that aren't threadsafe (i.e. those with `False` in the list(s) of scripts), we use a single node, and a single task per node. For the majority scripts that are threadsafe and those that aren't, we use a single CPU per task, and explicitly `export OMP_NUM_THREADS=1`, since there is no documentation or evidence of a speedup with more than one CPU per task. However, for `partition.py` we use between 2-4 CPUs per task (equal to the number of polarisations, which is 2 by default, but 4 if `[-D --dopol]` is used, which adds the `xy_yx_solve.py` or `xy_yx_apply.py` scripts to the `scripts` parameter in your config). Furthermore, `quick_tclean.py` will use as many CPUs as it can without exceeding 32 in total.
 

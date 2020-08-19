@@ -265,7 +265,7 @@ optional arguments:
   -D num, --plane num   Distribute tasks of this block size before moving onto
                         next node [default: 1; max: ntasks-per-node].
   -m num, --mem num     Use this many GB of memory (per node) for threadsafe
-                        scripts [default: 236; max: 236].
+                        scripts [default: 232; max: 232].
   -p name, --partition name
                         SLURM partition to use [default: 'Main'].
   -T time, --time time  Time limit to use for all jobs, in the form d-hh:mm:ss
@@ -418,7 +418,7 @@ extrafields = ''
 nodes = 1
 ntasks_per_node = 8
 plane = 1
-mem = 236                         # Use this many GB of memory (per node)
+mem = 232                         # Use this many GB of memory (per node)
 partition = 'Main'                # SLURM partition to use
 exclude = ''                      # SLURM nodes to exclude
 time = '12:00:00'

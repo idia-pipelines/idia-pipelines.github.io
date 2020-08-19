@@ -248,14 +248,21 @@
   <li>If running in full Stokes mode, <code class="highlighter-rouge">setjy</code> now includes the polarisation models for 3C286 and 3C138 if they are present in the data.
 <!-- * Improved performance, including ... --></li>
   <li>Improved default parameters, including a smaller RFI mask that removes the persistent RFI in the ranges <code class="highlighter-rouge">933~960, 1163~1299</code>, and <code class="highlighter-rouge">1524~1630</code> MHz</li>
-  <li>Improved interaction with SLURM, including <code class="highlighter-rouge">exclude, dependencies, account</code> and <code class="highlighter-rouge">reservation</code> parameters, and graceful termination of pipeline after errors</li>
-  <li>Improved calculation of antenna statistics, based on flags within raw data, used to select reference antenna and flag any bad antennas</li>
+  <li>Improved interaction with SLURM, including <code class="highlighter-rouge">exclude, dependencies, account</code> and <code class="highlighter-rouge">reservation</code> parameters, and graceful termination of pipeline after errors
+<!-- * Improved calculation of antenna statistics, based on flags within raw data, used to select reference antenna and flag any bad antennas --></li>
   <li>Uses CASA 5.6.2, Python 2.7, and Singularity 3.5.2.</li>
 </ul>
 
 <h2 id="known-issues">Known Issues</h2>
 
 <h3 id="moderate">Moderate:</h3>
+
+<ul>
+  <li><strong>Discontinuities in the Stokes Q and U spectra</strong>:
+In the event that full Stokes calibration is requested (by passing the <code class="highlighter-rouge">--dopol</code> parameter during the build stage) we have noticed that the Stokes Q and U spectra of the calibrated data show discontinuities between the spectral windows (i.e. when <code class="highlighter-rouge">nspw</code> &gt; 1 in your config). While the overall shape of the Q and U spectra seem to be right, the discontinuities will affect the inferences made during rotation measure synthesis. We are in the process of debugging this and will issue a patch once we have fixed it.</li>
+</ul>
+
+<h3 id="minor">Minor:</h3>
 
 <ul>
   <li><strong>Resource allocation</strong>:
@@ -265,21 +272,13 @@
       <li>Similarly, we use a single memory value for all threadsafe tasks.</li>
     </ul>
   </li>
-  <li><strong>Discontinuities in the Stokes Q and U spectra</strong>:
-In the event that full Stokes calibration is requested (by passing the <code class="highlighter-rouge">--dopol</code> parameter during the build stage) we have noticed that the Stokes Q and U spectra of the calibrated data show discontinuities between the spectral windows (i.e. when <code class="highlighter-rouge">nspw</code> &gt; 1 in your config). While the overall shape of the Q and U spectra seem to be right, the discontinuities will affect the inferences made during rotation measure synthesis. We are in the process of debugging this and will issue a patch once we have fixed it.</li>
 </ul>
 
-<h3 id="minor">Minor:</h3>
+<!-- * **SLURM reports setjy jobs as FAILED**: Every time the `setjy` pipeline job is run, SLURM reports that this job failed, even though it has successfully completed. A quick glance at the last few lines of the logs will determine whether this step has legitimately failed or not. -->
 
 <ul>
   <li>
-    <p><strong>SLURM reports setjy jobs as FAILED</strong>: Every time the <code class="highlighter-rouge">setjy</code> pipeline job is run, SLURM reports that this job failed, even though it has successfully completed. A quick glance at the last few lines of the logs will determine whether this step has legitimately failed or not.</p>
-  </li>
-  <li>
     <p><strong>Discontinuities in the phase solutions</strong>: We have noticed a discontinuity in the phase of the bandpass solutions between spectral windows (i.e. when <code class="highlighter-rouge">nspw</code> &gt; 1 in your config). However, this does not seem to have a significant effect on the calibration, as the spectrum of sources within the target field matches between data calibrated with <code class="highlighter-rouge">nspw</code> &gt; 1, and data calibrated with <code class="highlighter-rouge">nspw=1</code>.</p>
-  </li>
-  <li>
-    <p><strong>Empty rows in sub-MSs</strong>: Some tasks might complain that no valid data were found in a sub-MS, due to some combination of data selection parameters resulting in a null selection for a specific sub-MS. Generally this seems to be a “harmless” error, and doesn’t seem to affect the progress of the calibration/pipeline.</p>
   </li>
   <li>
     <p><strong>Slow plotting</strong>: Generating plots of the calibrated visibilities is very time consuming, often running to a few hours. However, as this is the last step of the pipeline, the calibrated, split measurement sets and images should be ready for further analysis while the plots are being generated. The speed of plotting is limited by how quickly <code class="highlighter-rouge">plotms</code> can generate the plots.</p>
