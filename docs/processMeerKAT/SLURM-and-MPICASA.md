@@ -19,7 +19,7 @@ To run a CASA script in a non-interactive way in the SLURM cluster, you would us
 
 _**The image below illustrates these different steps.**_
 
-![Basic step-by-step guide on to use SLURM and MPICASA to run a CASA Script.](https://d2mxuefqeaa7sj.cloudfront.net/s_EA37BF1003DCBCF5DA97C07EE87BCC9C3B03F3B2E4F25A26C4DD1191504B01C3_1530182750818_Screen+Shot+2018-06-28+at+12.45.22.png)
+![Basic step-by-step guide on to use SLURM and MPICASA to run a CASA Script.](/assets/slurm-and-mpicasa.png)
 
 ## Write your CASA Script
 CASA scripts are written in Python. An entire pipeline can be written in such a script, that includes flagging, initial calibration and imaging.
@@ -91,4 +91,4 @@ Running CASA through SLURM requires calling CASA via `mpicasa`. CASA understands
 __partition__: In order to run across a cluster the `partition` task needs to be called prior to running any other tasks. `partition`  [creates a multi-measurement set](https://casa.nrao.edu/casadocs/casa-5.4.1/uv-manipulation/data-partition) (MMS) that is a collection of multiple SUBMS's, each of which will be operated upon as a task in SLURM. By default CASA will split the MS along the spectral window (`spw`) axis, and across scans. The number of SUBMSes created can be specified in `partition`, however it seems that specifying a number larger than what CASA would decide leads to some strangeness with the metadata (and a failure of tasks that operate on the MMS).
 
 
-__tclean__: In order to run across a cluster, `parallel=True` should be specified in `tclean`. However, if `savemodel='modelcolumn'` is also specified, it triggers some kind of a race condition between the different nodes where they are competing for write access, and the task crashes. So setting `savemodel='virtual'` or `savemodel='none'` are the only options that work. Both the `makePSF` step and the minor cycles of deconvolution are openMP aware, and can exploit additional resources specified via `--cpus-per-task` in the SLURM `sbatch` file.
+__tclean__: In order to run across a cluster, `parallel=True` should be specified in `tclean`. However, if `savemodel='modelcolumn'` is also specified, it triggers some kind of a race condition between the different nodes where they are competing for write access, and the task crashes. So setting `savemodel='virtual'` or `savemodel='none'` are the only options that work. Both the `makePSF` step and the major cycles of deconvolution are openMP aware, and can exploit additional resources specified via `--cpus-per-task` in the SLURM `sbatch` file.
