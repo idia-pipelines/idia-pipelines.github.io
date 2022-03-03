@@ -17,10 +17,24 @@ which will add the correct paths to your `$PATH` and `$PYTHONPATH` in order to c
 
 ### 2. Build a config file:
 
+#### a. For continuum/spectral line processing : 
+
         processMeerKAT.py -B -C myconfig.txt -M mydata.ms
 
+#### b. For polarization processing : 
 
-This defines several variables that are read by the pipeline while calibrating the data, as well as requesting resources on the cluster. The config file parameters are described by in-line comments in the config file itself wherever possible.
+        processMeerKAT.py -B -C myconfig.txt -M mydata.ms --dopol
+
+#### c. Including self-calibration : 
+
+        processMeerKAT.py -B -C myconfig.txt -M mydata.ms -2
+
+#### d. Including science imaging : 
+
+        processMeerKAT.py -B -C myconfig.txt -M mydata.ms -I
+
+
+This defines several variables that are read by the pipeline while calibrating the data, as well as requesting resources on the cluster. The config file parameters are described by in-line comments in the config file itself wherever possible. The `--dopol` option can be used in conjunction with the `-2/--do2GC` option to enable polarization calibration as well as self-calibration.
 
 ### 3. To run the pipeline:
 
@@ -43,5 +57,4 @@ Starting with v1.1 of the processMeerKAT pipeline, the default behaviour is to s
 More detailed information about SPW splitting is found [here](/docs/processMeerKAT/using-the-pipeline#spw-splitting).
 
 <!-- The documentation can be accessed on the [pipelines website](/docs/processMeerKAT), or on the [Github wiki](https://github.com/idia-astro/pipelines/wiki). -->
-
 ----------------------------------------------------------------------------------------------------------
