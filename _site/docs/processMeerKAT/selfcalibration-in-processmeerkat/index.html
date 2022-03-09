@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  
+
+  <title>Self-calibration in processMeerKAT - IDIA Pipelines</title>
+  <link rel="stylesheet" href="http://localhost:4000/assets/css/just-the-docs.css">
+  
+  <script type="text/javascript" src="http://localhost:4000/assets/js/vendor/lunr.min.js"></script>
+  
+  <script type="text/javascript" src="http://localhost:4000/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+
+  <div class="page-wrap">
+    <div class="side-bar">
+      <a href="http://localhost:4000/" class="site-title fs-6 lh-tight">IDIA Pipelines</a>
+      <span class="fs-3"><button class="js-main-nav-trigger navigation-list-toggle btn btn-outline" type="button" data-text-toggle="Hide">Menu</button></span>
+      <div class="navigation main-nav js-main-nav">
+        <nav role="navigation" aria-label="Main navigation">
+  <ul class="navigation-list">
+    
+    
+      
+    
+      
+        
+      
+    
+      
+        
+          <li class="navigation-list-item">
+            
+            <a href="http://localhost:4000/" class="navigation-list-link">Home</a>
+            
+          </li>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <li class="navigation-list-item">
+            
+            <a href="http://localhost:4000/docs/access/" class="navigation-list-link">Access to IDIA Machines</a>
+            
+          </li>
+        
+      
+    
+      
+        
+          <li class="navigation-list-item active">
+            
+            <a href="http://localhost:4000/docs/processMeerKAT" class="navigation-list-link">processMeerKAT</a>
+            
+              
+              <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/Quick-Start/" class="navigation-list-link">Quick Start</a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/Release-Notes/" class="navigation-list-link">Release Notes</a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/using-the-pipeline/" class="navigation-list-link">Using the Pipeline</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/Example-Use-Cases/" class="navigation-list-link">Example Use Cases</a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/Diagnosing-Errors/" class="navigation-list-link">Diagnosing Errors</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/deep-2-tutorial/" class="navigation-list-link">DEEP 2 Tutorial</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/calibration-in-processmeerkat/" class="navigation-list-link">Calibration in processMeerKAT</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item  active">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/selfcalibration-in-processmeerkat/" class="navigation-list-link active">Self-calibration in processMeerKAT</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/SLURM-and-MPICASA/" class="navigation-list-link">SLURM and MPICASA</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/LICENSE/" class="navigation-list-link">LICENSE</a>
+                      
+                    </li>
+                  
+                
+              </ul>
+            
+          </li>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <li class="navigation-list-item">
+            
+            <a href="http://localhost:4000/docs/containers/" class="navigation-list-link">Singularity Containers</a>
+            
+          </li>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+  </ul>
+</nav>
+
+      </div>
+      <footer role="contentinfo" class="site-footer">
+        <p class="text-small text-grey-dk-000 mb-0">This site uses <a href="https://github.com/pmarsceill/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.</p>
+      </footer>
+    </div>
+    <div class="main-content-wrap">
+      <div class="page-header">
+        <div class="main-content">
+          
+          <div class="search js-search">
+            <div class="search-input-wrap">
+              <input type="text" class="js-search-input search-input" tabindex="0" placeholder="Search IDIA Pipelines" aria-label="Search IDIA Pipelines" autocomplete="off">
+              <svg width="14" height="14" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" class="search-icon"><title>Search</title><g fill-rule="nonzero"><path d="M17.332 20.735c-5.537 0-10-4.6-10-10.247 0-5.646 4.463-10.247 10-10.247 5.536 0 10 4.601 10 10.247s-4.464 10.247-10 10.247zm0-4c3.3 0 6-2.783 6-6.247 0-3.463-2.7-6.247-6-6.247s-6 2.784-6 6.247c0 3.464 2.7 6.247 6 6.247z"/><path d="M11.672 13.791L.192 25.271 3.02 28.1 14.5 16.62z"/></g></svg>
+            </div>
+            <div class="js-search-results search-results-wrap"></div>
+          </div>
+          
+          
+            <ul class="list-style-none text-small mt-md-1 mb-md-1 pb-4 pb-md-0 js-aux-nav aux-nav">
+              
+                <li class="d-inline-block my-0"><a href="//github.com/idia-astro/pipelines/wiki">IDIA Pipelines</a></li>
+              
+            </ul>
+          
+        </div>
+      </div>
+      <div class="main-content js-main-content" tabindex="0">
+        
+          
+            <nav class="breadcrumb-nav">
+              <ol class="breadcrumb-nav-list">
+                
+                  <li class="breadcrumb-nav-list-item"><a href="http://localhost:4000/docs/processMeerKAT">processMeerKAT</a></li>
+                
+                <li class="breadcrumb-nav-list-item"><span>Self-calibration in processMeerKAT</span></li>
+              </ol>
+            </nav>
+          
+        
+        <div id="main-content" class="page-content" role="main">
+          <p>processMeerKAT implements the imaging &amp; self-calibration loop using a
+combination of <a href="https://casadocs.readthedocs.io/en/stable/">CASA</a> for imaging
+and calibration and <a href="https://www.astron.nl/citt/pybdsf/">pyBDSF</a> for
+source-finding and masking.</p>
+
+<p>Briefly, the self-calibration implementation in processMeerKAT works as
+follows : The initial iteration of the loop performs a blind deconvolution of
+the sky, which is followed by running pyBDSF to identify and create a mask
+around the point sources detected in the image. The subsequent iterations use
+the source mask generated from the previous iteration, allowing for deeper
+imaging. Each iteration runs pyBDSF after the imaging stage in order to further
+refine the mask.</p>
+
+<p>By default, no gain calibration is performed after the first blind deconvolution
+(although this is configurable), and the desired type of gain calibration can be
+specified (phase-only, amplitude &amp; phase etc.) per loop.</p>
+
+<p>The configuration options are intended to be as flexible as possible, with
+sensible defaults. Some configuration options can be specified per loop, and
+others only accept a single value for the entire self-calibration cycle. These
+options are summarized below :</p>
+
+<ul>
+  <li><strong>Single options:</strong> These config variables accept only a single argument, and will be
+applied identically to all iterations of the self-cal cycle; <code class="highlighter-rouge">nloops</code>, <code class="highlighter-rouge">loop</code>,
+<code class="highlighter-rouge">discard_nloops</code>, <code class="highlighter-rouge">outlier_threshold</code></li>
+  <li><strong>Gaincal options:</strong> These config variables accept either a single argument, or a list of length <code class="highlighter-rouge">nloops</code>; <code class="highlighter-rouge">solint</code>, <code class="highlighter-rouge">calmode</code>, <code class="highlighter-rouge">gaintype</code>, <code class="highlighter-rouge">flag</code></li>
+  <li><strong>List of list options:</strong> These config variables accept either a single argument, or a list of lists of length <code class="highlighter-rouge">nloop</code>; <code class="highlighter-rouge">imsize</code></li>
+</ul>
+
+<p>Any configuration options not listed above can contain either a single value
+(applied to all loops) or a list of length <code class="highlighter-rouge">nloops + 1</code>. This is explained
+further in the following section.</p>
+
+<h2 id="selfcal-config-options">Selfcal Config Options</h2>
+
+<p>The default self-cal section in the config file is shown below, and the details of each option are explained further down.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[selfcal]
+nloops = 2                        # Number of clean + bdsf loops.
+loop = 0                          # If nonzero, adds this number to nloops to name images or continue previous run
+cell = '1.5arcsec'
+robust = -0.5
+imsize = [6144, 6144]
+wprojplanes = 512
+niter = [10000, 50000, 50000]
+threshold = ['0.5mJy', 10, 10]    # After loop 0, S/N values if &gt;= 1.0, otherwise Jy
+nterms = 2                        # Number of taylor terms
+gridder = 'wproject'
+deconvolver = 'mtmfs'
+calmode = ['','p']                # '' to skip solving (will also exclude mask for this loop), 'p' for phase-only and 'ap' for amplitude and phase
+solint = ['','1min']
+uvrange = ''                      # uv range cutoff for gaincal
+flag = True                       # Flag residual column after selfcal?
+gaintype = 'G'                    # Use 'T' for polarisation on linear feeds (e.g. MeerKAT)
+discard_nloops = 0                # Discard this many selfcal solutions (e.g. from quick and dirty image) during subsequent loops (only considers when calmode !='')
+outlier_threshold = 0.0           # S/N values if &gt;= 1.0, otherwise Jy
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p><strong>nloops</strong> : The number of self calibration loops to perform. This determines
+the number of times gain calibration will be performed. The total number of
+images generated will be <code class="highlighter-rouge">nloops+1</code>.
+Each loop in general comprises imaging (with <code class="highlighter-rouge">tclean</code>), calibration (with
+<code class="highlighter-rouge">gaincal</code>) and source finding/masking (with <code class="highlighter-rouge">pyBDSF</code>).  The final loop does
+not perform the <code class="highlighter-rouge">gaincal</code> stage since the gain solutions will not be applied
+for any further loops.</p>
+  </li>
+  <li>
+    <p><strong>loop</strong> : Set this to be a non-zero number if restarting from a previous
+selfcal run. Can be left to zero for all other cases.</p>
+  </li>
+  <li>
+    <p><strong>cell</strong>: The cell size of the pixels in the image plane, specified as a CASA
+compatible string (with units). This can be a single parameter, which will be
+applied identically to all loops, or specified as a list of strings if
+different cell sizes per loop is desired. The length of the list must be
+<code class="highlighter-rouge">nloops+1</code> to account for the final image after all the self-calibration loops
+are complete.</p>
+  </li>
+  <li>
+    <p><strong>robust</strong>: The Briggs’ robust parameter used during gridding. Specified
+identically to the <code class="highlighter-rouge">cell</code> parameter.</p>
+  </li>
+  <li>
+    <p><strong>imsize</strong>: The size of the image in pixels. The image dimensions must be
+specified in both dimensions, hence a list of [6144,6144] is treated as a
+single specification and will be applied identically to all loops. To specify
+a different image size per iteration, a list-of-lists syntax must be used,
+such as - ``[[6144, 6144], [8192,8192]]`.</p>
+  </li>
+  <li>
+    <p><strong>wprojplanes</strong> : The number of W-projection planes to use (in case the
+<code class="highlighter-rouge">wproject</code> gridder is specified). Specified identically to the <code class="highlighter-rouge">cell</code>
+parameter.</p>
+  </li>
+  <li>
+    <p><strong>niter</strong>: The number of iterations to perform per loop. Imaging will continue
+until either the stopping threshold (described below) is reached, or the
+iteration limit is reached. Specified identically to the <code class="highlighter-rouge">cell</code> parameter.</p>
+  </li>
+  <li>
+    <p><strong>threshold</strong>: The stopping threshold per loop (a total of <code class="highlighter-rouge">nloop+1</code>). The
+stopping threshold for the initial loop must be specified as a string with
+units. Subsequent loops may either be specified as a decimal, or as a string
+with units. If a decimal is specified, values &gt; 1 are considered as
+multipliers on the image RMS and values &lt; 1 are considered to be the threshold
+value in Jy.</p>
+  </li>
+  <li>
+    <p><strong>nterms</strong> : The number of Taylor terms to use for broadband imaging.
+Specified identically to the <code class="highlighter-rouge">cell</code> parameter.</p>
+  </li>
+  <li>
+    <p><strong>gridder</strong> : The gridder to use for imaging, typically one of either
+<code class="highlighter-rouge">standard</code> or <code class="highlighter-rouge">wproject</code>. Specified identically to the <code class="highlighter-rouge">cell</code> parameter.</p>
+  </li>
+  <li>
+    <p><strong>deconvolver</strong> : The deconvolver to use during imaging. Specified identically
+to the <code class="highlighter-rouge">cell</code> parameter.</p>
+  </li>
+  <li>
+    <p><strong>calmode</strong> : The calibration type per loop - one of either <code class="highlighter-rouge">'p'</code> (phase only)
+or <code class="highlighter-rouge">'ap'</code> (amplitude and phase). A blank string implies no calibration will be
+performed on that loop. Must be of length <code class="highlighter-rouge">nloop</code>.</p>
+  </li>
+  <li>
+    <p><strong>solint</strong> : The solution interval per loop, specified similar to <code class="highlighter-rouge">calmode</code>.</p>
+  </li>
+  <li>
+    <p><strong>uvrange</strong>: The UV range limit to consider for gaincal. In the presence of
+strong RFI, it can be helpful to discard the shortest baselines while
+performing the gain calibration solve. This does not affect the imaging steps.
+Specified similar to the <code class="highlighter-rouge">calmode</code> parameter.</p>
+  </li>
+  <li>
+    <p><strong>flag</strong>: True/False - Determines whether flagging is performed on the
+residuals prior to the gain calibration solve. In situations with RFI this can
+improve the image quality on subsequent loops. Setting it to <code class="highlighter-rouge">False</code> can
+provide a speedup to the imaging process.</p>
+  </li>
+  <li>
+    <p><strong>gaintype</strong>: The gaintype specified in the <code class="highlighter-rouge">gaincal</code> task. Typically one of
+either <code class="highlighter-rouge">G</code> or <code class="highlighter-rouge">T</code>. Use <code class="highlighter-rouge">T</code> if preserving the polarization in instruments with
+linear feeds is important (e.g., MeerKAT).</p>
+  </li>
+  <li>
+    <p><strong>discard_nloops</strong>: Discard the first <code class="highlighter-rouge">discard_nloops</code> loops. This is useful
+if the initial images are intentionally smaller and intended to generate more
+accurate source masks for example. It will only discard the gain solutions
+from loops where <code class="highlighter-rouge">calmode</code> is not blank.</p>
+  </li>
+  <li>
+    <p><strong>outlier_threshold</strong>: The threshold value to identify an outlier. Considered
+to be an SNR threshold if &gt; 1 and an absolute value in Jy if &lt; 1. The
+algorithm for determining and imaging outliers is explained in much more
+detail in the next section.</p>
+  </li>
+</ul>
+
+
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

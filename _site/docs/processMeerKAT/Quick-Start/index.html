@@ -45,15 +45,15 @@
     
       
         
+      
+    
+      
+        
           <li class="navigation-list-item">
             
             <a href="http://localhost:4000/docs/access/" class="navigation-list-link">Access to IDIA Machines</a>
             
           </li>
-        
-      
-    
-      
         
       
     
@@ -79,13 +79,13 @@
                   
                 
                   
-                
-                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/Release-Notes/" class="navigation-list-link">Release Notes</a>
                       
                     </li>
+                  
+                
                   
                 
                   
@@ -99,13 +99,13 @@
                   
                 
                   
-                
-                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/Example-Use-Cases/" class="navigation-list-link">Example Use Cases</a>
                       
                     </li>
+                  
+                
                   
                 
                   
@@ -135,6 +135,14 @@
                   
                     <li class="navigation-list-item ">
                       
+                      <a href="http://localhost:4000/docs/processMeerKAT/selfcalibration-in-processmeerkat/" class="navigation-list-link">Self-calibration in processMeerKAT</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
                       <a href="http://localhost:4000/docs/processMeerKAT/SLURM-and-MPICASA/" class="navigation-list-link">SLURM and MPICASA</a>
                       
                     </li>
@@ -151,6 +159,10 @@
               </ul>
             
           </li>
+        
+      
+    
+      
         
       
     
@@ -248,10 +260,27 @@
 
 <h3 id="2-build-a-config-file">2. Build a config file:</h3>
 
+<h4 id="a-for-continuumspectral-line-processing-">a. For continuum/spectral line processing :</h4>
+
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    processMeerKAT.py -B -C myconfig.txt -M mydata.ms
 </code></pre></div></div>
 
-<p>This defines several variables that are read by the pipeline while calibrating the data, as well as requesting resources on the cluster. The config file parameters are described by in-line comments in the config file itself wherever possible.</p>
+<h4 id="b-for-polarization-processing-">b. For polarization processing :</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    processMeerKAT.py -B -C myconfig.txt -M mydata.ms --dopol
+</code></pre></div></div>
+
+<h4 id="c-including-self-calibration-">c. Including self-calibration :</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    processMeerKAT.py -B -C myconfig.txt -M mydata.ms -2
+</code></pre></div></div>
+
+<h4 id="d-including-science-imaging-">d. Including science imaging :</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    processMeerKAT.py -B -C myconfig.txt -M mydata.ms -I
+</code></pre></div></div>
+
+<p>This defines several variables that are read by the pipeline while calibrating the data, as well as requesting resources on the cluster. The config file parameters are described by in-line comments in the config file itself wherever possible. The <code class="highlighter-rouge">--dopol</code> option can be used in conjunction with the <code class="highlighter-rouge">-2/--do2GC</code> option to enable polarization calibration as well as self-calibration.</p>
 
 <h3 id="3-to-run-the-pipeline">3. To run the pipeline:</h3>
 
@@ -280,7 +309,6 @@
 <p>More detailed information about SPW splitting is found <a href="/docs/processMeerKAT/using-the-pipeline#spw-splitting">here</a>.</p>
 
 <!-- The documentation can be accessed on the [pipelines website](/docs/processMeerKAT), or on the [Github wiki](https://github.com/idia-astro/pipelines/wiki). -->
-
 <hr />
 
 

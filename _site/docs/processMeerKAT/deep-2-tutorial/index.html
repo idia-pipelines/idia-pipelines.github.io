@@ -45,15 +45,15 @@
     
       
         
+      
+    
+      
+        
           <li class="navigation-list-item">
             
             <a href="http://localhost:4000/docs/access/" class="navigation-list-link">Access to IDIA Machines</a>
             
           </li>
-        
-      
-    
-      
         
       
     
@@ -79,13 +79,13 @@
                   
                 
                   
-                
-                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/Release-Notes/" class="navigation-list-link">Release Notes</a>
                       
                     </li>
+                  
+                
                   
                 
                   
@@ -99,13 +99,13 @@
                   
                 
                   
-                
-                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/Example-Use-Cases/" class="navigation-list-link">Example Use Cases</a>
                       
                     </li>
+                  
+                
                   
                 
                   
@@ -135,6 +135,14 @@
                   
                     <li class="navigation-list-item ">
                       
+                      <a href="http://localhost:4000/docs/processMeerKAT/selfcalibration-in-processmeerkat/" class="navigation-list-link">Self-calibration in processMeerKAT</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
                       <a href="http://localhost:4000/docs/processMeerKAT/SLURM-and-MPICASA/" class="navigation-list-link">SLURM and MPICASA</a>
                       
                     </li>
@@ -151,6 +159,10 @@
               </ul>
             
           </li>
+        
+      
+    
+      
         
       
     
@@ -715,22 +727,22 @@ logs/xx_yy_apply-1491811.casa  logs/xx_yy_apply-1491811.err  logs/xx_yy_apply-14
 <span class="nb">cp </span>tutorial_config_part2.txt .config.tmp
 
 <span class="c">#flag_round_2.sbatch</span>
-<span class="nv">IDs</span><span class="o">=</span><span class="k">$(</span>sbatch flag_round_2.sbatch | <span class="nb">cut</span> <span class="nt">-d</span> <span class="s1">' '</span> <span class="nt">-f4</span><span class="k">)</span>
+<span class="nv">IDs</span><span class="o">=</span><span class="si">$(</span>sbatch flag_round_2.sbatch | <span class="nb">cut</span> <span class="nt">-d</span> <span class="s1">' '</span> <span class="nt">-f4</span><span class="si">)</span>
 
 <span class="c">#xx_yy_solve.sbatch</span>
-IDs+<span class="o">=</span>,<span class="k">$(</span>sbatch <span class="nt">-d</span> afterok:<span class="nv">$IDs</span> <span class="nt">--kill-on-invalid-dep</span><span class="o">=</span><span class="nb">yes </span>xx_yy_solve.sbatch | <span class="nb">cut</span> <span class="nt">-d</span> <span class="s1">' '</span> <span class="nt">-f4</span><span class="k">)</span>
+IDs+<span class="o">=</span>,<span class="si">$(</span>sbatch <span class="nt">-d</span> afterok:<span class="nv">$IDs</span> <span class="nt">--kill-on-invalid-dep</span><span class="o">=</span><span class="nb">yes </span>xx_yy_solve.sbatch | <span class="nb">cut</span> <span class="nt">-d</span> <span class="s1">' '</span> <span class="nt">-f4</span><span class="si">)</span>
 
 <span class="c">#xx_yy_apply.sbatch</span>
-IDs+<span class="o">=</span>,<span class="k">$(</span>sbatch <span class="nt">-d</span> afterok:<span class="nv">$IDs</span> <span class="nt">--kill-on-invalid-dep</span><span class="o">=</span><span class="nb">yes </span>xx_yy_apply.sbatch | <span class="nb">cut</span> <span class="nt">-d</span> <span class="s1">' '</span> <span class="nt">-f4</span><span class="k">)</span>
+IDs+<span class="o">=</span>,<span class="si">$(</span>sbatch <span class="nt">-d</span> afterok:<span class="nv">$IDs</span> <span class="nt">--kill-on-invalid-dep</span><span class="o">=</span><span class="nb">yes </span>xx_yy_apply.sbatch | <span class="nb">cut</span> <span class="nt">-d</span> <span class="s1">' '</span> <span class="nt">-f4</span><span class="si">)</span>
 
 <span class="c">#split.sbatch</span>
-IDs+<span class="o">=</span>,<span class="k">$(</span>sbatch <span class="nt">-d</span> afterok:<span class="nv">$IDs</span> <span class="nt">--kill-on-invalid-dep</span><span class="o">=</span><span class="nb">yes </span>split.sbatch | <span class="nb">cut</span> <span class="nt">-d</span> <span class="s1">' '</span> <span class="nt">-f4</span><span class="k">)</span>
+IDs+<span class="o">=</span>,<span class="si">$(</span>sbatch <span class="nt">-d</span> afterok:<span class="nv">$IDs</span> <span class="nt">--kill-on-invalid-dep</span><span class="o">=</span><span class="nb">yes </span>split.sbatch | <span class="nb">cut</span> <span class="nt">-d</span> <span class="s1">' '</span> <span class="nt">-f4</span><span class="si">)</span>
 
 <span class="c">#quick_tclean.sbatch</span>
-IDs+<span class="o">=</span>,<span class="k">$(</span>sbatch <span class="nt">-d</span> afterok:<span class="nv">$IDs</span> <span class="nt">--kill-on-invalid-dep</span><span class="o">=</span><span class="nb">yes </span>quick_tclean.sbatch | <span class="nb">cut</span> <span class="nt">-d</span> <span class="s1">' '</span> <span class="nt">-f4</span><span class="k">)</span>
+IDs+<span class="o">=</span>,<span class="si">$(</span>sbatch <span class="nt">-d</span> afterok:<span class="nv">$IDs</span> <span class="nt">--kill-on-invalid-dep</span><span class="o">=</span><span class="nb">yes </span>quick_tclean.sbatch | <span class="nb">cut</span> <span class="nt">-d</span> <span class="s1">' '</span> <span class="nt">-f4</span><span class="si">)</span>
 
 <span class="c">#plot_solutions.sbatch</span>
-IDs+<span class="o">=</span>,<span class="k">$(</span>sbatch <span class="nt">-d</span> afterok:<span class="nv">$IDs</span> <span class="nt">--kill-on-invalid-dep</span><span class="o">=</span><span class="nb">yes </span>plot_solutions.sbatch | <span class="nb">cut</span> <span class="nt">-d</span> <span class="s1">' '</span> <span class="nt">-f4</span><span class="k">)</span>
+IDs+<span class="o">=</span>,<span class="si">$(</span>sbatch <span class="nt">-d</span> afterok:<span class="nv">$IDs</span> <span class="nt">--kill-on-invalid-dep</span><span class="o">=</span><span class="nb">yes </span>plot_solutions.sbatch | <span class="nb">cut</span> <span class="nt">-d</span> <span class="s1">' '</span> <span class="nt">-f4</span><span class="si">)</span>
 
 <span class="c">#Output message and create jobScripts directory</span>
 <span class="nb">echo </span>Submitted sbatch <span class="nb">jobs </span>with following IDs: <span class="nv">$IDs</span>

@@ -45,15 +45,15 @@
     
       
         
+      
+    
+      
+        
           <li class="navigation-list-item">
             
             <a href="http://localhost:4000/docs/access/" class="navigation-list-link">Access to IDIA Machines</a>
             
           </li>
-        
-      
-    
-      
         
       
     
@@ -79,13 +79,13 @@
                   
                 
                   
-                
-                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/Release-Notes/" class="navigation-list-link">Release Notes</a>
                       
                     </li>
+                  
+                
                   
                 
                   
@@ -99,13 +99,13 @@
                   
                 
                   
-                
-                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/Example-Use-Cases/" class="navigation-list-link">Example Use Cases</a>
                       
                     </li>
+                  
+                
                   
                 
                   
@@ -135,6 +135,14 @@
                   
                     <li class="navigation-list-item ">
                       
+                      <a href="http://localhost:4000/docs/processMeerKAT/selfcalibration-in-processmeerkat/" class="navigation-list-link">Self-calibration in processMeerKAT</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
                       <a href="http://localhost:4000/docs/processMeerKAT/SLURM-and-MPICASA/" class="navigation-list-link">SLURM and MPICASA</a>
                       
                     </li>
@@ -151,6 +159,10 @@
               </ul>
             
           </li>
+        
+      
+    
+      
         
       
     
@@ -552,28 +564,28 @@ targetfields = '2'
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jcollier@slurm-login:/scratch/users/jcollier/MIGHTEE/32k_nspw4$ ./summary.sh
 SPW #1: /scratch/users/jcollier/MIGHTEE/32k_nspw4/1350.0~1375.0MHz
           JobID         JobName  Partition    Elapsed NNodes NTasks NCPUS  MaxDiskRead MaxDiskWrite             NodeList   TotalCPU    CPUTime     MaxRSS      State ExitCode
-<span class="gd">--------------- --------------- ---------- ---------- ------ ------ ----- ------------ ------------ -------------------- ---------- ---------- ---------- ---------- --------
-</span>1362974         setjy                 Main   01:22:05      2           16                                slwrk-[102-103]   00:00:00   21:53:20               RUNNING      0:0
+--------------- --------------- ---------- ---------- ------ ------ ----- ------------ ------------ -------------------- ---------- ---------- ---------- ---------- --------
+1362974         setjy                 Main   01:22:05      2           16                                slwrk-[102-103]   00:00:00   21:53:20               RUNNING      0:0
 1362974.0       orted                        01:22:05      1      1     1                                      slwrk-103   00:00:00   01:22:05               RUNNING      0:0
-<span class="gd">-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-</span>SPW #2: /scratch/users/jcollier/MIGHTEE/32k_nspw4/1375.0~1400.0MHz
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+SPW #2: /scratch/users/jcollier/MIGHTEE/32k_nspw4/1375.0~1400.0MHz
           JobID         JobName  Partition    Elapsed NNodes NTasks NCPUS  MaxDiskRead MaxDiskWrite             NodeList   TotalCPU    CPUTime     MaxRSS      State ExitCode
-<span class="gd">--------------- --------------- ---------- ---------- ------ ------ ----- ------------ ------------ -------------------- ---------- ---------- ---------- ---------- --------
-</span>1362983         flag_round_1          Main   01:14:44      2           16                                slwrk-[160-161]   00:00:00   19:55:44               RUNNING      0:0
+--------------- --------------- ---------- ---------- ------ ------ ----- ------------ ------------ -------------------- ---------- ---------- ---------- ---------- --------
+1362983         flag_round_1          Main   01:14:44      2           16                                slwrk-[160-161]   00:00:00   19:55:44               RUNNING      0:0
 1362983.0       orted                        01:14:44      1      1     1                                      slwrk-161   00:00:00   01:14:44               RUNNING      0:0
-<span class="gd">-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-</span>SPW #3: /scratch/users/jcollier/MIGHTEE/32k_nspw4/1400.0~1425.0MHz
-          JobID         JobName  Partition    Elapsed NNodes NTasks NCPUS  MaxDiskRead MaxDiskWrite             NodeList   TotalCPU    CPUTime     MaxRSS      State ExitCode
-<span class="gd">--------------- --------------- ---------- ---------- ------ ------ ----- ------------ ------------ -------------------- ---------- ---------- ---------- ---------- --------
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-</span>SPW #4: /scratch/users/jcollier/MIGHTEE/32k_nspw4/1425.0~1450.0MHz
+SPW #3: /scratch/users/jcollier/MIGHTEE/32k_nspw4/1400.0~1425.0MHz
           JobID         JobName  Partition    Elapsed NNodes NTasks NCPUS  MaxDiskRead MaxDiskWrite             NodeList   TotalCPU    CPUTime     MaxRSS      State ExitCode
-<span class="gd">--------------- --------------- ---------- ---------- ------ ------ ----- ------------ ------------ -------------------- ---------- ---------- ---------- ---------- --------
+--------------- --------------- ---------- ---------- ------ ------ ----- ------------ ------------ -------------------- ---------- ---------- ---------- ---------- --------
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-</span>All SPWs: /scratch/users/jcollier/MIGHTEE/32k_nspw4
+SPW #4: /scratch/users/jcollier/MIGHTEE/32k_nspw4/1425.0~1450.0MHz
           JobID         JobName  Partition    Elapsed NNodes NTasks NCPUS  MaxDiskRead MaxDiskWrite             NodeList   TotalCPU    CPUTime     MaxRSS      State ExitCode
-<span class="gd">--------------- --------------- ---------- ---------- ------ ------ ----- ------------ ------------ -------------------- ---------- ---------- ---------- ---------- --------
-</span>1362970         calc_refant           Main   00:03:27      1            1                                      slwrk-105  02:54.393   00:03:27             COMPLETED      0:0
+--------------- --------------- ---------- ---------- ------ ------ ----- ------------ ------------ -------------------- ---------- ---------- ---------- ---------- --------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+All SPWs: /scratch/users/jcollier/MIGHTEE/32k_nspw4
+          JobID         JobName  Partition    Elapsed NNodes NTasks NCPUS  MaxDiskRead MaxDiskWrite             NodeList   TotalCPU    CPUTime     MaxRSS      State ExitCode
+--------------- --------------- ---------- ---------- ------ ------ ----- ------------ ------------ -------------------- ---------- ---------- ---------- ---------- --------
+1362970         calc_refant           Main   00:03:27      1            1                                      slwrk-105  02:54.393   00:03:27             COMPLETED      0:0
 1362970.batch   batch                        00:03:27      1      1     1        0.06M        0.00M            slwrk-105  00:00.034   00:03:27      0.01G  COMPLETED      0:0
 1362970.0       singularity                  00:03:27      1      1     1       69.58G        0.02M            slwrk-105  02:54.358   00:03:27      1.01G  COMPLETED      0:0
 1362971_[3%1]   partition             Main   00:00:00      2           64                                  None assigned   00:00:00   00:00:00               PENDING      0:0

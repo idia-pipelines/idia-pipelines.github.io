@@ -45,15 +45,15 @@
     
       
         
+      
+    
+      
+        
           <li class="navigation-list-item">
             
             <a href="http://localhost:4000/docs/access/" class="navigation-list-link">Access to IDIA Machines</a>
             
           </li>
-        
-      
-    
-      
         
       
     
@@ -79,13 +79,13 @@
                   
                 
                   
-                
-                  
                     <li class="navigation-list-item  active">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/Release-Notes/" class="navigation-list-link active">Release Notes</a>
                       
                     </li>
+                  
+                
                   
                 
                   
@@ -99,13 +99,13 @@
                   
                 
                   
-                
-                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/Example-Use-Cases/" class="navigation-list-link">Example Use Cases</a>
                       
                     </li>
+                  
+                
                   
                 
                   
@@ -135,6 +135,14 @@
                   
                     <li class="navigation-list-item ">
                       
+                      <a href="http://localhost:4000/docs/processMeerKAT/selfcalibration-in-processmeerkat/" class="navigation-list-link">Self-calibration in processMeerKAT</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
                       <a href="http://localhost:4000/docs/processMeerKAT/SLURM-and-MPICASA/" class="navigation-list-link">SLURM and MPICASA</a>
                       
                     </li>
@@ -151,6 +159,10 @@
               </ul>
             
           </li>
+        
+      
+    
+      
         
       
     
@@ -235,7 +247,21 @@
           
         
         <div id="main-content" class="page-content" role="main">
-          <h1 id="version-11">Version 1.1</h1>
+          <h1 id="version-20">Version 2.0</h1>
+
+<p>This is the third release of the IDIA Pipelines <code class="highlighter-rouge">processMeerKAT</code> package, intended for use on the <a href="https://docs.ilifu.ac.za/#/">ilifu</a> SLURM cluster. The software uses a parallelized implementation of <a href="https://casadocs.readthedocs.io/en/stable/">CASA 6</a> to calibrate and image interferometric (imaging) data from the MeerKAT telescope.</p>
+
+<p>The current release adds the following functionality:</p>
+
+<ul>
+  <li>Implemented support self-calibration and imaging. Allows for configuration of multiple self-calibration loops, with customizable parameters per loop as well as an additional final imaging stage to generate science-ready images.</li>
+  <li>Support for outlier fields - It is now possible to specify an outlier threshold to identify and image bright sources outside the main field of view, which can improve image fidelity in some cases.</li>
+  <li>Bugfixes and improvements to polarization calibration.</li>
+  <li>Support for loading modules on the ilifu SLURM cluster</li>
+  <li>Uses CASA 6.3, Python 3.8 and Singularity 3.9.1</li>
+</ul>
+
+<h1 id="version-11">Version 1.1</h1>
 
 <p>This is the second release of the IDIA Pipelines <code class="highlighter-rouge">processsMeerKAT</code> package, to be used on the ilifu SLURM cluster. The software uses a parallelised implementation of CASA to calibrate interferometric (imaging) data from the MeerKAT telescope.</p>
 
