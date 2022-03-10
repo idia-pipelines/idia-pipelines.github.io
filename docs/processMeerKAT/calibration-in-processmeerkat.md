@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Calibration in processMeerKAT
+title: Cross-calibration in processMeerKAT
 parent: processMeerKAT
 nav_order: 7
 ---

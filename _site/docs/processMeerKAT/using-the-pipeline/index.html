@@ -127,7 +127,7 @@
                   
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/calibration-in-processmeerkat/" class="navigation-list-link">Calibration in processMeerKAT</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/calibration-in-processmeerkat/" class="navigation-list-link">Cross-calibration in processMeerKAT</a>
                       
                     </li>
                   
@@ -248,87 +248,8 @@
         
         <div id="main-content" class="page-content" role="main">
           <h2 id="usage">Usage</h2>
-
-<ul>
-  <li>The usage can be seen by running
-<code class="highlighter-rouge">processMeerKAT.py -h</code></li>
-</ul>
-
-<p>which gives</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>usage: /idia/software/pipelines/master/processMeerKAT/processMeerKAT.py
-       [-h] [-M path] [-C path] [-N num] [-t num] [-D num] [-m num] [-p name]
-       [-T time] [-S script threadsafe container]
-       [-b script threadsafe container] [-a script threadsafe container]
-       [-w path] [-c path] [-n unique] [-d list] [-e nodes] [-A group]
-       [-r name] [-l] [-s] [-v] [-q] [-P] [-2] [-x] (-B | -R | -V | -L)
-
-Process MeerKAT data via CASA measurement set. Version: 1.1
-
-optional arguments:
-  -h, --help            show this help message and exit
-  -M path, --MS path    Path to measurement set.
-  -C path, --config path
-                        Relative (not absolute) path to config file.
-  -N num, --nodes num   Use this number of nodes [default: 1; max: 79].
-  -t num, --ntasks-per-node num
-                        Use this number of tasks (per node) [default: 16; max:
-                        32].
-  -D num, --plane num   Distribute tasks of this block size before moving onto
-                        next node [default: 1; max: ntasks-per-node].
-  -m num, --mem num     Use this many GB of memory (per node) for threadsafe
-                        scripts [default: 232; max: 232].
-  -p name, --partition name
-                        SLURM partition to use [default: 'Main'].
-  -T time, --time time  Time limit to use for all jobs, in the form d-hh:mm:ss
-                        [default: '12:00:00'].
-  -S script threadsafe container, --scripts script threadsafe container
-                        Run pipeline with these scripts, in this order, using
-                        these containers (3rd value - empty string to default
-                        to [-c --container]). Is it threadsafe (2nd value)?
-  -b script threadsafe container, --precal_scripts script threadsafe container
-                        Same as [-S --scripts], but run before calibration.
-  -a script threadsafe container, --postcal_scripts script threadsafe container
-                        Same as [-S --scripts], but run after calibration.
-  -w path, --mpi_wrapper path
-                        Use this mpi wrapper when calling threadsafe scripts
-                        [default: '/idia/software/pipelines/casa-pipeline-
-                        release-5.6.1-8.el7/bin/mpicasa'].
-  -c path, --container path
-                        Use this container when calling scripts [default:
-                        '/idia/software/containers/casa-stable-5.6.2-2.simg'].
-  -n unique, --name unique
-                        Unique name to give this pipeline run (e.g. 'run1_'),
-                        appended to the start of all job names. [default: ''].
-  -d list, --dependencies list
-                        Comma-separated list (without spaces) of SLURM job
-                        dependencies (only used when nspw=1). [default: ''].
-  -e nodes, --exclude nodes
-                        SLURM worker nodes to exclude [default: ''].
-  -A group, --account group
-                        SLURM accounting group to use (e.g. 'b05-pipelines-ag'
-                        - check 'sacctmgr show user $(whoami) -s
-                        format=account%30') [default: 'b03-idia-ag'].
-  -r name, --reservation name
-                        SLURM reservation to use. [default: ''].
-  -l, --local           Build config file locally (i.e. without calling srun)
-                        [default: False].
-  -s, --submit          Submit jobs immediately to SLURM queue [default:
-                        False].
-  -v, --verbose         Verbose output? [default: False].
-  -q, --quiet           Activate quiet mode, with suppressed output [default:
-                        False].
-  -P, --dopol           Perform polarization calibration in the pipeline
-                        [default: False].
-  -2, --do2GC           Perform (2GC) self-calibration in the pipeline
-                        [default: False].
-  -x, --nofields        Do not read the input MS to extract field IDs
-                        [default: False].
-  -B, --build           Build config file using input MS.
-  -R, --run             Run pipeline with input config file.
-  -V, --version         Display the version of this pipeline and quit.
-  -L, --license         Display this program's license and quit.
-</code></pre></div></div>
+<p>The usage can be seen by running
+<code class="highlighter-rouge">processMeerKAT.py -h</code> the output of which is documented below.</p>
 
 <h3 id="simple-usage">Simple usage</h3>
 
@@ -411,6 +332,81 @@ optional arguments:
 <p><code class="highlighter-rouge">processMeerKAT.py -R -v -s -C myconfig.txt</code></p>
 
 <p><strong>NOTE:</strong> All other command-line arguments passed into <code class="highlighter-rouge">processMeerKAT.py</code> when using option <code class="highlighter-rouge">[-R --run]</code> will have no effect, since the arguments are read from the config file at this point. Only options <code class="highlighter-rouge">[-s --submit], [-v --verbose]</code> and <code class="highlighter-rouge">[-C --config]</code> will have any effect at this point. Similarly, changing the <code class="highlighter-rouge">[slurm]</code> section in your config file after using option <code class="highlighter-rouge">[-R --run]</code> will have no effect unless you <code class="highlighter-rouge">[-R --run]</code> again.</p>
+
+<p>The command line help text is :</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>usage: /idia/software/pipelines/master/processMeerKAT/processMeerKAT.py
+       [-h] [-M path] [-C path] [-N num] [-t num] [-D num] [-m num] [-p name]
+       [-T time] [-S script threadsafe container]
+       [-b script threadsafe container] [-a script threadsafe container]
+       [-w path] [-c path] [-n unique] [-d list] [-e nodes] [-A group]
+       [-r name] [-l] [-s] [-v] [-q] [-P] [-2] [-x] (-B | -R | -V | -L)
+
+Process MeerKAT data via CASA measurement set. Version: 1.1
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -M path, --MS path    Path to measurement set.
+  -C path, --config path
+                        Relative (not absolute) path to config file.
+  -N num, --nodes num   Use this number of nodes [default: 1; max: 79].
+  -t num, --ntasks-per-node num
+                        Use this number of tasks (per node) [default: 16; max:
+                        32].
+  -D num, --plane num   Distribute tasks of this block size before moving onto
+                        next node [default: 1; max: ntasks-per-node].
+  -m num, --mem num     Use this many GB of memory (per node) for threadsafe
+                        scripts [default: 232; max: 232].
+  -p name, --partition name
+                        SLURM partition to use [default: 'Main'].
+  -T time, --time time  Time limit to use for all jobs, in the form d-hh:mm:ss
+                        [default: '12:00:00'].
+  -S script threadsafe container, --scripts script threadsafe container
+                        Run pipeline with these scripts, in this order, using
+                        these containers (3rd value - empty string to default
+                        to [-c --container]). Is it threadsafe (2nd value)?
+  -b script threadsafe container, --precal_scripts script threadsafe container
+                        Same as [-S --scripts], but run before calibration.
+  -a script threadsafe container, --postcal_scripts script threadsafe container
+                        Same as [-S --scripts], but run after calibration.
+  -w path, --mpi_wrapper path
+                        Use this mpi wrapper when calling threadsafe scripts
+                        [default: '/idia/software/pipelines/casa-pipeline-
+                        release-5.6.1-8.el7/bin/mpicasa'].
+  -c path, --container path
+                        Use this container when calling scripts [default:
+                        '/idia/software/containers/casa-stable-5.6.2-2.simg'].
+  -n unique, --name unique
+                        Unique name to give this pipeline run (e.g. 'run1_'),
+                        appended to the start of all job names. [default: ''].
+  -d list, --dependencies list
+                        Comma-separated list (without spaces) of SLURM job
+                        dependencies (only used when nspw=1). [default: ''].
+  -e nodes, --exclude nodes
+                        SLURM worker nodes to exclude [default: ''].
+  -A group, --account group
+                        SLURM accounting group to use (e.g. 'b05-pipelines-ag'
+                        - check 'sacctmgr show user $(whoami) -s
+                        format=account%30') [default: 'b03-idia-ag'].
+  -r name, --reservation name
+                        SLURM reservation to use. [default: ''].
+  -l, --local           Build config file locally (i.e. without calling srun)
+                        [default: False].
+  -s, --submit          Submit jobs immediately to SLURM queue [default:
+                        False].
+  -v, --verbose         Verbose output? [default: False].
+  -q, --quiet           Activate quiet mode, with suppressed output [default:
+                        False].
+  -P, --dopol           Perform polarization calibration in the pipeline
+                        [default: False].
+  -2, --do2GC           Perform (2GC) self-calibration in the pipeline
+                        [default: False].
+  -x, --nofields        Do not read the input MS to extract field IDs
+                        [default: False].
+  -B, --build           Build config file using input MS.
+  -R, --run             Run pipeline with input config file.
+  -V, --version         Display the version of this pipeline and quit.
+  -L, --license         Display this program's license and quit.
+</code></pre></div></div>
 
 <h2 id="config-files">Config files</h2>
 
