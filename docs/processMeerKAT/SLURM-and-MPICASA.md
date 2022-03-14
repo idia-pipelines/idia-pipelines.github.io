@@ -7,7 +7,11 @@ nav_order: 8
 
 # Parallel CASA Using SLURM at IDIA
 
-SLURM is a resource and job management system that is available on many clusters. Jobs/tasks are typically submitted to the job management system, and are inserted into a job queue; the job is executed when the requested resources become available. SLURM is currently used with the IDIA cluster. Please consult the Appendix at the bottom of this page on the computing environments available at IDIA, and how to use Singularity containers.
+**Note: For details on how to setup SLURM batch and interactive jobs on the ilifu system, please look at the [ilifu documentation](https://docs.ilifu.ac.za/#/getting_started/submit_job_slurm).**
+
+This page deals with the specifics of using CASA in conjuction with the SLURM environment on the ilifu computing system. 
+
+SLURM is a resource and job management system that is available on many clusters. Jobs/tasks are typically submitted to the job management system, and are inserted into a job queue; the job is executed when the requested resources become available. SLURM is currently used with the IDIA cluster. 
 
 While SLURM Clusters provide the option to request and reserve resources to work in an interactive mode, its preferred to submit jobs to the queue to be run in a non-interactive way.
 
@@ -17,19 +21,23 @@ To run a CASA script in a non-interactive way in the SLURM cluster, you would us
 2. Write an associated SBATCH script for your job.
 3. Submit the script (i.e., your job) to the queue using `sbatch`.
 
+<!---
+
 _**The image below illustrates these different steps.**_
 
 ![Basic step-by-step guide on to use SLURM and MPICASA to run a CASA Script.](/assets/slurm-and-mpicasa.png)
 
+--->
+
 ## Write your CASA Script
 CASA scripts are written in Python. An entire pipeline can be written in such a script, that includes flagging, initial calibration and imaging.
 
-It is important to note that different CASA tasks use different schemes for parallelism, when writing your script. For example, `flagdata` parallelises by scan and is thus RAM intensive; `tclean` parallelises by frequency and is thus CPU intensive.
+It is important to note that different CASA tasks use different schemes for parallelism, when writing your script. For example, `flagdata` parallelises by scan and is thus RAM intensive; `tclean` splits up the input data to occupy as many processes are are specified, and is this CPU & RAM intensive.
 
 Therefore, a single script that includes flagging and imaging could have sub-optimal usage of a cluster resources for some tasks, and optimal usage for others. Keep this in mind when writing your script.
 
 
-    vis = 'blah'
+    vis = '/path/to/visibility.ms'
     var1 = 'something'
     var2 = 1e-3
     casatask(vis=vis,
@@ -50,12 +58,13 @@ Here’s an example of an SBATCH script that submits a TCLEAN job:
     #SBATCH --tasks-per-node 48
     #SBATCH -J tclean
     #SBATCH -m plane=8
-    #SBATCH -o casameer-batch-1530187312-tclean.sh.stdout.txt
-    #SBATCH -e casameer-batch-1530187312-tclean.sh.stderr.txt
-    #Run the application:
-    /idia/users/frank/casa-cluster/casa-prerelease-5.3.0-115.el7/bin/mpicasa /usr/bin/singularity exec ~/casameer.simg  "casa" --nologger --log2term --nogui -c tclean.py
+    #SBATCH -o /path/to/stdout.log
+    #SBATCH -e /path/to/stderr.log
 
-Please consult our documentation/wiki pages for more details on how software and containers are used on the IDIA Cloud.
+    #Run the application:
+    /path/to/casa-prerelease-5.3.0-115.el7/bin/mpicasa /usr/bin/singularity exec /path/to/casa/container.simg  "casa" --nologger --log2term --nogui -c tclean.py
+
+You can find more details on how to use Singularity on ilifu on [their website](https://docs.ilifu.ac.za/#/getting_started/container_environments).
 
 There are a few important SBATCH parameters to define:
 
@@ -88,7 +97,10 @@ __-m/--distribution__ : This controls how the tasks are allocated across the req
 
 Running CASA through SLURM requires calling CASA via `mpicasa`. CASA understands how to use `mpi` on tasks that are optimised for `mpi` (such as `flagdata`, `tclean`, `setjy`, and `applycal`) while operating as per usual on tasks that are not `mpi` aware (like `gaincal`). Ideally, the only change to an existing script would be to add a call to `partition` at the top. Below are some notes on tasks.
 
-__partition__: In order to run across a cluster the `partition` task needs to be called prior to running any other tasks. `partition`  [creates a multi-measurement set](https://casa.nrao.edu/casadocs/casa-5.4.1/uv-manipulation/data-partition) (MMS) that is a collection of multiple SUBMS's, each of which will be operated upon as a task in SLURM. By default CASA will split the MS along the spectral window (`spw`) axis, and across scans. The number of SUBMSes created can be specified in `partition`, however it seems that specifying a number larger than what CASA would decide leads to some strangeness with the metadata (and a failure of tasks that operate on the MMS).
+__partition__: In order to run tasks (except tclean) across a cluster, the `partition` task needs to be called prior to running any other tasks. `partition`  [creates a multi-measurement set](https://casa.nrao.edu/casadocs/casa-5.4.1/uv-manipulation/data-partition) (MMS) that is a collection of multiple SUBMS's, each of which will be operated upon as a task in SLURM. By default CASA will split the MS along the spectral window (`spw`) axis, and across scans. 
 
+<!--
+The number of SUBMSes created can be specified in `partition`, however it seems that specifying a number larger than what CASA would decide leads to some strangeness with the metadata (and a failure of tasks that operate on the MMS).
+-->
 
 __tclean__: In order to run across a cluster, `parallel=True` should be specified in `tclean`. However, if `savemodel='modelcolumn'` is also specified, it triggers some kind of a race condition between the different nodes where they are competing for write access, and the task crashes. So setting `savemodel='virtual'` or `savemodel='none'` are the only options that work. Both the `makePSF` step and the major cycles of deconvolution are openMP aware, and can exploit additional resources specified via `--cpus-per-task` in the SLURM `sbatch` file.
