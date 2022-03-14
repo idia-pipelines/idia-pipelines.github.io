@@ -245,7 +245,7 @@ please send an email to <a href="mailto:support@ilifu.ac.za">support@ilifu.ac.za
 
 <h1 id="available-containers">Available Containers</h1>
 <p>The most recent, stable versions of containers are available in <code class="highlighter-rouge">/idia/software/containers/</code>. Some
-of these containers can be accessed via the Jupyter-Hub, but all of them can be accessed via the
+of these containers can be accessed via JupyterHub, but all of them can be accessed via the
 terminal (i.e., once you’ve ssh’d into an IDIA machine).</p>
 
 <p>Here are a few examples of the latest stable Singularity container builds that are available in
@@ -254,15 +254,15 @@ terminal (i.e., once you’ve ssh’d into an IDIA machine).</p>
   <li><code class="highlighter-rouge">jupyter-casa-latest.simg</code>
     <ul>
       <li>Allows you to use CASA tasks via the Jupyter notebook. Note that visualisation tools like
-<code class="highlighter-rouge">plotms</code> or <code class="highlighter-rouge">viewer</code> will not work on the notebook.</li>
+<code class="highlighter-rouge">plotms</code> or <code class="highlighter-rouge">viewer</code> will not work on the notebook. This currently runs CASA v5.5.</li>
     </ul>
   </li>
-  <li><code class="highlighter-rouge">casa-stable-5.3.0.simg</code>
+  <li><code class="highlighter-rouge">casa-6.4.simg</code>
     <ul>
-      <li>Contains the CASA binaries for the 5.3.0. release.</li>
+      <li>Contains the modular CASA 6.4 install, which can be accessed via Python using <code class="highlighter-rouge">import casatools</code> etc.</li>
     </ul>
   </li>
-  <li><code class="highlighter-rouge">kern4.simg</code>
+  <li><code class="highlighter-rouge">kern7.simg</code>
     <ul>
       <li>Contains <em>all</em> the software packages provided by the <a href="http://kernsuite.info/">Kern</a> repository.</li>
     </ul>
