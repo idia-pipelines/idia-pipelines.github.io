@@ -12,10 +12,10 @@ This is the third release of the IDIA Pipelines `processMeerKAT` package, intend
 The current release adds the following functionality:
 
 * Implemented support self-calibration and imaging. Allows for configuration of multiple self-calibration loops, with customizable parameters per loop as well as an additional final imaging stage to generate science-ready images.
-* Support for outlier fields - It is now possible to specify an outlier threshold to identify and image bright sources outside the main field of view, which can improve image fidelity in some cases. 
+* Support for outlier fields - It is now possible to specify an outlier threshold to identify and image bright sources outside the main field of view, which can improve image fidelity in some cases.
 * Bugfixes and improvements to polarization calibration.
 * Support for loading modules on the ilifu SLURM cluster
-* Uses CASA 6.3, Python 3.8 and Singularity 3.9.1
+* Uses CASA 6.4, Python 3.8 and Singularity 3.9.1
 
 
 # Version 1.1

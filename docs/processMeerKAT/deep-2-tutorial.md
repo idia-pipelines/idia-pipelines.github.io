@@ -120,7 +120,7 @@ By default, for this particular MS, for all threadsafe scripts (i.e. those with 
 
 For scripts that aren't threadsafe (i.e. those with `False` in the list(s) of scripts), we use a single node, and a single task per node. For the majority scripts that are threadsafe and those that aren't, we use a single CPU per task, and explicitly `export OMP_NUM_THREADS=1`, since there is no documentation or evidence of a speedup with more than one CPU per task. However, for `partition.py` we use between 2-4 CPUs per task (equal to the number of polarisations, which is 2 by default, but 4 if `[-D --dopol]` is used, which adds the `xy_yx_solve.py` or `xy_yx_apply.py` scripts to the `scripts` parameter in your config). Furthermore, `quick_tclean.py` will use as many CPUs as it can without exceeding 32 in total.
 
-The cross-calibration parameters in section `[crosscal]` correspond to various CASA parameters passed into the calibration tasks that the pipeline uses, following an algorithm that is documented [here](/docs/processMeerKAT/calibration-in-processmeerkat). By default all frequency ranges listed in `badfreqranges`, and all antenna numbers listed in `badants`, will be flagged out entirely. If the `calc_refant.py` script is run by the pipeline (i.e. when `calcrefant=True` and `calc_refant.py` is in the list of scripts), this will likely change the value of `refant`, and possibly add a list of bad antennas to `badants`.
+The cross-calibration parameters in section `[crosscal]` correspond to various CASA parameters passed into the calibration tasks that the pipeline uses, following an algorithm that is documented [here](/docs/processMeerKAT/cross-calibration-in-processmeerkat). By default all frequency ranges listed in `badfreqranges`, and all antenna numbers listed in `badants`, will be flagged out entirely. If the `calc_refant.py` script is run by the pipeline (i.e. when `calcrefant=True` and `calc_refant.py` is in the list of scripts), this will likely change the value of `refant`, and possibly add a list of bad antennas to `badants`.
 
 ##### 4. Edit your config file to set `nspw=1, mem=5GB, postcal_scripts=[]` and then run the pipeline using your config file
 
@@ -394,7 +394,7 @@ Run ./cleanup.sh to remove MSs/MMSs from this directory (after pipeline has run)
 
 As before, we see the sbatch files being written to our working directory. Since we set `submit=True`, `submit_pipeline.sh` has been run, and all output after that (without the timestamps) comes from this bash script. After the first job is run (`sbatch flag_round_1.sbatch`), each other job is run with a dependency on all previous jobs (e.g. `sbatch -d afterok:1491808,1491809,1491810 --kill-on-invalid-dep=yes xx_yy_apply.sbatch`). We can see this by calling `squeue -u your_username`, which shows those jobs `(Dependency)`. `submit_pipeline.sh` then writes five job scripts, all of which are explained in the output, written to the `jobScripts` directory with a timestamp appended to the filename, and symlinked from your working directory. `findErrors.sh` finds errors after this pipeline run has completed, ignoring all MPI errors.
 
-These tasks follow the first step of a two-step calibration process that is summarised [here](/docs/processMeerKAT/calibration-in-processmeerkat).
+These tasks follow the first step of a two-step calibration process that is summarised [here](/docs/processMeerKAT/cross-calibration-in-processmeerkat).
 
 ##### 13. Run `./summary.sh`
 
@@ -564,7 +564,7 @@ Wait until the run finishes before step 22. You may want to come back later, as 
 
 After this pipeline run has completed, viewing the output of `./summary.sh` or `./displayTimes.sh` shows this run took ~45 minutes, including ~20 minutes for quick-look imaging all fields, and ~14 minutes for plotting (a [known issue](/docs/processMeerKAT/Release-Notes#known-issues)).
 
-These new tasks follow the second step of a two step calibration process that is summarised on [this page](/docs/processMeerKAT/calibration-in-processmeerkat).
+These new tasks follow the second step of a two step calibration process that is summarised on [this page](/docs/processMeerKAT/cross-calibration-in-processmeerkat).
 
 After `split.py` has run, you will see four new files
 
@@ -619,7 +619,7 @@ The last script that runs is `plot_solutions.py`, which calls CASA task `plotms`
 
 ### Also see
 
-- [Calibration in processMeerKAT](/docs/processMeerKAT/calibration-in-processmeerkat)
+- [Calibration in processMeerKAT](/docs/processMeerKAT/cross-calibration-in-processmeerkat)
 - [Diagnosing Errors](/docs/processMeerKAT/Diagnosing-Errors)
 - [Using the pipeline](/docs/processMeerKAT/using-the-pipeline)
 - [Release Notes](/docs/processMeerKAT/Release-Notes)

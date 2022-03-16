@@ -7,7 +7,7 @@ nav_order: 4
 
 # Calibration
 
-Our algorithmic approach toward calibration in the pipeline can be found [here](/docs/processMeerKAT/calibration-in-processmeerkat).
+Our algorithmic approach toward calibration in the pipeline can be found [here](/docs/processMeerKAT/cross-calibration-in-processmeerkat).
 
 ### Stokes I Calibration (Continuum)
 
