@@ -127,7 +127,7 @@
                   
                     <li class="navigation-list-item  active">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/calibration-in-processmeerkat/" class="navigation-list-link active">Cross-calibration in processMeerKAT</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/cross-calibration-in-processmeerkat/" class="navigation-list-link active">Cross-calibration in processMeerKAT</a>
                       
                     </li>
                   
@@ -135,7 +135,7 @@
                   
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/selfcalibration-in-processmeerkat/" class="navigation-list-link">Self-calibration in processMeerKAT</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/self-calibration-in-processmeerkat/" class="navigation-list-link">Self-calibration in processMeerKAT</a>
                       
                     </li>
                   
@@ -318,15 +318,17 @@ much flatter allowing a median-filtering approach such as <code class="highlight
 much more effectively. The thresholds are lower than the first round as the data
 is now calibrated, and therefore more well behaved. calibrated data.</p>
 
-<p><strong>Cross hand calibration</strong> : The cross hand calibration recipe broadly follows
-the CASA guide for <a href="https://casa.nrao.edu/casadocs/casa-5.4.1/synthesis-calibration/instrumental-polarization-calibration">polarisation calibration in the linear
-basis</a>.
-A new set of bandpass, delay and parallel hand gains are computed. Using the
-CASA helper routine <code class="highlighter-rouge">qufromgain</code>, the Q and U values of the secondary calibrator
-are computed, and are then used to solve for the frequency dependent leakages
-and XY calibration (<em>i.e.,</em> “Df” and “XYf” calibration in <code class="highlighter-rouge">polcal</code> and <code class="highlighter-rouge">gaincal</code>
-respectively). The fluxes are then bootstrapped from the primary calibrator to
-the other fields specified in the config file.</p>
+<p><strong>Cross hand calibration</strong> : The cross-hand calibration (necessary for
+polarization observations) utilizes the unpolarized primary to solve for the
+leakages, and the polarization calibrator to solve for the XY phase. The
+pipeline uses the published <a href="https://iopscience.iop.org/article/10.1088/0067-0049/206/2/16/meta">full Stokes
+models</a> as
+an input to solve for the XY phase. This approach requires only a single scan
+on the polarization calibrator. At the time of writing (April 2022) the
+standard polarization calibrators are all in the Northern hemisphere, and hence
+most MeerKAT observations are only able to have a single (or two) scans on the
+calibrator source, and our approach ensures sensible polarization results with
+such constraints.</p>
 
 <p><strong>Splitting out calibrated data</strong> : Finally each field in the MMS (whether calibrator or target) is split
 out and optionally averaged in time and frequency. If multiple SPWs are specified, this process is
@@ -363,36 +365,32 @@ identically across each SPW specified in the config file.</p>
 
 <p>The cross-hand calibration performs the following steps:</p>
 <ul>
-  <li>Delay calibration (the K term), time averaged, parallel hand</li>
-  <li>Bandpass calibration (the B term), time averaged, parallel hand</li>
-  <li>Cross hand delay calibration (the KCROSS term), time averaged, cross hand</li>
+  <li>Bandpass calibration on the primary calibrator</li>
+  <li>Leakage calibration on the unpolarized primary calibrator (typically one of either J1939-6342 or J0408-6545)</li>
+  <li>Gain calibration (using gaintype=’T’ in CASA) on the primary, secondary and polarization calibrators</li>
+  <li>XY Phase calibration on the polarization calibrator</li>
 </ul>
 
-<p>after the cross-hand delay calibration is performed, we iterate over calculating
-the time dependent gains. Initially the time-dependent gains are calculated for
-the primary and secondary calibrators, as a function of time and parallactic
-angle. The polarisation properties of the secondary are assumed to be unknown,
-and are determined from the gain variation as a function of parallactic angle.
-This is fit for by the <code class="highlighter-rouge">qufromgain</code> task, which is contained in <code class="highlighter-rouge">almapolhelpers</code>
-and can be accessed in CASA by</p>
+<p>We opt to use gaintype=’T’ in the CASA <code class="highlighter-rouge">gaincal</code> task since it preserves the
+relative gains of the X &amp; Y feeds. This is important because in the case of the
+secondary and polarization calibrators, the Stokes Q power of the source is
+retained in the difference of the XX and YY correlations, and correcting for
+each correlation independently without accounting for the source polarization
+will reduce the Stokes Q signal to 0 since any relative change between the two
+will be assumed to be due to instrumental effects.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  from almapolhelpers import *
-</code></pre></div></div>
-
-<p>This imports several helper tasks that are meant to solve ALMA polarisation, but
-are general enough to work with any telescope that has linear feeds. From CASA
-5.5 onwards some of these helper tasks have found their way into the regular
-CASA tasks such as <code class="highlighter-rouge">polcal</code> and <code class="highlighter-rouge">gaincal</code>.</p>
-
-<p>Once the fractional Q and U values are determined for the phase calibrator, the
-gain solutions are recomputed with the fractional polarisation as an input, in
-theory resulting in more accurate gain solutions. This is followed by a call to
-<code class="highlighter-rouge">xyamb</code>, also within <code class="highlighter-rouge">almapolhelpers</code> that breaks the ambiguity in the X-Y
-phases for the solutions generated by <code class="highlighter-rouge">qufromgain</code>. These can be cross-checked
-with the solutions obtained by running <code class="highlighter-rouge">gaincal</code> with <code class="highlighter-rouge">gaintype='XYf+QU</code> which
-solves for the X-Y phase as a function of frequency, assuming an unknown source
-Q, U value. Finally we run <code class="highlighter-rouge">polcal</code> in the <code class="highlighter-rouge">Df</code> mode in order to calculate the
-polarisation leakage (the D term) as a function of frequency (f).</p>
+<p>While in principle during the <code class="highlighter-rouge">setjy</code> step we set the full Stokes model of the
+polarization calibrator, we find that the CASA <code class="highlighter-rouge">gaincal</code> task does not reliably
+pick this model up while calibrating with <code class="highlighter-rouge">gaintype='G'</code>. However the
+<code class="highlighter-rouge">gaintype='XYf+QU'</code> mode does recognize the input model and yields sensible XY
+phase solutions. Please note that after XY phase solutions the resulting
+calibration solutions could still contain an arbitrary polarization angle
+offset corresponding to a feed offset. This offset can be measured by
+generating cubes of the polarization calibrator, and any measured offsets can
+be corrected for in the image domain or by modifying the calibration tables
+directly. At this time the pipeline does not support either of these
+operations, and it will have to be done by the user after the pipeline has
+completed.</p>
 
 
           

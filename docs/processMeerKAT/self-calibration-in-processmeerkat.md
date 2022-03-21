@@ -2,8 +2,8 @@
 layout: default
 title: Self-calibration in processMeerKAT
 parent: processMeerKAT
-nav_order: 7
--
+nav_order: 8
+---
 
 processMeerKAT implements the imaging & self-calibration loop using a
 combination of [CASA](https://casadocs.readthedocs.io/en/stable/) for imaging

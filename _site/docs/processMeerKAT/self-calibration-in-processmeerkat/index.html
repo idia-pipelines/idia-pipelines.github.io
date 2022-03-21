@@ -127,7 +127,7 @@
                   
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/calibration-in-processmeerkat/" class="navigation-list-link">Cross-calibration in processMeerKAT</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/cross-calibration-in-processmeerkat/" class="navigation-list-link">Cross-calibration in processMeerKAT</a>
                       
                     </li>
                   
@@ -135,7 +135,7 @@
                   
                     <li class="navigation-list-item  active">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/selfcalibration-in-processmeerkat/" class="navigation-list-link active">Self-calibration in processMeerKAT</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/self-calibration-in-processmeerkat/" class="navigation-list-link active">Self-calibration in processMeerKAT</a>
                       
                     </li>
                   
@@ -262,7 +262,7 @@ refine the mask.</p>
 
 <p>By default, no gain calibration is performed after the first blind deconvolution
 (although this is configurable), and the desired type of gain calibration can be
-specified (phase-only, amplitude &amp; phase etc.) per loop.</p>
+specified (phase-only, amplitude &amp; phase, etc.) per loop.</p>
 
 <p>The configuration options are intended to be as flexible as possible, with
 sensible defaults. Some configuration options can be specified per loop, and
@@ -407,6 +407,46 @@ algorithm for determining and imaging outliers is explained in much more
 detail in the next section.</p>
   </li>
 </ul>
+
+<!-- `rmsmap` and `mask` will be copied. -->
+
+<h2 id="outlier-imaging">Outlier Imaging</h2>
+
+<p>An optional part of the self-calibration routine within processMeerKAT is the outlier imaging. Within this mode, we utilise the <a href="https://casa.nrao.edu/Release3.3.0/docs/UserMan/UserMansu280.html"><code class="highlighter-rouge">outlierfile</code> parameter</a> within CASA’s <code class="highlighter-rouge">tclean</code> task, which allows the positions of strong off-axis outliers to be specified, along with a number of other imaging parameters, as outlined below. Within this routine, CASA phase-rotates to the specified position, enabling a small image to be created that is centred on the source, without the need for W-projection.</p>
+
+<p>The motivation for including outlier imaging within processMeerKAT is to produce images equivalent in quality to much larger images (e.g. 10x10k pixels), with the strong sources far off axis being deconvolved, without the need for computational-heavy and long-running imaging over such a large area. However, an additional benefit is being able to specify precise positions of the outliers, centred within a pixel, with higher sampling of the beam over many smaller pixels, giving improved deconvolution that is not restricted by the pixel grid of the main image. For instance, without outliers, one may image 10,240 x 10,240 pixels with 1024 W-projection planes, deconvolving all the sources within the field of view, taking 10s of hours and lots of RAM to create an image. With outlier imaging, one could image 6144 x 6144 pixels with 512 W-projection planes within a few to several hours and with less RAM, and the few outliers above your threshold and beyond your main imaging area are deconvolved and included in your model for self-calbiration.</p>
+
+<!-- It may even be possible to image sources within the main imaging area, but this mode isn't currently enabled, and needs to be verified. -->
+<p><!-- An additional benefit is the ability to increase taylor terms to more accurately model spectral curvature of bright outliers, although this 'mixing of taylor terms' between the main image and outliers needs to be verified and is therefore disabled by default. --></p>
+
+<p>In order to construct a local sky model, from which outliers can be selected according to the specified threshold, we make use of the <a href="https://research.csiro.au/racs/home/survey/">Rapid ASKAP Continuum Survey (RACS)</a>. Durning the <code class="highlighter-rouge">[-R --run]</code> step, we query the online RACS catalogue for all sources (in and away from the galactic plane) within 2 degrees of the image’s phase centre, written to <code class="highlighter-rouge">RACS_local.fits</code>, and select the sources above your threshold, written as an outlierfile to <code class="highlighter-rouge">outliers.txt</code>. We then select sources from this list that are outside the inner 99% of your main imaging region (i.e. include as outliers any sources within the outer 1% and beyond) for each selfcal loop, written to <code class="highlighter-rouge">outliers_loop0.txt</code>, <code class="highlighter-rouge">outliers_loop1.txt</code>, etc. This is performed separately for each loop since the image size may change between loops. Each outlierfile is passed into the <code class="highlighter-rouge">tclean</code> call for that loop, including <code class="highlighter-rouge">selfcal_part2</code>, in which the image (including outliers) is used to predict to the <code class="highlighter-rouge">MODEL_DATA</code> column, used for subsequest self-calibration.</p>
+
+<p><strong>Also write about selecting point sources, once that is done.</strong></p>
+
+<p>During each selfcal loop, the mask and position are updated based on the output from running PyBSF. A mask is contructed corresponding to the island boundaries, the same as is done for the main image. The position is taken from the resulting PyBDSF catalogue, corresponding to the source that is closest to the previous position, which is often the only source found within the small image. If no source is found, the previous position is used. However, this would indicate that you have not detected an outlier at that position, which will prove problematic for further imaging and self-calibration.</p>
+
+<p>We recommend having fewer than ~10 outliers, since the overhead in run-time caused by imaging outliers outweighs any improvement in run-time caused by creating a smaller main image with fewer W-projection planes. When the <code class="highlighter-rouge">[-R --run]</code> step is performed, a warning will be displayed when the number of outliers exceeds 10 sources, in which case, a good compromose may be a larger image with fewer outliers, or a higher outlier threshold.</p>
+
+<p>Outlier imaging is disabled by default, but can be enabled by setting a value for the <code class="highlighter-rouge">outlier_threshold</code> parameter in the <code class="highlighter-rouge">[selfcal]</code> section of your config file. Similar to the <code class="highlighter-rouge">threshold</code> parameter, this is considered a S/N value if it’s greater than 1, or otherwise in Jy units. A good default is 0.5, which selects all sources above 0.5 Jy that are outside the your main image area. When a S/N value is used, the threshold corresponds to the value given by the integrated flux density divided by its uncertainty, taken from the RACS catalogue.</p>
+
+<p>For each outlier within your <code class="highlighter-rouge">outlierfile</code>, by default, we set a 128x128 imsize, 1 arcsec cell sizes, and the standard gridder, leaving all other options identical to what is specified for the main image (some of which is set in your config file). However, as specified in the CASA docs, the following parameters are fully configurable within your <code class="highlighter-rouge">outlierfile</code>:</p>
+
+<!-- a number of taylor terms matched to your config (2 by default), -->
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>imagename, imsize, cell, phasecenter, startmodel, mask, specmode, nchan, start, width, nterms, reffreq, gridder, deconvolver, wprojplanes
+</code></pre></div></div>
+
+<p>If you wish to use non-default values, including searching for a local sky model over a different radius comapred to 2 degrees, you can do this by <a href="/docs/processMeerKAT/using-the-pipeline#inserting-your-own-scripts">editing the selfcal_part2 script</a>.</p>
+
+<p>Similarly, outlier imaging can be performed during the science imaging step of prcessMeerKAT, by passing an outlier file into the <code class="highlighter-rouge">outlierfile</code> parameter from the <code class="highlighter-rouge">[imaging]</code> section of your config file. If this section exists (enabled during the build step with <code class="highlighter-rouge">processMeerKAT.py -B -I</code>), the outlier file from your last self-calibration loop will be copied to the <code class="highlighter-rouge">outlierfile</code> parameter, in the same way that <code class="highlighter-rouge">rmsmap</code> and <code class="highlighter-rouge">mask</code> from your last selfcal loop are copied to this section, enabling S/N-based thresholding and masked deconvolution, respectively.</p>
+
+<h3 id="known-issues">Known Issues</h3>
+
+<p>During outlier imaging, the resolution of the output data products, from both the outliers and main image, including the PSF, is observed to be broader, from an apparent difference in weighting. This may be due to the local PSF being worse at the far-off-axis position of the outlier, where it is more severely affected by bandwidth and time smearing, compared to the centre of the image. At its extreme, this effect significantly worsens the quality of the output images, which we speculate is due to CASA attempting to match the PSF of the main image to that of the worst outlier.
+<!-- as the weighting moves closer to natural weighting. -->
+<!-- (high positive Briggs robust weightings) --></p>
+
+<p><strong>Write about outliers for which no PyBDSF source is detected, if it remains a problem after selecting only point sources.</strong></p>
 
 
           
