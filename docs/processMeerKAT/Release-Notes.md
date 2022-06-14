@@ -7,15 +7,15 @@ nav_order: 2
 
 # Version 2.0
 
-This is the third release of the IDIA Pipelines `processMeerKAT` package, intended for use on the [ilifu](https://docs.ilifu.ac.za/#/) SLURM cluster. The software uses a parallelized implementation of [CASA 6](https://casadocs.readthedocs.io/en/stable/) to calibrate and image interferometric (imaging) data from the MeerKAT telescope.
+This is the third release of the IDIA Pipelines `processMeerKAT` package, intended for use on the [ilifu](https://docs.ilifu.ac.za/#/) SLURM cluster. The software uses a parallelised implementation of [CASA 6](https://casadocs.readthedocs.io/en/stable/) to calibrate and image interferometric (imaging) data from the MeerKAT telescope.
 
 The current release adds the following functionality:
 
-* Implemented support self-calibration and imaging. Allows for configuration of multiple self-calibration loops, with customizable parameters per loop as well as an additional final imaging stage to generate science-ready images.
-* Support for outlier fields - It is now possible to specify an outlier threshold to identify and image bright sources outside the main field of view, which can improve image fidelity in some cases.
-* Bugfixes and improvements to polarization calibration.
+* **Implemented self-calibration and imaging**: this allows for configuration of multiple self-calibration loops, with customisable parameters per loop, as well as an additional final imaging stage to generate science-ready images.
+* **Support for outlier fields**: it is now possible to specify an outlier threshold to identify and image bright sources outside the main field of view, which improves the run-time of imaging, and can improve image fidelity in some cases.
+* Bugfixes and improvements to polarisation calibration.
 * Support for loading modules on the ilifu SLURM cluster
-* Uses CASA 6.4, Python 3.8 and Singularity 3.9.1
+* Uses CASA 6.X, Python 3.8, OpenMPI 4.0.3, and Singularity 3.9.1
 
 
 # Version 1.1

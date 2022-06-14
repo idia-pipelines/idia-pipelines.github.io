@@ -70,12 +70,4 @@ In rare cases, a primary calibrator may be close enough to the target(s) that on
 
 ### Multiple calibrator field IDs
 
-Multiple field IDs can be specified by writing a comma-separated list to your config file. However, this use case is not supported, since tasks such as `setjy` and `qufromgain` cannot handle this.
-
-# Restarting or Using Part of the Pipeline
-
-There are a few steps within the pipeline that only need to be run once for a given dataset. For datasets that have already been through the default pipeline, the reference antenna and list of bad antennas would have been calculated, and can be found in `logs/calc_refant-*.err`. These can be written in your new config file, where you also set `calcrefant=False`.
-
-More generally, users can run any selected parts of the pipeline by editing the `scripts` argument or passing scripts in via the command-line arguments (see [Using the Pipeline](/docs/processMeerKAT/using-the-pipeline#inserting-your-own-scripts)).
-
-The pipeline is not designed to run twice within the same directory, since CASA will complain the files already exist. The pipeline can be killed and re-run from the start at any point, but care should also be taken to ensure the data are not corrupted (e.g. during flagging or solving).
+Multiple field IDs can be specified by writing a comma-separated list to your config file. However, this use case is not supported, since tasks such as `setjy` cannot handle this.

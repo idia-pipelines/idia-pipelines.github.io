@@ -184,4 +184,6 @@ During outlier imaging, the resolution of the output data products, from both th
 <!-- as the weighting moves closer to natural weighting. -->
 <!-- (high positive Briggs robust weightings) -->
 
+CASA contains a bug such that `Stokes='IQUV'` cannot be specified during outlier imaging, but only `Stokes='I'` can be specified.
+
 **Write about outliers for which no PyBDSF source is detected, if it remains a problem after selecting only point sources.**

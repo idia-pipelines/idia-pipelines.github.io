@@ -5,7 +5,7 @@ parent: processMeerKAT
 nav_order: 7
 ---
 
-![processMeerKAT_flowchart](/assets/processMeerKAT.png)
+![processMeerKAT_flowchart](/assets/processMeerKAT.pdf)
 
 processMeerKAT implements a CASA based wide-band full Stokes calibration
 pipeline (in the linear basis). Broadly, the pipeline aims to "do the right
@@ -19,7 +19,7 @@ and SLURM) and sections that must be run in serial.
 *New in Version 1.1* : The MeerKAT band can now be optionally separated out
 into multiple spectral windows (SPWs) which are processed in parallel. Each SPW
 is processed simultaneously (assuming there are a sufficient number of free
-nodes on the cluster) bringing down the total runtime to $\sim T_{obs}/2.$. The
+nodes on the cluster) bringing down the total runtime to <img src="https://latex.codecogs.com/gif.latex?s=\text{$\sim T_{obs}/2$}" />. The
 steps outlined below are run per-SPW. If this option is turned off, these steps
 are run over the entire band.
 
