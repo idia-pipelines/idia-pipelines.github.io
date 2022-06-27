@@ -2,7 +2,7 @@
 layout: default
 title: LICENSE
 parent: processMeerKAT
-nav_order: 12
+nav_order: 13
 ---
 <pre>
                     GNU GENERAL PUBLIC LICENSE

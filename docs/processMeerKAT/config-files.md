@@ -1,11 +1,11 @@
 ---
 layout: default
-title: config files
+title: Configuration Files
 parent: processMeerKAT
-nav_order: 9
+nav_order: 10
 ---
 
-# Config files
+# Configuration files
 
 The config file is where you set parameters affecting how you run the pipeline. The default config contains the following:
 
@@ -97,7 +97,7 @@ discard_nloops = 0                # Discard this many selfcal solutions (e.g. fr
 outlier_threshold = 0.0           # S/N values if >= 1.0, otherwise Jy
 ```
 
-If you're also performing science imaging (option `[-I --science_image]` - see [here](/docs/processMeerKAT/self-calibration-in-processmeerkat)), the default config will also conatin the `[image]` section:
+If you're also performing science imaging (option `[-I --science_image]` - see [here](/docs/processMeerKAT/science-imaging-in-processmeerkat)), the default config will also conatin the `[image]` section:
 
 ```
 [image]

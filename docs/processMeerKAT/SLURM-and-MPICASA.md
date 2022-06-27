@@ -2,7 +2,7 @@
 layout: default
 title: SLURM and MPICASA
 parent: processMeerKAT
-nav_order: 11
+nav_order: 12
 ---
 
 # Parallel CASA Using SLURM at IDIA
