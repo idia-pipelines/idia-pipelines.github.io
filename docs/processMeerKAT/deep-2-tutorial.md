@@ -2,12 +2,12 @@
 layout: default
 title: DEEP 2 Tutorial
 parent: processMeerKAT
-nav_order: 6
+nav_order: 10
 ---
 
 # DEEP 2 Tutorial
 
-### This tutorial walks you through running the various steps of the pipeline for a single DEEP 2 dataset, which is a snapshot (~20 minutes on source), 16-dish MeerKAT observation of a radio-quiet patch of sky using the old ROACH-2 correlator, 11 GB in size. It was written for v1.1 of the pipeline during July 2020.
+### This tutorial walks you through running the various steps of the pipeline for a single DEEP 2 dataset, which is a snapshot (~20 minutes on source), 16-dish MeerKAT observation of a radio-quiet patch of sky using the old ROACH-2 correlator, 11 GB in size. It was written for [v1.0](/docs/processMeerKAT/release-notes#version-10) of the pipeline during July 2020, but can be reproduced with [v1.1](/docs/processMeerKAT/release-notes#version-11) upwards by setting `nspw=1`.
 
 To begin, ssh into the ilifu cluster (`slurm.ilifu.ac.za`), and create a working directory somewhere on the filesystem (e.g. `/scratch/users/your_username/tutorial/`).
 
@@ -53,7 +53,7 @@ You should get the following output, with different timestamps
 
 This calls CASA via the default singularity container without writing log files, and runs `read_ms.py`. It calls `srun`, requesting only 1 node, 1 task, 4 GB of memory, a 10 minute time limit, with interactive quality of service (qos) to increase the likelihood of launching `srun` immediately. The purpose of this call is to read the input MS and extract information used to build the pipeline run, such as the field IDs corresponding to our different fields, and the number of scans (to check against the nodes and tasks per node, each of which is handled by a MPI worker - see [step 3](#3-view-the-config-file-created-which-has-the-following-contents)). The output statements with `DEBUG` correspond to those output during `[-v --verbose]` mode. Warnings are display when multiple calibrator fields are present with the same intent, but only one is extracted, corresponding to the field with the most scans. In this case the extras fields are moved to `extrafields` (i.e. for applying calibration and imaging).
 
-*For more information about MPI and parallelism, see ilifu training [slides](http://www.ilifu.ac.za/sites/default/files/image_tool/images/492/training/JCollier_2020_advanced.pdf) (slides 12-16) and [video](https://www.youtube.com/watch?v=4I5p983cehk&t=1711s).*
+*For more information about MPI and parallelism, see ilifu training [slides](https://docs.ilifu.ac.za/training/2020/ilifu_training_advanced_1_20200422_presentation_1.pdf) (slides 12-16) and [video](https://www.youtube.com/watch?v=4I5p983cehk&t=1711s).*
 
 ##### 3. View the config file created, which has the following contents:
 
@@ -112,7 +112,7 @@ dopol = False
 
 This config file contains five sections - data, fields, slurm, crosscal, and run. The fields IDs that we just extracted, seen in section `[fields]`, correspond to field 0 for the bandpass calibrator, field 0 for the total flux calibrator, field 2 for the phase calibrator, fields 3 for the science target (i.e. the DEEP 2 field) and field 1 for an extra calibrator field for which we'll apply solutions and produce a quick-look image. Only the target and extra fields may have multiple fields, separated by a comma. If a field isn't found according to its intent, a warning is displayed, and the field for the total flux calibrator is selected. If the total flux calibrator isn't present, the program will display an error and terminate. The `[run]` section is used internally by the pipeline, and should be ignored.
 
-The SLURM parameters in section `[slurm]` correspond to those seen by running `processMeerKAT.py -h`. The pipeline executes all the scripts from the `scripts` parameter in order, including any of your own that you can insert (see [Using the Pipeline](/docs/processMeerKAT/using-the-pipeline#inserting-your-own-scripts)). The `precal_scripts` and `postcal_scripts` are only relevant when `nspw` > 1 (the default is `nspw=16`), where as we will set `nspw=1` for this tutorial, meaning that in the next step, the scripts in `precal_scripts` will be prepended to the beginning of `scripts`, and the scripts in `postcal_scripts` will be appended to the end of `scripts`.
+The SLURM parameters in section `[slurm]` correspond to those seen by running `processMeerKAT.py -h`. The pipeline executes all the scripts from the `scripts` parameter in order, including any of your own that you can insert (see [Advanced Usage](/docs/processMeerKAT/advanced-usage#inserting-your-own-scripts)). The `precal_scripts` and `postcal_scripts` are only relevant when `nspw` > 1 (the default is `nspw=16`), where as we will set `nspw=1` for this tutorial, meaning that in the next step, the scripts in `precal_scripts` will be prepended to the beginning of `scripts`, and the scripts in `postcal_scripts` will be appended to the end of `scripts`.
 
 <!-- See the [MIGHTEE tutorial](link-TBD) when using `nspw` > 1. -->
 
@@ -120,7 +120,7 @@ By default, for this particular MS, for all threadsafe scripts (i.e. those with 
 
 For scripts that aren't threadsafe (i.e. those with `False` in the list(s) of scripts), we use a single node, and a single task per node. For the majority scripts that are threadsafe and those that aren't, we use a single CPU per task, and explicitly `export OMP_NUM_THREADS=1`, since there is no documentation or evidence of a speedup with more than one CPU per task. However, for `partition.py` we use between 2-4 CPUs per task (equal to the number of polarisations, which is 2 by default, but 4 if `[-D --dopol]` is used, which adds the `xy_yx_solve.py` or `xy_yx_apply.py` scripts to the `scripts` parameter in your config). Furthermore, `quick_tclean.py` will use as many CPUs as it can without exceeding 32 in total.
 
-The cross-calibration parameters in section `[crosscal]` correspond to various CASA parameters passed into the calibration tasks that the pipeline uses, following an algorithm that is documented [here](/docs/processMeerKAT/calibration-in-processmeerkat). By default all frequency ranges listed in `badfreqranges`, and all antenna numbers listed in `badants`, will be flagged out entirely. If the `calc_refant.py` script is run by the pipeline (i.e. when `calcrefant=True` and `calc_refant.py` is in the list of scripts), this will likely change the value of `refant`, and possibly add a list of bad antennas to `badants`.
+The cross-calibration parameters in section `[crosscal]` correspond to various CASA parameters passed into the calibration tasks that the pipeline uses, following an algorithm that is documented [here](/docs/processMeerKAT/cross-calibration-in-processmeerkat). By default all frequency ranges listed in `badfreqranges`, and all antenna numbers listed in `badants`, will be flagged out entirely. If the `calc_refant.py` script is run by the pipeline (i.e. when `calcrefant=True` and `calc_refant.py` is in the list of scripts), this will likely change the value of `refant`, and possibly add a list of bad antennas to `badants`.
 
 ##### 4. Edit your config file to set `nspw=1, mem=5GB, postcal_scripts=[]` and then run the pipeline using your config file
 
@@ -193,7 +193,7 @@ You will see something similar to the following, with other people's jobs mixed 
 
 We can see the job with name `validate` was submitted to SLURM worker node 121, amongst a number of jobs in the Main partition, the Jupyter Spawner partition, and possible other partitions. Your job may list `(Priority)`, which means it is too low a priority to be run at this point, or `(Resources)`, which means it is waiting for resources to be made available.
 
-*NOTE: You can view just your jobs with `squeue -u your_username`, an individual job with `squeue -j 1491583`, and just the jobs in the main partition with `squeue -p Main`. You can view which nodes are allocated, which are idle, which are mixed (i.e. partially allocated), and which are down in the Main partition with `sinfo -p Main`. Often it is good idea to check this before selecting your SLURM parameters. More more information, see the [ilifu documentation](http://docs.ilifu.ac.za/#/tech_docs/running_jobs?id=_4-specifying-resources-when-running-jobs-on-slurm)*
+*NOTE: You can view just your jobs with `squeue -u your_username`, an individual job with `squeue -j 1491583`, and just the jobs in the main partition with `squeue -p Main`. You can view which nodes are allocated, which are idle, which are mixed (i.e. partially allocated), and which are down in the Main partition with `sinfo -p Main`. Often it is good idea to check this before selecting your SLURM parameters. More more information, see the [ilifu documentation](http://docs.ilifu.ac.za/#/tech_docs/running_jobs?id=specifying-resources-when-running-jobs-on-slurm)*
 
 
 ##### 8. View `partition.sbatch`, which has the following contents:
@@ -394,7 +394,7 @@ Run ./cleanup.sh to remove MSs/MMSs from this directory (after pipeline has run)
 
 As before, we see the sbatch files being written to our working directory. Since we set `submit=True`, `submit_pipeline.sh` has been run, and all output after that (without the timestamps) comes from this bash script. After the first job is run (`sbatch flag_round_1.sbatch`), each other job is run with a dependency on all previous jobs (e.g. `sbatch -d afterok:1491808,1491809,1491810 --kill-on-invalid-dep=yes xx_yy_apply.sbatch`). We can see this by calling `squeue -u your_username`, which shows those jobs `(Dependency)`. `submit_pipeline.sh` then writes five job scripts, all of which are explained in the output, written to the `jobScripts` directory with a timestamp appended to the filename, and symlinked from your working directory. `findErrors.sh` finds errors after this pipeline run has completed, ignoring all MPI errors.
 
-These tasks follow the first step of a two-step calibration process that is summarised [here](/docs/processMeerKAT/calibration-in-processmeerkat).
+These tasks follow the first step of a two-step calibration process that is summarised [here](/docs/processMeerKAT/cross-calibration-in-processmeerkat).
 
 ##### 13. Run `./summary.sh`
 
@@ -564,7 +564,7 @@ Wait until the run finishes before step 22. You may want to come back later, as 
 
 After this pipeline run has completed, viewing the output of `./summary.sh` or `./displayTimes.sh` shows this run took ~45 minutes, including ~20 minutes for quick-look imaging all fields, and ~14 minutes for plotting (a [known issue](/docs/processMeerKAT/Release-Notes#known-issues)).
 
-These new tasks follow the second step of a two step calibration process that is summarised on [this page](/docs/processMeerKAT/calibration-in-processmeerkat).
+These new tasks follow the second step of a two step calibration process that is summarised on [this page](/docs/processMeerKAT/cross-calibration-in-processmeerkat).
 
 After `split.py` has run, you will see four new files
 
@@ -584,7 +584,7 @@ srun --mem=1GB --time=1 /carta_share/hdf_convert/run_hdf_converter -o /carta_sha
 
 Connect to [https://carta.idia.ac.za/](https://carta.idia.ac.za/), and open `1491550051.880.0~1680.0MHz_DEEP_2_off.im.hdf5`.
 
-Alternatively, you can view the images by connecting to a compute/worker node (ensure you use `ssh -YA` when connecting to ilifu - see [ilifu docs](http://docs.ilifu.ac.za/#/tech_docs/running_jobs?id=_32-interactive-session-with-x11-support)) with:
+Alternatively, you can view the images by connecting to a compute/worker node (ensure you use `ssh -YA` when connecting to ilifu - see [ilifu docs](http://docs.ilifu.ac.za/#/tech_docs/running_jobs?id=interactive-session-with-x11-support)) with:
 
 ```
 salloc --qos qos-interactive
@@ -619,7 +619,7 @@ The last script that runs is `plot_solutions.py`, which calls CASA task `plotms`
 
 ### Also see
 
-- [Calibration in processMeerKAT](/docs/processMeerKAT/calibration-in-processmeerkat)
+- [Calibration in processMeerKAT](/docs/processMeerKAT/cross-calibration-in-processmeerkat)
 - [Diagnosing Errors](/docs/processMeerKAT/Diagnosing-Errors)
 - [Using the pipeline](/docs/processMeerKAT/using-the-pipeline)
 - [Release Notes](/docs/processMeerKAT/Release-Notes)

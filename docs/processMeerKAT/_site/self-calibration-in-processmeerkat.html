@@ -1,0 +1,200 @@
+<p>processMeerKAT implements the imaging &amp; self-calibration loop using a
+combination of <a href="https://casadocs.readthedocs.io/en/stable/">CASA</a> for imaging
+and calibration and <a href="https://www.astron.nl/citt/pybdsf/">pyBDSF</a> for
+source-finding and masking.</p>
+
+<p>Briefly, the self-calibration implementation in processMeerKAT works as
+follows : The initial iteration of the loop performs a blind deconvolution of
+the sky, which is followed by running pyBDSF to identify and create a mask
+around the point sources detected in the image. The subsequent iterations use
+the source mask generated from the previous iteration, allowing for deeper
+imaging. Each iteration runs pyBDSF after the imaging stage in order to further
+refine the mask.</p>
+
+<p>By default, no gain calibration is performed after the first blind deconvolution
+(although this is configurable), and the desired type of gain calibration can be
+specified (phase-only, amplitude &amp; phase, etc.) per loop.</p>
+
+<p>The configuration options are intended to be as flexible as possible, with
+sensible defaults. Some configuration options can be specified per loop, and
+others only accept a single value for the entire self-calibration cycle. These
+options are summarized below :</p>
+
+<ul>
+  <li><strong>Single options:</strong> These config variables accept only a single argument, and will be
+applied identically to all iterations of the self-cal cycle; <code class="highlighter-rouge">nloops</code>, <code class="highlighter-rouge">loop</code>,
+<code class="highlighter-rouge">discard_nloops</code>, <code class="highlighter-rouge">outlier_threshold</code></li>
+  <li><strong>Gaincal options:</strong> These config variables accept either a single argument, or a list of length <code class="highlighter-rouge">nloops</code>; <code class="highlighter-rouge">solint</code>, <code class="highlighter-rouge">calmode</code>, <code class="highlighter-rouge">gaintype</code>, <code class="highlighter-rouge">flag</code></li>
+  <li><strong>List of list options:</strong> These config variables accept either a single argument, or a list of lists of length <code class="highlighter-rouge">nloop</code>; <code class="highlighter-rouge">imsize</code></li>
+</ul>
+
+<p>Any configuration options not listed above can contain either a single value
+(applied to all loops) or a list of length <code class="highlighter-rouge">nloops + 1</code>. This is explained
+further in the following section.</p>
+
+<h2 id="selfcal-config-options">Selfcal Config Options</h2>
+
+<p>The default self-cal section in the config file is shown below, and the details of each option are explained further down.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[selfcal]
+nloops = 2                        # Number of clean + bdsf loops.
+loop = 0                          # If nonzero, adds this number to nloops to name images or continue previous run
+cell = '1.5arcsec'
+robust = -0.5
+imsize = [6144, 6144]
+wprojplanes = 512
+niter = [10000, 50000, 50000]
+threshold = ['0.5mJy', 10, 10]    # After loop 0, S/N values if &gt;= 1.0, otherwise Jy
+nterms = 2                        # Number of taylor terms
+gridder = 'wproject'
+deconvolver = 'mtmfs'
+calmode = ['','p']                # '' to skip solving (will also exclude mask for this loop), 'p' for phase-only and 'ap' for amplitude and phase
+solint = ['','1min']
+uvrange = ''                      # uv range cutoff for gaincal
+flag = True                       # Flag residual column after selfcal?
+gaintype = 'G'                    # Use 'T' for polarisation on linear feeds (e.g. MeerKAT)
+discard_nloops = 0                # Discard this many selfcal solutions (e.g. from quick and dirty image) during subsequent loops (only considers when calmode !='')
+outlier_threshold = 0.0           # S/N values if &gt;= 1.0, otherwise Jy
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p><strong>nloops</strong> : The number of self calibration loops to perform. This determines
+the number of times gain calibration will be performed. The total number of
+images generated will be <code class="highlighter-rouge">nloops+1</code>.
+Each loop in general comprises imaging (with <code class="highlighter-rouge">tclean</code>), calibration (with
+<code class="highlighter-rouge">gaincal</code>) and source finding/masking (with <code class="highlighter-rouge">pyBDSF</code>).  The final loop does
+not perform the <code class="highlighter-rouge">gaincal</code> stage since the gain solutions will not be applied
+for any further loops.</p>
+  </li>
+  <li>
+    <p><strong>loop</strong> : Set this to be a non-zero number if restarting from a previous
+selfcal run. Can be left to zero for all other cases.</p>
+  </li>
+  <li>
+    <p><strong>cell</strong>: The cell size of the pixels in the image plane, specified as a CASA
+compatible string (with units). This can be a single parameter, which will be
+applied identically to all loops, or specified as a list of strings if
+different cell sizes per loop is desired. The length of the list must be
+<code class="highlighter-rouge">nloops+1</code> to account for the final image after all the self-calibration loops
+are complete.</p>
+  </li>
+  <li>
+    <p><strong>robust</strong>: The Briggs’ robust parameter used during gridding. Specified
+identically to the <code class="highlighter-rouge">cell</code> parameter.</p>
+  </li>
+  <li>
+    <p><strong>imsize</strong>: The size of the image in pixels. The image dimensions must be
+specified in both dimensions, hence a list of [6144,6144] is treated as a
+single specification and will be applied identically to all loops. To specify
+a different image size per iteration, a list-of-lists syntax must be used,
+such as - ``[[6144, 6144], [8192,8192]]`.</p>
+  </li>
+  <li>
+    <p><strong>wprojplanes</strong> : The number of W-projection planes to use (in case the
+<code class="highlighter-rouge">wproject</code> gridder is specified). Specified identically to the <code class="highlighter-rouge">cell</code>
+parameter.</p>
+  </li>
+  <li>
+    <p><strong>niter</strong>: The number of iterations to perform per loop. Imaging will continue
+until either the stopping threshold (described below) is reached, or the
+iteration limit is reached. Specified identically to the <code class="highlighter-rouge">cell</code> parameter.</p>
+  </li>
+  <li>
+    <p><strong>threshold</strong>: The stopping threshold per loop (a total of <code class="highlighter-rouge">nloop+1</code>). The
+stopping threshold for the initial loop must be specified as a string with
+units. Subsequent loops may either be specified as a decimal, or as a string
+with units. If a decimal is specified, values &gt; 1 are considered as
+multipliers on the image RMS and values &lt; 1 are considered to be the threshold
+value in Jy.</p>
+  </li>
+  <li>
+    <p><strong>nterms</strong> : The number of Taylor terms to use for broadband imaging.
+Specified identically to the <code class="highlighter-rouge">cell</code> parameter.</p>
+  </li>
+  <li>
+    <p><strong>gridder</strong> : The gridder to use for imaging, typically one of either
+<code class="highlighter-rouge">standard</code> or <code class="highlighter-rouge">wproject</code>. Specified identically to the <code class="highlighter-rouge">cell</code> parameter.</p>
+  </li>
+  <li>
+    <p><strong>deconvolver</strong> : The deconvolver to use during imaging. Specified identically
+to the <code class="highlighter-rouge">cell</code> parameter.</p>
+  </li>
+  <li>
+    <p><strong>calmode</strong> : The calibration type per loop - one of either <code class="highlighter-rouge">'p'</code> (phase only)
+or <code class="highlighter-rouge">'ap'</code> (amplitude and phase). A blank string implies no calibration will be
+performed on that loop. Must be of length <code class="highlighter-rouge">nloop</code>.</p>
+  </li>
+  <li>
+    <p><strong>solint</strong> : The solution interval per loop, specified similar to <code class="highlighter-rouge">calmode</code>.</p>
+  </li>
+  <li>
+    <p><strong>uvrange</strong>: The UV range limit to consider for gaincal. In the presence of
+strong RFI, it can be helpful to discard the shortest baselines while
+performing the gain calibration solve. This does not affect the imaging steps.
+Specified similar to the <code class="highlighter-rouge">calmode</code> parameter.</p>
+  </li>
+  <li>
+    <p><strong>flag</strong>: True/False - Determines whether flagging is performed on the
+residuals prior to the gain calibration solve. In situations with RFI this can
+improve the image quality on subsequent loops. Setting it to <code class="highlighter-rouge">False</code> can
+provide a speedup to the imaging process.</p>
+  </li>
+  <li>
+    <p><strong>gaintype</strong>: The gaintype specified in the <code class="highlighter-rouge">gaincal</code> task. Typically one of
+either <code class="highlighter-rouge">G</code> or <code class="highlighter-rouge">T</code>. Use <code class="highlighter-rouge">T</code> if preserving the polarization in instruments with
+linear feeds is important (e.g., MeerKAT).</p>
+  </li>
+  <li>
+    <p><strong>discard_nloops</strong>: Discard the first <code class="highlighter-rouge">discard_nloops</code> loops. This is useful
+if the initial images are intentionally smaller and intended to generate more
+accurate source masks for example. It will only discard the gain solutions
+from loops where <code class="highlighter-rouge">calmode</code> is not blank.</p>
+  </li>
+  <li>
+    <p><strong>outlier_threshold</strong>: The threshold value to identify an outlier. Considered
+to be an SNR threshold if &gt; 1 and an absolute value in Jy if &lt; 1. The
+algorithm for determining and imaging outliers is explained in much more
+detail in the next section.</p>
+  </li>
+</ul>
+
+<!-- `rmsmap` and `mask` will be copied. -->
+
+<h2 id="outlier-imaging">Outlier Imaging</h2>
+
+<p>An optional part of the self-calibration routine within processMeerKAT is the outlier imaging. Within this mode, we utilise the <a href="https://casa.nrao.edu/Release3.3.0/docs/UserMan/UserMansu280.html"><code class="highlighter-rouge">outlierfile</code> parameter</a> within CASA’s <code class="highlighter-rouge">tclean</code> task, which allows the positions of strong off-axis outliers to be specified, along with a number of other imaging parameters, as outlined below. Within this routine, CASA phase-rotates to the specified position, enabling a small image to be created that is centred on the source, without the need for W-projection.</p>
+
+<p>The motivation for including outlier imaging within processMeerKAT is to produce images equivalent in quality to much larger images (e.g. 10x10k pixels), with the strong sources far off axis being deconvolved, without the need for computational-heavy and long-running imaging over such a large area. However, an additional benefit is being able to specify precise positions of the outliers, centred within a pixel, with higher sampling of the beam over many smaller pixels, giving improved deconvolution that is not restricted by the pixel grid of the main image. For instance, without outliers, one may image 10,240 x 10,240 pixels with 1024 W-projection planes, deconvolving all the sources within the field of view, taking 10s of hours and lots of RAM to create an image. With outlier imaging, one could image 6144 x 6144 pixels with 512 W-projection planes within a few to several hours and with less RAM, and the few outliers above your threshold and beyond your main imaging area are deconvolved and included in your model for self-calbiration.</p>
+
+<!-- It may even be possible to image sources within the main imaging area, but this mode isn't currently enabled, and needs to be verified. -->
+<p><!-- An additional benefit is the ability to increase taylor terms to more accurately model spectral curvature of bright outliers, although this 'mixing of taylor terms' between the main image and outliers needs to be verified and is therefore disabled by default. --></p>
+
+<p>In order to construct a local sky model, from which outliers can be selected according to the specified threshold, we make use of the <a href="https://research.csiro.au/racs/home/survey/">Rapid ASKAP Continuum Survey (RACS)</a>. Durning the <code class="highlighter-rouge">[-R --run]</code> step, we query the online RACS catalogue for all sources (in and away from the galactic plane) within 2 degrees of the image’s phase centre, written to <code class="highlighter-rouge">RACS_local.fits</code>, and select the sources above your threshold, written as an outlierfile to <code class="highlighter-rouge">outliers.txt</code>. We then select sources from this list that are outside the inner 99% of your main imaging region (i.e. include as outliers any sources within the outer 1% and beyond) for each selfcal loop, written to <code class="highlighter-rouge">outliers_loop0.txt</code>, <code class="highlighter-rouge">outliers_loop1.txt</code>, etc. This is performed separately for each loop since the image size may change between loops. Each outlierfile is passed into the <code class="highlighter-rouge">tclean</code> call for that loop, including <code class="highlighter-rouge">selfcal_part2</code>, in which the image (including outliers) is used to predict to the <code class="highlighter-rouge">MODEL_DATA</code> column, used for subsequest self-calibration.</p>
+
+<p><strong>Also write about selecting point sources, once that is done.</strong></p>
+
+<p>During each selfcal loop, the mask and position are updated based on the output from running PyBSF. A mask is contructed corresponding to the island boundaries, the same as is done for the main image. The position is taken from the resulting PyBDSF catalogue, corresponding to the source that is closest to the previous position, which is often the only source found within the small image. If no source is found, the previous position is used. However, this would indicate that you have not detected an outlier at that position, which will prove problematic for further imaging and self-calibration.</p>
+
+<p>We recommend having fewer than ~10 outliers, since the overhead in run-time caused by imaging outliers outweighs any improvement in run-time caused by creating a smaller main image with fewer W-projection planes. When the <code class="highlighter-rouge">[-R --run]</code> step is performed, a warning will be displayed when the number of outliers exceeds 10 sources, in which case, a good compromose may be a larger image with fewer outliers, or a higher outlier threshold.</p>
+
+<p>Outlier imaging is disabled by default, but can be enabled by setting a value for the <code class="highlighter-rouge">outlier_threshold</code> parameter in the <code class="highlighter-rouge">[selfcal]</code> section of your config file. Similar to the <code class="highlighter-rouge">threshold</code> parameter, this is considered a S/N value if it’s greater than 1, or otherwise in Jy units. A good default is 0.5, which selects all sources above 0.5 Jy that are outside the your main image area. When a S/N value is used, the threshold corresponds to the value given by the integrated flux density divided by its uncertainty, taken from the RACS catalogue.</p>
+
+<p>For each outlier within your <code class="highlighter-rouge">outlierfile</code>, by default, we set a 128x128 imsize, 1 arcsec cell sizes, and the standard gridder, leaving all other options identical to what is specified for the main image (some of which is set in your config file). However, as specified in the CASA docs, the following parameters are fully configurable within your <code class="highlighter-rouge">outlierfile</code>:</p>
+
+<!-- a number of taylor terms matched to your config (2 by default), -->
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>imagename, imsize, cell, phasecenter, startmodel, mask, specmode, nchan, start, width, nterms, reffreq, gridder, deconvolver, wprojplanes
+</code></pre></div></div>
+
+<p>If you wish to use non-default values, including searching for a local sky model over a different radius comapred to 2 degrees, you can do this by <a href="/docs/processMeerKAT/using-the-pipeline#inserting-your-own-scripts">editing the selfcal_part2 script</a>.</p>
+
+<p>Similarly, outlier imaging can be performed during the science imaging step of prcessMeerKAT, by passing an outlier file into the <code class="highlighter-rouge">outlierfile</code> parameter from the <code class="highlighter-rouge">[imaging]</code> section of your config file. If this section exists (enabled during the build step with <code class="highlighter-rouge">processMeerKAT.py -B -I</code>), the outlier file from your last self-calibration loop will be copied to the <code class="highlighter-rouge">outlierfile</code> parameter, in the same way that <code class="highlighter-rouge">rmsmap</code> and <code class="highlighter-rouge">mask</code> from your last selfcal loop are copied to this section, enabling S/N-based thresholding and masked deconvolution, respectively.</p>
+
+<h3 id="known-issues">Known Issues</h3>
+
+<p>During outlier imaging, the resolution of the output data products, from both the outliers and main image, including the PSF, is observed to be broader, from an apparent difference in weighting. This may be due to the local PSF being worse at the far-off-axis position of the outlier, where it is more severely affected by bandwidth and time smearing, compared to the centre of the image. At its extreme, this effect significantly worsens the quality of the output images, which we speculate is due to CASA attempting to match the PSF of the main image to that of the worst outlier.
+<!-- as the weighting moves closer to natural weighting. -->
+<!-- (high positive Briggs robust weightings) --></p>
+
+<p><strong>Write about outliers for which no PyBDSF source is detected, if it remains a problem after selecting only point sources.</strong></p>

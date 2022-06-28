@@ -59,6 +59,10 @@
     
       
         
+      
+    
+      
+        
           <li class="navigation-list-item">
             
             <a href="http://localhost:4000/docs/processMeerKAT" class="navigation-list-link">processMeerKAT</a>
@@ -89,8 +93,6 @@
                   
                 
                   
-                
-                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/using-the-pipeline/" class="navigation-list-link">Using the Pipeline</a>
@@ -109,9 +111,43 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/Diagnosing-Errors/" class="navigation-list-link">Diagnosing Errors</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/config-files/" class="navigation-list-link">Configuration Files</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/cross-calibration-in-processmeerkat/" class="navigation-list-link">Cross-calibration in processMeerKAT</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/self-calibration-in-processmeerkat/" class="navigation-list-link">Self-calibration in processMeerKAT</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/science-imaging-in-processmeerkat/" class="navigation-list-link">Science Imaging in processMeerKAT</a>
                       
                     </li>
                   
@@ -127,7 +163,7 @@
                   
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/calibration-in-processmeerkat/" class="navigation-list-link">Calibration in processMeerKAT</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/Advanced-Usage/" class="navigation-list-link">Advanced Usage</a>
                       
                     </li>
                   
@@ -192,6 +228,18 @@
         
       
     
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
   </ul>
 </nav>
 
@@ -226,16 +274,9 @@
           
         
         <div id="main-content" class="page-content" role="main">
-          <h1 id="accessing-idia-machines">Accessing IDIA Machines</h1>
+          <h1 id="accessing-the-ilifu-cluster">Accessing the ilifu cluster</h1>
 
-<p>This page provides details on how to get access to the IDIA virtual machines. While this page is
-specific to the IDIA-Pipelines project, the details related to requesting access and connecting to a
-machine are identical.</p>
-
-<p>You can request access using the following <a href="http://docs.ilifu.ac.za/#/getting_started/request_access">form</a>.</p>
-
-<p>In particular, please mention the team that you are a part of when you request access. This is
-extremely important, since it will help us provide you with access to the relevant project files.</p>
+<p>You can request access to the ilifu cluster using the form found <a href="https://docs.ilifu.ac.za/#/getting_started/request_access">here</a>. You will need to specify which team/project you are a part of while signing up.</p>
 
 <h2 id="joining-the-idia-pipelines-team">Joining the IDIA Pipelines Team</h2>
 <p>Access to the IDIA-Pipeline resources can be arranged if you are part of the <strong>Pipelines</strong> Team.
@@ -247,88 +288,31 @@ Pipelines</a> repo as a contributor.</p>
 
 <h2 id="access">Access</h2>
 
-<p>There are a pool of IDIA machines that are available for usage. Please note that the machine names
-mentioned here are meant for usage by the IDIA-Pipelines team. In practice, we will provide you with
-a machine name after you’ve requested access.</p>
-
-<p>You can access IDIA machines via a Jupyter-Hub (preferred) or SSH (traditional).</p>
-
-<p>The URL usually corresponds to the name of the VM, and is served on the IDIA domain. For example,
-our <strong>helo</strong> node can be accessed via <a href="https://helo.idia.ac.za">https://helo.idia.ac.za</a>.</p>
-
-<h3 id="jupyter-hub">Jupyter-Hub</h3>
-<p>A Virtual Machine (VM) can be accessed online using your browser (Chrome/Firefox preferred). Simply
-type in the URL provided.</p>
-
-<p>You will be presented with a login window for the Jupyter-Hub. Use your previously generated (LDAP)
-username and password to access your account.</p>
-
-<h3 id="ssh">SSH</h3>
-<p>To <code class="highlighter-rouge">SSH</code> into an IDIA VM, you will need your SSH key.</p>
-
-<p>This is how you would <code class="highlighter-rouge">SSH</code> into <strong>helo</strong> with X-forwarding:</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>ssh  <span class="nt">-XY</span> <span class="nt">-i</span> /path/to/your/key.pem helo.idia.ac.za <span class="nt">-l</span> &lt;username&gt;
-</code></pre></div></div>
-
-<h1 id="changing-your-password">Changing your Password</h1>
-<p>You need to change your generic password as soon as possible. You can do this with the following
-command (one line on the prompt):</p>
-
-<p><code class="highlighter-rouge">$ ldappasswd -H ldap://10.102.4.109 -x -D "cn=username,ou=users,dc=idia,dc=arc,dc=ac,dc=za" -W -S -A</code></p>
-
-<p><em>Important:</em> In the command above, you will need to change <code class="highlighter-rouge">username</code> to your <em>username</em>.</p>
-
-<p>You will then be prompted for passwords as follows:</p>
-<ul>
-  <li>Twice for your current password (verification).</li>
-  <li>Twice for your new password.</li>
-  <li>Once for your <em>LDAP</em> password, which will be your <em>old</em> password. This is required to bind to the
-LDAP server to commit the change to your password.</li>
-</ul>
-
-<p>This is a little more involved then usual, because your credentials are not specific to a machine.
-Access on the cloud is coordinated on using the LDAP server – this is why you need to do the
-<em>authenticate -&gt; enter new password -&gt; authorize/bind</em> process to propagate your password to the
-server. This allows us to provide you with access to any machine provisioned for your project
-without having to remember a myriad of passwords.</p>
-
-<p>Incidentally, you can do this without ssh’ing into the machine – simply open up a terminal using
-the Jupyter-Hub and use this to change your password.</p>
+<p>A summary of how to access the ilifu services is provided <a href="https://docs.ilifu.ac.za/#/getting_started/access_ilifu">here</a>.</p>
 
 <h2 id="storage">Storage</h2>
-<p>There are several storage areas available. Most (all) Pipelines machines will have the IDIA storage
-attached. This means that you will have access to your work and your data on any system that you’re
-logged into.</p>
+<p>There are several storage areas available on the ilifu cluster, and access to data is managed via Unix groups.</p>
 
-<p>Access to data is managed with Unix groups.</p>
+<p>There are several mounted volumes, intended for different use cases. These are summarised <a href="http://docs.ilifu.ac.za/#/data/directory_structure">here</a>.</p>
 
-<p>Please take careful note of the following.</p>
+<!-- These are summarized below, please take careful note of the following :
 
-<ul>
-  <li><code class="highlighter-rouge">/users/&lt;username&gt;/</code>, where <code class="highlighter-rouge">/users</code> is a shared BeeGFS volume.</li>
-  <li><code class="highlighter-rouge">/idia/users/&lt;username&gt;/</code>, where <code class="highlighter-rouge">/idia</code> is a shared BeeGFS volume. This is the preferred space
-for you to store your longish term data products.</li>
-  <li><code class="highlighter-rouge">/idia/&lt;Project&gt;</code> is a shared directory on BeeGFS for a project. You can fetch raw data from here.
-Please steer away from dumping data into this directory.</li>
-  <li><code class="highlighter-rouge">/scratch/users/&lt;username&gt;/</code> is the shared working directory for <username>, where `/scratch` is a
-BeeGFS volume). This is the preferred space for intermediate data products, e.g., you can use this
-space to do imaging.</username></li>
-</ul>
+* `/users/<username>/`, where `/users` is a shared CephFS volume.
+* `/idia/users/<username>/`, where `/idia` is a shared CephFS volume. This is the preferred space
+  for you to store your medium term data products.
+* `/idia/projects/<Project>` is a shared directory on CephFS for a project. You can fetch raw data from here.
+  Please steer away from dumping data into this directory.
+* `/scratch/users/<username>/` is the shared working directory for <username>, where `/scratch` is a
+  CephFS volume). This is the preferred space to use as a working directory, where final data products are moved into one of the more permanent locations listed above, and intermediate data products are purged. -->
 
-<h2 id="setting-up-your-own-vm">Setting up your own VM.</h2>
-<p>Smaller VMs can be spun-up for (sub)-projects. Additionally, users will have to follow the
-aforementioned process to setup their accounts.</p>
+<!-- ## Setting up your own VM. -->
 
-<p>Please use the Google form to design and <a href="https://docs.google.com/forms/d/e/1FAIpQLSc6GwFfqTUcKVmkcmn1VRIBADp-_JOSVt9aW1dfNmc12kxuvg/viewform">Request a VM</a>.</p>
-
-<h2 id="github">GitHub</h2>
-<p>There are two important GitHub resources that project members can use:</p>
-<ul>
-  <li><a href="https://github.com/idia-pipelines/idia-pipelines.github.io">IDIA-Pipelines Blog</a>: This is the repo for this website, and there is an
-associated <a href="https://github.com/idia-pipelines/idia-pipelines.github.io/wiki">wiki</a> for project members to share information.</li>
-  <li><a href="https://github.com/AfricanResearchCloud/idia-containers">IDIA Containers</a>: This is very important repository for the
-<a href="http://singularity.lbl.gov/">Singularity</a> containers used at IDIA.</li>
-</ul>
+<!-- ## GitHub
+There are two important GitHub resources that project members can use:
+* [IDIA-Pipelines Blog][idia-pipelines]: This is the repo for this website, and there is an
+  associated [wiki][idia-pipelines-wiki] for project members to share information.
+* [IDIA Containers][idia-containers]: This is very important repository for the
+  [Singularity][singularity] containers used at IDIA. -->
 
 
 

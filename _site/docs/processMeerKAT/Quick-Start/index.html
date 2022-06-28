@@ -59,6 +59,10 @@
     
       
         
+      
+    
+      
+        
           <li class="navigation-list-item active">
             
             <a href="http://localhost:4000/docs/processMeerKAT" class="navigation-list-link">processMeerKAT</a>
@@ -89,8 +93,6 @@
                   
                 
                   
-                
-                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/using-the-pipeline/" class="navigation-list-link">Using the Pipeline</a>
@@ -109,9 +111,43 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/Diagnosing-Errors/" class="navigation-list-link">Diagnosing Errors</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/config-files/" class="navigation-list-link">Configuration Files</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/cross-calibration-in-processmeerkat/" class="navigation-list-link">Cross-calibration in processMeerKAT</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/self-calibration-in-processmeerkat/" class="navigation-list-link">Self-calibration in processMeerKAT</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/science-imaging-in-processmeerkat/" class="navigation-list-link">Science Imaging in processMeerKAT</a>
                       
                     </li>
                   
@@ -127,7 +163,7 @@
                   
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/calibration-in-processmeerkat/" class="navigation-list-link">Calibration in processMeerKAT</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/Advanced-Usage/" class="navigation-list-link">Advanced Usage</a>
                       
                     </li>
                   
@@ -165,6 +201,18 @@
             <a href="http://localhost:4000/docs/containers/" class="navigation-list-link">Singularity Containers</a>
             
           </li>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
         
       
     
@@ -248,10 +296,27 @@
 
 <h3 id="2-build-a-config-file">2. Build a config file:</h3>
 
+<h4 id="a-for-continuumspectral-line-processing-">a. For continuum/spectral line processing :</h4>
+
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    processMeerKAT.py -B -C myconfig.txt -M mydata.ms
 </code></pre></div></div>
 
-<p>This defines several variables that are read by the pipeline while calibrating the data, as well as requesting resources on the cluster. The config file parameters are described by in-line comments in the config file itself wherever possible.</p>
+<h4 id="b-for-polarization-processing-">b. For polarization processing :</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    processMeerKAT.py -B -C myconfig.txt -M mydata.ms -P
+</code></pre></div></div>
+
+<h4 id="c-including-self-calibration-">c. Including self-calibration :</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    processMeerKAT.py -B -C myconfig.txt -M mydata.ms -2
+</code></pre></div></div>
+
+<h4 id="d-including-science-imaging-">d. Including science imaging :</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    processMeerKAT.py -B -C myconfig.txt -M mydata.ms -I
+</code></pre></div></div>
+
+<p>This defines several variables that are read by the pipeline while calibrating the data, as well as requesting resources on the cluster. The <a href="/docs/processMeerKAT/config-files">config file parameters</a> are described by in-line comments in the config file itself wherever possible. The <code class="highlighter-rouge">[-P --dopol]</code> option can be used in conjunction with the <code class="highlighter-rouge">[-2 --do2GC]</code> and <code class="highlighter-rouge">[-I --science_image]</code> options to enable polarization calibration as well as <a href="/docs/processMeerKAT/self-calibration-in-processmeerkat">self-calibration</a> and <a href="/docs/processMeerKAT/science-imaging-in-processmeerkat">science imaging</a>.</p>
 
 <h3 id="3-to-run-the-pipeline">3. To run the pipeline:</h3>
 
@@ -260,27 +325,26 @@
 
 <p>This will create <code class="highlighter-rouge">submit_pipeline.sh</code>, which you can then run with <code class="highlighter-rouge">./submit_pipeline.sh</code> to submit all pipeline jobs to the SLURM queue.</p>
 
-<p>Other convenient scripts are also created that allow you to monitor and (if necessary) kill the jobs. <code class="highlighter-rouge">summary.sh</code> provides a brief overview of the status of the jobs in the pipeline, <code class="highlighter-rouge">findErrors.sh</code> checks the log files for commonly reported errors, and <code class="highlighter-rouge">killJobs.sh</code> kills all the jobs from the current run of the pipeline, ignoring any other jobs you might have running.</p>
+<p>Other convenient scripts are also created that allow you to monitor and (if necessary) kill the jobs. <code class="highlighter-rouge">summary.sh</code> provides a brief overview of the status of the jobs in the pipeline, <code class="highlighter-rouge">findErrors.sh</code> checks the log files for commonly reported errors (after the jobs have run), and <code class="highlighter-rouge">killJobs.sh</code> kills all the jobs from the current run of the pipeline, ignoring any other (unrelated) jobs you might have running.</p>
 
-<p>For help, run <code class="highlighter-rouge">processMeerKAT.py -h</code>, which provides a brief description of all the command line arguments.</p>
+<p>For help, run <code class="highlighter-rouge">processMeerKAT.py -h</code>, which provides a brief description of all the <a href="/docs/processMeerKAT/using-the-pipeline#command-line-options">command line options</a>.</p>
 
 <h2 id="using-multiple-spectral-windows-new-in-v11">Using multiple spectral windows (new in v1.1)</h2>
 
-<p>Starting with v1.1 of the processMeerKAT pipeline, the default behaviour is to split up the MeerKAT band into 16 spectral windows (SPWs), and process each concurrently. This results in a few major usability changes as outlined below:</p>
+<p>Starting with v1.1 of the processMeerKAT pipeline, the default behaviour is to split up the MeerKAT band into several spectral windows (SPWs), and process each concurrently. This results in a few major usability changes as outlined below:</p>
 
 <ol>
   <li>
-    <p><strong>Calibration output</strong> : Since the calibration is performed independently per SPW, all the output specific to that SPW is within it’s own directory. Output such as the calibration tables, logs, plots etc. per SPW can be found within each SPW directory.</p>
+    <p><strong>Calibration output</strong> : Since the calibration is performed independently per SPW, all the output specific to that SPW is within its own directory. Output such as the calibration tables, logs, plots etc. per SPW can be found within each SPW directory.</p>
   </li>
   <li>
     <p><strong>Logs in the top level directory</strong> : Logs in the top level directory (<em>i.e.,</em> the directory where the pipeline was launched) correspond to the scripts in the <code class="highlighter-rouge">precal_scripts</code> and <code class="highlighter-rouge">postcal_scripts</code> variables in the config file. These scripts are run from the top level before and after calibration respectively. By default these correspond to the scripts to calculate the reference antenna (if enabled), partition the data into SPWs, and concat the individual SPWs back into a single MS/MMS.</p>
   </li>
 </ol>
 
-<p>More detailed information about SPW splitting is found <a href="/docs/processMeerKAT/using-the-pipeline#spw-splitting">here</a>.</p>
+<p>More detailed information about SPW splitting is found <a href="/docs/processMeerKAT/config-files#spw-splitting">here</a>.</p>
 
 <!-- The documentation can be accessed on the [pipelines website](/docs/processMeerKAT), or on the [Github wiki](https://github.com/idia-astro/pipelines/wiki). -->
-
 <hr />
 
 

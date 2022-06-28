@@ -11,8 +11,8 @@ permalink: /
 # IDIA Pipelines
 
 
-Welcome to the IDIA Pipelines Website. Here you'll find help and documentation to help you do
-calibration and imaging of Radio Data Using the IDIA system.
+Welcome to the IDIA Pipelines website! Here you'll find documentation to help you do
+calibration and imaging of radio data using the ilifu.
 
 ## The IDIA Pipelines Team
 The team includes members from many of the MeerKAT Large Survey Projects. This list includes the

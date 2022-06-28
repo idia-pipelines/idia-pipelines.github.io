@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  
+
+  <title>Configuration Files - IDIA Pipelines</title>
+  <link rel="stylesheet" href="http://localhost:4000/assets/css/just-the-docs.css">
+  
+  <script type="text/javascript" src="http://localhost:4000/assets/js/vendor/lunr.min.js"></script>
+  
+  <script type="text/javascript" src="http://localhost:4000/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+
+  <div class="page-wrap">
+    <div class="side-bar">
+      <a href="http://localhost:4000/" class="site-title fs-6 lh-tight">IDIA Pipelines</a>
+      <span class="fs-3"><button class="js-main-nav-trigger navigation-list-toggle btn btn-outline" type="button" data-text-toggle="Hide">Menu</button></span>
+      <div class="navigation main-nav js-main-nav">
+        <nav role="navigation" aria-label="Main navigation">
+  <ul class="navigation-list">
+    
+    
+      
+    
+      
+        
+      
+    
+      
+        
+          <li class="navigation-list-item">
+            
+            <a href="http://localhost:4000/" class="navigation-list-link">Home</a>
+            
+          </li>
+        
+      
+    
+      
+        
+          <li class="navigation-list-item">
+            
+            <a href="http://localhost:4000/docs/access/" class="navigation-list-link">Access to IDIA Machines</a>
+            
+          </li>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <li class="navigation-list-item active">
+            
+            <a href="http://localhost:4000/docs/processMeerKAT" class="navigation-list-link">processMeerKAT</a>
+            
+              
+              <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/Quick-Start/" class="navigation-list-link">Quick Start</a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/Release-Notes/" class="navigation-list-link">Release Notes</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/using-the-pipeline/" class="navigation-list-link">Using the Pipeline</a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/Example-Use-Cases/" class="navigation-list-link">Example Use Cases</a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/Diagnosing-Errors/" class="navigation-list-link">Diagnosing Errors</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item  active">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/config-files/" class="navigation-list-link active">Configuration Files</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/cross-calibration-in-processmeerkat/" class="navigation-list-link">Cross-calibration in processMeerKAT</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/self-calibration-in-processmeerkat/" class="navigation-list-link">Self-calibration in processMeerKAT</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/science-imaging-in-processmeerkat/" class="navigation-list-link">Science Imaging in processMeerKAT</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/deep-2-tutorial/" class="navigation-list-link">DEEP 2 Tutorial</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/Advanced-Usage/" class="navigation-list-link">Advanced Usage</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/SLURM-and-MPICASA/" class="navigation-list-link">SLURM and MPICASA</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/LICENSE/" class="navigation-list-link">LICENSE</a>
+                      
+                    </li>
+                  
+                
+              </ul>
+            
+          </li>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <li class="navigation-list-item">
+            
+            <a href="http://localhost:4000/docs/containers/" class="navigation-list-link">Singularity Containers</a>
+            
+          </li>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+  </ul>
+</nav>
+
+      </div>
+      <footer role="contentinfo" class="site-footer">
+        <p class="text-small text-grey-dk-000 mb-0">This site uses <a href="https://github.com/pmarsceill/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.</p>
+      </footer>
+    </div>
+    <div class="main-content-wrap">
+      <div class="page-header">
+        <div class="main-content">
+          
+          <div class="search js-search">
+            <div class="search-input-wrap">
+              <input type="text" class="js-search-input search-input" tabindex="0" placeholder="Search IDIA Pipelines" aria-label="Search IDIA Pipelines" autocomplete="off">
+              <svg width="14" height="14" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" class="search-icon"><title>Search</title><g fill-rule="nonzero"><path d="M17.332 20.735c-5.537 0-10-4.6-10-10.247 0-5.646 4.463-10.247 10-10.247 5.536 0 10 4.601 10 10.247s-4.464 10.247-10 10.247zm0-4c3.3 0 6-2.783 6-6.247 0-3.463-2.7-6.247-6-6.247s-6 2.784-6 6.247c0 3.464 2.7 6.247 6 6.247z"/><path d="M11.672 13.791L.192 25.271 3.02 28.1 14.5 16.62z"/></g></svg>
+            </div>
+            <div class="js-search-results search-results-wrap"></div>
+          </div>
+          
+          
+            <ul class="list-style-none text-small mt-md-1 mb-md-1 pb-4 pb-md-0 js-aux-nav aux-nav">
+              
+                <li class="d-inline-block my-0"><a href="//github.com/idia-astro/pipelines/wiki">IDIA Pipelines</a></li>
+              
+            </ul>
+          
+        </div>
+      </div>
+      <div class="main-content js-main-content" tabindex="0">
+        
+          
+            <nav class="breadcrumb-nav">
+              <ol class="breadcrumb-nav-list">
+                
+                  <li class="breadcrumb-nav-list-item"><a href="http://localhost:4000/docs/processMeerKAT">processMeerKAT</a></li>
+                
+                <li class="breadcrumb-nav-list-item"><span>Configuration Files</span></li>
+              </ol>
+            </nav>
+          
+        
+        <div id="main-content" class="page-content" role="main">
+          <h1 id="configuration-files">Configuration files</h1>
+
+<p>The config file is where you set parameters affecting how you run the pipeline. The default config contains the following:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[data]
+vis = ''
+
+[fields]
+bpassfield = ''
+fluxfield = ''
+phasecalfield = ''
+targetfields = ''
+extrafields = ''
+
+[slurm]                           # See processMeerKAT.py -h for documentation
+nodes = 1
+ntasks_per_node = 8
+plane = 1
+mem = 232                         # Use this many GB of memory (per node)
+partition = 'Main'                # SLURM partition to use
+exclude = ''                      # SLURM nodes to exclude
+time = '12:00:00'
+submit = False
+container = '/idia/software/containers/casa-6.5.0-modular.sif'
+mpi_wrapper = 'mpirun'
+name = ''
+dependencies = ''
+account = 'b03-idia-ag'
+reservation = ''
+modules = ['openmpi/4.0.3']
+verbose = False
+precal_scripts = [('calc_refant.py',False,''), ('partition.py',True,'')]
+postcal_scripts = [('concat.py',False,''), ('plotcal_spw.py', False, ''), ('selfcal_part1.py',True,''), ('selfcal_part2.py',False,''), ('science_image.py', True, '')]
+scripts = [ ('validate_input.py',False,''),
+            ('flag_round_1.py',True,''),
+            ('calc_refant.py',False,''),
+            ('setjy.py',True,''),
+            ('xx_yy_solve.py',False,''),
+            ('xx_yy_apply.py',True,''),
+            ('flag_round_2.py',True,''),
+            ('xx_yy_solve.py',False,''),
+            ('xx_yy_apply.py',True,''),
+            ('split.py',True,''),
+            ('quick_tclean.py',True,'')]
+
+[crosscal]
+minbaselines = 4                  # Minimum number of baselines to use while calibrating
+chanbin = 1                       # Number of channels to average before calibration (during partition)
+width = 1                         # Number of channels to (further) average after calibration (during split)
+timeavg = '8s'                    # Time interval to average after calibration (during split)
+createmms = True                  # Create MMS (True) or MS (False) for cross-calibration during partition
+keepmms = True                    # Output MMS (True) or MS (False) during split
+spw = '*:880~933MHz,*:960~1010MHz,*:1010~1060MHz,*:1060~1110MHz,*:1110~1163MHz,*:1299~1350MHz,*:1350~1400MHz,*:1400~1450MHz,*:1450~1500MHz,*:1500~1524MHz,*:1630~1680MHz' # Spectral window / frequencies to extract for MMS
+nspw = 11                         # Number of spectral windows to split into
+calcrefant = False                # Calculate reference antenna in program (overwrites 'refant')
+refant = 'm059'                   # Reference antenna name / number
+standard = 'Stevens-Reynolds 2016'# Flux density standard for setjy
+badants = []                      # List of bad antenna numbers (to flag)
+badfreqranges = [ '933~960MHz',   # List of bad frequency ranges (to flag)
+                  '1163~1299MHz',
+                  '1524~1630MHz']
+
+[run]                             # Internal variables for pipeline execution
+continue = True
+dopol = False
+</code></pre></div></div>
+
+<p>If you’re also performing self-calibration (option <code class="highlighter-rouge">[-2 --do2GC]</code> - see <a href="/docs/processMeerKAT/self-calibration-in-processmeerkat">here</a>), the default config will also contain the <code class="highlighter-rouge">[selfcal]</code> section:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[selfcal]
+nloops = 2                        # Number of clean + bdsf loops.
+loop = 0                          # If nonzero, adds this number to nloops to name images or continue previous run
+cell = '1.5arcsec'
+robust = -0.5
+imsize = [6144, 6144]
+wprojplanes = 512
+niter = [10000, 50000, 50000]
+threshold = ['0.5mJy', 10, 10]    # After loop 0, S/N values if &gt;= 1.0, otherwise Jy
+nterms = 2                        # Number of taylor terms
+gridder = 'wproject'
+deconvolver = 'mtmfs'
+calmode = ['','p']                # '' to skip solving (will also exclude mask for this loop), 'p' for phase-only and 'ap' for amplitude and phase
+solint = ['','1min']
+uvrange = ''                      # uv range cutoff for gaincal
+flag = True                       # Flag residual column after selfcal?
+gaintype = 'G'                    # Use 'T' for polarisation on linear feeds (e.g. MeerKAT)
+discard_nloops = 0                # Discard this many selfcal solutions (e.g. from quick and dirty image) during subsequent loops (only considers when calmode !='')
+outlier_threshold = 0.0           # S/N values if &gt;= 1.0, otherwise Jy
+outlier_radius = 0.0              # Radius in degrees for identifying outliers in RACS
+</code></pre></div></div>
+
+<p>If you’re also performing science imaging (option <code class="highlighter-rouge">[-I --science_image]</code> - see <a href="/docs/processMeerKAT/science-imaging-in-processmeerkat">here</a>), the default config will also conatin the <code class="highlighter-rouge">[image]</code> section:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[image]
+cell = '1.5arcsec'
+robust = -0.5
+imsize = [6144, 6144]
+wprojplanes = 512
+niter = 50000
+threshold = 10                    # S/N value if &gt;= 1.0 and rmsmap != '', otherwise Jy
+multiscale = [0, 5, 10, 15]
+nterms = 2                        # Number of taylor terms
+gridder = 'wproject'
+deconvolver = 'mtmfs'
+restoringbeam = ''
+specmode = 'mfs'
+stokes = 'I'
+pbthreshold = 0.1                 # Threshold below which to mask the PB for PB correction
+mask = ''
+rmsmap = ''
+outlierfile = ''
+</code></pre></div></div>
+
+<p>If you do not perform either self-calibration or science imaging, the script related to those steps will be stripped from your config. Similarly <code class="highlighter-rouge">calc_refant</code> will be stripped from your config if <code class="highlighter-rouge">calcrefant=False</code> (the default), in which case <code class="highlighter-rouge">m059</code> will be used as a good default reference antenna, or the pipeline will output a warning if this antenna doesn’t exist in your input MS, and will reommend other good reference antennas.</p>
+
+<p>When the pipeline is run, the contents of your config file are copied to the hidden file <code class="highlighter-rouge">.config.tmp</code> and each python script reads the parameters from this file as it is run. This way, the user cannot easily break the pipeline during the time it is running. This means changing the <code class="highlighter-rouge">[slurm]</code> section in your config file will have no effect unless you once again run <code class="highlighter-rouge">processMeerKAT.py -R</code>.</p>
+
+<h1 id="polarisation-config">Polarisation config</h1>
+
+<p>If you select <code class="highlighter-rouge">[-P --dopol]</code> during the <code class="highlighter-rouge">[-B --build]</code> step of the pipeline, your config file be similar to the above, except <code class="highlighter-rouge">xy_yx_solve</code> and <code class="highlighter-rouge">xy_yx_apply</code> replace the 2nd call of the <code class="highlighter-rouge">xx_yy_solve</code> and <code class="highlighter-rouge">xx_yy_apply</code> scripts. Furthermore, in the <code class="highlighter-rouge">[run]</code> section, <code class="highlighter-rouge">dopol=True</code> will be set, which will cause all four correlations to be included during the initial <code class="highlighter-rouge">partition</code> step (or the pipeline will output a warning during the <code class="highlighter-rouge">[-B --build]</code> step if only two correlations exist). Additionally, we recommend setting <code class="highlighter-rouge">gaintype = 'T'</code> in the <code class="highlighter-rouge">[selfcal]</code> section, if performing self-calibration for polarisation processing.</p>
+
+<h1 id="manually-selecting-field-ids">Manually selecting field IDs</h1>
+
+<p>As discussed <a href="/docs/processMeerKAT/using-the-pipeline#selecting-ms-and-field-ids">here</a>, the pipeline selects field IDs for you by default, during the <code class="highlighter-rouge">[-B --build]</code> step. However, these can be overwritten after this step by editing the <code class="highlighter-rouge">[fields]</code> section of your config file and manually selecting field IDs. Both field names (i.e. strings) and field IDs (i.e. strings of integers) are supported, although field names are preferable.</p>
+
+<p>Example use cases for manually selecting field IDs include when your input MS has mislabelled (or missing) <code class="highlighter-rouge">INTENT</code>, and when multiple flux/bandpass calibrators were used (or labelled as such via their <code class="highlighter-rouge">INTENT</code>), but where the default is less preferred (as the pipeline chooses the one with the most scans by default). For example, you may have two scans on field <code class="highlighter-rouge">J0408-6545</code>, but only one on <code class="highlighter-rouge">J1939-6342</code>, but the latter is still preferred as its model is more well constrained. Lastly, you may wish to remove <code class="highlighter-rouge">extrafields</code> to reduce processing time, if you have no interest in calibrating these fields and producing quick-look images of them.</p>
+
+<h1 id="spw-splitting">SPW Splitting</h1>
+
+<p><a href="/docs/processMeerKAT/Release-Notes#version-11">Version 1.1</a> introduced spectral window (SPW) splitting, where each separate SPW is processed concurrently. Here we discuss all that is relevant to this functionality.</p>
+
+<p>This mode is the default mode, invoked by selecting a value greater than one with the config parameter <code class="highlighter-rouge">nspw</code>. This mode is recommended for most use cases, when the input dataset is TB in size, and the number of scans is typical (tens of scans). When the input data (after pre-processing, including selection of <code class="highlighter-rouge">spw</code>) is small (tens to hundreds of GB), or when the number of scans is very large (hundreds), the single MS mode (see <a href="/docs/processMeerKAT/example-use-cases#ms-only-single-thread-processing">MS only</a>) is recommended. Alternatively, for such a use case, the user could set <code class="highlighter-rouge">nspw=1</code>, resulting in the previous behaviour from version 1.0, but with potential polarisation calibration and flux scale issues.</p>
+
+<p>When selecting <code class="highlighter-rouge">nspw</code> &gt; 1 and passing in a single SPW range via the <code class="highlighter-rouge">spw</code> config parameter (e.g. <code class="highlighter-rouge">spw=*:880~1680MHz</code>), the data will split into <code class="highlighter-rouge">nspw</code> SPWs during the <code class="highlighter-rouge">[-R --run]</code> step, which will be equally-sized frequency ranges encompassing the frequency range provided. The <a href="/docs/processMeerKAT/cross-calibration-in-processmeerkat">calibration algorithm</a> within each SPW remains the same. However, the resulting Stokes I calibration when <code class="highlighter-rouge">nspw</code> &gt; 1 is improved overall, as it accounts for the intrinsic spectrum of the phase calibrator, which would otherwise be treated as flat across the entire <code class="highlighter-rouge">spw</code>. Furthermore, the <a href="/docs/processMeerKAT/cross-calibration-in-processmeerkat">polarisation calibration</a> is improved, since each SPW, within which the phase calibrator’s leakages and Stokes Q and U are assumed to be constant, is solved separately, which accounts for the wideband polarisation structure.</p>
+
+<h2 id="setting-spw-and-nspw">Setting <code class="highlighter-rouge">spw</code> and <code class="highlighter-rouge">nspw</code></h2>
+
+<p>The SPWs into which the pipeline splits and independently (and concurrently) processes, is determined by the final values stored in the config parameter <code class="highlighter-rouge">spw</code>. Multiple SPWs are listed as comma-seperated values, but will only be considered as separate SPWs when <code class="highlighter-rouge">nspw</code> is equal to the number of comma-separated SPWs given by the <code class="highlighter-rouge">spw</code> parameter. If <code class="highlighter-rouge">nspw=1</code> and <code class="highlighter-rouge">spw</code> contains comma-separated values, only a single SPW will be processed, and the comma-separated values will be passed into the CASA tasks that set the <code class="highlighter-rouge">spw</code> parameter. If <code class="highlighter-rouge">nspw</code> is not equal to the number of comma-separated SPWs, the pipeline will output a warning and set <code class="highlighter-rouge">nspw</code> in your config to be equal to the number of comma-separated SPWs.</p>
+
+<p>Therefore, the SPWs can be manually set to ranges that will be separately (and concurrently) processed, such as manual frequency ranges that avoid regions of persistent RFI. We recommend the following default for this purpose:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nspw=11
+spw = '*:880~933MHz,*:960~1010MHz,*:1010~1060MHz,*:1060~1110MHz,*:1110~1163MHz,*:1299~1350MHz,*:1350~1400MHz,*:1400~1450MHz,*:1450~1500MHz,*:1500~1524MHz,*:1630~1680MHz'
+</code></pre></div></div>
+
+<p>This also enables you to set <code class="highlighter-rouge">badfreqranges = []</code>, as the SPWs have already been constructed to avoid these regions of persistent RFI.</p>
+
+<p>Alternatively, if <code class="highlighter-rouge">spw</code> is equal to a single value (i.e. not a comma-separated list), the pipeline can split the frequency range given by <code class="highlighter-rouge">spw</code> into <code class="highlighter-rouge">nspw</code> equal ranges, which is done during the <code class="highlighter-rouge">[-R --run]</code> step. This is the default behaviour when <code class="highlighter-rouge">spw</code> is not manually set. By default, <code class="highlighter-rouge">nspw</code> is set to 16 during the <code class="highlighter-rouge">[-B --build]</code> step, and then updated to 12 during the <code class="highlighter-rouge">[-R --run]</code> step, since 4 SPWs are completely encompassed by the default flagging mask given by the config parameter <code class="highlighter-rouge">badfreqranges</code>, which has a default value of <code class="highlighter-rouge">['933~960MHz', '1163~1299MHz','1524~1630MHz']</code>. So after the <code class="highlighter-rouge">[-B --build]</code> step, the default <code class="highlighter-rouge">spw</code> is <code class="highlighter-rouge">*:860~1680MHz</code>, and during the <code class="highlighter-rouge">[-R --run]</code> step, the pipeline will remove <code class="highlighter-rouge">*:1167.5~1218.75MHz, *:1218.75~1270.0MHz, *:1526.25~1577.5MHz</code> and <code class="highlighter-rouge">*:1577.5~1628.75MHz</code>, so that the final default <code class="highlighter-rouge">spw</code> is</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>*:860.0~911.25MHz,*:911.25~962.5MHz,*:962.5~1013.75MHz,*:1013.75~1065.0MHz,*:1065.0~1116.25MHz,*:1116.25~1167.5MHz,*:1270.0~1321.25MHz,*:1321.25~1372.5MHz,*:1372.5~1423.75MHz,*:1423.75~1475.0MHz,*:1475.0~1526.25MHz,*:1628.75~1680.0MHz
+</code></pre></div></div>
+
+<p>Any frequency unit can be used for each comma-separated <code class="highlighter-rouge">spw</code>, such as GHz, kHz, or no unit, which selects channel indices. However, the removal of SPWs that are encompassed by the RFI mask will only be removed when using <code class="highlighter-rouge">MHz</code>.</p>
+
+<p>After updating the config’s SPWs, the <code class="highlighter-rouge">[-R --run]</code> step creates directories for each of the SPWs, named as <code class="highlighter-rouge">880~933MHz, 960~1010MHz</code>, etc. It then copies your config file into each of them but overwrites <code class="highlighter-rouge">spw</code> to be the single SPW that will be processed, and <code class="highlighter-rouge">nspw=1</code>. Furthermore, if you have not requested all 32 tasks per node (i.e. each SPW will be processed by an entire node) with the config parameter <code class="highlighter-rouge">ntasks_per_node=32</code>, it will overwrite the config parameter <code class="highlighter-rouge">mem</code> with the integet part of the previous value divided by <code class="highlighter-rouge">nspw/2</code>. Lastly, it will set <code class="highlighter-rouge">precal_script</code> and <code class="highlighter-rouge">postcal_scripts</code> to empty lists (see below).</p>
+
+<p>Each SPW directory created during the <code class="highlighter-rouge">[-R --run]</code> step will be processed independently and concurrently, after the initial partition job that runs over the single input MS (see below). This is achieved by running an instance of the pipeline within each SPW directory, with <code class="highlighter-rouge">nspw=1</code>, following the same calibration recipe within each separate SPW as within version 1.0.</p>
+
+<h2 id="pre-cal-and-post-cal-scripts">Pre-cal and post-cal scripts</h2>
+
+<p>When <code class="highlighter-rouge">nspw</code> &gt; 1, the config parameter <code class="highlighter-rouge">scripts</code> refers to the separate scripts that will be run as single jobs within each SPW directory. Any scripts that should be run within the top-level working directory (i.e. above the SPW directories) are stored in <code class="highlighter-rouge">precal_scripts</code>, and <code class="highlighter-rouge">postcal_scripts</code>, respectively run before and after running the scripts within each SPW directory. By default, <code class="highlighter-rouge">precal_scripts = [('calc_refant.py',False,''), ('partition.py',True,'')]</code>, and <code class="highlighter-rouge">postcal_scripts = [('concat.py',False,''), ('plotcal_spw.py', False, ''), ('selfcal_part1.py',True,''), ('selfcal_part2.py',False,''), ('science_image.py', True, '')]</code>, although <code class="highlighter-rouge">calc_refant.py</code> will be stripped if <code class="highlighter-rouge">calcrefant=False</code>, and the selfcal and imaging scripts will be stripped if you do not select these routines during the <code class="highlighter-rouge">[-B --build]</code> step with <code class="highlighter-rouge">[-2 --do2GC]</code> and <code class="highlighter-rouge">[-I --science_image]</code>, respectively. The <code class="highlighter-rouge">partition.py</code> and <code class="highlighter-rouge">concat.py</code> steps are discussed below.</p>
+
+<p>The steps following <code class="highlighter-rouge">concat</code> are run over the concatenated dataset that spans all of the SPWs. Alternatively, these scripts (e.g. for self-carlibation and science imaging) can be appended to the end of <code class="highlighter-rouge">scripts</code>, which will then be run on the targets split from each of the SPWs. Similar to the behaviour during the cross-calibration steps, self-calibrating separately over SPWs will partially solve for frequency dependence of your gain, albeit with a loss of signal-to-noise (compared to the full-band self-calibration run after concatenating). After doing this, concat can be run, and then one final science imaging step over the whole (concatenated) band. Alternatively, you could perform a custom combination of your SPW images, such as a weighted average image, assuming you’ve matched the resolution with a common <code class="highlighter-rouge">restoringbeam</code> and/or <code class="highlighter-rouge">uvtaper</code>.</p>
+
+<!-- `calc_refant.py` calculates the antenna statistics by considering the percentage of flagged data...-->
+
+<p>During the <code class="highlighter-rouge">[-R --run]</code> step, if <code class="highlighter-rouge">nspw=1</code> and <code class="highlighter-rouge">precal_scripts</code> or <code class="highlighter-rouge">postcal_scripts</code> are not empty, a warning will be output, and these lists will be respectively prepended and appended to <code class="highlighter-rouge">scripts</code>, and then set to empty lists.</p>
+
+<h2 id="partition">Partition</h2>
+
+<p>The initial partition, given by the <code class="highlighter-rouge">partiton.py</code> script (by default the last script in <code class="highlighter-rouge">precal_scripts</code>), which reads your input MS and partitions out your selected <code class="highlighter-rouge">spw</code> into an MMS, is run as a SLURM array job when <code class="highlighter-rouge">nspw</code> &gt; 1. This step allows multiple concurrently-running partitions over several SPWs, but limited to &lt; 200 cores, meaning that sometimes not every SPW is partitioned concurrently. After the first SPW is partitioned, the first SPW launches an instance of the pipeline, and so on until the last SPW is processing. This behaviour is a special case that only works when <code class="highlighter-rouge">partition.py</code> is the last script within <code class="highlighter-rouge">precal_scripts</code>, otherwise the processing of every SPW waits until the last script within <code class="highlighter-rouge">precal_scripts</code> has been run.</p>
+
+<h2 id="bash-jobscripts">Bash <code class="highlighter-rouge">jobScripts</code></h2>
+
+<p>When using <code class="highlighter-rouge">nspw</code> &gt; 1, the behaviour of the bash scripts within the <code class="highlighter-rouge">jobScripts</code> directory (symlinked from the working directory) is different. Each bash script will iterate through the SPW directories and display the output for that SPW, running each SPW directory’s instance of that bash script, which remains the same as above. Since there are more than 100 jobs by default, <code class="highlighter-rouge">./summary.sh</code> will display only the running or failed jobs, and will not display completed or pending jobs, whereas <code class="highlighter-rouge">./fullSummary.sh</code> will display all of the jobs. Additionally, when <code class="highlighter-rouge">precal_scripts</code> and <code class="highlighter-rouge">postcal_scripts</code> are not empty lists, there will be a version of each of these <code class="highlighter-rouge">jobScripts</code> starting with <code class="highlighter-rouge">allSPW_</code>. These correspond to the pipeline jobs that are run at top-level directory over all SPWs, which is also displayed when calling the other <code class="highlighter-rouge">jobScripts</code>. For example, when running <code class="highlighter-rouge">./summary.sh -X</code> (where <code class="highlighter-rouge">-X</code> outputs ones line per job) during the middle of your processing with <code class="highlighter-rouge">nspw=2</code>, you will see something similar to the following:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jcollier@slurm-login:/scratch/users/jcollier/MIGHTEE/nspw2$ ./summary.sh -X
+SPW #1: /scratch/users/jcollier/MIGHTEE/nspw2/1350~1375MHz
+          JobID         JobName  Partition    Elapsed NNodes NTasks NCPUS  MaxDiskRead MaxDiskWrite             NodeList   TotalCPU    CPUTime     MaxRSS      State ExitCode
+--------------- --------------- ---------- ---------- ------ ------ ----- ------------ ------------ -------------------- ---------- ---------- ---------- ---------- --------
+1838779         setjy                 Main   00:02:31      1            4                                    compute-039   00:00:00   00:10:04             RUNNING        0:0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+SPW #2: /scratch/users/jcollier/MIGHTEE/nspw2/1375~1400MHz
+          JobID         JobName  Partition    Elapsed NNodes NTasks NCPUS  MaxDiskRead MaxDiskWrite             NodeList   TotalCPU    CPUTime     MaxRSS      State ExitCode
+--------------- --------------- ---------- ---------- ------ ------ ----- ------------ ------------ -------------------- ---------- ---------- ---------- ---------- --------
+1838788         flag_round_1          Main   00:06:22      1            4                                    compute-059   00:00:00   00:25:28             RUNNING        0:0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+All SPWs: /scratch/users/jcollier/MIGHTEE/nspw2
+          JobID         JobName  Partition    Elapsed NNodes NTasks NCPUS  MaxDiskRead MaxDiskWrite             NodeList   TotalCPU    CPUTime     MaxRSS      State ExitCode
+--------------- --------------- ---------- ---------- ------ ------ ----- ------------ ------------ -------------------- ---------- ---------- ---------- ---------- --------
+1838776_0       partition             Main   00:03:49      1            8                                    compute-058   00:00:00   00:30:32             COMPLETED      0:0
+1838776_1       partition             Main   00:03:19      1            8                                    compute-018   00:00:00   00:26:32             COMPLETED      0:0
+1838797         concat                Main   00:02:13      1            1                                    compute-020   00:00:00   00:00:00             PENDING        0:0
+1838798         plotcal_spw           Main   00:00:19      1            1                                    compute-020   00:00:00   00:00:00             PENDING        0:0
+</code></pre></div></div>
+
+<h2 id="concatenation-and-further-imaging">Concatenation and further imaging</h2>
+
+<p>After all of the SPWs have completed, irrespective of their completion status, the scripts within <code class="highlighter-rouge">postcal_scripts</code> are run at the top level directory (i.e. above the SPW directories). By default, the first of these is <code class="highlighter-rouge">concat.py</code>, which concatenates any output MMSs/MSs and quick-look images. By default these are the split calibrator and target fields, and their quick-look images.</p>
+
+<p>If the config parameter <code class="highlighter-rouge">keepmms=True</code>, <code class="highlighter-rouge">virtualconcat</code> will be run for each field that has been split into its own MMS, resulting in an MMS with <code class="highlighter-rouge">nspw</code> x <code class="highlighter-rouge">nscans</code> sub-MSs. If <code class="highlighter-rouge">keepmms=False</code>, <code class="highlighter-rouge">concat</code> is run over each field that has been split into its own MS, resulting in a single concatenated MS. In both cases, the resulting MMS/MS will now contain multiple SPWs, given by <code class="highlighter-rouge">nspw</code> (assuming that all SPWs successfully completed processing). These can then be imaged over the whole concatenated frequency range via further image processing, such as <a href="/docs/processMeerKAT/self-calibration-in-processmeerkat">self-calibration</a> and <a href="/docs/processMeerKAT/science-imaging-in-processmeerkat">science imaging</a>.</p>
+
+<p>Furthermore, each split field’s quick-look image is concatenated together into a quick-look continuum cube. If any SPWs failed to split out a field or create an image for that field, they will be excluded from the (image and MMS/MS) concatenation.</p>
+
+
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

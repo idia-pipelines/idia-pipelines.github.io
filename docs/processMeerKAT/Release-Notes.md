@@ -5,13 +5,26 @@ parent: processMeerKAT
 nav_order: 2
 ---
 
+# Version 2.0
+
+This is the third release of the IDIA Pipelines `processMeerKAT` package, intended for use on the [ilifu](https://docs.ilifu.ac.za/#/) SLURM cluster. The software uses a parallelised implementation of [CASA 6](https://casadocs.readthedocs.io/en/stable/) to calibrate and image interferometric (imaging) data from the MeerKAT telescope.
+
+The current release adds the following functionality:
+
+* **Self-calibration and science imaging**: this allows for configuration of multiple self-calibration loops, with customisable parameters per loop, as well as an additional final imaging stage to generate science-ready images, which includes primary beam correction using [katbeam](https://github.com/ska-sa/katbeam).
+* **Support for outlier fields**: it is now possible to specify an outlier threshold to identify and image bright sources outside the main field of view, which improves the run-time of imaging, and can improve image fidelity in some cases.
+* Bugfixes and improvements to polarisation calibration.
+* Support for loading modules on the ilifu SLURM cluster
+* Uses CASA 6.X, Python 3.8, OpenMPI 4.0.3, and Singularity 3.9.1
+
+
 # Version 1.1
 
 This is the second release of the IDIA Pipelines `processsMeerKAT` package, to be used on the ilifu SLURM cluster. The software uses a parallelised implementation of CASA to calibrate interferometric (imaging) data from the MeerKAT telescope.
 
 The current release adds the following functionality:
 
-* Spectral Window (SPW) splitting (see docs [here](/docs/processMeerKAT/using-the-pipeline#spw-splitting)), where each separate SPW is processed independently and concurrently, providing a speed-up for large (TB) datasets, better polarisation calibration, and better flux scaling
+* Spectral Window (SPW) splitting (see docs [here](/docs/processMeerKAT/config-files#spw-splitting)), where each separate SPW is processed independently and concurrently, providing a speed-up for large (TB) datasets, better polarisation calibration, and better flux scaling
 * Quick-look continuum cube, across all SPWs
 * Pre-processing during initial partition of MS, including pre-averaging of frequency channels, removal of cross-hand correlations up front for Stokes I processing, and removal of autocorrelations
 * If running in full Stokes mode, `setjy` now includes the polarisation models for 3C286 and 3C138 if they are present in the data.

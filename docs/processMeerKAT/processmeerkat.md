@@ -6,6 +6,8 @@ has_children: true
 permalink: /docs/processMeerKAT
 ---
 
+# processMeerKAT
+
 The `processMeerKAT` software has been written to do calibration and imaging of MeerKAT
 interferometric data.
 
@@ -18,23 +20,23 @@ Typical calibration and imaging of radio data comprises three steps:
   pursuit of high dynamic range imaging. This includes compensating for the primary beam and
   direction dependent effects.
 
-The `processMeerKAT` currently does full-polarisation *a priori* calibration on MeerKAT data, and includes automated
+The `processMeerKAT` currently does full-polarisation *a priori* and *a posteriori'* calibration on MeerKAT data, and includes automated
 flagging. `processMeerKAT` is written solely for the processing of data on the ilifu SLURM cluster, but
 future revisions will allow you to run the software on any HPC platform.
 
 The main features of `processMeerKAT` are as follows:
-* Is written in Python 2.7 (for CASA 5.X).
-* Calibration algorithms only use CASA 5.X tasks and helper functions.
-* Uses a purpose-built CASA Singularity container for parallel processing at IDIA, i.e, is fully
-thread-safe.
-* Uses `MPICASA` to run parallel jobs over the cluster.
-* Generates `SBATCH` files and ancillary helper scripts for processing.
+* Is written in Python 3.8+ (for CASA 6.5+).
+* Calibration algorithms only use CASA 6.5+ tasks and helper functions.
+* Uses a purpose-built CASA Singularity container for parallel processing at IDIA (i.e. is fully
+thread-safe).
+* Uses `casampi` to run parallel jobs over the cluster.
+* Generates `sbatch` files and ancillary helper scripts for processing.
 
 Please read the documentation to learn how to use the pipeline for your imaging data at IDIA.
 
 ## License
 
-Copyright (C) 2020 Inter-University Institute for Data Intensive Astronomy.
+Copyright (C) 2022 Inter-University Institute for Data Intensive Astronomy.
 [support@ilifu.ac.za](mailto:support@ilifu.ac.za)
 
 This program is free software: you can redistribute it and/or modify
@@ -51,4 +53,3 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 {: .fs-6 .fw-300 }
-

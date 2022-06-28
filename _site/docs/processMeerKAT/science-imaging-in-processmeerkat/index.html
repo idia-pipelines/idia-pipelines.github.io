@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  
+
+  <title>Science Imaging in processMeerKAT - IDIA Pipelines</title>
+  <link rel="stylesheet" href="http://localhost:4000/assets/css/just-the-docs.css">
+  
+  <script type="text/javascript" src="http://localhost:4000/assets/js/vendor/lunr.min.js"></script>
+  
+  <script type="text/javascript" src="http://localhost:4000/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+
+  <div class="page-wrap">
+    <div class="side-bar">
+      <a href="http://localhost:4000/" class="site-title fs-6 lh-tight">IDIA Pipelines</a>
+      <span class="fs-3"><button class="js-main-nav-trigger navigation-list-toggle btn btn-outline" type="button" data-text-toggle="Hide">Menu</button></span>
+      <div class="navigation main-nav js-main-nav">
+        <nav role="navigation" aria-label="Main navigation">
+  <ul class="navigation-list">
+    
+    
+      
+    
+      
+        
+      
+    
+      
+        
+          <li class="navigation-list-item">
+            
+            <a href="http://localhost:4000/" class="navigation-list-link">Home</a>
+            
+          </li>
+        
+      
+    
+      
+        
+          <li class="navigation-list-item">
+            
+            <a href="http://localhost:4000/docs/access/" class="navigation-list-link">Access to IDIA Machines</a>
+            
+          </li>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <li class="navigation-list-item active">
+            
+            <a href="http://localhost:4000/docs/processMeerKAT" class="navigation-list-link">processMeerKAT</a>
+            
+              
+              <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/Quick-Start/" class="navigation-list-link">Quick Start</a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/Release-Notes/" class="navigation-list-link">Release Notes</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/using-the-pipeline/" class="navigation-list-link">Using the Pipeline</a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/Example-Use-Cases/" class="navigation-list-link">Example Use Cases</a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/Diagnosing-Errors/" class="navigation-list-link">Diagnosing Errors</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/config-files/" class="navigation-list-link">Configuration Files</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/cross-calibration-in-processmeerkat/" class="navigation-list-link">Cross-calibration in processMeerKAT</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/self-calibration-in-processmeerkat/" class="navigation-list-link">Self-calibration in processMeerKAT</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item  active">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/science-imaging-in-processmeerkat/" class="navigation-list-link active">Science Imaging in processMeerKAT</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/deep-2-tutorial/" class="navigation-list-link">DEEP 2 Tutorial</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/Advanced-Usage/" class="navigation-list-link">Advanced Usage</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/SLURM-and-MPICASA/" class="navigation-list-link">SLURM and MPICASA</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/LICENSE/" class="navigation-list-link">LICENSE</a>
+                      
+                    </li>
+                  
+                
+              </ul>
+            
+          </li>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <li class="navigation-list-item">
+            
+            <a href="http://localhost:4000/docs/containers/" class="navigation-list-link">Singularity Containers</a>
+            
+          </li>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+  </ul>
+</nav>
+
+      </div>
+      <footer role="contentinfo" class="site-footer">
+        <p class="text-small text-grey-dk-000 mb-0">This site uses <a href="https://github.com/pmarsceill/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.</p>
+      </footer>
+    </div>
+    <div class="main-content-wrap">
+      <div class="page-header">
+        <div class="main-content">
+          
+          <div class="search js-search">
+            <div class="search-input-wrap">
+              <input type="text" class="js-search-input search-input" tabindex="0" placeholder="Search IDIA Pipelines" aria-label="Search IDIA Pipelines" autocomplete="off">
+              <svg width="14" height="14" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" class="search-icon"><title>Search</title><g fill-rule="nonzero"><path d="M17.332 20.735c-5.537 0-10-4.6-10-10.247 0-5.646 4.463-10.247 10-10.247 5.536 0 10 4.601 10 10.247s-4.464 10.247-10 10.247zm0-4c3.3 0 6-2.783 6-6.247 0-3.463-2.7-6.247-6-6.247s-6 2.784-6 6.247c0 3.464 2.7 6.247 6 6.247z"/><path d="M11.672 13.791L.192 25.271 3.02 28.1 14.5 16.62z"/></g></svg>
+            </div>
+            <div class="js-search-results search-results-wrap"></div>
+          </div>
+          
+          
+            <ul class="list-style-none text-small mt-md-1 mb-md-1 pb-4 pb-md-0 js-aux-nav aux-nav">
+              
+                <li class="d-inline-block my-0"><a href="//github.com/idia-astro/pipelines/wiki">IDIA Pipelines</a></li>
+              
+            </ul>
+          
+        </div>
+      </div>
+      <div class="main-content js-main-content" tabindex="0">
+        
+          
+            <nav class="breadcrumb-nav">
+              <ol class="breadcrumb-nav-list">
+                
+                  <li class="breadcrumb-nav-list-item"><a href="http://localhost:4000/docs/processMeerKAT">processMeerKAT</a></li>
+                
+                <li class="breadcrumb-nav-list-item"><span>Science Imaging in processMeerKAT</span></li>
+              </ol>
+            </nav>
+          
+        
+        <div id="main-content" class="page-content" role="main">
+          <h1 id="science-imaging">Science Imaging</h1>
+
+<p>processMeerKAT implements science imaging using the <code class="highlighter-rouge">tclean</code> task in
+<a href="https://casadocs.readthedocs.io/en/stable/">CASA</a> to generate the images, and
+the katbeam package to perform primary beam correction on the final image.</p>
+
+<p>The science imaging functionality exposes more of the advanced imaging
+capabilities of <code class="highlighter-rouge">tclean</code> and is intended to be run after all the
+self-calibration loops. By default the final imaging mask generated by
+self-calibration is passed in to science imaging, as well as the final set of
+outlier fields (if <a href="/docs/processMeerKAT/self-calibration-in-processmeerkat#outlier-imaging">outlier imaging</a> is enabled).</p>
+
+<p>Similarly, the final <code class="highlighter-rouge">rmsmap</code> is passed in to science imaging, to enable S/N-based thresholding (see below).
+It is possible to run science imaging immediately after cross-calibration, without running selfcal, although these three fields
+will not be populated, but would need to be manually set based on a pre-existing set of custom output (e.g. a mask, RMS map and outlier file).</p>
+
+<p>Science imaging is expected to be run once, preferably at the end of self-calibration, and
+unlike self-calibration it does not accept tuples as arguments.</p>
+
+<h3 id="a-note-on-pb-correction">A note on PB correction</h3>
+
+<p>If the CASA gridders <code class="highlighter-rouge">standard</code> or <code class="highlighter-rouge">wproject</code> are used the default <code class="highlighter-rouge">.pb</code> image
+generated is incorrect for MeerKAT. We therefore use the package <code class="highlighter-rouge">katbeam</code> to
+perform the PB correction. The final data products are the flat noise image
+(produced by CASA), the <code class="highlighter-rouge">katbeam</code> PB image as well as the PB corrected image.</p>
+
+<p>The <code class="highlighter-rouge">katbeam</code> package describes the MeerKAT PB as an axis-symmetric <code class="highlighter-rouge">cos^2</code>
+function. In a future release of the pipeline we intend to support the AW
+projection algorithm, which will produce a correct <code class="highlighter-rouge">.pb</code> image for MeerKAT from
+within tclean, in full Stokes.</p>
+
+<h2 id="science-imaging-config-options">Science Imaging Config Options</h2>
+
+<p>The default science imaging section in the config file is shown below, and the details of each option are explained further down.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[image]
+cell = '1.5arcsec'
+robust = -0.5
+imsize = [6144, 6144]
+wprojplanes = 512
+niter = 50000
+threshold = 10                    # S/N value if &gt;= 1.0 and rmsmap != '', otherwise Jy
+multiscale = [0, 5, 10, 15]
+nterms = 2                        # Number of taylor terms
+gridder = 'wproject'
+deconvolver = 'mtmfs'
+restoringbeam = ''
+specmode = 'mfs'
+stokes = 'I'
+pbthreshold = 0.1                 # Threshold below which to mask the PB for PB correction
+mask = ''
+rmsmap = ''
+outlierfile = ''
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p><strong>cell</strong>: The cell size of the pixels in the image plane, specified as a CASA
+compatible string (with units).</p>
+  </li>
+  <li>
+    <p><strong>robust</strong>: The Briggs’ robust parameter used during gridding. Specified as a
+floating point between -2 (uniform weighting) and +2 (natural weighting).</p>
+  </li>
+  <li>
+    <p><strong>imsize</strong>: The size of the image in pixels. The image dimensions can be
+specified in one or two dimensions, hence 6144 is treated as [6144,6144].</p>
+  </li>
+  <li>
+    <p><strong>wprojplanes</strong> : The number of W-projection planes to use (in case the
+<code class="highlighter-rouge">wproject</code> gridder is specified). Must be specified as an integer.</p>
+  </li>
+  <li>
+    <p><strong>niter</strong>: The number of iterations to perform during deconvolution. Imaging
+will continue until either the stopping threshold (described below) is
+reached, or the iteration limit is reached.</p>
+  </li>
+  <li>
+    <p><strong>threshold</strong>: The stopping threshold for deconvolution. If the threshold
+value is larger than 1 and the <code class="highlighter-rouge">rmsmap</code> parameter is not blank, the value is
+treated as a signal-to-noise ratio. If the threshold value is less than 1, or
+if it is greater than 1 and the <code class="highlighter-rouge">rmsmap</code> parameter is blank, it is treated as
+an absolute value in Jy. If science imaging is requested after
+self-calibration, the <code class="highlighter-rouge">rmsmap</code> parameter will be auto-populated by the
+pipeline.</p>
+  </li>
+  <li>
+    <p><strong>multiscale</strong>; The number of individual scales to use if multi-scale imaging
+is desired (and the appropriate <code class="highlighter-rouge">deconvolver</code> is chosen - e.g. <code class="highlighter-rouge">mtmfs</code> or <code class="highlighter-rouge">multiscale</code>) specified as a list
+of integers such as [0, 5, 10] etc. To switch off multiscale imaging, specify
+a blank list (<em>i.e.,</em> <code class="highlighter-rouge">multiscale=[]</code>).</p>
+  </li>
+  <li>
+    <p><strong>nterms</strong> : The number of Taylor terms to use for broadband imaging.</p>
+  </li>
+  <li>
+    <p><strong>gridder</strong> : The gridder to use for imaging, typically one of either
+<code class="highlighter-rouge">standard</code> or <code class="highlighter-rouge">wproject</code>. Any CASA gridder is a valid entry for this
+parameter, although all the necessary configuration options for different
+gridders will not be exposed through the configuration file.</p>
+  </li>
+  <li>
+    <p><strong>deconvolver</strong> : The deconvolver to use during imaging. Use <code class="highlighter-rouge">clark</code> or <code class="highlighter-rouge">hogbom</code> when the fractional bandwidth (bandwidth divided by band centre) is &lt; ~15%.</p>
+  </li>
+  <li>
+    <p><strong>restoringbeam</strong> : Specified as a string with units, such as <code class="highlighter-rouge">'20arcsec'</code>. If
+this is left blank, the default restoring beam is used. Specifying this
+parameter can be used to force a specific restoring beam during imaging.</p>
+  </li>
+  <li>
+    <p><strong>specmode</strong> : Specify whether to generate a multi-frequency synthesis image
+(<code class="highlighter-rouge">mfs</code>) or a spectral cube (<code class="highlighter-rouge">cube</code> or <code class="highlighter-rouge">cubedata</code>).</p>
+  </li>
+  <li>
+    <p><strong>stokes</strong> : The Stokes planes to image. Please note that generating
+multi-Stokes spectral cubes or multi-Stokes cubes with outliers, is not currently possible within CASA</p>
+  </li>
+  <li>
+    <p><strong>pbthreshold</strong> : The PB gain threshold below which to mask the PB and the PB
+corrected image. The PB is generated using the <code class="highlighter-rouge">katbeam</code> package.</p>
+  </li>
+  <li>
+    <p><strong>mask</strong> : Path to a CLEAN mask or a CASA region file. This is normally
+auto-populated by the pipeline if science imaging is queued up after
+self-calibration. However, if science imaging is being launched manually, this
+will have to be specified if masking is desired. If the parameter is left
+blank, no masking will be performed.</p>
+  </li>
+  <li>
+    <p><strong>rmsmap</strong> : Path to an RMS image, used to determine local thresholds during
+deconvolution. This is normally auto-populated by the pipeline if science
+imaging is queued up after self-calibration. If this is left blank, the
+<code class="highlighter-rouge">threshold</code> parameter is assumed to be an absolute (global) threshold in Jy.</p>
+  </li>
+  <li>
+    <p><strong>outlierfile</strong> : Path to a valid outlier fields file. This is normally
+auto-populated by the pipeline if science imaging is queued up after
+self-calibration. If this is left blank, no <a href="/docs/processMeerKAT/self-calibration-in-processmeerkat#outlier-imaging">outlier imaging</a> is performed.</p>
+  </li>
+</ul>
+
+
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

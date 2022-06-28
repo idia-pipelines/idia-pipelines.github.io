@@ -59,6 +59,10 @@
     
       
         
+      
+    
+      
+        
           <li class="navigation-list-item">
             
             <a href="http://localhost:4000/docs/processMeerKAT" class="navigation-list-link">processMeerKAT</a>
@@ -89,8 +93,6 @@
                   
                 
                   
-                
-                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/using-the-pipeline/" class="navigation-list-link">Using the Pipeline</a>
@@ -109,9 +111,43 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/Diagnosing-Errors/" class="navigation-list-link">Diagnosing Errors</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/config-files/" class="navigation-list-link">Configuration Files</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/cross-calibration-in-processmeerkat/" class="navigation-list-link">Cross-calibration in processMeerKAT</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/self-calibration-in-processmeerkat/" class="navigation-list-link">Self-calibration in processMeerKAT</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/science-imaging-in-processmeerkat/" class="navigation-list-link">Science Imaging in processMeerKAT</a>
                       
                     </li>
                   
@@ -127,7 +163,7 @@
                   
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/calibration-in-processmeerkat/" class="navigation-list-link">Calibration in processMeerKAT</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/Advanced-Usage/" class="navigation-list-link">Advanced Usage</a>
                       
                     </li>
                   
@@ -192,6 +228,18 @@
         
       
     
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
   </ul>
 </nav>
 
@@ -227,35 +275,32 @@
         
         <div id="main-content" class="page-content" role="main">
           <h1 id="singularity-containers">Singularity Containers</h1>
-<p>At IDIA, astronomical software packages are provided and managed using <a href="http://singularity.lbl.gov/">Singularity</a> containers. Containers
+<p>At IDIA, astronomical software packages are provided and managed using <a href="http://singularityware.github.io/">Singularity</a> containers. Containers
 are managed and built by our developers. If you have any questions/issues relating to containers,
 please send an email to <a href="mailto:support@ilifu.ac.za">support@ilifu.ac.za</a>. You can find more documentation about containers on Ilifu <a href="http://docs.ilifu.ac.za/#/getting_started/container_environments">here</a>.</p>
 
 <h1 id="available-containers">Available Containers</h1>
 <p>The most recent, stable versions of containers are available in <code class="highlighter-rouge">/idia/software/containers/</code>. Some
-of these containers can be accessed via the Jupyter-Hub, but all of them can be accessed via the
-terminal (i.e., once you’ve ssh’d into an IDIA machine).</p>
+of these containers can be accessed via JupyterHub, but all of them can be accessed via the
+terminal (i.e., once you’ve ssh’d into an IDIA machine). Some additional CASA-specific information can be found <a href="https://docs.ilifu.ac.za/#/astronomy/astronomy_software?id=casa">here</a>.</p>
 
 <p>Here are a few examples of the latest stable Singularity container builds that are available in
-<code class="highlighter-rouge">/idia/software/containers/</code>:</p>
+<code class="highlighter-rouge">/idia/software/containers/</code>:
+<!-- * `jupyter-casa-latest.simg`
+    * Allows you to use CASA tasks via the Jupyter notebook. Note that visualisation tools like
+      `plotms` or `viewer` will not work on the notebook. This currently runs CASA v5.5. --></p>
 <ul>
-  <li><code class="highlighter-rouge">jupyter-casa-latest.simg</code>
+  <li><code class="highlighter-rouge">casa-6.5.0-modular.sif</code>
     <ul>
-      <li>Allows you to use CASA tasks via the Jupyter notebook. Note that visualisation tools like
-<code class="highlighter-rouge">plotms</code> or <code class="highlighter-rouge">viewer</code> will not work on the notebook.</li>
+      <li>Contains the modular CASA 6.5 install, which can be accessed via Python using <code class="highlighter-rouge">import casatools</code> etc.</li>
     </ul>
   </li>
-  <li><code class="highlighter-rouge">casa-stable-5.3.0.simg</code>
-    <ul>
-      <li>Contains the CASA binaries for the 5.3.0. release.</li>
-    </ul>
-  </li>
-  <li><code class="highlighter-rouge">kern4.simg</code>
+  <li><code class="highlighter-rouge">kern7.simg</code>
     <ul>
       <li>Contains <em>all</em> the software packages provided by the <a href="http://kernsuite.info/">Kern</a> repository.</li>
     </ul>
   </li>
-  <li><code class="highlighter-rouge">sourcefinding_py3.simg</code>
+  <li><code class="highlighter-rouge">ASTRO-PY3.simg</code>
     <ul>
       <li>Builds of commonly used source finding packages, e.g., PyBDSF.</li>
     </ul>

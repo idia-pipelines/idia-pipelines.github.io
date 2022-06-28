@@ -59,6 +59,10 @@
     
       
         
+      
+    
+      
+        
           <li class="navigation-list-item active">
             
             <a href="http://localhost:4000/docs/processMeerKAT" class="navigation-list-link active">processMeerKAT</a>
@@ -89,8 +93,6 @@
                   
                 
                   
-                
-                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/using-the-pipeline/" class="navigation-list-link">Using the Pipeline</a>
@@ -109,9 +111,43 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/Diagnosing-Errors/" class="navigation-list-link">Diagnosing Errors</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/config-files/" class="navigation-list-link">Configuration Files</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/cross-calibration-in-processmeerkat/" class="navigation-list-link">Cross-calibration in processMeerKAT</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/self-calibration-in-processmeerkat/" class="navigation-list-link">Self-calibration in processMeerKAT</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/science-imaging-in-processmeerkat/" class="navigation-list-link">Science Imaging in processMeerKAT</a>
                       
                     </li>
                   
@@ -127,7 +163,7 @@
                   
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/calibration-in-processmeerkat/" class="navigation-list-link">Calibration in processMeerKAT</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/Advanced-Usage/" class="navigation-list-link">Advanced Usage</a>
                       
                     </li>
                   
@@ -192,6 +228,18 @@
         
       
     
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
   </ul>
 </nav>
 
@@ -226,7 +274,9 @@
           
         
         <div id="main-content" class="page-content" role="main">
-          <p>The <code class="highlighter-rouge">processMeerKAT</code> software has been written to do calibration and imaging of MeerKAT
+          <h1 id="processmeerkat">processMeerKAT</h1>
+
+<p>The <code class="highlighter-rouge">processMeerKAT</code> software has been written to do calibration and imaging of MeerKAT
 interferometric data.</p>
 
 <p>Typical calibration and imaging of radio data comprises three steps:</p>
@@ -240,25 +290,25 @@ pursuit of high dynamic range imaging. This includes compensating for the primar
 direction dependent effects.</li>
 </ul>
 
-<p>The <code class="highlighter-rouge">processMeerKAT</code> currently does full-polarisation <em>a priori</em> calibration on MeerKAT data, and includes automated
+<p>The <code class="highlighter-rouge">processMeerKAT</code> currently does full-polarisation <em>a priori</em> and <em>a posteriori’</em> calibration on MeerKAT data, and includes automated
 flagging. <code class="highlighter-rouge">processMeerKAT</code> is written solely for the processing of data on the ilifu SLURM cluster, but
 future revisions will allow you to run the software on any HPC platform.</p>
 
 <p>The main features of <code class="highlighter-rouge">processMeerKAT</code> are as follows:</p>
 <ul>
-  <li>Is written in Python 2.7 (for CASA 5.X).</li>
-  <li>Calibration algorithms only use CASA 5.X tasks and helper functions.</li>
-  <li>Uses a purpose-built CASA Singularity container for parallel processing at IDIA, i.e, is fully
-thread-safe.</li>
-  <li>Uses <code class="highlighter-rouge">MPICASA</code> to run parallel jobs over the cluster.</li>
-  <li>Generates <code class="highlighter-rouge">SBATCH</code> files and ancillary helper scripts for processing.</li>
+  <li>Is written in Python 3.8+ (for CASA 6.5+).</li>
+  <li>Calibration algorithms only use CASA 6.5+ tasks and helper functions.</li>
+  <li>Uses a purpose-built CASA Singularity container for parallel processing at IDIA (i.e. is fully
+thread-safe).</li>
+  <li>Uses <code class="highlighter-rouge">casampi</code> to run parallel jobs over the cluster.</li>
+  <li>Generates <code class="highlighter-rouge">sbatch</code> files and ancillary helper scripts for processing.</li>
 </ul>
 
 <p>Please read the documentation to learn how to use the pipeline for your imaging data at IDIA.</p>
 
 <h2 id="license">License</h2>
 
-<p>Copyright (C) 2020 Inter-University Institute for Data Intensive Astronomy.
+<p>Copyright (C) 2022 Inter-University Institute for Data Intensive Astronomy.
 <a href="mailto:support@ilifu.ac.za">support@ilifu.ac.za</a></p>
 
 <p>This program is free software: you can redistribute it and/or modify
@@ -291,19 +341,19 @@ along with this program. If not, see <a href="https://www.gnu.org/licenses/">htt
               
             
               
+            
+              
               <li>
                 <a href="http://localhost:4000/docs/processMeerKAT/Quick-Start/">Quick Start</a>
               </li>
               
             
               
-            
-              
-            
-              
               <li>
                 <a href="http://localhost:4000/docs/processMeerKAT/Release-Notes/">Release Notes</a>
               </li>
+              
+            
               
             
               
@@ -315,16 +365,40 @@ along with this program. If not, see <a href="https://www.gnu.org/licenses/">htt
               
             
               
+            
+              
               <li>
                 <a href="http://localhost:4000/docs/processMeerKAT/Example-Use-Cases/">Example Use Cases</a>
               </li>
               
             
               
+              <li>
+                <a href="http://localhost:4000/docs/processMeerKAT/Diagnosing-Errors/">Diagnosing Errors</a>
+              </li>
+              
             
               
               <li>
-                <a href="http://localhost:4000/docs/processMeerKAT/Diagnosing-Errors/">Diagnosing Errors</a>
+                <a href="http://localhost:4000/docs/processMeerKAT/config-files/">Configuration Files</a>
+              </li>
+              
+            
+              
+              <li>
+                <a href="http://localhost:4000/docs/processMeerKAT/cross-calibration-in-processmeerkat/">Cross-calibration in processMeerKAT</a>
+              </li>
+              
+            
+              
+              <li>
+                <a href="http://localhost:4000/docs/processMeerKAT/self-calibration-in-processmeerkat/">Self-calibration in processMeerKAT</a>
+              </li>
+              
+            
+              
+              <li>
+                <a href="http://localhost:4000/docs/processMeerKAT/science-imaging-in-processmeerkat/">Science Imaging in processMeerKAT</a>
               </li>
               
             
@@ -336,7 +410,7 @@ along with this program. If not, see <a href="https://www.gnu.org/licenses/">htt
             
               
               <li>
-                <a href="http://localhost:4000/docs/processMeerKAT/calibration-in-processmeerkat/">Calibration in processMeerKAT</a>
+                <a href="http://localhost:4000/docs/processMeerKAT/Advanced-Usage/">Advanced Usage</a>
               </li>
               
             
