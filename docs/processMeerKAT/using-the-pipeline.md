@@ -5,12 +5,12 @@ parent: processMeerKAT
 nav_order: 3
 ---
 
-## Usage
+# Usage
 The usage can be seen by running
-```processMeerKAT.py -h``` the output of which is documented below.
+```processMeerKAT.py -h``` the output of which is documented [below](#command-line-options).
 
 
-### Simple usage
+## Simple usage
 
 * To get things working, source `setup.sh`, which will add to your `$PATH` and `$PYTHONPATH` (add this to your `~/.profile`, for future use)
 
@@ -48,11 +48,11 @@ This will create `submit_pipeline.sh`, which you can then run to submit all pipe
 
 `./displayTimes.sh`
 
-### Detailed usage
+## Detailed usage
 
-* Build config file locally (e.g. on a fat node) using a custom SLURM configuration (nodes and tasks per node may be overwritten in your config file with something more appropriate by the end of the build step)
+* Build config file using a custom SLURM configuration (nodes and tasks per node may be overwritten in your config file with something more appropriate by the end of the build step)
 
-```processMeerKAT.py -l -B -C myconfig.txt -M mydata.ms -p Test02 -N 10 -t 8 -P 4 -m 100 -T 06:00:00 -n mydata_```
+```processMeerKAT.py -B -C myconfig.txt -M mydata.ms -p Test02 -N 10 -t 8 -D 4 -m 100 -T 06:00:00 -n run1_```
 
 * Build config file using different MPI wrapper and container
 
@@ -60,7 +60,7 @@ This will create `submit_pipeline.sh`, which you can then run to submit all pipe
 
 * Build config file with different set of (python) scripts
 
-```processMeerKAT.py -B -C myconfig.txt -S /absolute/path/to/my/script.py False /absolute/path/to/container.simg -S partition.py True '' -S relative/path/to/my/script.py True relative/path/to/container.simg -S flag_round_1.py True '' -S script_in_bash_PATH.py False container_in_bash_PATH.simg setjy.py True ''```
+```processMeerKAT.py -B -C myconfig.txt -S /absolute/path/to/my/script.py False /absolute/path/to/container.simg -S partition.py True '' -S relative/path/to/my/script.py True relative/path/to/container.simg -S flag_round_1.py True '' -S script_in_bash_PATH.py False container_in_bash_PATH.simg -S setjy.py True ''```
 
 * Run the pipeline immediately in verbose mode
 
@@ -68,13 +68,15 @@ This will create `submit_pipeline.sh`, which you can then run to submit all pipe
 
 **NOTE:** All other command-line arguments passed into `processMeerKAT.py` when using option `[-R --run]` will have no effect, since the arguments are read from the config file at this point. Only options `[-s --submit], [-v --verbose]` and `[-C --config]` will have any effect at this point. Similarly, changing the `[slurm]` section in your config file after using option `[-R --run]` will have no effect unless you `[-R --run]` again.
 
-The command line help text is :
+# Command-line options
+
+The command line help text is:
 ```
-usage: /users/jcollier/Scripts/pipelines_casa6_dev/processMeerKAT/processMeerKAT.py [-h] [-M path] [-C path] [-N num] [-t num] [-D num] [-m num] [-p name] [-T time] [-S script threadsafe container] [-b script threadsafe container]
+usage: /idia/software/pipelines/master/processMeerKAT/processMeerKAT.py [-h] [-M path] [-C path] [-N num] [-t num] [-D num] [-m num] [-p name] [-T time] [-S script threadsafe container] [-b script threadsafe container]
                                                                                     [-a script threadsafe container] [--modules [module [module ...]]] [-w path] [-c path] [-n unique] [-d list] [-e nodes] [-A group] [-r name] [-l] [-s]
                                                                                     [-v] [-q] [-P] [-2] [-I] [-x] [-j] (-B | -R | -V | -L)
 
-Process MeerKAT data via CASA MeasurementSet. Version: 1.1
+Process MeerKAT data via CASA MeasurementSet. Version: 2.0
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -126,13 +128,13 @@ optional arguments:
   -L, --license         Display this program's license and quit.
 ```
 
-## Selecting MS and fields IDs
+# Selecting MS and field IDs
 
 As previously stated, to build a config file, run
 
 ```processMeerKAT.py -B -C myconfig.txt -M mydata.ms```
 
-This calls CASA and adds a `[data]` section to your config file, which points to your MS, and a `[fields]` section, which points to the field IDs you want to process as bandpass, total flux and phase calibrators, and science target(s), as extracted by your input MS via their `INTENT` labels. Only targets and extra fields may have multiple fields separated by a comma, and all extra calibrator fields are appended as "targets", to allow for solutions to be applied to them, and quick-look images to be made of them (see [v1.0 release notes](/docs/processMeerKAT/Release-Notes/)).
+This calls CASA and adds a `[data]` section to your config file, which points to your MS, and a `[fields]` section, which points to the field IDs you want to process as bandpass, total flux and phase calibrators, and science target(s), as extracted from your input MS via their `INTENT` labels. Only targets and extra fields may have multiple fields separated by a comma, and all extra calibrator fields are appended as "targets", to allow for solutions to be applied to them, and quick-look images to be made of them (see [v1.0 release notes](/docs/processMeerKAT/Release-Notes#version-10)).
 
 The following is an example of what is appended to the bottom of your config file.
 

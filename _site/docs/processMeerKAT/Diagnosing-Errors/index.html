@@ -45,15 +45,19 @@
     
       
         
-      
-    
-      
-        
           <li class="navigation-list-item">
             
             <a href="http://localhost:4000/docs/access/" class="navigation-list-link">Access to IDIA Machines</a>
             
           </li>
+        
+      
+    
+      
+        
+      
+    
+      
         
       
     
@@ -79,6 +83,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/Release-Notes/" class="navigation-list-link">Release Notes</a>
@@ -87,15 +93,13 @@
                   
                 
                   
-                
-                  
-                
-                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/using-the-pipeline/" class="navigation-list-link">Using the Pipeline</a>
                       
                     </li>
+                  
+                
                   
                 
                   
@@ -119,7 +123,7 @@
                   
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/deep-2-tutorial/" class="navigation-list-link">DEEP 2 Tutorial</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/config-files/" class="navigation-list-link">Configuration Files</a>
                       
                     </li>
                   
@@ -136,6 +140,30 @@
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/self-calibration-in-processmeerkat/" class="navigation-list-link">Self-calibration in processMeerKAT</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/science-imaging-in-processmeerkat/" class="navigation-list-link">Science Imaging in processMeerKAT</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/deep-2-tutorial/" class="navigation-list-link">DEEP 2 Tutorial</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/Advanced-Usage/" class="navigation-list-link">Advanced Usage</a>
                       
                     </li>
                   
@@ -168,15 +196,23 @@
     
       
         
-      
-    
-      
-        
           <li class="navigation-list-item">
             
             <a href="http://localhost:4000/docs/containers/" class="navigation-list-link">Singularity Containers</a>
             
           </li>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
         
       
     
@@ -248,9 +284,9 @@
         
         <div id="main-content" class="page-content" role="main">
           <h1 id="diagnosing-errors">Diagnosing Errors</h1>
-<p>This is a list of <em>potential</em> issues that could arise while running the pipeline, which are typically associated with runtime errors, which could be due to issues with the cluster (e.g., worker-node failure during your job) or job parameterisation (e.g., underestimating RAM required).</p>
+<p>On this page is a list of <em>potential</em> issues that could arise while running the pipeline, which are typically associated with runtime errors, that could be due to issues with the cluster (e.g., compute-node failure during running your job) or job parameterisation (e.g. underestimating RAM required).</p>
 
-<p>This is not an exhaustive list, and is intended to give the user a sense of what problems may need to be reported to support@ilifu.ac.za and which ones can be ignored.</p>
+<p>This is not an exhaustive list, and is intended to give the user a sense of which problems may need to be reported to <a href="mailto:support@ilifu.ac.za">support@ilifu.ac.za</a> and which problems can be ignored.</p>
 
 <h3 id="unable-to-launch-jobs-in-slurm">Unable to launch jobs in SLURM</h3>
 
@@ -267,9 +303,17 @@
 
 <h3 id="memory-error">Memory error</h3>
 
-<p>If you see the phrase <code class="highlighter-rouge">MemoryError</code> in the <code class="highlighter-rouge">.err</code> logs (this can be located by <code class="highlighter-rouge">grep -i MemoryError logs/*.err</code>) this is typically indicative that CASA did not have enough memory to complete the task. This often happens while running <code class="highlighter-rouge">flagdata</code> and does not always halt execution of the pipeline. If you are not using the maximum amount of memory per node, increase your allocation (up to 232 GB on an ilifu node from the Main partition, or 480 GB on an ilifu node from the HighMem partition). If you are using the maximum amount of memory per node, reduce the number of tasks per node and increase the nodes in the config file (e.g. halve tasks and double nodes) before re-launching the pipeline, as that will allocate more memory per task.</p>
+<p>If you see the phrase <code class="highlighter-rouge">oom</code> (Out of Memory) or <code class="highlighter-rouge">MemoryError</code> in the <code class="highlighter-rouge">.err</code> logs (this can be located by <code class="highlighter-rouge">grep -i oom logs/*.err</code>), this is typically indicative that CASA did not have enough memory to complete the task. This often happens while running <code class="highlighter-rouge">flagdata</code> and does not always halt execution of the pipeline. If you are not using the maximum amount of memory per node, increase your allocation (up to 232 GB on an ilifu node from the Main partition, or 480 GB on an ilifu node from the HighMem partition). If you are using the maximum amount of memory per node, reduce the number of tasks per node and consider increasing the nodes in the config file (e.g. halve tasks and double nodes) before re-launching the pipeline, as that will allocate more memory per task.</p>
 
-<p>There are cases where a failure in <code class="highlighter-rouge">flagdata</code> can leave the MS in an intermediate state that causes the subsequent calibration tasks to fail. We recommend killing any currently running jobs (by running <code class="highlighter-rouge">./killJobs.sh</code> from the parent directory), wiping the <code class="highlighter-rouge">*MHz</code> subdirectories, and re-running <code class="highlighter-rouge">processMeerKAT.py -R [-C &lt;config_file&gt;]</code> and <code class="highlighter-rouge">./submit_pipeline.sh</code> again after making the above changes to the config file.</p>
+<p><code class="highlighter-rouge">summary.sh</code> will show a <code class="highlighter-rouge">State</code> of <code class="highlighter-rouge">OUT_OF_ME+</code> for jobs that have run out of memory, and the following error should appear in the <code class="highlighter-rouge">.err</code> logs (e.g. for jobID 1234567):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>slurmstepd: error: Detected 1 oom-kill event(s) in StepId=1234567.0 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: compute-070: task 0: Out Of Memory
+srun: launch/slurm: _step_signal: Terminating StepId=1234567.0
+slurmstepd: error: Detected 1 oom-kill event(s) in StepId=1234567.batch cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+</code></pre></div></div>
+
+<p>There are cases where a failure in <code class="highlighter-rouge">flagdata</code> can leave the MS in an intermediate state that causes the subsequent calibration tasks to fail. If the pipeline run did not cancel, we recommend killing any currently running jobs (by running <code class="highlighter-rouge">./killJobs.sh</code> from the parent directory), wiping the <code class="highlighter-rouge">*MHz</code> subdirectories, and re-running <code class="highlighter-rouge">processMeerKAT.py -R [-C &lt;config_file&gt;]</code> and <code class="highlighter-rouge">./submit_pipeline.sh</code> again after making the above changes to the config file. Alternatively, you could attempt to <a href="/docs/processMeerKAT/advanced-usage#restarting-or-resuming-the-pipeline">resume the pipeline</a>.</p>
 
 <h2 id="false-positives">False positives</h2>
 <h3 id="server-timeout-errors">Server timeout errors</h3>
@@ -309,7 +353,6 @@
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>*** Error *** Error in data selection specification: MSSelectionNullSelection : The selected table has zero rows.
 </code></pre></div></div>
 <p>in either the corresponding <code class="highlighter-rouge">.out</code> or <code class="highlighter-rouge">.err</code> file. These errors basically arise because a combination of chan/SPW/field/time selection has resulted in a null selection for one subMS inside the MMS causing applycal to fail for that one subMS. These errors do not have any impact on the final image quality.</p>
-
 
 
           

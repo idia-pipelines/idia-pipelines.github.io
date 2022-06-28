@@ -11,7 +11,7 @@ This is the third release of the IDIA Pipelines `processMeerKAT` package, intend
 
 The current release adds the following functionality:
 
-* **Implemented self-calibration and imaging**: this allows for configuration of multiple self-calibration loops, with customisable parameters per loop, as well as an additional final imaging stage to generate science-ready images.
+* **Self-calibration and science imaging**: this allows for configuration of multiple self-calibration loops, with customisable parameters per loop, as well as an additional final imaging stage to generate science-ready images, which includes primary beam correction using [katbeam](https://github.com/ska-sa/katbeam).
 * **Support for outlier fields**: it is now possible to specify an outlier threshold to identify and image bright sources outside the main field of view, which improves the run-time of imaging, and can improve image fidelity in some cases.
 * Bugfixes and improvements to polarisation calibration.
 * Support for loading modules on the ilifu SLURM cluster
@@ -24,7 +24,7 @@ This is the second release of the IDIA Pipelines `processsMeerKAT` package, to b
 
 The current release adds the following functionality:
 
-* Spectral Window (SPW) splitting (see docs [here](/docs/processMeerKAT/using-the-pipeline#spw-splitting)), where each separate SPW is processed independently and concurrently, providing a speed-up for large (TB) datasets, better polarisation calibration, and better flux scaling
+* Spectral Window (SPW) splitting (see docs [here](/docs/processMeerKAT/config-files#spw-splitting)), where each separate SPW is processed independently and concurrently, providing a speed-up for large (TB) datasets, better polarisation calibration, and better flux scaling
 * Quick-look continuum cube, across all SPWs
 * Pre-processing during initial partition of MS, including pre-averaging of frequency channels, removal of cross-hand correlations up front for Stokes I processing, and removal of autocorrelations
 * If running in full Stokes mode, `setjy` now includes the polarisation models for 3C286 and 3C138 if they are present in the data.

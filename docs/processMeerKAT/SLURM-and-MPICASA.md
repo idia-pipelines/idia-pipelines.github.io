@@ -58,7 +58,7 @@ if os.path.exists(logfile):
 An SBATCH script is a bash script that wraps the relevant SLURM parameters needed for your script. Consult the following website for more details on how to use SBATCH:
 https://slurm.schedmd.com/sbatch.html
 
-Here’s an example of an SBATCH script that submits a TCLEAN job for CASA 6:
+Here’s an example of an SBATCH script that submits a `tclean` job for CASA 6:
 
 ```
 #!/bin/bash
@@ -116,7 +116,7 @@ __partition__ (basic): In order to run tasks (except tclean) across a cluster, t
 __mstransform__ (advanced): the `mstransform` task (called under the hood by `partition`) is better suited to partition an MS into an MMS, as it allows for more control via several additional parameters, such as averaging in time and frequency. For example, the following call averages by 8 frequency channels (from selected frequency range 880-1680 MHz) and 16 second integrations, as well as selecting only two (parallel-hand) correlations (controlled by one core each, given by `nthreads=2`), and no autocorrelations:
 
 ```
-mstransform(vis=visname, outputvis=mvis, spw='0:880~1680MHz', createmms=True, datacolumn='DATA', chanaverage=True, chanbin=8, timeaverage=True, timebin='16s', separationaxis='scan', numsubms=msmd.nscans(), nthreads=2, antenna='*&', correlation='XX,YY')
+mstransform(vis=visname, outputvis=mvis, spw='*:880~1680MHz', createmms=True, datacolumn='DATA', chanaverage=True, chanbin=8, timeaverage=True, timebin='16s', separationaxis='scan', numsubms=msmd.nscans(), nthreads=2, antenna='*&', correlation='XX,YY')
 ```
 
 <!--

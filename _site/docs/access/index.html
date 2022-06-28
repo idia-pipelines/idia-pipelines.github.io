@@ -45,15 +45,19 @@
     
       
         
-      
-    
-      
-        
           <li class="navigation-list-item active">
             
             <a href="http://localhost:4000/docs/access/" class="navigation-list-link active">Access to IDIA Machines</a>
             
           </li>
+        
+      
+    
+      
+        
+      
+    
+      
         
       
     
@@ -79,6 +83,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/Release-Notes/" class="navigation-list-link">Release Notes</a>
@@ -87,15 +93,13 @@
                   
                 
                   
-                
-                  
-                
-                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/using-the-pipeline/" class="navigation-list-link">Using the Pipeline</a>
                       
                     </li>
+                  
+                
                   
                 
                   
@@ -119,7 +123,7 @@
                   
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/deep-2-tutorial/" class="navigation-list-link">DEEP 2 Tutorial</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/config-files/" class="navigation-list-link">Configuration Files</a>
                       
                     </li>
                   
@@ -136,6 +140,30 @@
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/self-calibration-in-processmeerkat/" class="navigation-list-link">Self-calibration in processMeerKAT</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/science-imaging-in-processmeerkat/" class="navigation-list-link">Science Imaging in processMeerKAT</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/deep-2-tutorial/" class="navigation-list-link">DEEP 2 Tutorial</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/Advanced-Usage/" class="navigation-list-link">Advanced Usage</a>
                       
                     </li>
                   
@@ -168,15 +196,23 @@
     
       
         
-      
-    
-      
-        
           <li class="navigation-list-item">
             
             <a href="http://localhost:4000/docs/containers/" class="navigation-list-link">Singularity Containers</a>
             
           </li>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
         
       
     
@@ -240,7 +276,7 @@
         <div id="main-content" class="page-content" role="main">
           <h1 id="accessing-the-ilifu-cluster">Accessing the ilifu cluster</h1>
 
-<p>You can request access to the ilifu cluster using <a href="https://docs.ilifu.ac.za/#/getting_started/request_access">this form</a>. You will need to specify which team/project you are a part of while signing up.</p>
+<p>You can request access to the ilifu cluster using the form found <a href="https://docs.ilifu.ac.za/#/getting_started/request_access">here</a>. You will need to specify which team/project you are a part of while signing up.</p>
 
 <h2 id="joining-the-idia-pipelines-team">Joining the IDIA Pipelines Team</h2>
 <p>Access to the IDIA-Pipeline resources can be arranged if you are part of the <strong>Pipelines</strong> Team.
@@ -252,33 +288,31 @@ Pipelines</a> repo as a contributor.</p>
 
 <h2 id="access">Access</h2>
 
-<p>A summary of how to access the ilifu services are provided <a href="https://docs.ilifu.ac.za/#/getting_started/access_ilifu">here</a>.</p>
+<p>A summary of how to access the ilifu services is provided <a href="https://docs.ilifu.ac.za/#/getting_started/access_ilifu">here</a>.</p>
 
 <h2 id="storage">Storage</h2>
 <p>There are several storage areas available on the ilifu cluster, and access to data is managed via Unix groups.</p>
 
-<p>There are several mounted volumes, intended for different use cases. These are summarized below, please take careful note of the following :</p>
+<p>There are several mounted volumes, intended for different use cases. These are summarised <a href="http://docs.ilifu.ac.za/#/data/directory_structure">here</a>.</p>
 
-<ul>
-  <li><code class="highlighter-rouge">/users/&lt;username&gt;/</code>, where <code class="highlighter-rouge">/users</code> is a shared CephFS volume.</li>
-  <li><code class="highlighter-rouge">/idia/users/&lt;username&gt;/</code>, where <code class="highlighter-rouge">/idia</code> is a shared CephFS volume. This is the preferred space
-for you to store your medium term data products.</li>
-  <li><code class="highlighter-rouge">/idia/projects/&lt;Project&gt;</code> is a shared directory on CephFS for a project. You can fetch raw data from here.
-Please steer away from dumping data into this directory.</li>
-  <li><code class="highlighter-rouge">/scratch/users/&lt;username&gt;/</code> is the shared working directory for <username>, where `/scratch` is a
-CephFS volume). This is the preferred space to use as a working directory, where final data products are moved into one of the more permanent locations listed above, and intermediate data products are purged.</username></li>
-</ul>
+<!-- These are summarized below, please take careful note of the following :
 
-<h2 id="setting-up-your-own-vm">Setting up your own VM.</h2>
+* `/users/<username>/`, where `/users` is a shared CephFS volume.
+* `/idia/users/<username>/`, where `/idia` is a shared CephFS volume. This is the preferred space
+  for you to store your medium term data products.
+* `/idia/projects/<Project>` is a shared directory on CephFS for a project. You can fetch raw data from here.
+  Please steer away from dumping data into this directory.
+* `/scratch/users/<username>/` is the shared working directory for <username>, where `/scratch` is a
+  CephFS volume). This is the preferred space to use as a working directory, where final data products are moved into one of the more permanent locations listed above, and intermediate data products are purged. -->
 
-<h2 id="github">GitHub</h2>
-<p>There are two important GitHub resources that project members can use:</p>
-<ul>
-  <li><a href="https://github.com/idia-pipelines/idia-pipelines.github.io">IDIA-Pipelines Blog</a>: This is the repo for this website, and there is an
-associated <a href="https://github.com/idia-pipelines/idia-pipelines.github.io/wiki">wiki</a> for project members to share information.</li>
-  <li><a href="https://github.com/AfricanResearchCloud/idia-containers">IDIA Containers</a>: This is very important repository for the
-<a href="http://singularity.lbl.gov/">Singularity</a> containers used at IDIA.</li>
-</ul>
+<!-- ## Setting up your own VM. -->
+
+<!-- ## GitHub
+There are two important GitHub resources that project members can use:
+* [IDIA-Pipelines Blog][idia-pipelines]: This is the repo for this website, and there is an
+  associated [wiki][idia-pipelines-wiki] for project members to share information.
+* [IDIA Containers][idia-containers]: This is very important repository for the
+  [Singularity][singularity] containers used at IDIA. -->
 
 
 

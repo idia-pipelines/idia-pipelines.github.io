@@ -12,18 +12,18 @@ please send an email to [support@ilifu.ac.za][support]. You can find more docume
 # Available Containers
 The most recent, stable versions of containers are available in `/idia/software/containers/`. Some
 of these containers can be accessed via JupyterHub, but all of them can be accessed via the
-terminal (i.e., once you've ssh'd into an IDIA machine).
+terminal (i.e., once you've ssh'd into an IDIA machine). Some additional CASA-specific information can be found [here](https://docs.ilifu.ac.za/#/astronomy/astronomy_software?id=casa).
 
 Here are a few examples of the latest stable Singularity container builds that are available in
 `/idia/software/containers/`:
-* `jupyter-casa-latest.simg`
+<!-- * `jupyter-casa-latest.simg`
     * Allows you to use CASA tasks via the Jupyter notebook. Note that visualisation tools like
-      `plotms` or `viewer` will not work on the notebook. This currently runs CASA v5.5.
-* `casa-6.4.simg`
-    * Contains the modular CASA 6.4 install, which can be accessed via Python using `import casatools` etc.
+      `plotms` or `viewer` will not work on the notebook. This currently runs CASA v5.5. -->
+* `casa-6.5.0-modular.sif`
+    * Contains the modular CASA 6.5 install, which can be accessed via Python using `import casatools` etc.
 * `kern7.simg`
     * Contains _all_ the software packages provided by the [Kern][kern] repository.
-* `sourcefinding_py3.simg`
+* `ASTRO-PY3.simg`
     * Builds of commonly used source finding packages, e.g., PyBDSF.
 
 # Reporting a bug / Requesting Software
@@ -133,7 +133,7 @@ $
 While the command may seem cumbersome, it is very useful when trying to build scripts that utilise
 several containers.
 
-[singularity]: http://singularity.lbl.gov/
+[singularity]: http://singularityware.github.io/
 [github-containers]:https://github.com/AfricanResearchCloud/idia-containers
 [kern]: http://kernsuite.info/
 [sfissues]: https://github.com/AfricanResearchCloud/idia-containers/issues/4

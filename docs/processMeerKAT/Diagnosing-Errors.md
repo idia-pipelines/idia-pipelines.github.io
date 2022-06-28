@@ -6,9 +6,9 @@ nav_order: 5
 ---
 
 # Diagnosing Errors
-This is a list of _potential_ issues that could arise while running the pipeline, which are typically associated with runtime errors, which could be due to issues with the cluster (e.g., worker-node failure during your job) or job parameterisation (e.g., underestimating RAM required).
+On this page is a list of _potential_ issues that could arise while running the pipeline, which are typically associated with runtime errors, that could be due to issues with the cluster (e.g., compute-node failure during running your job) or job parameterisation (e.g. underestimating RAM required).
 
-This is not an exhaustive list, and is intended to give the user a sense of what problems may need to be reported to support@ilifu.ac.za and which ones can be ignored.
+This is not an exhaustive list, and is intended to give the user a sense of which problems may need to be reported to [support@ilifu.ac.za](mailto:support@ilifu.ac.za) and which problems can be ignored.
 
 ### Unable to launch jobs in SLURM
 
@@ -26,9 +26,18 @@ If you encounter this error, please file a ticket with [support@ilifu.ac.za](mai
 
 ### Memory error
 
-If you see the phrase `MemoryError` in the `.err` logs (this can be located by `grep -i MemoryError logs/*.err`) this is typically indicative that CASA did not have enough memory to complete the task. This often happens while running `flagdata` and does not always halt execution of the pipeline. If you are not using the maximum amount of memory per node, increase your allocation (up to 232 GB on an ilifu node from the Main partition, or 480 GB on an ilifu node from the HighMem partition). If you are using the maximum amount of memory per node, reduce the number of tasks per node and increase the nodes in the config file (e.g. halve tasks and double nodes) before re-launching the pipeline, as that will allocate more memory per task.
+If you see the phrase `oom` (Out of Memory) or `MemoryError` in the `.err` logs (this can be located by `grep -i oom logs/*.err`), this is typically indicative that CASA did not have enough memory to complete the task. This often happens while running `flagdata` and does not always halt execution of the pipeline. If you are not using the maximum amount of memory per node, increase your allocation (up to 232 GB on an ilifu node from the Main partition, or 480 GB on an ilifu node from the HighMem partition). If you are using the maximum amount of memory per node, reduce the number of tasks per node and consider increasing the nodes in the config file (e.g. halve tasks and double nodes) before re-launching the pipeline, as that will allocate more memory per task.
 
-There are cases where a failure in `flagdata` can leave the MS in an intermediate state that causes the subsequent calibration tasks to fail. We recommend killing any currently running jobs (by running `./killJobs.sh` from the parent directory), wiping the `*MHz` subdirectories, and re-running `processMeerKAT.py -R [-C <config_file>]` and `./submit_pipeline.sh` again after making the above changes to the config file.
+`summary.sh` will show a `State` of `OUT_OF_ME+` for jobs that have run out of memory, and the following error should appear in the `.err` logs (e.g. for jobID 1234567):
+
+```
+slurmstepd: error: Detected 1 oom-kill event(s) in StepId=1234567.0 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: compute-070: task 0: Out Of Memory
+srun: launch/slurm: _step_signal: Terminating StepId=1234567.0
+slurmstepd: error: Detected 1 oom-kill event(s) in StepId=1234567.batch cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+```
+
+There are cases where a failure in `flagdata` can leave the MS in an intermediate state that causes the subsequent calibration tasks to fail. If the pipeline run did not cancel, we recommend killing any currently running jobs (by running `./killJobs.sh` from the parent directory), wiping the `*MHz` subdirectories, and re-running `processMeerKAT.py -R [-C <config_file>]` and `./submit_pipeline.sh` again after making the above changes to the config file. Alternatively, you could attempt to [resume the pipeline](/docs/processMeerKAT/advanced-usage#restarting-or-resuming-the-pipeline).
 
 ## False positives
 ### Server timeout errors
@@ -75,4 +84,3 @@ There are two ways to determine if this is a "false positive". Locate the script
 *** Error *** Error in data selection specification: MSSelectionNullSelection : The selected table has zero rows.
 ```
 in either the corresponding `.out` or `.err` file. These errors basically arise because a combination of chan/SPW/field/time selection has resulted in a null selection for one subMS inside the MMS causing applycal to fail for that one subMS. These errors do not have any impact on the final image quality.
-

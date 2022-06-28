@@ -5,21 +5,23 @@ parent: processMeerKAT
 nav_order: 7
 ---
 
-![processMeerKAT_flowchart](/assets/processMeerKAT.pdf)
+# Cross-calibration
 
-processMeerKAT implements a CASA based wide-band full Stokes calibration
+![processMeerKAT_flowchart](/assets/processMeerKAT-v2.0.png)
+
+processMeerKAT implements a CASA-based wide-band full Stokes calibration
 pipeline (in the linear basis). Broadly, the pipeline aims to "do the right
 thing" and by keeping the steps as general as possible we believe that there
 should be no need for fine tuning in order to obtain a well calibrated dataset.
 The pipeline is implemented as a series of SLURM `sbatch` scripts that in turn
 call CASA scripts. The scripts are separated out to make optimal use of the
-cluster, by splitting out sections that can be run in parallel (via `mpicasa`
+cluster, by splitting out sections that can be run in parallel (via `casampi`
 and SLURM) and sections that must be run in serial.
 
 *New in Version 1.1* : The MeerKAT band can now be optionally separated out
 into multiple spectral windows (SPWs) which are processed in parallel. Each SPW
 is processed simultaneously (assuming there are a sufficient number of free
-nodes on the cluster) bringing down the total runtime to <img src="https://latex.codecogs.com/gif.latex?s=\text{$\sim T_{obs}/2$}" />. The
+nodes on the cluster) bringing down the total runtime to <img src="https://latex.codecogs.com/gif.latex?\text{$s \approx T_{obs}/2$}" />. The
 steps outlined below are run per-SPW. If this option is turned off, these steps
 are run over the entire band.
 
@@ -110,7 +112,7 @@ reduce overall data volume.
 **Flagging (round 1)** : If a list of bad frequency ranges and bad antennas is
 specified, those are flagged. Subsequently, `flagdata` is called on the
 calibrators and target sources with conservative limits to clip out the worst
-RFI. It also makes a single call to `tfcrop` to flag data at a 6 $\sigma$ limit.
+RFI. It also makes a single call to `tfcrop` to flag data at a <img src="https://latex.codecogs.com/gif.latex?\text{$6\sigma$}" /> limit.
 `tfcrop` in this case is preferred, since the as yet uncalibrated bandpass shape
 should be taken care of by fitting a piecewise polynomial across the band.
 

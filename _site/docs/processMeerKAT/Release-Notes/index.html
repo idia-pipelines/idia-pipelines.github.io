@@ -45,15 +45,19 @@
     
       
         
-      
-    
-      
-        
           <li class="navigation-list-item">
             
             <a href="http://localhost:4000/docs/access/" class="navigation-list-link">Access to IDIA Machines</a>
             
           </li>
+        
+      
+    
+      
+        
+      
+    
+      
         
       
     
@@ -79,6 +83,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item  active">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/Release-Notes/" class="navigation-list-link active">Release Notes</a>
@@ -87,15 +93,13 @@
                   
                 
                   
-                
-                  
-                
-                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/using-the-pipeline/" class="navigation-list-link">Using the Pipeline</a>
                       
                     </li>
+                  
+                
                   
                 
                   
@@ -119,7 +123,7 @@
                   
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/deep-2-tutorial/" class="navigation-list-link">DEEP 2 Tutorial</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/config-files/" class="navigation-list-link">Configuration Files</a>
                       
                     </li>
                   
@@ -136,6 +140,30 @@
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/self-calibration-in-processmeerkat/" class="navigation-list-link">Self-calibration in processMeerKAT</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/science-imaging-in-processmeerkat/" class="navigation-list-link">Science Imaging in processMeerKAT</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/deep-2-tutorial/" class="navigation-list-link">DEEP 2 Tutorial</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/Advanced-Usage/" class="navigation-list-link">Advanced Usage</a>
                       
                     </li>
                   
@@ -168,15 +196,23 @@
     
       
         
-      
-    
-      
-        
           <li class="navigation-list-item">
             
             <a href="http://localhost:4000/docs/containers/" class="navigation-list-link">Singularity Containers</a>
             
           </li>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
         
       
     
@@ -249,16 +285,16 @@
         <div id="main-content" class="page-content" role="main">
           <h1 id="version-20">Version 2.0</h1>
 
-<p>This is the third release of the IDIA Pipelines <code class="highlighter-rouge">processMeerKAT</code> package, intended for use on the <a href="https://docs.ilifu.ac.za/#/">ilifu</a> SLURM cluster. The software uses a parallelized implementation of <a href="https://casadocs.readthedocs.io/en/stable/">CASA 6</a> to calibrate and image interferometric (imaging) data from the MeerKAT telescope.</p>
+<p>This is the third release of the IDIA Pipelines <code class="highlighter-rouge">processMeerKAT</code> package, intended for use on the <a href="https://docs.ilifu.ac.za/#/">ilifu</a> SLURM cluster. The software uses a parallelised implementation of <a href="https://casadocs.readthedocs.io/en/stable/">CASA 6</a> to calibrate and image interferometric (imaging) data from the MeerKAT telescope.</p>
 
 <p>The current release adds the following functionality:</p>
 
 <ul>
-  <li>Implemented support self-calibration and imaging. Allows for configuration of multiple self-calibration loops, with customizable parameters per loop as well as an additional final imaging stage to generate science-ready images.</li>
-  <li>Support for outlier fields - It is now possible to specify an outlier threshold to identify and image bright sources outside the main field of view, which can improve image fidelity in some cases.</li>
-  <li>Bugfixes and improvements to polarization calibration.</li>
+  <li><strong>Self-calibration and science imaging</strong>: this allows for configuration of multiple self-calibration loops, with customisable parameters per loop, as well as an additional final imaging stage to generate science-ready images, which includes primary beam correction using <a href="https://github.com/ska-sa/katbeam">katbeam</a>.</li>
+  <li><strong>Support for outlier fields</strong>: it is now possible to specify an outlier threshold to identify and image bright sources outside the main field of view, which improves the run-time of imaging, and can improve image fidelity in some cases.</li>
+  <li>Bugfixes and improvements to polarisation calibration.</li>
   <li>Support for loading modules on the ilifu SLURM cluster</li>
-  <li>Uses CASA 6.4, Python 3.8 and Singularity 3.9.1</li>
+  <li>Uses CASA 6.X, Python 3.8, OpenMPI 4.0.3, and Singularity 3.9.1</li>
 </ul>
 
 <h1 id="version-11">Version 1.1</h1>
@@ -268,7 +304,7 @@
 <p>The current release adds the following functionality:</p>
 
 <ul>
-  <li>Spectral Window (SPW) splitting (see docs <a href="/docs/processMeerKAT/using-the-pipeline#spw-splitting">here</a>), where each separate SPW is processed independently and concurrently, providing a speed-up for large (TB) datasets, better polarisation calibration, and better flux scaling</li>
+  <li>Spectral Window (SPW) splitting (see docs <a href="/docs/processMeerKAT/config-files#spw-splitting">here</a>), where each separate SPW is processed independently and concurrently, providing a speed-up for large (TB) datasets, better polarisation calibration, and better flux scaling</li>
   <li>Quick-look continuum cube, across all SPWs</li>
   <li>Pre-processing during initial partition of MS, including pre-averaging of frequency channels, removal of cross-hand correlations up front for Stokes I processing, and removal of autocorrelations</li>
   <li>If running in full Stokes mode, <code class="highlighter-rouge">setjy</code> now includes the polarisation models for 3C286 and 3C138 if they are present in the data.

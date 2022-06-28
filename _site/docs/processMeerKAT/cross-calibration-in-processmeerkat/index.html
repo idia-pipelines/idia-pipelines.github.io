@@ -45,15 +45,19 @@
     
       
         
-      
-    
-      
-        
           <li class="navigation-list-item">
             
             <a href="http://localhost:4000/docs/access/" class="navigation-list-link">Access to IDIA Machines</a>
             
           </li>
+        
+      
+    
+      
+        
+      
+    
+      
         
       
     
@@ -79,6 +83,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/Release-Notes/" class="navigation-list-link">Release Notes</a>
@@ -87,15 +93,13 @@
                   
                 
                   
-                
-                  
-                
-                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/using-the-pipeline/" class="navigation-list-link">Using the Pipeline</a>
                       
                     </li>
+                  
+                
                   
                 
                   
@@ -119,7 +123,7 @@
                   
                     <li class="navigation-list-item ">
                       
-                      <a href="http://localhost:4000/docs/processMeerKAT/deep-2-tutorial/" class="navigation-list-link">DEEP 2 Tutorial</a>
+                      <a href="http://localhost:4000/docs/processMeerKAT/config-files/" class="navigation-list-link">Configuration Files</a>
                       
                     </li>
                   
@@ -136,6 +140,30 @@
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/self-calibration-in-processmeerkat/" class="navigation-list-link">Self-calibration in processMeerKAT</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/science-imaging-in-processmeerkat/" class="navigation-list-link">Science Imaging in processMeerKAT</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/deep-2-tutorial/" class="navigation-list-link">DEEP 2 Tutorial</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="http://localhost:4000/docs/processMeerKAT/Advanced-Usage/" class="navigation-list-link">Advanced Usage</a>
                       
                     </li>
                   
@@ -168,15 +196,23 @@
     
       
         
-      
-    
-      
-        
           <li class="navigation-list-item">
             
             <a href="http://localhost:4000/docs/containers/" class="navigation-list-link">Singularity Containers</a>
             
           </li>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
         
       
     
@@ -247,21 +283,23 @@
           
         
         <div id="main-content" class="page-content" role="main">
-          <p><img src="/assets/processMeerKAT.png" alt="processMeerKAT_flowchart" /></p>
+          <h1 id="cross-calibration">Cross-calibration</h1>
 
-<p>processMeerKAT implements a CASA based wide-band full Stokes calibration
+<p><img src="/assets/processMeerKAT-v2.0.png" alt="processMeerKAT_flowchart" /></p>
+
+<p>processMeerKAT implements a CASA-based wide-band full Stokes calibration
 pipeline (in the linear basis). Broadly, the pipeline aims to “do the right
 thing” and by keeping the steps as general as possible we believe that there
 should be no need for fine tuning in order to obtain a well calibrated dataset.
 The pipeline is implemented as a series of SLURM <code class="highlighter-rouge">sbatch</code> scripts that in turn
 call CASA scripts. The scripts are separated out to make optimal use of the
-cluster, by splitting out sections that can be run in parallel (via <code class="highlighter-rouge">mpicasa</code>
+cluster, by splitting out sections that can be run in parallel (via <code class="highlighter-rouge">casampi</code>
 and SLURM) and sections that must be run in serial.</p>
 
 <p><em>New in Version 1.1</em> : The MeerKAT band can now be optionally separated out
 into multiple spectral windows (SPWs) which are processed in parallel. Each SPW
 is processed simultaneously (assuming there are a sufficient number of free
-nodes on the cluster) bringing down the total runtime to $\sim T_{obs}/2.$. The
+nodes on the cluster) bringing down the total runtime to <img src="https://latex.codecogs.com/gif.latex?\text{$s \approx T_{obs}/2$}" />. The
 steps outlined below are run per-SPW. If this option is turned off, these steps
 are run over the entire band.</p>
 
@@ -351,7 +389,7 @@ reduce overall data volume.</p>
 <p><strong>Flagging (round 1)</strong> : If a list of bad frequency ranges and bad antennas is
 specified, those are flagged. Subsequently, <code class="highlighter-rouge">flagdata</code> is called on the
 calibrators and target sources with conservative limits to clip out the worst
-RFI. It also makes a single call to <code class="highlighter-rouge">tfcrop</code> to flag data at a 6 $\sigma$ limit.
+RFI. It also makes a single call to <code class="highlighter-rouge">tfcrop</code> to flag data at a <img src="https://latex.codecogs.com/gif.latex?\text{$6\sigma$}" /> limit.
 <code class="highlighter-rouge">tfcrop</code> in this case is preferred, since the as yet uncalibrated bandpass shape
 should be taken care of by fitting a piecewise polynomial across the band.</p>
 
