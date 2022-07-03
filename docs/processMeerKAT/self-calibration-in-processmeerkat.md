@@ -7,6 +7,10 @@ nav_order: 8
 
 # Self-calibration
 
+*Note:*
+1. *Our selfcal and science imaging workflow generally assumes a fixed image size, and may perform sub-optimally (e.g. sources missing from the CLEAN mask) if the image size changes at any point*
+2. *Imaging at higher spectral resolution (i.e. with more frequency channels) requires higher computational power / runtime, and may require increasing the time limit of your imaging jobs. In general we recommend self-calbrating at 1k (1024 channels). If your raw data is at higher spectral resolution, consider first averaging in frequency with the `width` or `chanbin` config parameters (also see spectral-line pre-processing [here](/docs/processMeerKAT/advanced-usage#spectral-line-pre-processing))*
+
 processMeerKAT implements the imaging & self-calibration loop using a
 combination of [CASA](https://casadocs.readthedocs.io/en/stable/) for imaging
 and calibration and [PyBDSF](https://www.astron.nl/citt/PyBDSF/) for

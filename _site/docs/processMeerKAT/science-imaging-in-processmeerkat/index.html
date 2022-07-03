@@ -285,6 +285,12 @@
         <div id="main-content" class="page-content" role="main">
           <h1 id="science-imaging">Science Imaging</h1>
 
+<p><em>Note:</em></p>
+<ol>
+  <li><em>Our selfcal and science imaging workflow generally assumes a fixed image size, and may perform sub-optimally (e.g. sources missing from the CLEAN mask) if the image size changes at any point</em></li>
+  <li><em>Imaging at higher spectral resolution (i.e. with more frequency channels) requires higher computational power / runtime, and may require increasing the time limit of your imaging jobs. In general we recommend self-calbrating at 1k (1024 channels). If your raw data is at higher spectral resolution, consider first averaging in frequency with the <code class="highlighter-rouge">width</code> or <code class="highlighter-rouge">chanbin</code> config parameters (also see spectral-line pre-processing <a href="/docs/processMeerKAT/advanced-usage#spectral-line-pre-processing">here</a>)</em></li>
+</ol>
+
 <p>processMeerKAT implements science imaging using the <code class="highlighter-rouge">tclean</code> task in
 <a href="https://casadocs.readthedocs.io/en/stable/">CASA</a> to generate the images, and
 the katbeam package to perform primary beam correction on the final image.</p>

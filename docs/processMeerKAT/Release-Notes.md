@@ -11,12 +11,15 @@ This is the third release of the IDIA Pipelines `processMeerKAT` package, intend
 
 The current release adds the following functionality:
 
-* **Self-calibration and science imaging**: this allows for configuration of multiple self-calibration loops, with customisable parameters per loop, as well as an additional final imaging stage to generate science-ready images, which includes primary beam correction using [katbeam](https://github.com/ska-sa/katbeam).
-* **Support for outlier fields**: it is now possible to specify an outlier threshold to identify and image bright sources outside the main field of view, which improves the run-time of imaging, and can improve image fidelity in some cases.
-* Bugfixes and improvements to polarisation calibration.
+* **Self-calibration and science imaging**: this allows for configuration of multiple self-calibration loops, with customisable parameters per loop, as well as an additional final imaging stage to generate science-ready images, which includes primary beam correction using [katbeam](https://github.com/ska-sa/katbeam)
+* **Support for outlier fields (experimental)**: it is now possible to specify an outlier threshold to identify and image bright sources outside the main field of view, which improves the run-time of imaging, and can improve image fidelity in some cases
+* Bugfixes and improvements to polarisation calibration
 * Support for loading modules on the ilifu SLURM cluster
 * Uses CASA 6.X, Python 3.8, OpenMPI 4.0.3, and Singularity 3.9.1
 
+## Known Issues (minor)
+
+Beyond the unresolved issues listed below, there are two minor CASA issues associated with outlier imaging, namely that `Stokes='IQUV'` cannot be specified during outlier imaging (but only `Stokes='I'`), and there is an observed loss in resolution whenever outlier imaging is invoked. For more information, see [here](/docs/processMeerKAT/self-calibration-in-processmeerkat#known-issues).
 
 # Version 1.1
 

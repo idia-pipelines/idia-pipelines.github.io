@@ -290,12 +290,16 @@
 <p>The current release adds the following functionality:</p>
 
 <ul>
-  <li><strong>Self-calibration and science imaging</strong>: this allows for configuration of multiple self-calibration loops, with customisable parameters per loop, as well as an additional final imaging stage to generate science-ready images, which includes primary beam correction using <a href="https://github.com/ska-sa/katbeam">katbeam</a>.</li>
-  <li><strong>Support for outlier fields</strong>: it is now possible to specify an outlier threshold to identify and image bright sources outside the main field of view, which improves the run-time of imaging, and can improve image fidelity in some cases.</li>
-  <li>Bugfixes and improvements to polarisation calibration.</li>
+  <li><strong>Self-calibration and science imaging</strong>: this allows for configuration of multiple self-calibration loops, with customisable parameters per loop, as well as an additional final imaging stage to generate science-ready images, which includes primary beam correction using <a href="https://github.com/ska-sa/katbeam">katbeam</a></li>
+  <li><strong>Support for outlier fields (experimental)</strong>: it is now possible to specify an outlier threshold to identify and image bright sources outside the main field of view, which improves the run-time of imaging, and can improve image fidelity in some cases</li>
+  <li>Bugfixes and improvements to polarisation calibration</li>
   <li>Support for loading modules on the ilifu SLURM cluster</li>
   <li>Uses CASA 6.X, Python 3.8, OpenMPI 4.0.3, and Singularity 3.9.1</li>
 </ul>
+
+<h2 id="known-issues-minor">Known Issues (minor)</h2>
+
+<p>Beyond the unresolved issues listed below, there are two minor CASA issues associated with outlier imaging, namely that <code class="highlighter-rouge">Stokes='IQUV'</code> cannot be specified during outlier imaging (but only <code class="highlighter-rouge">Stokes='I'</code>), and there is an observed loss in resolution whenever outlier imaging is invoked. For more information, see <a href="/docs/processMeerKAT/self-calibration-in-processmeerkat#known-issues">here</a>.</p>
 
 <h1 id="version-11">Version 1.1</h1>
 
