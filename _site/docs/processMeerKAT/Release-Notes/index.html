@@ -45,19 +45,15 @@
     
       
         
+      
+    
+      
+        
           <li class="navigation-list-item">
             
             <a href="http://localhost:4000/docs/access/" class="navigation-list-link">Access to IDIA Machines</a>
             
           </li>
-        
-      
-    
-      
-        
-      
-    
-      
         
       
     
@@ -83,8 +79,6 @@
                   
                 
                   
-                
-                  
                     <li class="navigation-list-item  active">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/Release-Notes/" class="navigation-list-link active">Release Notes</a>
@@ -93,13 +87,15 @@
                   
                 
                   
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/using-the-pipeline/" class="navigation-list-link">Using the Pipeline</a>
                       
                     </li>
-                  
-                
                   
                 
                   
@@ -187,6 +183,10 @@
               </ul>
             
           </li>
+        
+      
+    
+      
         
       
     
@@ -290,11 +290,13 @@
 <p>The current release adds the following functionality:</p>
 
 <ul>
-  <li><strong>Self-calibration and science imaging</strong>: this allows for configuration of multiple self-calibration loops, with customisable parameters per loop, as well as an additional final imaging stage to generate science-ready images, which includes primary beam correction using <a href="https://github.com/ska-sa/katbeam">katbeam</a></li>
-  <li><strong>Support for outlier fields (experimental)</strong>: it is now possible to specify an outlier threshold to identify and image bright sources outside the main field of view, which improves the run-time of imaging, and can improve image fidelity in some cases</li>
+  <li><strong>Self-calibration and science imaging</strong>: this allows for configuration of multiple self-calibration loops, with customisable parameters per loop, as well as an additional final imaging stage to generate science-ready images, which includes primary beam correction using <a href="https://github.com/ska-sa/katbeam">katbeam</a>.</li>
+  <li>
+    <p><strong>Support for outlier fields (experimental)</strong>: it is now possible to specify an outlier threshold to identify and image bright sources outside the main field of view, which improves the run-time of imaging, and can improve image fidelity in some cases. This is an experimental feature, so please report any bugs to <a href="mailto:support@ilifu.ac.za">support@ilifu.ac.za</a>.</p>
+  </li>
   <li>Bugfixes and improvements to polarisation calibration</li>
   <li>Support for loading modules on the ilifu SLURM cluster</li>
-  <li>Uses CASA 6.X, Python 3.8, OpenMPI 4.0.3, and Singularity 3.9.1</li>
+  <li>Updated to use CASA 6.5, Python 3.8, OpenMPI 4.0.3, and Singularity 3.9.1</li>
 </ul>
 
 <h2 id="known-issues-minor">Known Issues (minor)</h2>
@@ -324,7 +326,7 @@
 <h3 id="moderate">Moderate:</h3>
 
 <ul>
-  <li><strong>Discontinuities in the Stokes Q and U spectra</strong>:
+  <li><strong>Discontinuities in the Stokes Q and U spectra [Resolved in V2.0]</strong>:
 In the event that full Stokes calibration is requested (by passing the <code class="highlighter-rouge">--dopol</code> parameter during the build stage) we have noticed that the Stokes Q and U spectra of the calibrated data show discontinuities between the spectral windows (i.e. when <code class="highlighter-rouge">nspw</code> &gt; 1 in your config). While the overall shape of the Q and U spectra seem to be right, the discontinuities will affect the inferences made during rotation measure synthesis. We are in the process of debugging this and will issue a patch once we have fixed it.</li>
 </ul>
 
@@ -379,7 +381,7 @@ In the event that full Stokes calibration is requested (by passing the <code cla
 
 <ul>
   <li>
-    <p><strong>Flux scale (not seen in V1.1)</strong>: Although the fluxes of the calibrated targets and calibrator sources are typically accurate to within a few percent, we find that there are certain datasets that result in a flux scale that is down by a factor of a few, particularly for short-track (e.g. 2 hour) observations (see <a href="/docs/processMeerKAT/Example-Use-Cases#short-track-observations-and-fluxscale-issues">example use case</a>). We are in the process of tracking down the root cause of these issues, and expect to issue a fix soon. However, if you do happen to notice that the fluxes of one or more of the sources/targets are off (either higher/lower), please report it by creating a <a href="https://github.com/idia-astro/pipelines/issues">Github issue</a>.</p>
+    <p><strong>Flux scale (Resolved in V1.1)</strong>: Although the fluxes of the calibrated targets and calibrator sources are typically accurate to within a few percent, we find that there are certain datasets that result in a flux scale that is down by a factor of a few, particularly for short-track (e.g. 2 hour) observations (see <a href="/docs/processMeerKAT/Example-Use-Cases#short-track-observations-and-fluxscale-issues">example use case</a>). We are in the process of tracking down the root cause of these issues, and expect to issue a fix soon. However, if you do happen to notice that the fluxes of one or more of the sources/targets are off (either higher/lower), please report it by creating a <a href="https://github.com/idia-astro/pipelines/issues">Github issue</a>.</p>
   </li>
   <li>
     <p><strong>Broadband polarisation (resolved in V1.1)</strong>: CASA does not natively support solving broad-band polarisations, <em>i.e.,</em> it is not sensitive to rotation measure (RM). The assumption is that the RM within a single spectral window (SPW) is constant, however MeerKAT has only a single SPW that spans the entire bandwidth. We have identified future workarounds (which is to split up the band into several SPWs), however presently the broadband polarisation models do contain systematic errors.</p>

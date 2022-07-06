@@ -11,11 +11,12 @@ This is the third release of the IDIA Pipelines `processMeerKAT` package, intend
 
 The current release adds the following functionality:
 
-* **Self-calibration and science imaging**: this allows for configuration of multiple self-calibration loops, with customisable parameters per loop, as well as an additional final imaging stage to generate science-ready images, which includes primary beam correction using [katbeam](https://github.com/ska-sa/katbeam)
-* **Support for outlier fields (experimental)**: it is now possible to specify an outlier threshold to identify and image bright sources outside the main field of view, which improves the run-time of imaging, and can improve image fidelity in some cases
+* **Self-calibration and science imaging**: this allows for configuration of multiple self-calibration loops, with customisable parameters per loop, as well as an additional final imaging stage to generate science-ready images, which includes primary beam correction using [katbeam](https://github.com/ska-sa/katbeam).
+* **Support for outlier fields (experimental)**: it is now possible to specify an outlier threshold to identify and image bright sources outside the main field of view, which improves the run-time of imaging, and can improve image fidelity in some cases. This is an experimental feature, so please report any bugs to [support@ilifu.ac.za](mailto:support@ilifu.ac.za).
+
 * Bugfixes and improvements to polarisation calibration
 * Support for loading modules on the ilifu SLURM cluster
-* Uses CASA 6.X, Python 3.8, OpenMPI 4.0.3, and Singularity 3.9.1
+* Updated to use CASA 6.5, Python 3.8, OpenMPI 4.0.3, and Singularity 3.9.1
 
 ## Known Issues (minor)
 
@@ -41,7 +42,7 @@ The current release adds the following functionality:
 
 ### Moderate:
 
-* **Discontinuities in the Stokes Q and U spectra**:
+* **Discontinuities in the Stokes Q and U spectra [Resolved in V2.0]**:
 In the event that full Stokes calibration is requested (by passing the `--dopol` parameter during the build stage) we have noticed that the Stokes Q and U spectra of the calibrated data show discontinuities between the spectral windows (i.e. when `nspw` > 1 in your config). While the overall shape of the Q and U spectra seem to be right, the discontinuities will affect the inferences made during rotation measure synthesis. We are in the process of debugging this and will issue a patch once we have fixed it.
 
 ### Minor:
@@ -80,7 +81,7 @@ Please consult the documentation on [GitHub](https://idia-pipelines.github.io/) 
 
 ### Moderate:
 
-* **Flux scale (not seen in V1.1)**: Although the fluxes of the calibrated targets and calibrator sources are typically accurate to within a few percent, we find that there are certain datasets that result in a flux scale that is down by a factor of a few, particularly for short-track (e.g. 2 hour) observations (see [example use case](/docs/processMeerKAT/Example-Use-Cases#short-track-observations-and-fluxscale-issues)). We are in the process of tracking down the root cause of these issues, and expect to issue a fix soon. However, if you do happen to notice that the fluxes of one or more of the sources/targets are off (either higher/lower), please report it by creating a [Github issue](https://github.com/idia-astro/pipelines/issues).
+* **Flux scale (Resolved in V1.1)**: Although the fluxes of the calibrated targets and calibrator sources are typically accurate to within a few percent, we find that there are certain datasets that result in a flux scale that is down by a factor of a few, particularly for short-track (e.g. 2 hour) observations (see [example use case](/docs/processMeerKAT/Example-Use-Cases#short-track-observations-and-fluxscale-issues)). We are in the process of tracking down the root cause of these issues, and expect to issue a fix soon. However, if you do happen to notice that the fluxes of one or more of the sources/targets are off (either higher/lower), please report it by creating a [Github issue](https://github.com/idia-astro/pipelines/issues).
 
 * **Broadband polarisation (resolved in V1.1)**: CASA does not natively support solving broad-band polarisations, _i.e.,_ it is not sensitive to rotation measure (RM). The assumption is that the RM within a single spectral window (SPW) is constant, however MeerKAT has only a single SPW that spans the entire bandwidth. We have identified future workarounds (which is to split up the band into several SPWs), however presently the broadband polarisation models do contain systematic errors.
 

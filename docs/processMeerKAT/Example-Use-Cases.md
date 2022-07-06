@@ -13,26 +13,25 @@ Our algorithmic approach toward calibration in the pipeline can be found [here](
 
 Stokes I calibration is achieved in `xx_yy_solve.py`, and includes standard delay, bandpass and gain calibration. Within this pipeline, this is done to obtain better statistics for a second round of flagging.
 
-Stokes I calibration is the default mode of the pipeline, using the `xx_yy_solve.py` and `xx_yy_apply.py` scripts, instead of the `xy_yx_solve.py` and `xy_yx_apply.py` scripts. Since the 2nd round of flagging is different to the 1st, and much more effective, these two scripts are called twice, in a second round that should not be skipped. Furthermore, for good calibration, new solutions should always be derived after flagging.
+Stokes I calibration is the default mode of the pipeline, using the `xx_yy_solve.py` and `xx_yy_apply.py` scripts. Since the 2nd round of flagging is different to the 1st, and much more effective, these two scripts are called twice, in a second round that should not be skipped. Furthermore, for good calibration, new solutions should always be derived after flagging.
 
 <!-- Krishna to revise -->
 <!-- Lastly, it is recommended the 'xy_yx' scripts be run anyway, since linear feeds tend to have non-negligible coupling between the feeds, and so even to get a good Stokes I image, full Stokes calibration may be required.
 
 Therefore, for Stokes I calibration, the 'xy_yx' scripts may be replaced with the 'xx_yy' scripts, in which case only a minimal speedup will be gained. Therefore, this use case is generally discouraged. One reason for this use case may be where issues arise with the calibration, and to simplify the processing to what is well understood. -->
 
-### Short-Track Observations and Fluxscale Issues
+## Full Stokes Calibration (Polarisation)
 
-Replacing the 'xy_yx' scripts with the 'xx_yy' scripts is recommended for short-track observations (e.g. 2 hours), because the 'xy_yx' scripts assume that the phase calibrator has sufficient parallactic angle coverage to solve for the leakage and Stokes Q & U. We also recommend this for cases where there are issues with fluxscale, which often occurs when the 'xy_yx' scripts are run for short-track observations.
+Full Stokes calibration can be activated with `[-P --dopol]`, which, in addition to the calibration listed [above](#stokes-i-calibration-continuum), includes calibration of instrumental leakage and X-Y phase. While XY phase calibration typically results in accurate full Stokes spectra, absolute polarization angle calibration is not performed and any systematic offsets in the XY phase calibration will reflect as errors in the Stokes parameters of the source.
+
+
+### Short-Track Observations and flux scale Issues
+
+**New in V2.0**: The full Stokes calibration scripts (`xy_yx_solve` and `xy_yx_apply`) no longer rely on the parallactic angle coverage of the secondary, but default to using a dedicated scan on the polarization calibrator to solve for the XY phase. The secondary calibrator is used only in the event that there is no polarization calibrator present in the observation. Therefore full Stokes calibration can be performed on short-track observations, as long as a dedicated polarization calibrator is observed.
 
 **New in v1.1**: Only `xx_yy` scripts are used by default, and if the parallactic angle coverage is < 30 degrees, a warning is output recommending disabling polarisation calibration.
 
-## Full Stokes Calibration (Polarisation)
-
-Full Stokes calibration can be activated with `[-P --dopol]`, which, in addition to the calibration listed [above](#stokes-i-calibration-continuum), includes calibration of instrumental leakage, X-Y phase, source polarisation, and Stokes Q and U from gain variations, using the CASA helper task `GainFromQU`. This is achieved by using the phase calibrator to solve as a function of parallactic angle.
-
-Currently the pipeline does not solve for absolute polarisation angle, since the `CALIBRATE_POLARIZATION` intent is missing from MeerKAT datasets. Additionally, CASA currently has no functionality to solve for wide-band leakage and QU, but assumes a constant value across single spectral windows. Both of these issues are addressed in [v1.1](/docs/processMeerKAT/release-notes#version-11).
-
-Full-Stokes calibration is not recommended for short-track observations (see [section above](#short-track-observations-and-fluxscale-issues)).
+Replacing the 'xy_yx' scripts with the 'xx_yy' scripts is recommended for short-track observations (e.g. 2 hours), because the 'xy_yx' scripts assume that the phase calibrator has sufficient parallactic angle coverage to solve for the leakage and Stokes Q & U. We also recommend this for cases where there are issues with fluxscale, which often occurs when the 'xy_yx' scripts are run for short-track observations.
 
 ## Calibrating a Small Sub-Band (Spectral Line)
 

@@ -14,57 +14,52 @@ The usage can be seen by running
 
 * To get things working, source `setup.sh`, which will add to your `$PATH` and `$PYTHONPATH` (add this to your `~/.profile`, for future use)
 
-```source /idia/software/pipelines/master/setup.sh```
-
-* To print the version of the pipeline, run
-
-```processMeerKAT.py -V```
+  ```source /idia/software/pipelines/master/setup.sh```
 
 * To build a config file, which the pipeline reads as input for how to process the data, run
 
-```processMeerKAT.py -B -C myconfig.txt -M mydata.ms```
+  ```processMeerKAT.py -B -C myconfig.txt -M mydata.ms```
 
 * To run the pipeline, run
 
-```processMeerKAT.py -R -C myconfig.txt```
+  ```processMeerKAT.py -R -C myconfig.txt```
 
-This will create `submit_pipeline.sh`, which you can then run to submit all pipeline jobs to a SLURM queue:
-
+  This will create `submit_pipeline.sh`, which you can then run to submit all pipeline jobs to a SLURM queue:
 `./submit_pipeline.sh`
 
 * Display a summary of the submitted jobs
 
-`./summary.sh`
+  ```./summary.sh```
 
 * Kill the submitted jobs
 
-`./killJobs.sh`
+  ```./killJobs.sh```
 
 * If the pipeline crashes, or reports an error, find the error(s) by running (after the pipeline has run)
 
-`./findErrors.sh`
+  ```./findErrors.sh```
 
 * Once the pipeline has completed, display the start and end times of each job by running
 
-`./displayTimes.sh`
+  ```./displayTimes.sh```
 
 ## Detailed usage
 
 * Build config file using a custom SLURM configuration (nodes and tasks per node may be overwritten in your config file with something more appropriate by the end of the build step)
 
-```processMeerKAT.py -B -C myconfig.txt -M mydata.ms -p Test02 -N 10 -t 8 -D 4 -m 100 -T 06:00:00 -n run1_```
+  ```processMeerKAT.py -B -C myconfig.txt -M mydata.ms -p Test02 -N 10 -t 8 -D 4 -m 100 -T 06:00:00 -n run1_```
 
 * Build config file using different MPI wrapper and container
 
-```processMeerKAT.py -B -C myconfig.txt -M mydata.ms --mpi_wrapper /path/to/another/mpi/wrapper --container /path/to/another/container```
+  ```processMeerKAT.py -B -C myconfig.txt -M mydata.ms --mpi_wrapper /path/to/another/mpi/wrapper --container /path/to/another/container```
 
 * Build config file with different set of (python) scripts
 
-```processMeerKAT.py -B -C myconfig.txt -S /absolute/path/to/my/script.py False /absolute/path/to/container.simg -S partition.py True '' -S relative/path/to/my/script.py True relative/path/to/container.simg -S flag_round_1.py True '' -S script_in_bash_PATH.py False container_in_bash_PATH.simg -S setjy.py True ''```
+  ```processMeerKAT.py -B -C myconfig.txt -S /absolute/path/to/my/script.py False /absolute/path/to/container.simg -S partition.py True '' -S relative/path/to/my/script.py True relative/path/to/container.simg -S flag_round_1.py True '' -S script_in_bash_PATH.py False container_in_bash_PATH.simg -S setjy.py True ''```
 
 * Run the pipeline immediately in verbose mode
 
-```processMeerKAT.py -R -v -s -C myconfig.txt```
+  ```processMeerKAT.py -R -v -s -C myconfig.txt```
 
 **NOTE:** All other command-line arguments passed into `processMeerKAT.py` when using option `[-R --run]` will have no effect, since the arguments are read from the config file at this point. Only options `[-s --submit], [-v --verbose]` and `[-C --config]` will have any effect at this point. Similarly, changing the `[slurm]` section in your config file after using option `[-R --run]` will have no effect unless you `[-R --run]` again.
 

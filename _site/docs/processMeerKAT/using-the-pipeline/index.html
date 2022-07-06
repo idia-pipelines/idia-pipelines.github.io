@@ -45,19 +45,15 @@
     
       
         
+      
+    
+      
+        
           <li class="navigation-list-item">
             
             <a href="http://localhost:4000/docs/access/" class="navigation-list-link">Access to IDIA Machines</a>
             
           </li>
-        
-      
-    
-      
-        
-      
-    
-      
         
       
     
@@ -83,8 +79,6 @@
                   
                 
                   
-                
-                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/Release-Notes/" class="navigation-list-link">Release Notes</a>
@@ -93,13 +87,15 @@
                   
                 
                   
+                
+                  
+                
+                  
                     <li class="navigation-list-item  active">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/using-the-pipeline/" class="navigation-list-link active">Using the Pipeline</a>
                       
                     </li>
-                  
-                
                   
                 
                   
@@ -187,6 +183,10 @@
               </ul>
             
           </li>
+        
+      
+    
+      
         
       
     
@@ -290,82 +290,70 @@
 <h2 id="simple-usage">Simple usage</h2>
 
 <ul>
-  <li>To get things working, source <code class="highlighter-rouge">setup.sh</code>, which will add to your <code class="highlighter-rouge">$PATH</code> and <code class="highlighter-rouge">$PYTHONPATH</code> (add this to your <code class="highlighter-rouge">~/.profile</code>, for future use)</li>
+  <li>
+    <p>To get things working, source <code class="highlighter-rouge">setup.sh</code>, which will add to your <code class="highlighter-rouge">$PATH</code> and <code class="highlighter-rouge">$PYTHONPATH</code> (add this to your <code class="highlighter-rouge">~/.profile</code>, for future use)</p>
+
+    <p><code class="highlighter-rouge">source /idia/software/pipelines/master/setup.sh</code></p>
+  </li>
+  <li>
+    <p>To build a config file, which the pipeline reads as input for how to process the data, run</p>
+
+    <p><code class="highlighter-rouge">processMeerKAT.py -B -C myconfig.txt -M mydata.ms</code></p>
+  </li>
+  <li>
+    <p>To run the pipeline, run</p>
+
+    <p><code class="highlighter-rouge">processMeerKAT.py -R -C myconfig.txt</code></p>
+
+    <p>This will create <code class="highlighter-rouge">submit_pipeline.sh</code>, which you can then run to submit all pipeline jobs to a SLURM queue:
+<code class="highlighter-rouge">./submit_pipeline.sh</code></p>
+  </li>
+  <li>
+    <p>Display a summary of the submitted jobs</p>
+
+    <p><code class="highlighter-rouge">./summary.sh</code></p>
+  </li>
+  <li>
+    <p>Kill the submitted jobs</p>
+
+    <p><code class="highlighter-rouge">./killJobs.sh</code></p>
+  </li>
+  <li>
+    <p>If the pipeline crashes, or reports an error, find the error(s) by running (after the pipeline has run)</p>
+
+    <p><code class="highlighter-rouge">./findErrors.sh</code></p>
+  </li>
+  <li>
+    <p>Once the pipeline has completed, display the start and end times of each job by running</p>
+
+    <p><code class="highlighter-rouge">./displayTimes.sh</code></p>
+  </li>
 </ul>
-
-<p><code class="highlighter-rouge">source /idia/software/pipelines/master/setup.sh</code></p>
-
-<ul>
-  <li>To print the version of the pipeline, run</li>
-</ul>
-
-<p><code class="highlighter-rouge">processMeerKAT.py -V</code></p>
-
-<ul>
-  <li>To build a config file, which the pipeline reads as input for how to process the data, run</li>
-</ul>
-
-<p><code class="highlighter-rouge">processMeerKAT.py -B -C myconfig.txt -M mydata.ms</code></p>
-
-<ul>
-  <li>To run the pipeline, run</li>
-</ul>
-
-<p><code class="highlighter-rouge">processMeerKAT.py -R -C myconfig.txt</code></p>
-
-<p>This will create <code class="highlighter-rouge">submit_pipeline.sh</code>, which you can then run to submit all pipeline jobs to a SLURM queue:</p>
-
-<p><code class="highlighter-rouge">./submit_pipeline.sh</code></p>
-
-<ul>
-  <li>Display a summary of the submitted jobs</li>
-</ul>
-
-<p><code class="highlighter-rouge">./summary.sh</code></p>
-
-<ul>
-  <li>Kill the submitted jobs</li>
-</ul>
-
-<p><code class="highlighter-rouge">./killJobs.sh</code></p>
-
-<ul>
-  <li>If the pipeline crashes, or reports an error, find the error(s) by running (after the pipeline has run)</li>
-</ul>
-
-<p><code class="highlighter-rouge">./findErrors.sh</code></p>
-
-<ul>
-  <li>Once the pipeline has completed, display the start and end times of each job by running</li>
-</ul>
-
-<p><code class="highlighter-rouge">./displayTimes.sh</code></p>
 
 <h2 id="detailed-usage">Detailed usage</h2>
 
 <ul>
-  <li>Build config file using a custom SLURM configuration (nodes and tasks per node may be overwritten in your config file with something more appropriate by the end of the build step)</li>
+  <li>
+    <p>Build config file using a custom SLURM configuration (nodes and tasks per node may be overwritten in your config file with something more appropriate by the end of the build step)</p>
+
+    <p><code class="highlighter-rouge">processMeerKAT.py -B -C myconfig.txt -M mydata.ms -p Test02 -N 10 -t 8 -D 4 -m 100 -T 06:00:00 -n run1_</code></p>
+  </li>
+  <li>
+    <p>Build config file using different MPI wrapper and container</p>
+
+    <p><code class="highlighter-rouge">processMeerKAT.py -B -C myconfig.txt -M mydata.ms --mpi_wrapper /path/to/another/mpi/wrapper --container /path/to/another/container</code></p>
+  </li>
+  <li>
+    <p>Build config file with different set of (python) scripts</p>
+
+    <p><code class="highlighter-rouge">processMeerKAT.py -B -C myconfig.txt -S /absolute/path/to/my/script.py False /absolute/path/to/container.simg -S partition.py True '' -S relative/path/to/my/script.py True relative/path/to/container.simg -S flag_round_1.py True '' -S script_in_bash_PATH.py False container_in_bash_PATH.simg -S setjy.py True ''</code></p>
+  </li>
+  <li>
+    <p>Run the pipeline immediately in verbose mode</p>
+
+    <p><code class="highlighter-rouge">processMeerKAT.py -R -v -s -C myconfig.txt</code></p>
+  </li>
 </ul>
-
-<p><code class="highlighter-rouge">processMeerKAT.py -B -C myconfig.txt -M mydata.ms -p Test02 -N 10 -t 8 -D 4 -m 100 -T 06:00:00 -n run1_</code></p>
-
-<ul>
-  <li>Build config file using different MPI wrapper and container</li>
-</ul>
-
-<p><code class="highlighter-rouge">processMeerKAT.py -B -C myconfig.txt -M mydata.ms --mpi_wrapper /path/to/another/mpi/wrapper --container /path/to/another/container</code></p>
-
-<ul>
-  <li>Build config file with different set of (python) scripts</li>
-</ul>
-
-<p><code class="highlighter-rouge">processMeerKAT.py -B -C myconfig.txt -S /absolute/path/to/my/script.py False /absolute/path/to/container.simg -S partition.py True '' -S relative/path/to/my/script.py True relative/path/to/container.simg -S flag_round_1.py True '' -S script_in_bash_PATH.py False container_in_bash_PATH.simg -S setjy.py True ''</code></p>
-
-<ul>
-  <li>Run the pipeline immediately in verbose mode</li>
-</ul>
-
-<p><code class="highlighter-rouge">processMeerKAT.py -R -v -s -C myconfig.txt</code></p>
 
 <p><strong>NOTE:</strong> All other command-line arguments passed into <code class="highlighter-rouge">processMeerKAT.py</code> when using option <code class="highlighter-rouge">[-R --run]</code> will have no effect, since the arguments are read from the config file at this point. Only options <code class="highlighter-rouge">[-s --submit], [-v --verbose]</code> and <code class="highlighter-rouge">[-C --config]</code> will have any effect at this point. Similarly, changing the <code class="highlighter-rouge">[slurm]</code> section in your config file after using option <code class="highlighter-rouge">[-R --run]</code> will have no effect unless you <code class="highlighter-rouge">[-R --run]</code> again.</p>
 
