@@ -13,10 +13,10 @@ The current release adds the following functionality:
 
 * **Self-calibration and science imaging**: this allows for configuration of multiple self-calibration loops, with customisable parameters per loop, as well as an additional final imaging stage to generate science-ready images, which includes primary beam correction using [katbeam](https://github.com/ska-sa/katbeam).
 * **Support for outlier fields (experimental)**: it is now possible to specify an outlier threshold to identify and image bright sources outside the main field of view, which improves the run-time of imaging, and can improve image fidelity in some cases. This is an experimental feature, so please report any bugs to [support@ilifu.ac.za](mailto:support@ilifu.ac.za).
-
+* **Changes in SPW selection syntax**: The SPW selection syntax has changed in the pipeline. SPWs are now specified as `'*:1280~1320MHz'` rather than `0:1280~1320MHz` (as was the case in the previous release). This allows for more flexible SPW selection in the configuration file. Please note that using the old syntax (such as `0:1280~1320MHz` or `1:1430~1450MHz` etc.) will result in malformed directory names and is discouraged.
 * Bugfixes and improvements to polarisation calibration
 * Support for loading modules on the ilifu SLURM cluster
-* Updated to use CASA 6.5, Python 3.8, OpenMPI 4.0.3, and Singularity 3.9.1
+* Updated to use CASA 6.5+, Python 3.8, OpenMPI 4.0.3, and Singularity 3.9.1
 
 ## Known Issues (minor)
 
