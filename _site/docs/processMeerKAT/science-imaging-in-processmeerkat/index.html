@@ -305,6 +305,14 @@ outlier fields (if <a href="/docs/processMeerKAT/self-calibration-in-processmeer
 It is possible to run science imaging immediately after cross-calibration, without running selfcal, although these three fields
 will not be populated, but would need to be manually set based on a pre-existing set of custom output (e.g. a mask, RMS map and outlier file).</p>
 
+<p>A primary beam (PB) corrected image is also produced, using the <code class="highlighter-rouge">katbeam</code>
+package. The threshold for the PB cutoff is specified via the <code class="highlighter-rouge">pbthreshold</code>
+config parameter. However in the event that images with different PB thresholds
+are required (after the completion of science imaging) the CASA task <code class="highlighter-rouge">impbcor</code>
+may be used to PB correct the flat-noise image. Please make sure to select the
+<code class="highlighter-rouge">katbeam</code> PB and not the default CASA <code class="highlighter-rouge">.pb</code> image while performing PB
+correction to ensure accurate fluxes.</p>
+
 <p>Science imaging is expected to be run once, preferably at the end of self-calibration, and
 unlike self-calibration it does not accept tuples as arguments.</p>
 
@@ -409,6 +417,13 @@ multi-Stokes spectral cubes or multi-Stokes cubes with outliers, is not currentl
   <li>
     <p><strong>pbthreshold</strong> : The PB gain threshold below which to mask the PB and the PB
 corrected image. The PB is generated using the <code class="highlighter-rouge">katbeam</code> package.</p>
+  </li>
+  <li>
+    <p><strong>pbband</strong> : One of <code class="highlighter-rouge">LBand</code>, <code class="highlighter-rouge">UHF</code>, or <code class="highlighter-rouge">SBand</code>. The coefficients from the
+selected band are used to generate the primary beam. This is necessary
+because the different bands have overlapping frequencies, and the PB
+characteristics are different across the different bands, even at overlapping
+frequencies.</p>
   </li>
   <li>
     <p><strong>mask</strong> : Path to a CLEAN mask or a CASA region file. This is normally

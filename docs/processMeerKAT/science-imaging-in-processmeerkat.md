@@ -25,6 +25,14 @@ Similarly, the final `rmsmap` is passed in to science imaging, to enable S/N-bas
 It is possible to run science imaging immediately after cross-calibration, without running selfcal, although these three fields
 will not be populated, but would need to be manually set based on a pre-existing set of custom output (e.g. a mask, RMS map and outlier file).
 
+A primary beam (PB) corrected image is also produced, using the `katbeam`
+package. The threshold for the PB cutoff is specified via the `pbthreshold`
+config parameter. However in the event that images with different PB thresholds
+are required (after the completion of science imaging) the CASA task `impbcor`
+may be used to PB correct the flat-noise image. Please make sure to select the
+`katbeam` PB and not the default CASA `.pb` image while performing PB
+correction to ensure accurate fluxes.
+
 Science imaging is expected to be run once, preferably at the end of self-calibration, and
 unlike self-calibration it does not accept tuples as arguments.
 
@@ -117,6 +125,12 @@ outlierfile = ''
 
 * **pbthreshold** : The PB gain threshold below which to mask the PB and the PB
   corrected image. The PB is generated using the `katbeam` package.
+
+* **pbband** : One of `LBand`, `UHF`, or `SBand`. The coefficients from the
+  selected band are used to generate the primary beam. This is necessary
+  because the different bands have overlapping frequencies, and the PB
+  characteristics are different across the different bands, even at overlapping
+  frequencies.
 
 * **mask** : Path to a CLEAN mask or a CASA region file. This is normally
   auto-populated by the pipeline if science imaging is queued up after
