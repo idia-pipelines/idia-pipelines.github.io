@@ -45,15 +45,19 @@
     
       
         
-      
-    
-      
-        
           <li class="navigation-list-item">
             
             <a href="http://localhost:4000/docs/access/" class="navigation-list-link">Access to IDIA Machines</a>
             
           </li>
+        
+      
+    
+      
+        
+      
+    
+      
         
       
     
@@ -79,6 +83,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/Release-Notes/" class="navigation-list-link">Release Notes</a>
@@ -87,15 +93,13 @@
                   
                 
                   
-                
-                  
-                
-                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/using-the-pipeline/" class="navigation-list-link">Using the Pipeline</a>
                       
                     </li>
+                  
+                
                   
                 
                   
@@ -183,10 +187,6 @@
               </ul>
             
           </li>
-        
-      
-    
-      
         
       
     
@@ -305,16 +305,12 @@ outlier fields (if <a href="/docs/processMeerKAT/self-calibration-in-processmeer
 It is possible to run science imaging immediately after cross-calibration, without running selfcal, although these three fields
 will not be populated, but would need to be manually set based on a pre-existing set of custom output (e.g. a mask, RMS map and outlier file).</p>
 
-<p>A primary beam (PB) corrected image is also produced, using the <code class="highlighter-rouge">katbeam</code>
-package. The threshold for the PB cutoff is specified via the <code class="highlighter-rouge">pbthreshold</code>
-config parameter. However in the event that images with different PB thresholds
-are required (after the completion of science imaging) the CASA task <code class="highlighter-rouge">impbcor</code>
-may be used to PB correct the flat-noise image. Please make sure to select the
-<code class="highlighter-rouge">katbeam</code> PB and not the default CASA <code class="highlighter-rouge">.pb</code> image while performing PB
-correction to ensure accurate fluxes.</p>
+<p>A primary beam (PB) corrected image is also produced, using the <code class="highlighter-rouge">katbeam</code> package. The threshold for the PB cutoff is specified via the <code class="highlighter-rouge">pbthreshold</code> config parameter, and the <code class="highlighter-rouge">pbband</code> parameter is used to select the coefficients for generating the primary beam (see below). However, in the event that images with different PB thresholds are required (after the completion of science imaging), the CASA task <code class="highlighter-rouge">impbcor</code> may be used to PB correct the flat-noise image. Please make sure to select the <code class="highlighter-rouge">katbeam</code> PB and not the default CASA <code class="highlighter-rouge">.pb</code> image while performing PB correction to ensure accurate fluxes. An example call for doing this (e.g. in addition to the PB-corrected image already output as <code class="highlighter-rouge">my-amazing.science_image.katbeam_pbcor.image.tt0</code> at the default cutoff of 0.1) is the following:</p>
 
-<p>Science imaging is expected to be run once, preferably at the end of self-calibration, and
-unlike self-calibration it does not accept tuples as arguments.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>impbcor(imagename='my-amazing.science_image.image.tt0', pbimage='my-amazing.science_image.katbeam.pb.tt0', outfile='my-amazing.science_image.katbeam_pbcor.0.3.image.tt0', cutoff=0.3)
+</code></pre></div></div>
+
+<p>Science imaging is expected to be run once, preferably at the end of self-calibration, and unlike self-calibration it does not accept tuples as arguments.</p>
 
 <h3 id="a-note-on-pb-correction">A note on PB correction</h3>
 
@@ -344,7 +340,6 @@ nterms = 2                        # Number of taylor terms
 gridder = 'wproject'
 deconvolver = 'mtmfs'
 restoringbeam = ''
-specmode = 'mfs'
 stokes = 'I'
 pbthreshold = 0.1                 # Threshold below which to mask the PB for PB correction
 mask = ''
@@ -405,10 +400,6 @@ gridders will not be exposed through the configuration file.</p>
     <p><strong>restoringbeam</strong> : Specified as a string with units, such as <code class="highlighter-rouge">'20arcsec'</code>. If
 this is left blank, the default restoring beam is used. Specifying this
 parameter can be used to force a specific restoring beam during imaging.</p>
-  </li>
-  <li>
-    <p><strong>specmode</strong> : Specify whether to generate a multi-frequency synthesis image
-(<code class="highlighter-rouge">mfs</code>) or a spectral cube (<code class="highlighter-rouge">cube</code> or <code class="highlighter-rouge">cubedata</code>).</p>
   </li>
   <li>
     <p><strong>stokes</strong> : The Stokes planes to image. Please note that generating

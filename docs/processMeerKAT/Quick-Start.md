@@ -11,11 +11,11 @@ nav_order: 1
 
 ## 1. Setup the pipeline in your environment
 
-**Please note : These docs are for an upcoming release of the pipeline. At the time of writing (July 5 2022) please use the CASA6 branch of the pipeline, which is the pre-release version. The master branch will be updated at the time of release.**
+**Please note : These docs are for an upcoming release of the pipeline. At the time of writing (July 2022) please use the CASA6 branch of the pipeline, which is the pre-release version. The master branch will be updated at the time of release.**
 
 In order to use the `processMeerKAT.py` script, source the `setup.sh` file, which can be done on [ilifu](https://docs.ilifu.ac.za/#/) as
 
-        source /idia/software/pipelines/casa6/setup.sh
+        source /idia/software/pipelines/master/setup.sh
 
 which will add the correct paths to your `$PATH` and `$PYTHONPATH` in order to correctly use the pipeline. You could consider adding this to your `~/.profile` or `~/.bashrc` for future use.
 

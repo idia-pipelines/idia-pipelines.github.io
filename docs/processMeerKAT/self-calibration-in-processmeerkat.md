@@ -184,7 +184,8 @@ Similarly, outlier imaging can be performed during the science imaging step of p
 
 ### Known Issues
 
-During outlier imaging, the resolution of the output data products, from both the outliers and main image, including the PSF, is observed to be broader, from an apparent difference in weighting. This may be due to the local PSF being worse at the far-off-axis position of the outlier, where it is more severely affected by bandwidth and time smearing, compared to the centre of the image. At its extreme, this effect significantly worsens the quality of the output images, which we speculate is due to CASA attempting to match the PSF of the main image to that of the worst outlier.
+During outlier imaging, the resolution of the output data products, from both the outliers and main image, including the PSF, is observed to be broader, from an apparent difference in weighting. This appears to be a CASA bug that is independent of outlier position, and at its extreme, this effect significantly worsens the quality of the output images. However, the majority of images produced when invoking outlier imaging are of the same or improved quality, but simply with a slightly broader resolution.
+<!-- This may be due to the local PSF being worse at the far-off-axis position of the outlier, where it is more severely affected by bandwidth and time smearing, compared to the centre of the image. At its extreme, this effect significantly worsens the quality of the output images, which we speculate is due to CASA attempting to match the PSF of the main image to that of the worst outlier. -->
 <!-- as the weighting moves closer to natural weighting. -->
 <!-- (high positive Briggs robust weightings) -->
 

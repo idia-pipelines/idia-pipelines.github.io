@@ -45,15 +45,19 @@
     
       
         
-      
-    
-      
-        
           <li class="navigation-list-item">
             
             <a href="http://localhost:4000/docs/access/" class="navigation-list-link">Access to IDIA Machines</a>
             
           </li>
+        
+      
+    
+      
+        
+      
+    
+      
         
       
     
@@ -79,6 +83,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/Release-Notes/" class="navigation-list-link">Release Notes</a>
@@ -87,15 +93,13 @@
                   
                 
                   
-                
-                  
-                
-                  
                     <li class="navigation-list-item ">
                       
                       <a href="http://localhost:4000/docs/processMeerKAT/using-the-pipeline/" class="navigation-list-link">Using the Pipeline</a>
                       
                     </li>
+                  
+                
                   
                 
                   
@@ -183,10 +187,6 @@
               </ul>
             
           </li>
-        
-      
-    
-      
         
       
     
@@ -485,7 +485,8 @@ to be an SNR threshold if &gt; 1 and an absolute value in Jy if &lt; 1. We recom
 
 <h3 id="known-issues">Known Issues</h3>
 
-<p>During outlier imaging, the resolution of the output data products, from both the outliers and main image, including the PSF, is observed to be broader, from an apparent difference in weighting. This may be due to the local PSF being worse at the far-off-axis position of the outlier, where it is more severely affected by bandwidth and time smearing, compared to the centre of the image. At its extreme, this effect significantly worsens the quality of the output images, which we speculate is due to CASA attempting to match the PSF of the main image to that of the worst outlier.
+<p>During outlier imaging, the resolution of the output data products, from both the outliers and main image, including the PSF, is observed to be broader, from an apparent difference in weighting. This appears to be a CASA bug that is independent of outlier position, and at its extreme, this effect significantly worsens the quality of the output images. However, the majority of images produced when invoking outlier imaging are of the same or improved quality, but simply with a slightly broader resolution.
+<!-- This may be due to the local PSF being worse at the far-off-axis position of the outlier, where it is more severely affected by bandwidth and time smearing, compared to the centre of the image. At its extreme, this effect significantly worsens the quality of the output images, which we speculate is due to CASA attempting to match the PSF of the main image to that of the worst outlier. -->
 <!-- as the weighting moves closer to natural weighting. -->
 <!-- (high positive Briggs robust weightings) --></p>
 

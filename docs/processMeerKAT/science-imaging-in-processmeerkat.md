@@ -25,16 +25,13 @@ Similarly, the final `rmsmap` is passed in to science imaging, to enable S/N-bas
 It is possible to run science imaging immediately after cross-calibration, without running selfcal, although these three fields
 will not be populated, but would need to be manually set based on a pre-existing set of custom output (e.g. a mask, RMS map and outlier file).
 
-A primary beam (PB) corrected image is also produced, using the `katbeam`
-package. The threshold for the PB cutoff is specified via the `pbthreshold`
-config parameter. However in the event that images with different PB thresholds
-are required (after the completion of science imaging) the CASA task `impbcor`
-may be used to PB correct the flat-noise image. Please make sure to select the
-`katbeam` PB and not the default CASA `.pb` image while performing PB
-correction to ensure accurate fluxes.
+A primary beam (PB) corrected image is also produced, using the `katbeam` package. The threshold for the PB cutoff is specified via the `pbthreshold` config parameter, and the `pbband` parameter is used to select the coefficients for generating the primary beam (see below). However, in the event that images with different PB thresholds are required (after the completion of science imaging), the CASA task `impbcor` may be used to PB correct the flat-noise image. Please make sure to select the `katbeam` PB and not the default CASA `.pb` image while performing PB correction to ensure accurate fluxes. An example call for doing this (e.g. in addition to the PB-corrected image already output as `my-amazing.science_image.katbeam_pbcor.image.tt0` at the default cutoff of 0.1) is the following:
 
-Science imaging is expected to be run once, preferably at the end of self-calibration, and
-unlike self-calibration it does not accept tuples as arguments.
+```
+impbcor(imagename='my-amazing.science_image.image.tt0', pbimage='my-amazing.science_image.katbeam.pb.tt0', outfile='my-amazing.science_image.katbeam_pbcor.0.3.image.tt0', cutoff=0.3)
+```
+
+Science imaging is expected to be run once, preferably at the end of self-calibration, and unlike self-calibration it does not accept tuples as arguments.
 
 ### A note on PB correction
 
@@ -66,7 +63,6 @@ nterms = 2                        # Number of taylor terms
 gridder = 'wproject'
 deconvolver = 'mtmfs'
 restoringbeam = ''
-specmode = 'mfs'
 stokes = 'I'
 pbthreshold = 0.1                 # Threshold below which to mask the PB for PB correction
 mask = ''
@@ -116,9 +112,6 @@ outlierfile = ''
 * **restoringbeam** : Specified as a string with units, such as `'20arcsec'`. If
   this is left blank, the default restoring beam is used. Specifying this
   parameter can be used to force a specific restoring beam during imaging.
-
-* **specmode** : Specify whether to generate a multi-frequency synthesis image
-  (`mfs`) or a spectral cube (`cube` or `cubedata`).
 
 * **stokes** : The Stokes planes to image. Please note that generating
   multi-Stokes spectral cubes or multi-Stokes cubes with outliers, is not currently possible within CASA

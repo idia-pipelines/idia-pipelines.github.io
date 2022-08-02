@@ -113,7 +113,6 @@ nterms = 2                        # Number of taylor terms
 gridder = 'wproject'
 deconvolver = 'mtmfs'
 restoringbeam = ''
-specmode = 'mfs'
 stokes = 'I'
 pbthreshold = 0.1                 # Threshold below which to mask the PB for PB correction
 mask = ''
