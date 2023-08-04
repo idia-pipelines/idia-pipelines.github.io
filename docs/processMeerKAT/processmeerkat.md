@@ -34,6 +34,22 @@ thread-safe).
 
 Please read the documentation to learn how to use the pipeline for your imaging data at IDIA.
 
+## Acknowledgement
+
+An IEEE proceedings paper from the [2021 URSI GASS](https://www.ursi.org/event.php?id=393) conference, is available under [DOI: 10.23919/URSIGASS51995.2021.9560276](https://dx.doi.org/10.23919/URSIGASS51995.2021.9560276) (a copy of the paper can also be found [here](https://www.ursi.org/proceedings/procGA21/papers/URSIGASS2021-Mo-J11-AM2-3.pdf)). The pipeline can also be acknowledged as Collier, Sekhar, Frank, Taylor, et al. (in prep). The BibTeX citation of the proceedings paper is as follows:
+
+```
+@INPROCEEDINGS{9560276,
+  author={Collier, Jordan D. and Frank, Bradley and Sekhar, Srikrishna and Taylor, Andrew R.},
+  booktitle={2021 XXXIVth General Assembly and Scientific Symposium of the International Union of Radio Science (URSI GASS)}, 
+  title={The IDIA PROCESSMEERKAT pipeline: Fast CASA Processing on a Cloud-Based HPC Cluster}, 
+  year={2021},
+  volume={},
+  number={},
+  pages={1-4},
+  doi={10.23919/URSIGASS51995.2021.9560276}}
+  ```
+
 ## License
 
 Copyright (C) 2022 Inter-University Institute for Data Intensive Astronomy.
