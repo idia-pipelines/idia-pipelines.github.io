@@ -74,8 +74,8 @@ Here’s an example of an SBATCH script that submits a `tclean` job for CASA 6:
 #SBATCH --time=03:00:00
 
 #Run the application:
-module load openmpi/2.1.1
-mpirun singularity exec /path/to/casa/container.simg python tclean.py /path/to/data.ms
+module load openmpi/4.0.3
+mpirun singularity exec /idia/software/containers/casa-6.simg python tclean.py /path/to/data.ms
 ```
 
 More details can be found in the ilifu documentation about [using Singularity](https://docs.ilifu.ac.za/#/getting_started/container_environments) and [parallel processing](https://docs.ilifu.ac.za/#/getting_started/submit_job_slurm?id=parallel-computing-on-the-cluster). Some other helpful resources include the [resource allocation guide](https://docs.ilifu.ac.za/#/tech_docs/resource_allocation) and the [ilifu training](https://www.ilifu.ac.za/latest-training).
